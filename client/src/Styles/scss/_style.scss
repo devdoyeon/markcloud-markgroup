@@ -1,6 +1,6 @@
 //---------------컬러 변수 정리---------------
 //배경색,텍스트 및 선 컬러
-$mainColor: #5850CC;
+$mainColor: #5850cc;
 $subColor: #edf8f8;
 $footerColor: #eeeeee;
 $black: #15171a;
@@ -22,12 +22,6 @@ $middleFont: 'NotoSansM', '맑은 고딕', 'sans-serif';
 $regularFont: 'NotoSansR', '맑은 고딕', 'sans-serif';
 $lightFont: 'NotoSansL', '맑은 고딕', 'sans-serif';
 $thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
-$krFont: 'NotoSansKR', '맑은 고딕', 'sans-serif';
-
-//---------------폰트 사이즈 변수 정리---------------
-$normal-font-size: 16px; //데스트탑
-$tablet-font-size: 14px; //태블릿 폰트
-$mobile-font-size: 12px; //모바일 사이즈 폰트
 
 //---------------position style mixin---------------
 @mixin position-style(
@@ -47,9 +41,9 @@ $mobile-font-size: 12px; //모바일 사이즈 폰트
 }
 
 //---------------display flex style mixin---------------
-@mixin flex-style($flexDirection: row, $alignVal: center, $justifyVal: center) {
+@mixin flex-style($direction: row, $alignVal: center, $justifyVal: center) {
   display: flex;
-  flex-direction: $flexDirection;
+  flex-direction: $direction;
   align-items: $alignVal;
   justify-content: $justifyVal;
 }
