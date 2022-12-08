@@ -1,11 +1,11 @@
 version: "3.9"
 services:
   apiserver:
-    container_name: 'markcloud-advanced-annotation-api'
+    container_name: 'markcloud-groupware-api'
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: 'markcloud-advanced-annotaion-api:latest'
+    image: 'markcloud-groupware-api:latest'
     stdin_open: true
     tty: true
     volumes:
@@ -18,11 +18,11 @@ services:
       - db
 
   webserver:
-    container_name: 'markcloud-advanced-annotation-client'
+    container_name: 'markcloud-groupware-client'
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: "markcloud-advanced-annotation-client:latest"
+    image: "markcloud-groupware-client:latest"
     env_file: ./.env
     tty: true
     stdin_open: true
