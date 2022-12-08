@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  apiserver:
+    container_name: 'markcloud-advanced-annotation-api'
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: 'markcloud-advanced-annotaion-api:latest'
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./server:/server
+    ports:
+      - "${API_PORT}:3001"
+    env_file: ./.env
+    restart: always
+    depends_on:
+      - db
+
+  webserver:
+    container_name: 'markcloud-advanced-annotation-client'
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: "markcloud-advanced-annotation-client:latest"
+    env_file: ./.env
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./client/conf.d:/etc/nginx/conf.d
+    restart: always
+    ports:
+      - "${WEB_PORT}:80"
