@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# DEV-SAMPLE PROJECT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Framework
 
-## Available Scripts
+# Library
+- quill.js(Text Editor)
+- Redux
+- React-Redux
+- SASS(SCSS)
+- SWIPER && SLICK
+- BOOTSTRAB
 
-In the project directory, you can run:
+<pre>
+    MarkCloud Groupware
+</pre>
 
-### `npm start`
+## MAIN SCREEN
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| 번호 | 화면명(영어)               | 화면설명(한글)     | 연결URL                |
+| :--- | :------------------------ | :---------------- | :----------------------|
+| 1    | MAIN                      | 메인페이지         | "/groupware"           |
+| 2    | Project Status            | 프로젝트 현황      | “/groupware/project”   |
+| 3    | Weekly Business Report    | 주간업무보고       | “/groupware/weekly”    |
+| 4    | Board                     | 게시판             | “/groupware/board      |
+| 5    | Business Management       | 업무관리           | “/groupware/business   |
+| 6    | Personnel Management      | 인사관리           | “/groupware/personnel” |
+| 7    | Notice                    | 공지사항           | “/groupware/notice     |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## CLIENT DEVELOPMENT
 
-### `npm test`
+- [] 메인 페이지 [Mark.KDY,Mark.ABW]
+- [] 프로젝트 현황 [Mark.KDY]
+- [] 주간업무보고 [Mark.KDY]
+- [] 게시판 [Mark.KDY]
+- [] 업무관리 [Mark.ABW]
+- [] 인사관리 [Mark.ABW]
+- [] 공지사항 [Mark.ABW]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# js/commonUtils
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| FUNCTION         | PARAMETER | DATA TYPE | RETURN  |
+| :--------------- | :-------- | :-------- | :------ |
+| numberWithCommas | value     | Number    | Integer |
+| emptyCheck       | value     | All(\*)   | Boolean |
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
