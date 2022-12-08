@@ -8,7 +8,7 @@
 - React-Redux
 - SASS(SCSS)
 - SWIPER && SLICK
-- BOOTSTRAB
+- BOOTSTRAP
 
 <pre>
     MarkCloud Groupware
