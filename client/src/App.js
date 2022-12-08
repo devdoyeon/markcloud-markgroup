@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import ProjectStatus from './pages/ProjectStatus';
+import WeeklyReport from './pages/WeeklyReport';
+import Board from './pages/Board';
+import BusinessManagement from './pages/BusinessManagement';
+import PersonnelManagement from './pages/PersonnelManagement';
+import Notice from './pages/Notice';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/project' element={<ProjectStatus />} />
+        <Route path='/weekly' element={<WeeklyReport />} />
+        <Route path='/board' element={<Board />} />
+        <Route path='/business' element={<BusinessManagement />} />
+        <Route path='/personnel' element={<PersonnelManagement />} />
+        <Route path='/notice' element={<Notice />} />
+      </Routes>
     </div>
   );
 }
