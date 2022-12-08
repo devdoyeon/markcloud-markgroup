@@ -1,7 +1,7 @@
 FROM node:14-alpine as build-stage 
 WORKDIR /client
 
-COPY ./client /client
+COPY . /client
 RUN npm install
 RUN npm run build
 
