@@ -14,8 +14,6 @@ services:
       - "${API_PORT}:3001"
     env_file: ./.env
     restart: always
-    depends_on:
-      - db
 
   webserver:
     container_name: 'markcloud-groupware-client'
