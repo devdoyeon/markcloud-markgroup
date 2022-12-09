@@ -46,6 +46,7 @@ $thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
   flex-direction: $direction;
   align-items: $alignVal;
   justify-content: $justifyVal;
+  flex-wrap: wrap;
 }
 
 //---------------hide checkbox style mixin---------------
