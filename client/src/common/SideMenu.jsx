@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import Tools from './Tools';
 
 const SideMenu = () => {
   const path = useLocation().pathname;
@@ -39,6 +40,7 @@ const SideMenu = () => {
         </li>
         <li>MarkView</li>
       </ul>
+      <Tools/>
     </div>
   );
 };

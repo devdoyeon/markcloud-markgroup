@@ -9,3 +9,11 @@ export const emptyCheck = value => {
     return true;
   }
 };
+
+export const changeState = (setState, col, val) => {
+  setState(prev => {
+    const clone = { ...prev };
+    clone[col] = val;
+    return clone;
+  });
+};

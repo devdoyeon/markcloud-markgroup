@@ -1,6 +1,7 @@
 import SideMenu from 'common/SideMenu';
 import { useState, useEffect, useCallback } from 'react';
-import CommonPagination from 'common/CommonPagination';
+import Pagination from 'common/Pagination';
+import noneImg from 'image/noneList.svg';
 
 const Notice = () => {
   const [list, setList] = useState([]);
@@ -35,32 +36,23 @@ const Notice = () => {
           <h3>공지사항</h3>
         </div>
         <div className='list-wrap'>
-          <ul>
-            <li>
-              <div className='date-wrap'>
-                <span>2022.10.25</span>
-              </div>
-            </li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-            <li>d</li>
-          </ul>
+          {/* 리스트는 게시판에다가 다 구현해 뒀고 게시글 없는 건 이쪽에 테스트 하겠습니다!!
+          Board.jsx 가시면 반복문 구현해 둔 리스트 있는데 클래스명 참고하세요~ */}
+          <div className='noneList column'>
+            <img src={noneImg} alt='글 없음 아이콘' />
+            <span>등록된 게시글이 없습니다.</span>
+          </div>
           <div className='btn-wrap'>
             <button className='commonBtn noticeBtn'>등록</button>
           </div>
-          {/* <CommonPagination
+          {/* <Pagination
           postsPerPage={pageInfo.limit}
           viewPageNum={5}
           totalPosts={pageInfo.totalCount}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         /> */}
-          <CommonPagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     </div>
