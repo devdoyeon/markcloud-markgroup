@@ -38,9 +38,16 @@ const SideMenu = () => {
           onClick={() => navigate('/personnel')}>
           인사관리
         </li>
-        <li>MarkView</li>
+        <li>
+          <a
+            href='https://markcloud.co.kr/mark-view'
+            target='_blank'
+            rel='noopener noreferrer'>
+            MarkView
+          </a>
+        </li>
       </ul>
-      <Tools/>
+      <Tools />
     </div>
   );
 };

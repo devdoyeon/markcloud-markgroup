@@ -64,6 +64,9 @@
       @include txt-style($fontSize: 18px, $fontColor: $gray02);
       cursor: pointer;
       margin-bottom: 30px;
+      a {
+        @include txt-style($fontSize: 18px, $fontColor: $gray02)
+      }
 
       &.active {
         font-family: $boldFont;

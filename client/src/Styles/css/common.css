@@ -78,6 +78,10 @@
   cursor: pointer;
   margin-bottom: 30px;
 }
+.sidebar > ul > li a {
+  font-size: 18px;
+  color: #858585;
+}
 .sidebar > ul > li.active {
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   color: #15171a;
