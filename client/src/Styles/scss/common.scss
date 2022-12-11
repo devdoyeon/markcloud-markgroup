@@ -50,6 +50,33 @@
         padding-bottom: 8px;
       }
     }
+    > .search-wrap {
+      @include flex-style();
+      select {
+        border: none;
+        padding: 14px 16px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        color: $gray01;
+        > option {
+          background-color: white;
+          border-radius: 8px;
+        }
+      }
+      input {
+        padding: 14px 16px;
+        color: $gray01;
+      }
+      button {
+        padding: 11.5px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        > img {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
   }
 }
 
@@ -65,7 +92,7 @@
       cursor: pointer;
       margin-bottom: 30px;
       a {
-        @include txt-style($fontSize: 18px, $fontColor: $gray02)
+        @include txt-style($fontSize: 18px, $fontColor: $gray02);
       }
 
       &.active {

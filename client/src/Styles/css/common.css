@@ -62,6 +62,37 @@
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   padding-bottom: 8px;
 }
+.container .content-wrap > .search-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.container .content-wrap > .search-wrap select {
+  border: none;
+  padding: 14px 16px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  color: #585858;
+}
+.container .content-wrap > .search-wrap select > option {
+  background-color: white;
+  border-radius: 8px;
+}
+.container .content-wrap > .search-wrap input {
+  padding: 14px 16px;
+  color: #585858;
+}
+.container .content-wrap > .search-wrap button {
+  padding: 11.5px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.container .content-wrap > .search-wrap button > img {
+  width: 24px;
+  height: 24px;
+}
 
 .sidebar {
   position: fixed;
