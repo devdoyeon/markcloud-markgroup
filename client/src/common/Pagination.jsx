@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+// import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { changeState } from 'js/commonUtils';
 
 //= 페이지네이션 적용 시 스타일 수정 필요
@@ -68,13 +68,13 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
         <li
           onClick={() => changePara(prevCheck ? 'prev' : null)}
           className={`prev ${page === 1 ? 'block' : 'active'}`}>
-          <GrFormPrevious />
+          {/* <GrFormPrevious /> */}
         </li>
         {middle}
         <li
           onClick={() => changePara(nextCheck ? 'next' : null)}
           className={`next ${totalPage === page ? 'block' : 'active'}`}>
-          <GrFormNext />
+          {/* <GrFormNext /> */}
         </li>
       </>
     );
