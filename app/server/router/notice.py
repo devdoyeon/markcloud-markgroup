@@ -16,8 +16,9 @@ router_notice = APIRouter(
 
 # 전체 공지 확인
 @router_notice.get('/read',response_model=List[NoticeOut])
-def read_projects( 
-    db: Session = Depends(get_db),
+def read_projects(  # total_page, total_count, offset, limit
+    db: Session = Depends(get_db)
+    ,
 ):
     return get_notice(db)
 

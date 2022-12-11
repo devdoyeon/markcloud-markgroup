@@ -1,13 +1,20 @@
 from models import NoticeTable
 from fastapi import HTTPException
 
-def get_notice(db):
+
+def get_notice(db, offset, limit):
     
     table = NoticeTable
     
     try: 
-        result = db.query(table).all()
-        return result
+        
+        q_result = db.query(table).offset(offset).limit(limit).all()
+        total_count = len(q_result)
+        total_page = total_count // 10 # 고쳐야함 ㅅ 
+        
+        # total_count, total_page
+        result = {'data':q_result, 'meta': {'limit':limit, 'offset':offset,'total_count':total_count, 'total_page':total_page}}
+    
     except:
         raise HTTPException(status_code=500, detail='dbGetError')
 

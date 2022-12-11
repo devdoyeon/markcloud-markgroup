@@ -11,10 +11,11 @@ class NoticeTable(Base):
     id = Column(BigInteger, nullable = False, primary_key=True, autoincrement=True)
     title = Column(VARCHAR(50), nullable = False)
     content = Column(VARCHAR(50), nullable = False)
-    company= Column(VARCHAR(50), nullable = False)
+    #company= Column(VARCHAR(50), nullable = False) organ_code
     created_at = Column(DateTime, nullable = False)
     created_id = Column(VARCHAR(30), nullable = False)
     updated_at = Column(DateTime, nullable = False)
+    updated_id = Column(VARCHAR(30), nullable = False)
     
 # class ProjectTable(Base):
 #     __tablename__ = 'groupware_organization'
