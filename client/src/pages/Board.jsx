@@ -1,5 +1,5 @@
 import SideMenu from 'common/SideMenu';
-import searchIcon from 'image/searchIcon.svg'
+import CommonHeader from 'common/CommonHeader';
 import Pagination from 'common/Pagination';
 
 const Board = () => {
@@ -7,20 +7,7 @@ const Board = () => {
     <div className='container'>
       <SideMenu />
       <div className='content-wrap'>
-        <div className='header'>
-          <h3>자유게시판</h3>
-        </div>
-        <div className='search-wrap'>
-          <select>
-            <option value='title'>제목</option>
-            <option value='writer'>작성자</option>
-            <option value='content'>내용</option>
-          </select>
-          <input type="text" />
-          <button>
-            <img src={searchIcon} alt="검색 아이콘" />
-          </button>
-        </div>
+        <CommonHeader header={'자유게시판'} />
         <div className='list-wrap'>
           <ul>
             {new Array(9).fill('').map(
@@ -43,15 +30,8 @@ const Board = () => {
           <div className='btn-wrap'>
             <button className='commonBtn noticeBtn'>등록</button>
           </div>
-          {/* <Pagination
-          postsPerPage={pageInfo.limit}
-          viewPageNum={5}
-          totalPosts={pageInfo.totalCount}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        /> */}
-          {/* <Pagination /> */}
         </div>
+          {/* <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo}/> */}
       </div>
     </div>
   );

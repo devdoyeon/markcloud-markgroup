@@ -54,7 +54,7 @@
   width: fit-content;
   border-bottom: 2px solid #5b84e3;
   text-align: center;
-  margin-bottom: 62px;
+  margin-bottom: 29px;
 }
 .container .content-wrap > .header h3 {
   font-size: "22px";
@@ -66,30 +66,38 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
+  width: 980px;
+  margin-bottom: 36px;
 }
-.container .content-wrap > .search-wrap select {
+.container .content-wrap > .search-wrap .search {
+  border: 1px solid #f5f5f5;
+  border-radius: 8px;
+}
+.container .content-wrap > .search-wrap .search select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   border: none;
   padding: 14px 16px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   color: #585858;
 }
-.container .content-wrap > .search-wrap select > option {
+.container .content-wrap > .search-wrap .search select > option {
   background-color: white;
   border-radius: 8px;
 }
-.container .content-wrap > .search-wrap input {
+.container .content-wrap > .search-wrap .search input {
   padding: 14px 16px;
   color: #585858;
 }
-.container .content-wrap > .search-wrap button {
+.container .content-wrap > .search-wrap .search button {
   padding: 11.5px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-.container .content-wrap > .search-wrap button > img {
+.container .content-wrap > .search-wrap .search button > img {
   width: 24px;
   height: 24px;
 }

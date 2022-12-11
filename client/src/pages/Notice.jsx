@@ -45,14 +45,7 @@ const Notice = () => {
           <div className='btn-wrap'>
             <button className='commonBtn noticeBtn'>등록</button>
           </div>
-          {/* <Pagination
-          postsPerPage={pageInfo.limit}
-          viewPageNum={5}
-          totalPosts={pageInfo.totalCount}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        /> */}
-          {/* <Pagination /> */}
+          {/* <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo}/> */}
         </div>
       </div>
     </div>
