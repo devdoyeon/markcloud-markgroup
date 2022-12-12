@@ -125,22 +125,47 @@
       .search {
         border: 1px solid $gray05;
         border-radius: 8px;
-        select {
+        .selectBox {
+          display: inline-block;
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;
           border: none;
-          padding: 14px 16px;
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;
           color: $gray02;
-          > option {
+          .selectVal {
+            @include flex-style();
+            width: 83px;
+            font-size: 14px;
+          }
+        }
+        .selectOptGroup {
+          position: absolute;
+          transform: translateY(20px) translateX(0px);
+          background-color: gray;
+          color: $gray01;
+          border-radius: 4px;
+          border: 1px solid $gray05;
+          > .selectOpt {
+            width: 83px;
+            padding: 7px 0;
+            text-align: center;
+            font-size: 12px;
+            color: $gray01;
             background-color: white;
-            border-radius: 8px;
+            cursor: pointer;
+            &:first-child {
+              border-bottom: 1px solid $gray05;
+            }
+            &:hover {
+              background-color: $subBlue;
+            }
           }
         }
         input {
           padding: 14px 16px;
           color: $gray02;
+          font-size: 14px;
         }
         button {
           padding: 11.5px;
