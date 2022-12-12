@@ -47,12 +47,11 @@ class EditorComponent extends Component {
     return (
       <div style={{ width: '100%', height: 'auto' }}>
         <ReactQuill
-          style={{ height: '330px' }}
           theme='snow'
           modules={this.modules}
           formats={this.formats}
           value={value || ''}
-          onChange={(content, delta, source, editor) => {
+          onChange={(c, d, s, editor) => {
             onChange(editor.getHTML());
             console.log(editor.getHTML());
           }}

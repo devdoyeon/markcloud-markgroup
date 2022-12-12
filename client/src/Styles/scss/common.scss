@@ -10,7 +10,6 @@
   @include flex-style(column);
 }
 
-
 .commonBtn {
   background-color: $mainColor;
   border-radius: 8px;
@@ -40,6 +39,9 @@
     width: 980px;
     background-color: $white;
     min-height: 100vh;
+    .quill {
+      height: 330px;
+    }
     > .header {
       width: fit-content;
       border-bottom: 2px solid $mainBlue;

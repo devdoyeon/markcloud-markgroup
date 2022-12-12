@@ -50,6 +50,9 @@
   background-color: #ffffff;
   min-height: 100vh;
 }
+.container .content-wrap .quill {
+  height: 330px;
+}
 .container .content-wrap > .header {
   width: fit-content;
   border-bottom: 2px solid #5b84e3;
