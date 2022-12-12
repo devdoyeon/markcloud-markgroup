@@ -44,7 +44,7 @@ const CommonHeader = ({ header }) => {
               </div>
             )}
           </div>
-          <input type='text' />
+          <input type='text' placeholder='입력'/>
           <button>
             <img src={searchIcon} alt='검색 아이콘' />
           </button>

@@ -7,6 +7,7 @@
   font-family: 'NotoSansR', '맑은 고딕', sans-serif;
   font-size: 16px;
   font-weight: normal;
+  user-select: none;
 }
 
 select {
