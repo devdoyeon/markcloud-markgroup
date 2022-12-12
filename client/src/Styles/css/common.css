@@ -46,7 +46,7 @@
   position: absolute;
   left: 300px;
   top: 0;
-  width: 1140px;
+  width: 980px;
   background-color: #ffffff;
   min-height: 100vh;
 }
@@ -82,7 +82,7 @@
   padding: 14px 16px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  color: #585858;
+  color: #858585;
 }
 .container .content-wrap > .search-wrap .search select > option {
   background-color: white;
@@ -90,7 +90,7 @@
 }
 .container .content-wrap > .search-wrap .search input {
   padding: 14px 16px;
-  color: #585858;
+  color: #858585;
 }
 .container .content-wrap > .search-wrap .search button {
   padding: 11.5px;
@@ -100,6 +100,22 @@
 .container .content-wrap > .search-wrap .search button > img {
   width: 24px;
   height: 24px;
+}
+
+.pagination {
+  margin-bottom: 100px;
+}
+.pagination li {
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  color: #cdcdcd;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+.pagination li.now {
+  color: #15171a;
 }
 
 .sidebar {
