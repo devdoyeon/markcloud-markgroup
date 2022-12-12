@@ -18,6 +18,7 @@ function App() {
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/weekly' element={<WeeklyReport />} />
         <Route path='/board' element={<Board />} />
+        {/* -------------------------------------------------- */}
         {/* => 주간업무보고, 공지사항, 게시판 상세 보기 Route */}
         <Route path='/project/:id' element={<BoardRead />} />
         <Route path='/weekly/:id' element={<BoardRead />} />
@@ -30,6 +31,7 @@ function App() {
         <Route path='/project/write/:id' element={<ProjectStatus />} />
         <Route path='/weekly/write/:id' element={<WeeklyReport />} />
         <Route path='/board/write/:id' element={<Board />} />
+        {/* -------------------------------------------------- */}
         <Route path='/sample' element={<BoardRead />} />
         <Route path='/business' element={<BusinessManagement />} />
         <Route path='/personnel' element={<PersonnelManagement />} />
