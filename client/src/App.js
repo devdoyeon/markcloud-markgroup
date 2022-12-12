@@ -9,6 +9,7 @@ import PersonnelManagement from './pages/PersonnelManagement';
 import Notice from './pages/Notice';
 import BoardRead from 'pages/BoardRead';
 import NewBoard from 'pages/NewBoard';
+import NotFound from 'pages/NotFound';
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/weekly' element={<WeeklyReport />} />
         <Route path='/board' element={<Board />} />
-        {/* -------------------------------------------------- */}
+        <Route path='/sample' element={<BoardRead />} />
+        <Route path='/business' element={<BusinessManagement />} />
+        <Route path='/personnel' element={<PersonnelManagement />} />
+        <Route path='/notice' element={<Notice />} />
         {/* => 주간업무보고, 공지사항, 게시판 상세 보기 Route */}
         <Route path='/project/:id' element={<BoardRead />} />
         <Route path='/weekly/:id' element={<BoardRead />} />
@@ -32,32 +36,8 @@ function App() {
         <Route path='/weekly/write/:id' element={<WeeklyReport />} />
         <Route path='/board/write/:id' element={<Board />} />
         {/* -------------------------------------------------- */}
-        <Route path='/sample' element={<BoardRead />} />
-        <Route path='/business' element={<BusinessManagement />} />
-        <Route path='/personnel' element={<PersonnelManagement />} />
-        <Route path='/notice' element={<Notice />} />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
-      {/* 
-        /weekly/:id
-        /notice/:id
-        /board/:id
-        => 주간업무보고, 공지사항, 게시판 상세 보기 Route
-
-        --------------------------------------------------
-
-        /weekly/write
-        /notice/write
-        /board/write
-        => 주간업무보고, 공지사항, 게시판 작성 Route
-
-        --------------------------------------------------
-
-        /weekly/write/:id
-        /notice/write/:id
-        /board/write/:id
-        => 주간업무보고, 공지사항, 게시판 수정 Route
-        
-      */}
     </div>
   );
 }
