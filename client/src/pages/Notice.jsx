@@ -2,7 +2,6 @@ import SideMenu from 'common/SideMenu';
 import { useState, useEffect, useCallback } from 'react';
 import Pagination from 'common/Pagination';
 import noneImg from 'image/noneList.svg';
-import NewBoard from '../common/NewBoard';
 
 const Notice = () => {
   const [list, setList] = useState([]);
@@ -12,7 +11,6 @@ const Notice = () => {
   return (
     <div className='container'>
       <SideMenu />
-      <NewBoard />
       {/* <div className='content-wrap notice'>
       </div> */}
     </div>

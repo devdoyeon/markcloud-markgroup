@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 class EditorComponent extends Component {
   constructor(props) {
     super(props);
-  }
+  } 
 
   modules = {
     toolbar: [
