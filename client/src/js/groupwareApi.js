@@ -14,7 +14,7 @@ export const h2 = {
 // 공지사항 :
 export const noticeRead = async currentPage => {
   try {
-    return await axios.get(`/notice/read?page=${currentPage}&limit=9`, {
+    return await axios.get(`/bw/notice/read?page=${currentPage}&limit=9`, {
       header: h1,
     });
   } catch {
@@ -24,7 +24,7 @@ export const noticeRead = async currentPage => {
 // 쿼리에 해당하는 상표의 개수를 가져오는 API
 export const noticeCreate = async query => {
   try {
-    return await axios.post(`/notice/create`, query, { headers: h1 });
+    return await axios.post(`/bw/notice/create`, query, { headers: h1 });
   } catch {
     return null;
   }
@@ -32,7 +32,7 @@ export const noticeCreate = async query => {
 
 export const noticeUpdate = async query => {
   try {
-    return await axios.post(`/notice/update`, query, { headers: h1 });
+    return await axios.post(`/bw/notice/update`, query, { headers: h1 });
   } catch {
     return null;
   }
@@ -40,7 +40,7 @@ export const noticeUpdate = async query => {
 
 export const noticeDelete = async query => {
   try {
-    return await axios.post(`/notice/create`, query, { headers: h1 });
+    return await axios.post(`/bw/notice/create`, query, { headers: h1 });
   } catch {
     return null;
   }
