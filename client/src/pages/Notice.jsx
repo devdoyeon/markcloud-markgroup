@@ -60,7 +60,7 @@ const Notice = () => {
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
-        <BoardRead header='공지사항' curdata='안녕하세요 안병욱입니다.' />
+        <BoardRead header='공지사항' curData='안녕하세요 안병욱입니다.' />
       </div>
     </div>
   );
