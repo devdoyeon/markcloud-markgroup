@@ -22,6 +22,27 @@ function App() {
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
       </Routes>
+      {/* 
+        /weekly/:id
+        /notice/:id
+        /board/:id
+        => 주간업무보고, 공지사항, 게시판 상세 보기 Route
+
+        --------------------------------------------------
+
+        /weekly/write
+        /notice/write
+        /board/write
+        => 주간업무보고, 공지사항, 게시판 작성 Route
+
+        --------------------------------------------------
+
+        /weekly/write/:id
+        /notice/write/:id
+        /board/write/:id
+        => 주간업무보고, 공지사항, 게시판 수정 Route
+        
+      */}
     </div>
   );
 }
