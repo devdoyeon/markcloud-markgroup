@@ -36,14 +36,14 @@
     padding: 80px 0 0 50px;
     border-top-left-radius: 28px;
     @include position-style($left: 300px, $top: 0);
-    width: 1140px;
+    width: 980px;
     background-color: $white;
     min-height: 100vh;
     > .header {
       width: fit-content;
       border-bottom: 2px solid $mainBlue;
       text-align: center;
-      margin-bottom: 62px;
+      margin-bottom: 29px;
       h3 {
         @include txt-style($fontSize: '22px', $fontColor: $black);
         font-family: $middleFont;
@@ -119,31 +119,55 @@
       }
     }
     > .search-wrap {
-      @include flex-style();
-      select {
-        border: none;
-        padding: 14px 16px;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-        color: $gray01;
-        > option {
-          background-color: white;
-          border-radius: 8px;
+      @include flex-style($justifyVal: flex-end);
+      width: 980px;
+      margin-bottom: 36px;
+      .search {
+        border: 1px solid $gray05;
+        border-radius: 8px;
+        select {
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          border: none;
+          padding: 14px 16px;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          color: $gray02;
+          > option {
+            background-color: white;
+            border-radius: 8px;
+          }
+        }
+        input {
+          padding: 14px 16px;
+          color: $gray02;
+        }
+        button {
+          padding: 11.5px;
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+          > img {
+            width: 24px;
+            height: 24px;
+          }
         }
       }
-      input {
-        padding: 14px 16px;
-        color: $gray01;
-      }
-      button {
-        padding: 11.5px;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        > img {
-          width: 24px;
-          height: 24px;
-        }
-      }
+    }
+  }
+}
+
+.pagination {
+  margin-bottom: 100px;
+  li {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    color: $gray03;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    &.now {
+      color: $black;
     }
   }
 }
