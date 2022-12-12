@@ -87,9 +87,11 @@
   border-bottom-right-radius: 16px;
   padding: 40px 57px 34px 60px;
   max-height: 606px;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
 }
 .container .content-wrap .board-wrap > .body-wrap .writer,
-.container .content-wrap .board-wrap > .body-wrap .date {
+.container .content-wrap .board-wrap > .body-wrap .date,
+.container .content-wrap .board-wrap > .body-wrap .title {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -98,12 +100,14 @@
   height: 32px;
 }
 .container .content-wrap .board-wrap > .body-wrap .writer > span,
-.container .content-wrap .board-wrap > .body-wrap .date > span {
+.container .content-wrap .board-wrap > .body-wrap .date > span,
+.container .content-wrap .board-wrap > .body-wrap .title > span {
   margin-right: 13px;
   font-size: 14px;
 }
 .container .content-wrap .board-wrap > .body-wrap .writer > div,
-.container .content-wrap .board-wrap > .body-wrap .date > div {
+.container .content-wrap .board-wrap > .body-wrap .date > div,
+.container .content-wrap .board-wrap > .body-wrap .title > div {
   width: 805px;
   height: 32px;
   line-height: 32px;
@@ -116,6 +120,16 @@
 }
 .container .content-wrap .board-wrap > .body-wrap .date {
   margin-bottom: 32px;
+}
+.container .content-wrap .board-wrap > .body-wrap .title {
+  margin-bottom: 32px;
+}
+.container .content-wrap .board-wrap > .body-wrap .title > span {
+  margin-right: 25px;
+}
+.container .content-wrap .board-wrap > .body-wrap .title .title-input {
+  width: 95%;
+  background-color: #eeeefa;
 }
 .container .content-wrap .board-wrap > .body-wrap .line {
   width: 861px;

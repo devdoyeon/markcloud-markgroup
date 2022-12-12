@@ -70,9 +70,10 @@
         border-bottom-right-radius: 16px;
         padding: 40px 57px 34px 60px;
         max-height: 606px;
-
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
         .writer,
-        .date {
+        .date,
+        .title {
           @include flex-style($justifyVal: flex-start);
           height: 32px;
           > span {
@@ -93,6 +94,16 @@
         }
         .date {
           margin-bottom: 32px;
+        }
+        .title {
+          margin-bottom: 32px;
+          > span {
+            margin-right: 25px;
+          }
+          .title-input {
+            width: 95%;
+            background-color: $subBlue;
+          }
         }
         .line {
           width: 861px;
