@@ -38,7 +38,6 @@ const BoardRead = () => {
       return;
     }
   };
-
   return (
     <>
       <div className='header'>
