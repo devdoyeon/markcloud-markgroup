@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime
+from enum import Enum
 
 class NoticeIn(BaseModel):
     
@@ -16,13 +17,28 @@ class NoticeIn(BaseModel):
     class Config:
         orm_mode = True
         
-class NoticeOut(BaseModel):
+class NoticeFilter(str, Enum):
     
-    id:int
-    title:str
-    content:str
-    organ_code:str
-    created_id:str
+    title =  "title"
+    created_id = "created_id"
+    
+class NoticeOut(BaseModel):
 
+    id:str
+    created_at:datetime
+    created_id:str
+    title:str
+
+    class Config:
+        orm_mode = True
+
+class NoticeInfo(BaseModel):
+    
+    title:str
+    created_id:str
+    created_at:Optional[datetime]
+    updated_at:Optional[datetime]
+    content:str
+    
     class Config:
         orm_mode = True
