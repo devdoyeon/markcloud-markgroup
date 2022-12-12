@@ -1,24 +1,27 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import noneImg from 'image/noneList.svg';
 
 const ListWrap = ({ list }) => {
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
   // const renderList = () => {
-    // return list?.reduce((acc, { created_at, title, created_id}) => {
-    //   return (
-    //     <>
-    //       {acc}
-    //       <li>
-    //         <div className='row postInfo'>
-    //           <span className='date'>{created_at}</span>
-    //           <span className='alertNew'>NEW</span>
-    //         </div>
-    //         <div className='postTitle'>{title}</div>
-    //         <hr />
-    //         <div className='postWriter'>{created_id}</div>
-    //       </li>
-    //     </>
-    //   );
-    // }, <></>);
+  // return list?.reduce((acc, { created_at, title, created_id}) => {
+  //   return (
+  //     <>
+  //       {acc}
+  //       <li>
+  //         <div className='row postInfo'>
+  //           <span className='date'>{created_at}</span>
+  //           <span className='alertNew'>NEW</span>
+  //         </div>
+  //         <div className='postTitle'>{title}</div>
+  //         <hr />
+  //         <div className='postWriter'>{created_id}</div>
+  //       </li>
+  //     </>
+  //   );
+  // }, <></>);
   // };
 
   return (
@@ -52,7 +55,11 @@ const ListWrap = ({ list }) => {
         </ul>
       )}
       <div className='btn-wrap'>
-        <button className='commonBtn noticeBtn'>등록</button>
+        <button
+          className='commonBtn noticeBtn'
+          onClick={() => navigate(`${path}/write`)}>
+          등록
+        </button>
       </div>
     </div>
   );
