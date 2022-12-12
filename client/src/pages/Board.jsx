@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import Pagination from 'common/Pagination';
 
 const Board = () => {
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 15,
+  });
+
   return (
     <div className='container'>
       <SideMenu />
@@ -31,7 +37,7 @@ const Board = () => {
             <button className='commonBtn noticeBtn'>등록</button>
           </div>
         </div>
-          {/* <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo}/> */}
+        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>
   );
