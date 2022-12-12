@@ -32,7 +32,7 @@ const SideMenu = () => {
         <li
           className={path === '/board' && 'active'}
           onClick={() => navigate('/board')}>
-          게시판
+          사내게시판
         </li>
         <li
           className={path === '/personnel' && 'active'}
