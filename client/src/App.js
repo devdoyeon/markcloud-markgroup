@@ -7,6 +7,7 @@ import Board from './pages/Board';
 import BusinessManagement from './pages/BusinessManagement';
 import PersonnelManagement from './pages/PersonnelManagement';
 import Notice from './pages/Notice';
+import BoardRead from 'pages/BoardRead';
 
 function App() {
   return (
@@ -16,11 +17,10 @@ function App() {
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/weekly' element={<WeeklyReport />} />
         <Route path='/board' element={<Board />} />
-        {/* <Route path='/board/:id' element={<BoardRead />} /> */}
+        <Route path='/sample' element={<BoardRead />} />
         <Route path='/business' element={<BusinessManagement />} />
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
-        {/* <Route path='/notice/:id' element={<BoardRead />} /> */}
       </Routes>
     </div>
   );
