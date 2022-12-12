@@ -1,5 +1,5 @@
 import SideMenu from 'common/SideMenu';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Pagination from 'common/Pagination';
 import CommonHeader from 'common/CommonHeader';
 import ListWrap from 'common/ListWrap';
@@ -10,7 +10,6 @@ const Notice = () => {
     page: 1,
     totalPage: 15,
   });
-  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <div className='container'>

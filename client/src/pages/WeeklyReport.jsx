@@ -1,7 +1,10 @@
 import SideMenu from 'common/SideMenu';
 import noneImg from 'image/noneList.svg';
+import { useNavigate } from 'react-router-dom';
 
 const WeeklyReport = () => {
+  const navigate = useNavigate()
+
   return (
     <div className='container'>
       <SideMenu />
@@ -15,7 +18,7 @@ const WeeklyReport = () => {
           <span>등록된 게시글이 없습니다.</span>
         </div>
         <div className='btn-wrap'>
-          <button className='commonBtn noticeBtn'>등록</button>
+          <button className='commonBtn noticeBtn' onClick={() => navigate('/weekly/write')}>등록</button>
         </div>
       </div>
     </div>
