@@ -16,9 +16,11 @@ function App() {
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/weekly' element={<WeeklyReport />} />
         <Route path='/board' element={<Board />} />
+        {/* <Route path='/board/:id' element={<BoardRead />} /> */}
         <Route path='/business' element={<BusinessManagement />} />
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
+        {/* <Route path='/notice/:id' element={<BoardRead />} /> */}
       </Routes>
     </div>
   );
