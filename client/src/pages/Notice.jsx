@@ -6,14 +6,19 @@ import ListWrap from 'common/ListWrap';
 
 const Notice = () => {
   const [list, setList] = useState([]);
-  const [pageInfo, setPageInfo] = useState([]);
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 15,
+  });
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
-        <CommonHeader header='공지사항'/>
+        <CommonHeader header='공지사항' />
+        <ListWrap />
+        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>
   );
