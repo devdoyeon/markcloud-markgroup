@@ -59,7 +59,7 @@ const NewBoard = () => {
           </div>
         </div>
         <div className='btn-wrap'>
-          <button className='commonBtn'>수정</button>
+          <button className='commonBtn'>등록</button>
           <button className='commonBtn list'>목록</button>
         </div>
       </div>
