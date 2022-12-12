@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 class EditorComponent extends Component {
   constructor(props) {
     super(props);
-  } 
+  }
 
   modules = {
     toolbar: [
@@ -45,9 +45,9 @@ class EditorComponent extends Component {
   render() {
     const { value, onChange } = this.props;
     return (
-      <div style={{ width: '1000px', height: '650px' }}>
+      <div style={{ width: '100%', height: 'auto' }}>
         <ReactQuill
-          style={{ height: '600px' }}
+          style={{ height: '268px' }}
           theme='snow'
           modules={this.modules}
           formats={this.formats}
