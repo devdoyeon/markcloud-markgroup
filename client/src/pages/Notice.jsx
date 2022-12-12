@@ -8,7 +8,7 @@ const Notice = () => {
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 15,
+    totalPage: 60,
   });
 
   return (

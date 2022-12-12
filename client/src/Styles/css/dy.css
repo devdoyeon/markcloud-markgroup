@@ -1,0 +1,39 @@
+.status {
+  background-color: #eeeefa;
+  color: #858585;
+  width: 300px;
+  padding: 4px 16px;
+  border-radius: 8px;
+}
+.status .selectVal {
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.status .selectOptGroup {
+  position: absolute;
+  background-color: #eeeefa;
+  width: 300px;
+  transform: translateX(-16px) translateY(12px);
+  border-radius: 8px;
+}
+.status .selectOptGroup > .selectOpt {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 11px 16px;
+}
+.status .selectOptGroup > .selectOpt:hover {
+  color: #5850cc;
+}
+.status .selectOptGroup > .selectOpt.active {
+  color: #15171a;
+}
+.status .selectOptGroup > .selectOpt.active::before {
+  content: "";
+  border-left: 3px solid #5850cc;
+  margin-right: 16px;
+}
