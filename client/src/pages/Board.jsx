@@ -14,7 +14,7 @@ const Board = () => {
     <div className='container'>
       <SideMenu />
       <div className='content-wrap'>
-        <CommonHeader header={'자유게시판'} />
+        <CommonHeader header={'사내게시판'} />
         <ListWrap />
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
