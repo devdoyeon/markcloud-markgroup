@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BoardRead = ({ header, curdata }) => {
+const BoardRead = ({ header, curData }) => {
   return (
     <>
       <div className='header'>
@@ -8,19 +8,19 @@ const BoardRead = ({ header, curdata }) => {
       </div>
       <div className='board-wrap'>
         <div className='header'>
-          <h4>{curdata}</h4>
+          <h4>{curData}</h4>
         </div>
         <div className='body-wrap'>
           <div className='writer'>
             <span>작성자</span>
-            <div>{curdata}</div>
+            <div>{curData}</div>
           </div>
           <div className='date'>
             <span>작성일</span>
-            <div>{curdata}</div>
+            <div>{curData}</div>
           </div>
           <div className='line'></div>
-          <div className='content'>{curdata}</div>
+          <div className='content'>{curData}</div>
         </div>
       </div>
       <div className='btn-wrap'>
