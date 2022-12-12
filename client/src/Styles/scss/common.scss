@@ -123,25 +123,32 @@
       width: 980px;
       margin-bottom: 36px;
       .search {
+        @include flex-style();
+        height: 48px;
         border: 1px solid $gray05;
         border-radius: 8px;
         .selectBox {
+          transform: translateY(-2px);
           display: inline-block;
-          border-top-left-radius: 8px;
-          border-bottom-left-radius: 8px;
           border: none;
-          border-top-left-radius: 8px;
-          border-bottom-left-radius: 8px;
           color: $gray02;
           .selectVal {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
             @include flex-style();
             width: 83px;
+            height: 48px;
+            transition: all 0.2s;
             font-size: 14px;
+            &.on {
+              background-color: $subBlue;
+              transition: all 0.2s;
+            }
           }
         }
         .selectOptGroup {
           position: absolute;
-          transform: translateY(20px) translateX(0px);
+          transform: translateY(4px);
           background-color: gray;
           color: $gray01;
           border-radius: 4px;
@@ -154,18 +161,27 @@
             color: $gray01;
             background-color: white;
             cursor: pointer;
+            transition: all 0.1s;
             &:first-child {
               border-bottom: 1px solid $gray05;
             }
             &:hover {
+              transition: all 0.1s;
               background-color: $subBlue;
             }
           }
         }
         input {
-          padding: 14px 16px;
+          transform: translateY(-2px);
+          padding: 0 16px;
+          height: 48px;
           color: $gray02;
           font-size: 14px;
+          transition: all 0.2s;
+          &:focus {
+            background-color: $subBlue;
+            transition: all 0.2s;
+          }
         }
         button {
           padding: 11.5px;

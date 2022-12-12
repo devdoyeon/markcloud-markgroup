@@ -16,7 +16,7 @@ const CommonHeader = ({ header }) => {
         <div className='search'>
           <div className='selectBox'>
             <div
-              className='selectVal'
+              className={`selectVal ${select}`}
               onClick={() =>
                 select === 'on' ? setSelect('off') : setSelect('on')
               }>
