@@ -39,9 +39,6 @@
     width: 980px;
     background-color: $white;
     min-height: 100vh;
-    .quill {
-      height: 330px;
-    }
     > .header {
       width: fit-content;
       border-bottom: 2px solid $mainBlue;
@@ -115,7 +112,7 @@
           margin-bottom: 31px;
         }
         .content {
-          height: 661px;
+          height: 310px;
           overflow-y: auto;
         }
       }
@@ -215,7 +212,7 @@
 
 .pagination {
   margin-bottom: 100px;
-  li {
+  > li {
     width: 24px;
     height: 24px;
     font-size: 16px;
@@ -225,6 +222,9 @@
     text-align: center;
     &.now {
       color: $black;
+    }
+    &.block {
+      cursor: default;
     }
   }
 }
