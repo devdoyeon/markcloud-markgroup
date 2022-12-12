@@ -133,6 +133,7 @@
       @include flex-style($justifyVal: flex-end);
       width: 980px;
       margin-bottom: 36px;
+      user-select: none;
       .search {
         @include flex-style();
         height: 48px;
@@ -144,6 +145,7 @@
           border: none;
           color: $gray02;
           .selectVal {
+            cursor: pointer;
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
             @include flex-style();

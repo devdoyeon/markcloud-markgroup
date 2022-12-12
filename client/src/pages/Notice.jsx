@@ -13,9 +13,7 @@ const Notice = () => {
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
-        <CommonHeader header='공지 사항' />
-        <ListWrap />
-        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+        <CommonHeader header='공지사항'/>
       </div>
     </div>
   );

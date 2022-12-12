@@ -10,32 +10,32 @@ const SideMenu = () => {
     <div className='sidebar'>
       <ul>
         <li
-          className={path === '/business' && 'active'}
+          className={path.includes('/business') && 'active'}
           onClick={() => navigate('/business')}>
           업무관리
         </li>
         <li
-          className={path === '/project' && 'active'}
+          className={path.includes('/project') && 'active'}
           onClick={() => navigate('/project')}>
           프로젝트현황
         </li>
         <li
-          className={path === '/weekly' && 'active'}
+          className={path.includes('/weekly') && 'active'}
           onClick={() => navigate('/weekly')}>
           주간업무보고
         </li>
         <li
-          className={path === '/notice' && 'active'}
+          className={path.includes('/notice') && 'active'}
           onClick={() => navigate('/notice')}>
           공지사항
         </li>
         <li
-          className={path === '/board' && 'active'}
+          className={path.includes('/board') && 'active'}
           onClick={() => navigate('/board')}>
           사내게시판
         </li>
         <li
-          className={path === '/personnel' && 'active'}
+          className={path.includes('/personnel') && 'active'}
           onClick={() => navigate('/personnel')}>
           인사관리
         </li>
@@ -48,17 +48,17 @@ const SideMenu = () => {
           </a>
         </li>
       </ul>
-    <div className='column tools'>
-      <div className='help'>도움말</div>
-      <div className='logoutBtn'>로그아웃</div>
-      <div className='row'>
-        <div className='row user'>
-          <img src={sampleImg} alt='프로필 사진 샘플' />
-          <span>사용자</span>
+      <div className='column tools'>
+        <div className='help'>도움말</div>
+        <div className='logoutBtn'>로그아웃</div>
+        <div className='row'>
+          <div className='row user'>
+            <img src={sampleImg} alt='프로필 사진 샘플' />
+            <span>사용자</span>
+          </div>
+          <img src={rightArrow} alt='더보기' />
         </div>
-        <img src={rightArrow} alt='더보기' />
       </div>
-    </div>
     </div>
   );
 };
