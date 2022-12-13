@@ -219,21 +219,67 @@
       }
       .check-work-wrap {
         .check-tab-list {
+          @include flex-style($justifyVal: flex-start);
+          position: relative;
+          z-index: 1;
+          top: 1px;
           > div {
+            @include flex-style($justifyVal: space-between);
+            padding: 0 24px;
+            width: 206px;
+            height: 48px;
+            border: 1px solid $footerColor;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            margin-right: 8px;
+            border-bottom: 1px solid $gray05;
+            background: $gray05;
+            &.active {
+              color: $mainColor;
+              background-color: $white;
+              border-bottom: 1px solid $white;
+            }
+            .num {
+              display: none;
+              &.active {
+                display: block;
+                width: 40px;
+                height: 20px;
+                background-color: $mainColor;
+                @include flex-style();
+                color: $white;
+                border-radius: 16px;
+                line-height: 20px;
+              }
+            }
+            cursor: pointer;
+            span {
+              color: $gray01;
+              font-family: $regularFont;
+              font-size: 16px;
+              &.active {
+                color: $mainColor;
+              }
+            }
           }
           > .my-check {
           }
           > .request-check {
           }
           > .all-check {
+            margin-right: 0;
           }
         }
         .table {
+          position: relative;
+          z-index: 0;
           padding: 19px 16px 20px 16px;
           background-color: $white;
           border: 1px solid $footerColor;
-          box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+          // box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
           border-radius: 8px;
+          margin-bottom: 56px;
+          border-top-left-radius: 0;
           > div {
             background-color: $subBlue;
             border-radius: 8px;
