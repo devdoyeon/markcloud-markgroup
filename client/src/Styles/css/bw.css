@@ -235,3 +235,35 @@
 .container .content-wrap.business .work-wrap .work-btn-wrap .commonBtn.create {
   margin-left: auto;
 }
+.container .content-wrap.business .check-work-wrap .table {
+  padding: 19px 16px 20px 16px;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+}
+.container .content-wrap.business .check-work-wrap .table > div {
+  background-color: #eeeefa;
+  border-radius: 8px;
+}
+.container .content-wrap.business .check-work-wrap .table > div table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+.container .content-wrap.business .check-work-wrap .table > div table thead th {
+  padding: 10px 24px;
+  color: #585858;
+  font-size: 14px;
+}
+.container .content-wrap.business .check-work-wrap .table > div table tbody tr {
+  background-color: #fcfcfc;
+}
+.container .content-wrap.business .check-work-wrap .table > div table tbody tr:nth-child(2n) {
+  background-color: #f8f8fd;
+}
+.container .content-wrap.business .check-work-wrap .table > div table tbody tr td {
+  text-align: center;
+  padding: 18px 0;
+  font-size: 14px;
+}
