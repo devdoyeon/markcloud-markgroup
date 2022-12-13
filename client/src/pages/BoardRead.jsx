@@ -3,7 +3,12 @@ import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import { commonModalSetting } from 'js/commonUtils';
-import { getBoardDetail, deleteBoard, noticeInfo, noticeDelete } from 'js/groupwareApi';
+import {
+  getBoardDetail,
+  deleteBoard,
+  getNoticeInfo,
+  deleteNotice,
+} from 'js/groupwareApi';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -29,7 +34,7 @@ const BoardRead = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         setHeader('공지사항');
-        result = await noticeInfo(id);
+        result = await getNoticeInfo(id);
         break;
       case 'board':
         setHeader('사내게시판');
@@ -62,6 +67,7 @@ const BoardRead = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         setHeader('공지사항');
+        result = await deleteNotice(id);
         break;
       case 'board':
         setHeader('사내게시판');

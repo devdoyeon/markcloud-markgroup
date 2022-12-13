@@ -1,17 +1,14 @@
 import axios from 'axios';
 
 // 공지사항 :
-export const noticeList = async (type, value, currentPage) => {
-  let params = {
-    filter_type: type,
-    filter_val: value,
-    page: currentPage,
-    limit: '9',
-  };
+export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
-    return await axios.get(`/bw/notice/list`, params);
-  } catch {
-    return null;
+    return await axios.get(
+      // `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`
+      `/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`
+    );
+  } catch (error) {
+    return;
   }
 };
 export const noticeInfo = async id => {
@@ -21,28 +18,38 @@ export const noticeInfo = async id => {
     return null;
   }
 };
-// 쿼리에 해당하는 상표의 개수를 가져오는 API
-export const noticeCreate = async query => {
+
+export const createNotice = async ({ title, content }) => {
   try {
-    return await axios.post(`/bw/notice/create`, query);
-  } catch {
-    return null;
+    // return await axios.post(`/bw/notice/create`, {
+    return await axios.post(`/notice/create`, {
+      title: title,
+      content: content,
+    });
+  } catch (error) {
+    return;
   }
 };
 
-export const noticeUpdate = async query => {
+export const editNotice = async ({ title, content, id }) => {
   try {
-    return await axios.post(`/bw/notice/update`, query);
-  } catch {
-    return null;
+    // return await axios.post(`/bw/notice/update`, {
+    return await axios.post(`/notice/update`, {
+      title: title,
+      content: content,
+      created_id: id,
+    });
+  } catch (error) {
+    return;
   }
 };
 
-export const noticeDelete = async query => {
+export const deleteNotice = async id => {
   try {
-    return await axios.post(`/bw/notice/create`, query);
-  } catch {
-    return null;
+    // return await axios.post(`/bw/notice/create`, { notice_id: id });
+    return await axios.post(`/notice/create`, { notice_id: id });
+  } catch (error) {
+    return;
   }
 };
 
