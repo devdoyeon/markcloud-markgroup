@@ -3,11 +3,8 @@ export const numberWithCommas = x => {
 };
 
 export const emptyCheck = value => {
-  if (!value || value.trim() === '') {
-    return false;
-  } else {
-    return true;
-  }
+  if (!value?.length || value?.trim() === '') return false;
+  else return true;
 };
 
 export const changeState = (setState, col, val) => {
@@ -16,4 +13,8 @@ export const changeState = (setState, col, val) => {
     clone[col] = val;
     return clone;
   });
+};
+
+export const enterFn = (e, okFn) => {
+  if (e.key === 'Enter') okFn();
 };

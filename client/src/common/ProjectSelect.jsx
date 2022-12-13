@@ -22,7 +22,9 @@ const ProjectSelect = () => {
 
   return (
     <div className='selectBox status'>
-      <div className='selectVal' onClick={() => setSelect('on')}>
+      <div
+        className='selectVal'
+        onClick={() => (select === 'on' ? setSelect('off') : setSelect('on'))}>
         {returnStatus()}
         <img src={selectArrow} alt='선택 아이콘' />
       </div>
