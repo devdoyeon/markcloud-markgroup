@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { getBoardDetail, createBoard, editBoard } from 'js/groupwareApi';
+import {
+  getBoardDetail,
+  createBoard,
+  editBoard,
+  editNotice,
+  getNoticeInfo,
+  createNotice,
+} from 'js/groupwareApi';
 import { changeState } from 'js/commonUtils';
 
 const NewBoard = () => {
@@ -34,6 +41,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
+        result = await getNoticeInfo(id);
         return;
       case 'board':
         result = await getBoardDetail(id);
@@ -53,6 +61,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
+        result = await createNotice(postInfo);
         return;
       case 'board':
         result = await createBoard(postInfo);
@@ -73,6 +82,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
+        result = await editNotice(postInfo);
         return;
       case 'board':
         result = await editBoard(postInfo);

@@ -3,49 +3,58 @@ import { useState, useEffect } from 'react';
 import Pagination from 'common/Pagination';
 import CommonHeader from 'common/CommonHeader';
 import ListWrap from 'common/ListWrap';
-import { noticeList } from 'js/groupwareApi';
-import useInput from 'Hooks/useInput';
+import { getNoticeList } from 'js/groupwareApi';
 
 const Notice = () => {
   const [list, setList] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [searchText, setSearchText] = useState('');
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 60,
+    limit: 9,
   });
+  const [filter, setFilter] = useState('');
+  const [searchText, setSearchText] = useState('');
   const status = !!list?.length;
+  let prevent = false;
 
-  const noticeApi = async (filter, filter_val, pageInfo) => {
-    const result = await noticeList(filter, filter_val, pageInfo);
-    const { data, meta } = result?.data;
-    setList(data);
-    setPageInfo(prev => {
-      const clone = { ...prev };
-      clone.page = meta.page;
-      clone.totalPage = meta.totalPage;
-      return clone;
-    });
-    return result;
+  const getNoticeApi = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getNoticeList(pageInfo, filter, searchText);
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setList(data);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
+  };
+
+  const commonHeaderState = {
+    filter,
+    setFilter,
+    searchText,
+    setSearchText,
+    status,
   };
 
   useEffect(() => {
-    noticeApi(filter, searchText, pageInfo.page);
-  }, []);
+    getNoticeApi();
+  }, [pageInfo.page]);
 
   useEffect(() => {}, [searchText, filter]);
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
-        <CommonHeader
-          filter={filter}
-          setFilter={setFilter}
-          searchText={searchText}
-          setSearchText={setSearchText}
-          status={status}
-        />
-        <ListWrap />
+        <CommonHeader {...commonHeaderState} okFn={getNoticeApi} />
+        <ListWrap list={list} />
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>

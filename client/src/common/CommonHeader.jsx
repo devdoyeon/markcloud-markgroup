@@ -52,7 +52,7 @@ const CommonHeader = ({
                     <div
                       className='selectOpt'
                       onClick={() => {
-                        setFilter('writer');
+                        setFilter('created_id');
                         setSelect('off');
                       }}>
                       작성자

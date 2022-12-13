@@ -12,7 +12,7 @@ const Board = () => {
     totalPage: 9,
     limit: 9,
   });
-  const [filter, setFilter] = useState('writer');
+  const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   const status = !!list?.length;
   let prevent = false;
