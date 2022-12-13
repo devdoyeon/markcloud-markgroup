@@ -100,7 +100,7 @@ const NewProject = () => {
               </div>
             </div>
             <div className='row'>
-              <span>참여인원</span>
+              <span>참여 인원</span>
               <div className='people column'>
                 <div className={`selectBox status ${personSelect}`}>
                   <div

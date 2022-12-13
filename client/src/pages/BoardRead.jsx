@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { getBoardDetail, deleteBoard } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { commonModalSetting } from 'js/commonUtils';
+import { getBoardDetail, deleteBoard, noticeInfo, noticeDelete } from 'js/groupwareApi';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -29,6 +29,7 @@ const BoardRead = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         setHeader('공지사항');
+        result = await noticeInfo(id);
         break;
       case 'board':
         setHeader('사내게시판');

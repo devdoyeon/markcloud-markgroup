@@ -45,7 +45,7 @@ const Notice = () => {
           setSearchText={setSearchText}
           status={status}
         />
-        <ListWrap />
+        <ListWrap list={list}/>
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>

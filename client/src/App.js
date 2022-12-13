@@ -28,7 +28,7 @@ function App() {
         <Route path='/project/:id' element={<BoardRead />} />
         <Route path='/weekly/:id' element={<BoardRead />} />
         <Route path='/board/:id' element={<BoardRead />} />
-        <Route path='/notice/:id' element={<Board />} />
+        <Route path='/notice/:id' element={<BoardRead />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewProject />} />
         <Route path='/weekly/write' element={<NewBoard />} />

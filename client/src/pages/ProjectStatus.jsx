@@ -131,7 +131,7 @@ const ProjectStatus = () => {
                     <th>프로젝트 명</th>
                     <th>시작일</th>
                     <th>종료일</th>
-                    <th>참여인원</th>
+                    <th>참여 인원</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -14,9 +14,9 @@ export const noticeList = async (type, value, currentPage) => {
     return null;
   }
 };
-export const noticeInfo = async currentPage => {
+export const noticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/read?page=${currentPage}&limit=9`);
+    return await axios.get(`/bw/notice/info?notice_id=${id}`);
   } catch {
     return null;
   }
