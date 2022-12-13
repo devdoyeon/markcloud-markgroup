@@ -47,7 +47,7 @@
       text-align: center;
       margin-bottom: 29px;
       h3 {
-        @include txt-style($fontSize: '22px', $fontColor: $black);
+        @include txt-style($fontSize: 22px, $fontColor: $black);
         font-family: $middleFont;
         padding-bottom: 8px;
       }
@@ -307,7 +307,7 @@
     }
   }
   ul {
-    @include flex-style($alignVal: 'flex-start', $justifyVal: 'flex-start');
+    @include flex-style($alignVal: flex-start, $justifyVal: flex-start);
     width: $width02;
     height: 586px;
     li {

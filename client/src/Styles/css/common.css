@@ -61,7 +61,7 @@
   margin-bottom: 29px;
 }
 .container .content-wrap > .header h3 {
-  font-size: "22px";
+  font-size: 22px;
   color: #15171a;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   padding-bottom: 8px;
@@ -351,8 +351,8 @@
 .list-wrap ul {
   display: flex;
   flex-direction: row;
-  align-items: "flex-start";
-  justify-content: "flex-start";
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 980px;
   height: 586px;
