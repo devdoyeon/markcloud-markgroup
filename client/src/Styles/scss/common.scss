@@ -1,6 +1,4 @@
 @import './_style';
-@import './bw.scss';
-@import './dy.scss';
 
 .row {
   @include flex-style();
@@ -8,6 +6,10 @@
 
 .column {
   @include flex-style(column);
+}
+
+.quill {
+  height: 260px;
 }
 
 .commonBtn {

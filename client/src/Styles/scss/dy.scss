@@ -1,9 +1,10 @@
-@import 'style';
+@import './style';
 // 프로젝트 현황, 주간업무보고, 게시판
 
 // 프로젝트 현황 select
 .status {
-  background-color: $subBlue;
+  background-color: white;
+  border: 1px solid $footerColor;
   color: $gray02;
   width: 300px;
   padding: 4px 16px;
@@ -15,7 +16,8 @@
   }
   .selectOptGroup {
     position: absolute;
-    background-color: $subBlue;
+    background-color: white;
+    border: 1px solid $footerColor;
     width: 300px;
     transform: translateX(-16px) translateY(12px);
     border-radius: 8px;

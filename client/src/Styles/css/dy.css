@@ -1,5 +1,6 @@
 .status {
-  background-color: #eeeefa;
+  background-color: white;
+  border: 1px solid #eeeeee;
   color: #858585;
   width: 300px;
   padding: 4px 16px;
@@ -16,7 +17,8 @@
 }
 .status .selectOptGroup {
   position: absolute;
-  background-color: #eeeefa;
+  background-color: white;
+  border: 1px solid #eeeeee;
   width: 300px;
   transform: translateX(-16px) translateY(12px);
   border-radius: 8px;
