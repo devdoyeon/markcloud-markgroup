@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { getBoardDetail } from 'js/groupwareApi';
+import { getBoardDetail, deleteBoard } from 'js/groupwareApi';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -18,15 +18,22 @@ const BoardRead = () => {
       prevent = true;
     }, 200);
     let result;
-    if (path.includes('/notice')) {
-      setHeader('공지 사항');
-      // result = getNoticeDetail(id);
-    } else if (path.includes('/weekly')) {
-      setHeader('주간 업무 보고');
-      // result = getWeeklyDetail(id);
-    } else if (path.includes('/board')) {
-      setHeader('사내게시판');
-      result = await getBoardDetail(id);
+    switch (path.split('/')[1]) {
+      case 'notice':
+        setHeader('공지사항');
+        break;
+      case 'board':
+        setHeader('사내게시판');
+        result = await getBoardDetail(id);
+        break;
+      case 'weekly':
+        setHeader('주간 업무 보고');
+        break;
+      case 'project':
+        setHeader('프로젝트 현황');
+        break;
+      default:
+        result = '';
     }
     if (typeof result === 'object') {
       setInfo(result?.data);
@@ -38,6 +45,37 @@ const BoardRead = () => {
     } else {
       //에러핸들링
       return;
+    }
+  };
+
+  const deletePost = async () => {
+    let result;
+    switch (path.split('/')[1]) {
+      case 'notice':
+        setHeader('공지사항');
+        break;
+      case 'board':
+        setHeader('사내게시판');
+        result = await deleteBoard(id);
+        break;
+      case 'weekly':
+        setHeader('주간 업무 보고');
+        break;
+      case 'project':
+        setHeader('프로젝트 현황');
+        break;
+      default:
+        result = '';
+    }
+    if (typeof result === 'object') {
+      if (
+        !window.confirm(
+          '정말 삭제하시겠습니까?\n삭제된 게시글은 복구할 수 없습니다.'
+        )
+      )
+        return;
+      navigate(`/${path.split('/')[1]}`);
+      return alert('삭제가 완료되었습니다.');
     }
   };
 
@@ -70,6 +108,9 @@ const BoardRead = () => {
           </div>
         </div>
         <div className='btn-wrap'>
+          <button className='commonBtn delete' onClick={deletePost}>
+            삭제
+          </button>
           <button
             className='commonBtn'
             onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>

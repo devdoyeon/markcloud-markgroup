@@ -154,8 +154,15 @@
   justify-content: flex-end;
   flex-wrap: wrap;
 }
+.container .content-wrap .btn-wrap > button {
+  margin-left: 24px;
+}
 .container .content-wrap .btn-wrap > button:first-child {
-  margin-right: 24px;
+  margin-left: 0;
+  background-color: #858585;
+}
+.container .content-wrap .btn-wrap > button.applyBtn {
+  background-color: #5850cc;
 }
 .container .content-wrap .btn-wrap > button.list {
   background-color: #858585;
@@ -236,18 +243,16 @@
   border: 1px solid #f5f5f5;
   transition: all 0.2s;
   border-radius: 8px;
-  margin-right: 4px;
 }
 .container .content-wrap > .search-wrap .search input:focus {
   border: 1px solid #5850cc;
   transition: all 0.2s;
 }
 .container .content-wrap > .search-wrap .search button {
-  transform: translateY(-2px);
+  position: absolute;
+  transform: translateX(140px);
   width: 42px;
   height: 42px;
-  border: 1px solid #f5f5f5;
-  border-radius: 8px;
 }
 .container .content-wrap > .search-wrap .search button > img {
   width: 24px;

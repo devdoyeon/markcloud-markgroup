@@ -63,9 +63,13 @@ export const noticeDelete = async query => {
 
 // -------------------------------------------------------------------------------
 
-export const getBoardList = async (page, limit = 9) => {
+export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
-    return await axios.get(`/dy/board/list?page=${page}&limit=${limit}`);
+    return await axios.get(
+      `/dy/board/list?page=${page}&limit=${limit}${
+        value.length ? `&filter_type=${type}&filter_val=${value}` : ''
+      }`
+    );
   } catch (error) {
     return;
   }
@@ -86,6 +90,27 @@ export const createBoard = async ({ title, content }) => {
   };
   try {
     return await axios.post(`/dy/board/create`, query);
+  } catch (error) {
+    return;
+  }
+};
+
+export const editBoard = async ({ title, content, id }) => {
+  const query = {
+    title: title,
+    content: content,
+    post_id: Number(id),
+  };
+  try {
+    return await axios.post(`/dy/board/update`, query);
+  } catch (error) {
+    return;
+  }
+};
+
+export const deleteBoard = async id => {
+  try {
+    return await axios.post(`/dy/board/delete`, { post_id: id });
   } catch (error) {
     return;
   }

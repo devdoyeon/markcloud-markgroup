@@ -23,17 +23,17 @@ function App() {
         <Route path='/business' element={<BusinessManagement />} />
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
-        {/* => 주간업무보고, 공지사항, 게시판 상세 보기 Route */}
+        {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
         <Route path='/project/:id' element={<BoardRead />} />
         <Route path='/weekly/:id' element={<BoardRead />} />
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<Board />} />
-        {/* => 주간업무보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
+        {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewBoard />} />
         <Route path='/weekly/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />
-        {/* => 주간업무보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
+        {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
         <Route path='/project/write/:id' element={<NewBoard />} />
         <Route path='/weekly/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />

@@ -14,6 +14,7 @@ const Notice = () => {
     page: 1,
     totalPage: 60,
   });
+  const status = !!list?.length;
 
   const noticeApi = async (filter, filter_val, pageInfo) => {
     const result = await noticeList(filter, filter_val, pageInfo);
@@ -42,6 +43,7 @@ const Notice = () => {
           setFilter={setFilter}
           searchText={searchText}
           setSearchText={setSearchText}
+          status={status}
         />
         <ListWrap />
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />

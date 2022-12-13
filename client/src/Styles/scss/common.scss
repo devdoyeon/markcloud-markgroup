@@ -124,8 +124,13 @@
       width: 978px;
       @include flex-style($justifyVal: flex-end);
       > button {
+        margin-left: 24px;
         &:first-child {
-          margin-right: 24px;
+          margin-left: 0;
+          background-color: $gray02;
+        }
+        &.applyBtn {
+          background-color: $mainColor;
         }
         &.list {
           background-color: $gray02;
@@ -194,18 +199,17 @@
           border: 1px solid $gray05;
           transition: all 0.2s;
           border-radius: 8px;
-          margin-right: 4px;
+          // margin-right: 4px;
           &:focus {
             border: 1px solid $mainColor;
             transition: all 0.2s;
           }
         }
         button {
-          transform: translateY(-2px);
+          position: absolute;
+          transform: translateX(140px);
           width: 42px;
           height: 42px;
-          border: 1px solid $gray05;
-          border-radius: 8px;
           > img {
             width: 24px;
             height: 24px;

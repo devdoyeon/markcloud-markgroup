@@ -6,7 +6,7 @@ const BusinessManagement = () => {
       <SideMenu />
       <div className='content-wrap business'>
         <div className='header'>
-          <h3>업무관리</h3>
+          <h3>업무 관리</h3>
         </div>
         <div className='work-wrap'>
           <div className='work-situation'>

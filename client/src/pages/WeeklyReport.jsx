@@ -19,7 +19,7 @@ const WeeklyReport = () => {
           </div>
           <div className='btn-wrap'>
             <button
-              className='commonBtn noticeBtn'
+              className='commonBtn applyBtn'
               onClick={() => navigate('/weekly/write')}>
               등록
             </button>

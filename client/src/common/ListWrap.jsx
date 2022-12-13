@@ -51,7 +51,7 @@ const ListWrap = ({ list }) => {
       )}
       <div className='btn-wrap'>
         <button
-          className='commonBtn noticeBtn'
+          className='commonBtn applyBtn'
           onClick={() => navigate(`${path}/write`)}>
           등록
         </button>

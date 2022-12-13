@@ -9,13 +9,14 @@ const Board = () => {
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 15,
+    totalPage: 9,
+    limit: 9,
   });
-  const [filter, setFilter] = useState('created_id')
-  const [searchText, setSearchText] = useState('')
+  const [filter, setFilter] = useState('writer');
+  const [searchText, setSearchText] = useState('');
+  const status = !!list?.length
   let prevent = false;
 
-  const commonHeaderState = { filter, setFilter, searchText, setSearchText }
 
   const getBoard = async () => {
     if (prevent) return;
@@ -23,7 +24,7 @@ const Board = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getBoardList(pageInfo.page);
+    const result = await getBoardList(pageInfo, filter, searchText);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -36,16 +37,18 @@ const Board = () => {
     }
   };
 
+  const commonHeaderState = { filter, setFilter, searchText, setSearchText, status };
+
   useEffect(() => {
-    getBoard()
-  }, [pageInfo.page])
+    getBoard();
+  }, [pageInfo.page]);
 
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap'>
-        <CommonHeader {...commonHeaderState}/>
-        <ListWrap list={list}/>
+        <CommonHeader {...commonHeaderState} okFn={getBoard} />
+        <ListWrap list={list} />
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>

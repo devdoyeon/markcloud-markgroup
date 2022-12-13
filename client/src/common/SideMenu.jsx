@@ -12,17 +12,17 @@ const SideMenu = () => {
         <li
           className={path.includes('/business') && 'active'}
           onClick={() => navigate('/business')}>
-          업무관리
+          업무 관리
         </li>
         <li
           className={path.includes('/project') && 'active'}
           onClick={() => navigate('/project')}>
-          프로젝트현황
+          프로젝트 현황
         </li>
         <li
           className={path.includes('/weekly') && 'active'}
           onClick={() => navigate('/weekly')}>
-          주간업무보고
+          주간 업무 보고
         </li>
         <li
           className={path.includes('/notice') && 'active'}
@@ -37,7 +37,7 @@ const SideMenu = () => {
         <li
           className={path.includes('/personnel') && 'active'}
           onClick={() => navigate('/personnel')}>
-          인사관리
+          인사 관리
         </li>
         <li>
           <a

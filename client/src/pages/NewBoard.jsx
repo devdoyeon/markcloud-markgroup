@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { getBoardDetail, createBoard } from 'js/groupwareApi';
+import { getBoardDetail, createBoard, editBoard } from 'js/groupwareApi';
 import { changeState } from 'js/commonUtils';
 
 const NewBoard = () => {
@@ -22,7 +22,7 @@ const NewBoard = () => {
       case 'weekly':
         return '주간 업무 보고';
       case 'board':
-        return '사내 게시판';
+        return '사내게시판';
       case 'notice':
         return '공지사항';
       default:
@@ -44,8 +44,9 @@ const NewBoard = () => {
         return;
       default:
     }
-    if (typeof result === 'object') setPostInfo(result?.data);
-    else return; // 에러 처리
+    if (typeof result === 'object') {
+      setPostInfo(result?.data);
+    } else return; // 에러 처리
   };
 
   const createNew = async () => {
@@ -63,11 +64,30 @@ const NewBoard = () => {
       default:
     }
     if (typeof result === 'object') {
-      navigate(`/${path.split('/')[1]}`)
-      return alert('작성글이 등록되었습니다.')
+      navigate(`/${path.split('/')[1]}`);
+      return alert('작성글이 등록되었습니다.');
+    } else return; // 에러 처리
+  };
+
+  const editPost = async () => {
+    let result;
+    switch (path.split('/')[1]) {
+      case 'notice':
+        return;
+      case 'board':
+        result = await editBoard(postInfo);
+        break;
+      case 'weekly':
+        return;
+      case 'project':
+        return;
+      default:
     }
-    else return; // 에러 처리
-  }
+    if (typeof result === 'object') {
+      navigate(`/${path.split('/')[1]}/${postInfo?.id}`);
+      return alert('수정이 완료되었습니다.');
+    } else return; // 에러 처리
+  };
 
   useEffect(() => {
     if (id?.length) getOriginDetail();
@@ -94,7 +114,9 @@ const NewBoard = () => {
                   placeholder='제목을 입력해주세요.'
                   className='title-input'
                   value={postInfo.title}
-                  onChange={e => changeState(setPostInfo, 'title', e.target.value)}
+                  onChange={e =>
+                    changeState(setPostInfo, 'title', e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -108,13 +130,19 @@ const NewBoard = () => {
           </div>
         </div>
         <div className='btn-wrap'>
-          <button className='commonBtn' onClick={createNew}>등록</button>
+          <button
+            className='commonBtn applyBtn'
+            onClick={id?.length ? editPost : createNew}>
+            등록
+          </button>
           <button
             className='commonBtn list'
             onClick={() => {
               if (
                 !window.confirm(
-                  '수정을 취소하시겠습니까?\n수정이 취소된 작성글은 복구할 수 없습니다.'
+                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?\n${
+                    id?.length ? '수정' : '작성'
+                  }이 취소된 글은 복구할 수 없습니다.`
                 )
               )
                 return;
