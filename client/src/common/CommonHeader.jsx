@@ -3,8 +3,13 @@ import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
 
 // 자주 쓰이는 헤더
-const CommonHeader = ({ header }) => {
-  const [filter, setFilter] = useState('title');
+const CommonHeader = ({
+  header,
+  filter,
+  setFilter,
+  setSearchText,
+  searchText,
+}) => {
   const [select, setSelect] = useState('off');
 
   return (
@@ -20,7 +25,11 @@ const CommonHeader = ({ header }) => {
               onClick={() =>
                 select === 'on' ? setSelect('off') : setSelect('on')
               }>
-              {filter === 'title' ? '제목' : '작성자'}
+              {filter === 'title'
+                ? '제목'
+                : filter === 'created_id'
+                ? '작성자'
+                : '제목'}
               <img src={selectArrow} alt='선택 아이콘' />
             </div>
             {select === 'on' && (
@@ -36,7 +45,7 @@ const CommonHeader = ({ header }) => {
                 <div
                   className='selectOpt'
                   onClick={() => {
-                    setFilter('writer');
+                    setFilter('created_id');
                     setSelect('off');
                   }}>
                   작성자
@@ -44,7 +53,11 @@ const CommonHeader = ({ header }) => {
               </div>
             )}
           </div>
-          <input type='text' placeholder='입력'/>
+          <input
+            type='text'
+            placeholder='입력'
+            onChange={e => setSearchText(e.target.value)}
+          />
           <button>
             <img src={searchIcon} alt='검색 아이콘' />
           </button>

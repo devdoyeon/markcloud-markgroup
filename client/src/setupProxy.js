@@ -12,3 +12,13 @@ module.exports = function (app) {
     })
   );
 };
+
+// module.exports = function (app) {
+//   app.use(
+//     '/notice',
+//     createProxyMiddleware({
+//       target: 'http://192.168.0.38:8000',
+//       changeOrigin: true,
+//     })
+//   );
+// };
