@@ -1,6 +1,15 @@
+import { useState } from 'react';
 import SideMenu from 'common/SideMenu';
+import Pagination from 'common/Pagination';
 
 const BusinessManagement = () => {
+  const [num, setNum] = useState(0);
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 15,
+    limit: 9,
+  });
+
   return (
     <div className='container'>
       <SideMenu />
@@ -88,9 +97,26 @@ const BusinessManagement = () => {
 
         <div className='check-work-wrap'>
           <div className='check-tab-list'>
-            <div className='my-check'></div>
-            <div className='request-check'></div>
-            <div className='all-check'></div>
+            <div
+              className={num === 0 ? 'my-check active' : 'my-check'}
+              onClick={() => setNum(0)}>
+              <span className={num === 0 ? 'active' : ''}>나의 업무현황</span>
+              <div className={num === 0 ? 'num active' : 'num'}>0</div>
+            </div>
+            <div
+              className={num === 1 ? 'request-check active' : 'request-check'}
+              onClick={() => setNum(1)}>
+              <span className={num === 1 ? 'active' : ''}>
+                내가 요청한 업무
+              </span>
+              <div className={num === 1 ? 'num active' : 'num'}>0</div>
+            </div>
+            <div
+              className={num === 2 ? 'all-check active' : 'all-check'}
+              onClick={() => setNum(2)}>
+              <span className={num === 2 ? 'active' : ''}>전체 업무현황</span>
+              <div className={num === 2 ? 'num active' : 'num'}>0</div>
+            </div>
           </div>
           <div className='table'>
             <div>
@@ -160,6 +186,7 @@ const BusinessManagement = () => {
               </table>
             </div>
           </div>
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
       </div>
     </div>
