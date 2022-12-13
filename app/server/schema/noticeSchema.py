@@ -22,7 +22,7 @@ class NoticeFilter(str, Enum):
     
 class NoticeOut(BaseModel):
 
-    id:str
+    id:int
     created_at:date
     created_id:str
     title:str

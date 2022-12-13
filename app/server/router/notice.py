@@ -28,8 +28,7 @@ def read_notice_list(
     
     offset = (page - 1) * limit
     
-    notice_list = get_notice_list(db, offset, limit, user_id, filter_type, filter_val)
-    total_count = len(notice_list)
+    total_count, notice_list = get_notice_list(db, offset, limit, user_id, filter_type, filter_val)
     total_page = total_count // limit 
     
     if total_count % limit != 0:
@@ -65,14 +64,17 @@ def create_notice(
 @router_notice.post('/update') # 관리자와 작성자 아이디를 받아와야함 created_id 와 같을 경우 삭제 가능하도록
 def update_notice(
     inbound_data: NoticeIn,
+    notice_id:int,
+    user_id:str = 'songmoana',
     db: Session = Depends(get_db)
 ):
-    return change_notice(db,inbound_data)
+    return change_notice(db,inbound_data,notice_id,user_id)
 
 # 공지 삭제
 @router_notice.post('/delete') # 관리자와 작성자 아이디를 받아와야함 created_id 와 같을 경우 삭제 가능하도록
 def delete_notice(
-    notice_id,
+    notice_id:int,
+    user_id:str = 'songmoana',
     db: Session = Depends(get_db)
 ):
-    return remove_notice(db,notice_id)
+    return remove_notice(db,notice_id,user_id)
