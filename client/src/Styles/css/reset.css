@@ -30,7 +30,10 @@ ol {
   list-style: none;
 }
 
-h1,
+h1 {
+  font-size: 28px;
+}
+
 h2,
 h3,
 h4,
