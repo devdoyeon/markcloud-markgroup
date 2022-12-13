@@ -12,7 +12,22 @@ export const h2 = {
 };
 
 // 공지사항 :
-export const noticeRead = async currentPage => {
+export const noticeList = async (type, value, currentPage) => {
+  let params = {
+    filter_type: type,
+    filter_val: value,
+    page: currentPage,
+    limit: '9',
+  };
+  try {
+    return await axios.get(`/bw/notice/list`, params, {
+      header: h1,
+    });
+  } catch {
+    return null;
+  }
+};
+export const noticeInfo = async currentPage => {
   try {
     return await axios.get(`/bw/notice/read?page=${currentPage}&limit=9`, {
       header: h1,
