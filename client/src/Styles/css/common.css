@@ -16,7 +16,7 @@
 }
 
 .quill {
-  height: 260px;
+  height: 380px;
 }
 
 .commonBtn {
@@ -69,9 +69,7 @@
 .container .content-wrap .board-wrap {
   width: 978px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
-  min-height: 477px;
-  max-height: 606px;
-  height: auto;
+  height: 663px;
   margin-bottom: 56px;
 }
 .container .content-wrap .board-wrap > .header {
@@ -90,7 +88,7 @@
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   padding: 40px 57px 34px 60px;
-  max-height: 606px;
+  height: 663px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
 }
 .container .content-wrap .board-wrap > .body-wrap .writer,
@@ -142,7 +140,7 @@
   margin-bottom: 31px;
 }
 .container .content-wrap .board-wrap > .body-wrap .content {
-  height: 310px;
+  height: 430px;
   overflow-y: auto;
 }
 .container .content-wrap .btn-wrap {
