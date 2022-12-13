@@ -30,6 +30,11 @@ const BoardRead = () => {
     }
     if (typeof result === 'object') {
       setInfo(result?.data);
+      document.querySelector('.content').innerHTML =
+        new DOMParser().parseFromString(
+          result?.data?.content,
+          'text/html'
+        ).body.innerHTML;
     } else {
       //에러핸들링
       return;
@@ -61,7 +66,7 @@ const BoardRead = () => {
               <div>{info?.created_at?.replace('T', ' ')}</div>
             </div>
             <div className='line'></div>
-            <div className='content'>{info.content}</div>
+            <div className='content'></div>
           </div>
         </div>
         <div className='btn-wrap'>

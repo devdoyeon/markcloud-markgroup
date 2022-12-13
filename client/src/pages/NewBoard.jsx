@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { getBoardDetail } from 'js/groupwareApi';
+import { getBoardDetail, createBoard } from 'js/groupwareApi';
+import { changeState } from 'js/commonUtils';
 
 const NewBoard = () => {
   const [postInfo, setPostInfo] = useState({
@@ -47,6 +48,27 @@ const NewBoard = () => {
     else return; // 에러 처리
   };
 
+  const createNew = async () => {
+    let result;
+    switch (path.split('/')[1]) {
+      case 'notice':
+        return;
+      case 'board':
+        result = await createBoard(postInfo);
+        break;
+      case 'weekly':
+        return;
+      case 'project':
+        return;
+      default:
+    }
+    if (typeof result === 'object') {
+      navigate(`/${path.split('/')[1]}`)
+      return alert('작성글이 등록되었습니다.')
+    }
+    else return; // 에러 처리
+  }
+
   useEffect(() => {
     if (id?.length) getOriginDetail();
   }, []);
@@ -72,6 +94,7 @@ const NewBoard = () => {
                   placeholder='제목을 입력해주세요.'
                   className='title-input'
                   value={postInfo.title}
+                  onChange={e => changeState(setPostInfo, 'title', e.target.value)}
                 />
               </div>
             </div>
@@ -85,7 +108,7 @@ const NewBoard = () => {
           </div>
         </div>
         <div className='btn-wrap'>
-          <button className='commonBtn'>등록</button>
+          <button className='commonBtn' onClick={createNew}>등록</button>
           <button
             className='commonBtn list'
             onClick={() => {

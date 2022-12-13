@@ -51,13 +51,13 @@ class EditorComponent extends Component {
           modules={this.modules}
           formats={this.formats}
           value={content}
-          onChange={(c, d, s, editor) => {
+          onChange={(c, d, s, editor) =>
             setContent(prev => {
-              const clone = {...prev};
-              clone.content = editor.getHTML()
+              const clone = { ...prev };
+              clone.content = editor.getHTML();
               return clone;
             })
-          }}
+          }
         />
       </div>
     );

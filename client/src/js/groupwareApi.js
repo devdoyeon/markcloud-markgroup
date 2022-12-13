@@ -78,3 +78,15 @@ export const getBoardDetail = async id => {
     return;
   }
 };
+
+export const createBoard = async ({ title, content }) => {
+  const query = {
+    title: title,
+    content: content,
+  };
+  try {
+    return await axios.post(`/dy/board/create`, query);
+  } catch (error) {
+    return;
+  }
+};
