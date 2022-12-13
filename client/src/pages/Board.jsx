@@ -14,9 +14,8 @@ const Board = () => {
   });
   const [filter, setFilter] = useState('writer');
   const [searchText, setSearchText] = useState('');
-  const status = !!list?.length
+  const status = !!list?.length;
   let prevent = false;
-
 
   const getBoard = async () => {
     if (prevent) return;
@@ -37,7 +36,13 @@ const Board = () => {
     }
   };
 
-  const commonHeaderState = { filter, setFilter, searchText, setSearchText, status };
+  const commonHeaderState = {
+    filter,
+    setFilter,
+    searchText,
+    setSearchText,
+    status,
+  };
 
   useEffect(() => {
     getBoard();

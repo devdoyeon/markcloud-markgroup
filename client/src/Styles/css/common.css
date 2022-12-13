@@ -20,17 +20,17 @@
 }
 
 .commonBtn {
-  background-color: #5850cc;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 23.17px;
-  padding: 12px 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #5850cc;
+  border-radius: 8px;
+  line-height: 23.17px;
+  padding: 12px 32px;
 }
 
 .container {
@@ -61,7 +61,7 @@
   margin-bottom: 29px;
 }
 .container .content-wrap > .header h3 {
-  font-size: "22px";
+  font-size: 22px;
   color: #15171a;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   padding-bottom: 8px;
@@ -195,12 +195,12 @@
   color: #858585;
 }
 .container .content-wrap > .search-wrap .search .selectBox .selectVal {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  cursor: pointer;
   padding: 0 13px;
   width: 100px;
   height: 42px;
@@ -220,11 +220,11 @@
   border-radius: 8px;
 }
 .container .content-wrap > .search-wrap .search .selectOptGroup > .selectOpt {
+  font-size: 12px;
+  color: #585858;
   width: 100px;
   border-radius: 8px;
   padding: 9px 13px;
-  font-size: 12px;
-  color: #585858;
   background-color: white;
   cursor: pointer;
   transition: all 0.1s;
@@ -234,12 +234,12 @@
   background-color: #eeeefa;
 }
 .container .content-wrap > .search-wrap .search input {
+  font-size: 14px;
+  color: #858585;
   transform: translateY(-2px);
   padding: 0 16px;
   width: 220px;
   height: 42px;
-  color: #858585;
-  font-size: 14px;
   border: 1px solid #f5f5f5;
   transition: all 0.2s;
   border-radius: 8px;
@@ -263,10 +263,10 @@
   margin-bottom: 100px;
 }
 .pagination > li {
-  width: 24px;
-  height: 24px;
   font-size: 16px;
   color: #cdcdcd;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   user-select: none;
   text-align: center;
@@ -351,8 +351,8 @@
 .list-wrap ul {
   display: flex;
   flex-direction: row;
-  align-items: "flex-start";
-  justify-content: "flex-start";
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 980px;
   height: 586px;
@@ -378,11 +378,11 @@
 }
 .list-wrap ul li .postInfo .alertNew {
   font-size: 10px;
+  color: white;
   border-radius: 8px;
   padding: 2px 11px;
   background-color: #5b84e3;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
-  color: white;
 }
 .list-wrap ul li .postTitle {
   margin-bottom: 40px;
@@ -395,9 +395,9 @@
   background: #f5f5f5;
 }
 .list-wrap ul li .postWriter {
-  margin-top: 10px;
-  color: #585858;
   font-size: 14px;
+  color: #585858;
+  margin-top: 10px;
 }
 .list-wrap ul li:nth-child(3n) {
   margin-right: 0;

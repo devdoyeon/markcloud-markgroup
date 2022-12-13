@@ -7,22 +7,16 @@ const ListWrap = ({ list }) => {
   const navigate = useNavigate();
   const renderList = () => {
     return list?.reduce((acc, { created_at, title, created_id, id }) => {
-      const nowDate = new Date();
-      const postDate = new Date(created_at);
+      const today = new Date();
       return (
         <>
           {acc}
           <li onClick={() => navigate(`/board/${id}`)}>
             <div className='row postInfo'>
-              <span className='date'>
-                {created_at.split('T')[0].replaceAll('-', '.')}
-              </span>
-              {`${nowDate.getFullYear()}-${
-                nowDate.getMonth() + 1
-              }-${nowDate.getDate()}` ===
-              `${postDate.getFullYear()}-${
-                postDate.getMonth() + 1
-              }-${postDate.getDate()}` ? (
+              <span className='date'>{created_at.replaceAll('-', '.')}</span>
+              {`${today.getFullYear()}-${
+                today.getMonth() + 1
+              }-${today.getDate()}` === created_at ? (
                 <span className='alertNew'>NEW</span>
               ) : (
                 <></>

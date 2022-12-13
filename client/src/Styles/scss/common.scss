@@ -13,13 +13,12 @@
 }
 
 .commonBtn {
+  @include flex-style();
+  @include txt-style(16px, $white);
   background-color: $mainColor;
   border-radius: 8px;
-  color: $white;
-  font-size: 16px;
   line-height: 23.17px;
   padding: 12px 32px;
-  @include flex-style();
 }
 
 .container {
@@ -47,7 +46,7 @@
       text-align: center;
       margin-bottom: 29px;
       h3 {
-        @include txt-style($fontSize: '22px', $fontColor: $black);
+        @include txt-style(22px, $black);
         font-family: $middleFont;
         padding-bottom: 8px;
       }
@@ -154,8 +153,8 @@
           margin-right: 4px;
           color: $gray02;
           .selectVal {
-            cursor: pointer;
             @include flex-style($justifyVal: space-between);
+            cursor: pointer;
             padding: 0 13px;
             width: 100px;
             height: 42px;
@@ -175,11 +174,10 @@
           border: 1px solid $mainColor;
           border-radius: 8px;
           > .selectOpt {
+            @include txt-style(12px, $gray01);
             width: 100px;
             border-radius: 8px;
             padding: 9px 13px;
-            font-size: 12px;
-            color: $gray01;
             background-color: white;
             cursor: pointer;
             transition: all 0.1s;
@@ -190,16 +188,14 @@
           }
         }
         input {
+          @include txt-style(14px, $gray02);
           transform: translateY(-2px);
           padding: 0 16px;
           width: 220px;
           height: 42px;
-          color: $gray02;
-          font-size: 14px;
           border: 1px solid $gray05;
           transition: all 0.2s;
           border-radius: 8px;
-          // margin-right: 4px;
           &:focus {
             border: 1px solid $mainColor;
             transition: all 0.2s;
@@ -223,10 +219,9 @@
 .pagination {
   margin-bottom: 100px;
   > li {
+    @include txt-style(16px, $gray03);
     width: 24px;
     height: 24px;
-    font-size: 16px;
-    color: $gray03;
     cursor: pointer;
     user-select: none;
     text-align: center;
@@ -247,11 +242,11 @@
   padding: 130px 0 0 40px;
   > ul {
     > li {
-      @include txt-style($fontSize: 18px, $fontColor: $gray02);
+      @include txt-style(18px, $gray02);
       cursor: pointer;
       margin-bottom: 30px;
       a {
-        @include txt-style($fontSize: 18px, $fontColor: $gray02);
+        @include txt-style(18px, $gray02);
       }
 
       &.active {
@@ -307,7 +302,7 @@
     }
   }
   ul {
-    @include flex-style($alignVal: 'flex-start', $justifyVal: 'flex-start');
+    @include flex-style($alignVal: flex-start, $justifyVal: flex-start);
     width: $width02;
     height: 586px;
     li {
@@ -327,12 +322,11 @@
           @include txt-style(12px, $gray02);
         }
         .alertNew {
-          font-size: 10px;
+          @include txt-style(10px, white);
           border-radius: 8px;
           padding: 2px 11px;
           background-color: $mainBlue;
           font-family: $middleFont;
-          color: white;
         }
       }
       .postTitle {
@@ -346,10 +340,8 @@
         background: $gray05;
       }
       .postWriter {
-        // background-color: beige;
+        @include txt-style(14px, $gray01);
         margin-top: 10px;
-        color: $gray01;
-        font-size: 14px;
       }
       &:nth-child(3n) {
         margin-right: 0;

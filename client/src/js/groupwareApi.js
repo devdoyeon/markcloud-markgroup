@@ -66,9 +66,7 @@ export const noticeDelete = async query => {
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/dy/board/list?page=${page}&limit=${limit}${
-        value.length ? `&filter_type=${type}&filter_val=${value}` : ''
-      }`
+      `/dy/board/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`
     );
   } catch (error) {
     return;
