@@ -4,6 +4,222 @@
 // 변수
 
 // 업무관리
+// radio btn custom
+[type='radio'] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid $footerColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: $white;
+  padding: 0;
+}
+
+[type='radio']:checked {
+  background: url('image/check.svg');
+  border: 0;
+}
+
+[type='radio']:hover {
+  cursor: pointer;
+}
+
+[type='radio']:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+// checkbox custom btn
+[type='checkbox'] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid $footerColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: $white;
+  padding: 0;
+  transform: translateY(-2px);
+}
+
+[type='checkbox']:checked {
+  background: url('image/check.svg');
+  border: 0;
+}
+
+[type='checkbox']:hover {
+  cursor: pointer;
+}
+
+[type='checkbox']:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.container {
+  .content-wrap {
+    &.business {
+      width: 1060px;
+      .work-wrap {
+        padding: 40px 60px 24px 60px;
+        border: 1px solid $footerColor;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 16px;
+        margin-bottom: 40px;
+        .work-situation {
+          @include flex-style($justifyVal: flex-start);
+          padding: 12px 0;
+          border-top: 1px solid $footerColor;
+          border-bottom: 1px solid $footerColor;
+          > span {
+            margin-right: 16px;
+            font-size: 14px;
+            color: $gray01;
+          }
+          .work-bg {
+            @include flex-style();
+            padding: 6px 10px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            margin-right: 16px;
+            cursor: pointer;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+        .project-wrap,
+        .content,
+        .progress {
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+        }
+        .project-wrap {
+          @include flex-style($justifyVal: flex-start);
+          > div {
+            &.project {
+              margin-right: 16px;
+            }
+            width: calc((100% / 3) - 14px);
+            position: relative;
+            margin-right: 25px;
+            @include flex-style($justifyVal: flex-start);
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+              width: 1px;
+              height: 36px;
+              background-color: $footerColor;
+            }
+            &:last-child {
+              margin-right: 0;
+              &::after {
+                display: none;
+              }
+            }
+            > span {
+              margin-right: 16px;
+              font-size: 14px;
+              color: $gray01;
+            }
+            > div {
+              @include flex-style($justifyVal: flex-start);
+              border-radius: 8px;
+              width: 175px;
+              padding: 6px 0 6px 12px;
+              background-color: $subBlue;
+              font-size: 14px;
+            }
+          }
+        }
+        .content {
+          @include flex-style($justifyVal: flex-start);
+          padding: 12px 0;
+
+          > .title,
+          .content-text {
+            width: 50%;
+            padding-left: 16px;
+            input {
+              width: 314px;
+              margin-left: 25px;
+              border-radius: 8px;
+              background-color: $subBlue;
+              padding: 6px 0 6px 16px;
+            }
+            > label {
+              > span {
+                font-size: 14px;
+                color: $gray01;
+              }
+            }
+          }
+          > .title {
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              width: 1px;
+              right: -6px;
+              height: 36px;
+              background-color: $footerColor;
+            }
+          }
+        }
+        .progress {
+          margin-bottom: 24px;
+          > span {
+            font-size: 14px;
+            color: $gray01;
+            margin-right: 16px;
+          }
+          > label {
+            padding: 6px 10px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            margin-right: 16px;
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+        .work-btn-wrap {
+          @include flex-style($justifyVal: center, $alignVal: flex-start);
+          position: relative;
+          .search-option {
+            @include flex-style();
+            position: absolute;
+            .commonBtn {
+              &.search {
+                margin-right: 24px;
+                background-color: $gray02;
+                color: $white;
+              }
+              &.clear {
+                border: 1px solid $gray02;
+                color: $gray02;
+                background-color: $white;
+              }
+            }
+          }
+          .commonBtn {
+            &.create {
+              margin-left: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 // 인사관리
 
