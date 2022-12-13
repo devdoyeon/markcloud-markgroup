@@ -1,6 +1,20 @@
-import enum
+from pydantic import BaseModel
+from enum import Enum
 
-class ProjectStatus(str, enum.Enum):
-    ALL = "all" # 전체 업무 현황
-    MS = "MS" # 나의 업무현황   
-    MR = "MR" # 내가 요청한 업무 
+class ProjectManageFilter(str,Enum):
+    
+    All = "All" # 전체 업무현황
+    MyProject = "MyProject" # 나의 업무현황
+    MyRequest = "MyRequest" # 내가 요청한 업무
+
+class ProjectManageOut(BaseModel):
+    
+    id:int # 번호
+    project_name:str # 제목
+    project_description:str # 프로젝트
+    
+    
+    class Config:
+        orm_mode = True
+        
+        

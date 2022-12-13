@@ -1,29 +1,33 @@
-# from models import ~~
-# 다 같은 table 쓸 거 같은디 . .? db 랑.. 
+from model.memberManageModel import *
+from fastapi import HTTPException
 
-# def get_members(db, offset:int = 0, limit :int=1000):
-#     table = ''
-#     return db.query(table).offset(offset).limit(limit).all()
+# 부서관리 리스트
+def get_department_list(db, offset, limit):
     
-# def get_members_count(db):
-#     table = ''
-#     return  db.query(table).count()
+    table = DepartmentTable
     
-# def insert_member(db):
-#     table = ''
-#     db_query = 'table()'
-#     # schema 타고 넘어온 값
-#     return db.add(db_query)
+    try:
+        department_list = db.query(table).offset(offset).limit(limit).all()
+        return department_list
+    except:
+        raise HTTPException(status_code=500, detail='DBError')
 
-# def insert_department(db):
-#     table = ''
-#     db_query = ''
-#     return db.add(db_query)
+def insert_department(db):
+    pass
 
-# def change_member(db):
-#     table = ''
-#     return db.query(table).update()
 
-# def remove_member(db):
-#     table = ''
-#     return db.query(table).delete()
+
+
+
+# 인사관리 리스트
+def get_member_list(db, offset,limit):
+    
+    table = MemberTable
+    
+    try:
+        member_list = db.query(table).offset(offset).limit(limit).all()
+
+        return member_list
+    except:
+        raise HTTPException(status_code=500, detail='DBError')
+

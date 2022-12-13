@@ -1,73 +1,63 @@
-from models import NoticeTable
-from schema import noticeSchema
-
+from model import noticeModel, memberManageModel
+from sqlalchemy.orm import join
 from fastapi import HTTPException
+from datetime import datetime 
 
-
-
-def get_notice_list(db, offset, limit, filter_type, filter_val):
+def get_notice_list(db, offset, limit, user_id,filter_type, filter_val):
     
-    table = NoticeTable
+    notice_table = noticeModel.NoticeTable
+    member_table = memberManageModel.MemberTable
     
-    
-    query = db.query(table.id,
-                    table.created_at,
-                    table.created_id,
-                    table.title)
+    # 기업코드 확인
+    user_organ_code = db.query(member_table.department_code).filter(member_table.user_id==user_id)
+    query = db.query(notice_table).filter(notice_table.organ_code == user_organ_code)
     
     try:
-        if filter_type:
+        # 필터 O
+        if filter_type:    
             if filter_type == 'title':
-                query = query.filter(table.title == filter_val)
+                query = query.filter(notice_table.title.ilike(f'%{filter_val}%'))
             elif filter_type == 'created_id':
-                query = query.filter(table.created_id == filter_val)
+                query = query.filter(notice_table.created_id.ilike(f'%{filter_val}%'))
                 
-        notice_result = query.offset(offset).limit(limit).all()
-        
-        return notice_result
-    
+        # 필터 X        
+        notice_list = query.offset(offset).limit(limit).all()
+        return notice_list
     except:
-        raise HTTPException(status_code=500, detail='dbGetError')
+        raise HTTPException(status_code=500, detail='DBError')
 
 def get_notice_info(db,notice_id):
     
-    table = NoticeTable    
+    table = noticeModel.NoticeTable    
+    
     try:
-        
-        notice_info = db.query(table.title,
-                               table.created_id,
-                               table.created_at,
-                               table.updated_at,
-                               table.content).filter(table.id == notice_id).first()
+        notice_info = db.query(table).filter(table.id == notice_id).first()
         return notice_info
-    
     except:
-        raise HTTPException(status_code=500, detail='dbGetError')
+        raise HTTPException(status_code=500, detail='DBError')
+
+def insert_notice(db,inbound_data, user_id):
     
+    table_notice = noticeModel.NoticeTable
+    table_member = memberManageModel.MemberTable
 
-
-
-def insert_notice(db,inbound_data):
+    organ_code = db.query(table_member.department_code).filter(table_member.user_id == user_id).first()
     
-    db_query = NoticeTable(
+    db_query = table_notice(
         title=inbound_data.title,
+        organ_code = organ_code[0],
         content=inbound_data.content,
-        organ_code=inbound_data.organ_code,
-        created_at=inbound_data.created_at,
-        created_id = inbound_data.created_id,
-        updated_at = inbound_data.updated_at,
-        updated_id = inbound_data.updated_id
-    )
+        created_id=inbound_data.created_id)
+    
     try:
         db.add(db_query)
     except:
-        HTTPException(status_code=500, detail='dbInsertError')
-
+        HTTPException(status_code=500, detail='DBError')
 
 
 def change_notice(db,inbound_data):
     
-    table = NoticeTable
+    table = noticeModel.NoticeTable
     
     values = {table.title:inbound_data.title,
               table.content:inbound_data.content,
@@ -81,8 +71,8 @@ def change_notice(db,inbound_data):
 
 def remove_notice(db,notice_id):
     
-    table = NoticeTable
-    # notice_id 있는지 확인 후 ㄱㄱ
+    table = noticeModel.NoticeTable
+
     try:
         db.query(table).filter(table.id == notice_id).delete()
     except:
