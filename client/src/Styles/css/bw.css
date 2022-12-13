@@ -1,0 +1,237 @@
+[type=radio] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid #eeeeee;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: #ffffff;
+  padding: 0;
+}
+
+[type=radio]:checked {
+  background: url("image/check.svg");
+  border: 0;
+}
+
+[type=radio]:hover {
+  cursor: pointer;
+}
+
+[type=radio]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type=checkbox] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid #eeeeee;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: #ffffff;
+  padding: 0;
+  transform: translateY(-2px);
+}
+
+[type=checkbox]:checked {
+  background: url("image/check.svg");
+  border: 0;
+}
+
+[type=checkbox]:hover {
+  cursor: pointer;
+}
+
+[type=checkbox]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.container .content-wrap.business {
+  width: 1060px;
+}
+.container .content-wrap.business .work-wrap {
+  padding: 40px 60px 24px 60px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+.container .content-wrap.business .work-wrap .work-situation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+.container .content-wrap.business .work-wrap .work-situation > span {
+  margin-right: 16px;
+  font-size: 14px;
+  color: #585858;
+}
+.container .content-wrap.business .work-wrap .work-situation .work-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 6px 10px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+.container .content-wrap.business .work-wrap .work-situation .work-bg:last-child {
+  margin-right: 0;
+}
+.container .content-wrap.business .work-wrap .project-wrap,
+.container .content-wrap.business .work-wrap .content,
+.container .content-wrap.business .work-wrap .progress {
+  padding: 12px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+.container .content-wrap.business .work-wrap .project-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div {
+  width: calc(33.3333333333% - 14px);
+  position: relative;
+  margin-right: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project {
+  margin-right: 16px;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 36px;
+  background-color: #eeeeee;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div:last-child {
+  margin-right: 0;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div:last-child::after {
+  display: none;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div > span {
+  margin-right: 16px;
+  font-size: 14px;
+  color: #585858;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  width: 175px;
+  padding: 6px 0 6px 12px;
+  background-color: #eeeefa;
+  font-size: 14px;
+}
+.container .content-wrap.business .work-wrap .content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+.container .content-wrap.business .work-wrap .content > .title,
+.container .content-wrap.business .work-wrap .content .content-text {
+  width: 50%;
+  padding-left: 16px;
+}
+.container .content-wrap.business .work-wrap .content > .title input,
+.container .content-wrap.business .work-wrap .content .content-text input {
+  width: 314px;
+  margin-left: 25px;
+  border-radius: 8px;
+  background-color: #eeeefa;
+  padding: 6px 0 6px 16px;
+}
+.container .content-wrap.business .work-wrap .content > .title > label > span,
+.container .content-wrap.business .work-wrap .content .content-text > label > span {
+  font-size: 14px;
+  color: #585858;
+}
+.container .content-wrap.business .work-wrap .content > .title {
+  position: relative;
+}
+.container .content-wrap.business .work-wrap .content > .title::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  right: -6px;
+  height: 36px;
+  background-color: #eeeeee;
+}
+.container .content-wrap.business .work-wrap .progress {
+  margin-bottom: 24px;
+}
+.container .content-wrap.business .work-wrap .progress > span {
+  font-size: 14px;
+  color: #585858;
+  margin-right: 16px;
+}
+.container .content-wrap.business .work-wrap .progress > label {
+  padding: 6px 10px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  margin-right: 16px;
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+.container .content-wrap.business .work-wrap .work-btn-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+.container .content-wrap.business .work-wrap .work-btn-wrap .search-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+}
+.container .content-wrap.business .work-wrap .work-btn-wrap .search-option .commonBtn.search {
+  margin-right: 24px;
+  background-color: #858585;
+  color: #ffffff;
+}
+.container .content-wrap.business .work-wrap .work-btn-wrap .search-option .commonBtn.clear {
+  border: 1px solid #858585;
+  color: #858585;
+  background-color: #ffffff;
+}
+.container .content-wrap.business .work-wrap .work-btn-wrap .commonBtn.create {
+  margin-left: auto;
+}
