@@ -43,17 +43,20 @@ class EditorComponent extends Component {
   ];
 
   render() {
-    const { value, onChange } = this.props;
+    const { content, setContent } = this.props;
     return (
       <div style={{ width: '100%', height: 'auto' }}>
         <ReactQuill
           theme='snow'
           modules={this.modules}
           formats={this.formats}
-          value={value || ''}
+          value={content}
           onChange={(c, d, s, editor) => {
-            onChange(editor.getHTML());
-            console.log(editor.getHTML());
+            setContent(prev => {
+              const clone = {...prev};
+              clone.content = editor.getHTML()
+              return clone;
+            })
           }}
         />
       </div>

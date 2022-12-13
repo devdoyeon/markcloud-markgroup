@@ -60,3 +60,21 @@ export const noticeDelete = async query => {
     return null;
   }
 };
+
+// -------------------------------------------------------------------------------
+
+export const getBoardList = async (page, limit = 9) => {
+  try {
+    return await axios.get(`/dy/board/list?page=${page}&limit=${limit}`);
+  } catch (error) {
+    return;
+  }
+};
+
+export const getBoardDetail = async id => {
+  try {
+    return await axios.get(`/dy/board/detail/${id}`);
+  } catch (error) {
+    return;
+  }
+};

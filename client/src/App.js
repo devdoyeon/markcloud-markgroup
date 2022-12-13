@@ -28,15 +28,15 @@ function App() {
         <Route path='/weekly/:id' element={<BoardRead />} />
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<Board />} />
-        {/* => 주간업무보고, 공지사항, 게시판 작성, 프로젝트 현황 Route */}
+        {/* => 주간업무보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewBoard />} />
         <Route path='/weekly/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />
-        {/* => 주간업무보고, 공지사항, 게시판 수정, 프로젝트 현황 Route */}
-        <Route path='/project/write/:id' element={<ProjectStatus />} />
-        <Route path='/weekly/write/:id' element={<WeeklyReport />} />
-        <Route path='/board/write/:id' element={<Board />} />
+        {/* => 주간업무보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
+        <Route path='/project/write/:id' element={<NewBoard />} />
+        <Route path='/weekly/write/:id' element={<NewBoard />} />
+        <Route path='/board/write/:id' element={<NewBoard />} />
         {/* -------------------------------------------------- */}
         <Route path='/*' element={<NotFound />} />
       </Routes>

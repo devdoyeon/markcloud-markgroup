@@ -11,7 +11,18 @@ module.exports = function (app) {
       },
     })
   );
+  app.use(
+    '/dy',
+    createProxyMiddleware({
+      target: 'http://192.168.0.44:8001/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/dy': '',
+      },
+    })
+  );
 };
+
 
 // module.exports = function (app) {
 //   app.use(

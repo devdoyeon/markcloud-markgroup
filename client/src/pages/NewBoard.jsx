@@ -1,46 +1,68 @@
+import { useState, useEffect } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { getBoardDetail } from 'js/groupwareApi';
 
 const NewBoard = () => {
+  const [postInfo, setPostInfo] = useState({
+    created_id: '',
+    title: '',
+    content: '',
+  });
   const path = useLocation().pathname;
   const { id } = useParams();
-  const split = path.split('/');
-  let header = '';
+  const navigate = useNavigate();
 
-  switch (split[1]) {
-    case 'project':
-      header = '프로젝트 현황';
-      break;
-    case 'weekly':
-      header = '주간 업무 보고';
-      break;
-    case 'board':
-      header = '사내 게시판';
-      break;
-    case 'notice':
-      header = '공지사항';
-      break;
-    default:
-      break;
-  }
+  const returnHeader = () => {
+    switch (path.split('/')[1]) {
+      case 'project':
+        return '프로젝트 현황';
+      case 'weekly':
+        return '주간 업무 보고';
+      case 'board':
+        return '사내 게시판';
+      case 'notice':
+        return '공지사항';
+      default:
+        break;
+    }
+  };
+
+  const getOriginDetail = async () => {
+    let result;
+    switch (path.split('/')[1]) {
+      case 'notice':
+        return;
+      case 'board':
+        result = await getBoardDetail(id);
+        break;
+      case 'weekly':
+        return;
+      case 'project':
+        return;
+      default:
+    }
+    if (typeof result === 'object') setPostInfo(result?.data);
+    else return; // 에러 처리
+  };
+
+  useEffect(() => {
+    if (id?.length) getOriginDetail();
+  }, []);
+
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap'>
         <div className='header'>
-          {/* <h3>{header}</h3> */}
-          <h3>{header}</h3>
+          <h3>{returnHeader()}</h3>
         </div>
         <div className='board-wrap'>
           <div className='body-wrap'>
             <div className='writer'>
               <span>작성자</span>
-              <div>
-                info.created_id
-                {/* {info.created_id} */}
-              </div>
+              <div>{postInfo.created_id}</div>
             </div>
             <div className='title'>
               <span>제목</span>
@@ -49,18 +71,34 @@ const NewBoard = () => {
                   type='text'
                   placeholder='제목을 입력해주세요.'
                   className='title-input'
+                  value={postInfo.title}
                 />
               </div>
             </div>
             <div className='line'></div>
             <div className='content'>
-              <EditorComponent />
+              <EditorComponent
+                content={postInfo.content}
+                setContent={setPostInfo}
+              />
             </div>
           </div>
         </div>
         <div className='btn-wrap'>
           <button className='commonBtn'>등록</button>
-          <button className='commonBtn list'>목록</button>
+          <button
+            className='commonBtn list'
+            onClick={() => {
+              if (
+                !window.confirm(
+                  '수정을 취소하시겠습니까?\n수정이 취소된 작성글은 복구할 수 없습니다.'
+                )
+              )
+                return;
+              navigate(`/${path.split('/')[1]}`);
+            }}>
+            목록
+          </button>
         </div>
       </div>
     </div>

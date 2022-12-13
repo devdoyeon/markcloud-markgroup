@@ -38,7 +38,6 @@ const Notice = () => {
       <SideMenu />
       <div className='content-wrap notice'>
         <CommonHeader
-          header='공지사항'
           filter={filter}
           setFilter={setFilter}
           searchText={searchText}
