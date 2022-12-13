@@ -9,6 +9,7 @@ import PersonnelManagement from './pages/PersonnelManagement';
 import Notice from './pages/Notice';
 import BoardRead from 'pages/BoardRead';
 import NewBoard from 'pages/NewBoard';
+import NewProject from 'pages/NewProject';
 import NotFound from 'pages/NotFound';
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<Board />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
-        <Route path='/project/write' element={<NewBoard />} />
+        <Route path='/project/write' element={<NewProject />} />
         <Route path='/weekly/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />

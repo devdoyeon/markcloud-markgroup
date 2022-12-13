@@ -24,6 +24,8 @@ const CommonHeader = ({
         return '공지사항';
       case 'weekly':
         return '주간 업무 보고';
+      case 'project':
+        return '프로젝트 현황'
       default:
         return '';
     }
@@ -52,7 +54,7 @@ const CommonHeader = ({
                     <div
                       className='selectOpt'
                       onClick={() => {
-                        setFilter('writer');
+                        setFilter('created_id');
                         setSelect('off');
                       }}>
                       작성자

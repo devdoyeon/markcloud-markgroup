@@ -18,3 +18,24 @@ export const changeState = (setState, col, val) => {
 export const enterFn = (e, okFn) => {
   if (e.key === 'Enter') okFn();
 };
+
+export const commonModalSetting = (
+  setAlertBox,
+  bool,
+  mode,
+  context
+) => {
+  if (bool) {
+    setAlertBox({
+      mode: mode,
+      context: context,
+      bool: bool,
+    });
+  } else {
+    setAlertBox({
+      mode: '',
+      context: '',
+      bool: bool,
+    });
+  }
+};

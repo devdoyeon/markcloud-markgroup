@@ -3,13 +3,20 @@ import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
 import { getBoardDetail, createBoard, editBoard } from 'js/groupwareApi';
-import { changeState } from 'js/commonUtils';
+import { changeState, commonModalSetting } from 'js/commonUtils';
+import CommonModal from 'common/CommonModal';
 
 const NewBoard = () => {
+  const [alert, setAlert] = useState('');
   const [postInfo, setPostInfo] = useState({
     created_id: '',
     title: '',
     content: '',
+  });
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
   });
   const path = useLocation().pathname;
   const { id } = useParams();
@@ -64,8 +71,13 @@ const NewBoard = () => {
       default:
     }
     if (typeof result === 'object') {
-      navigate(`/${path.split('/')[1]}`);
-      return alert('작성글이 등록되었습니다.');
+      setAlert('apply');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '등록이 완료되었습니다.'
+      );
     } else return; // 에러 처리
   };
 
@@ -84,8 +96,13 @@ const NewBoard = () => {
       default:
     }
     if (typeof result === 'object') {
-      navigate(`/${path.split('/')[1]}/${postInfo?.id}`);
-      return alert('수정이 완료되었습니다.');
+      setAlert('edit');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '수정이 완료되었습니다.'
+      );
     } else return; // 에러 처리
   };
 
@@ -94,65 +111,79 @@ const NewBoard = () => {
   }, []);
 
   return (
-    <div className='container'>
-      <SideMenu />
-      <div className='content-wrap'>
-        <div className='header'>
-          <h3>{returnHeader()}</h3>
-        </div>
-        <div className='board-wrap'>
-          <div className='body-wrap'>
-            <div className='writer'>
-              <span>작성자</span>
-              <div>{postInfo.created_id}</div>
-            </div>
-            <div className='title'>
-              <span>제목</span>
-              <div>
-                <input
-                  type='text'
-                  placeholder='제목을 입력해주세요.'
-                  className='title-input'
-                  value={postInfo.title}
-                  onChange={e =>
-                    changeState(setPostInfo, 'title', e.target.value)
-                  }
+    <>
+      <div className='container'>
+        <SideMenu />
+        <div className='content-wrap'>
+          <div className='header'>
+            <h3>{returnHeader()}</h3>
+          </div>
+          <div className='board-wrap'>
+            <div className='body-wrap'>
+              <div className='writer'>
+                <span>작성자</span>
+                <div>{postInfo.created_id}</div>
+              </div>
+              <div className='title'>
+                <span>제목</span>
+                <div>
+                  <input
+                    type='text'
+                    placeholder='제목을 입력해주세요.'
+                    className='title-input'
+                    value={postInfo.title}
+                    onChange={e =>
+                      changeState(setPostInfo, 'title', e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div className='line'></div>
+              <div className='content'>
+                <EditorComponent
+                  content={postInfo.content}
+                  setContent={setPostInfo}
                 />
               </div>
             </div>
-            <div className='line'></div>
-            <div className='content'>
-              <EditorComponent
-                content={postInfo.content}
-                setContent={setPostInfo}
-              />
-            </div>
           </div>
-        </div>
-        <div className='btn-wrap'>
-          <button
-            className='commonBtn applyBtn'
-            onClick={id?.length ? editPost : createNew}>
-            등록
-          </button>
-          <button
-            className='commonBtn list'
-            onClick={() => {
-              if (
-                !window.confirm(
-                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?\n${
+          <div className='btn-wrap'>
+            <button
+              className='commonBtn applyBtn'
+              onClick={id?.length ? editPost : createNew}>
+              등록
+            </button>
+            <button
+              className='commonBtn list'
+              onClick={() => {
+                setAlert('cancel');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?<br/>${
                     id?.length ? '수정' : '작성'
                   }이 취소된 글은 복구할 수 없습니다.`
-                )
-              )
-                return;
-              navigate(`/${path.split('/')[1]}`);
-            }}>
-            목록
-          </button>
+                );
+              }}>
+              목록
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'cancel' || alert === 'apply')
+              navigate(`/${path.split('/')[1]}`);
+            else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+          }}
+          failFn={() => {}}
+        />
+      )}
+    </>
   );
 };
 

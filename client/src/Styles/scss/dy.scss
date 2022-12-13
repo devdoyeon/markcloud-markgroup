@@ -1,23 +1,26 @@
 @import './style';
 // 프로젝트 현황, 주간 업무 보고, 게시판
 
-// 프로젝트 현황 select
 .status {
-  background-color: white;
   border: 1px solid $footerColor;
   color: $gray02;
   width: 300px;
+  background-color: $subBlue;
   padding: 4px 16px;
   border-radius: 8px;
+  &.on {
+    border: 1px solid $mainColor;
+  }
   .selectVal {
     cursor: pointer;
     font-size: 14px;
     @include flex-style($justifyVal: space-between);
   }
   .selectOptGroup {
+    z-index: 2;
     position: absolute;
     background-color: white;
-    border: 1px solid $footerColor;
+    border: 1px solid $mainColor;
     width: 300px;
     transform: translateX(-16px) translateY(12px);
     border-radius: 8px;
@@ -26,7 +29,8 @@
       font-size: 14px;
       padding: 11px 16px;
       &:hover {
-        color: $mainColor;
+        color: $black;
+        background-color: $subBlue;
       }
       &.active {
         color: $black;
@@ -37,5 +41,177 @@
         }
       }
     }
+  }
+}
+
+.selectArea {
+  width: 980px;
+  height: 254px;
+  padding: 40px 60px 15px;
+  box-shadow: 0 0 3px 1px $footerColor;
+  border-radius: 16px;
+  span {
+    @include txt-style(14px, $gray01);
+    width: 113px;
+  }
+  hr {
+    width: 100%;
+    height: 1px;
+    border: none;
+    background-color: $footerColor;
+  }
+  input {
+    font-size: 14px;
+    width: 300px;
+    height: 32px;
+    background-color: $subBlue;
+    border-radius: 8px;
+    padding: 6px 16px;
+  }
+  > .row {
+    width: 860px;
+    &.btnWrap {
+      margin-top: 20px;
+      position: relative;
+    }
+    .commonBtn {
+      width: 94px;
+      height: 47px;
+      padding: 12px;
+      &.searchBtn {
+        background-color: $gray02;
+        margin-right: 32px;
+      }
+      &.resetBtn {
+        background-color: white;
+        border: 1px solid $gray02;
+        color: $gray02;
+      }
+      &.applyBtn {
+        position: absolute;
+        right: 0;
+      }
+    }
+    > .row {
+      padding: 15px 0;
+      &:first-child::after {
+        content: '.';
+        color: transparent;
+        border-right: 1px solid $footerColor;
+        margin: 0 13px;
+      }
+    }
+  }
+}
+
+.table-wrap {
+  width: 980px;
+  height: 360px;
+  box-shadow: 0 0 3px 1px $footerColor;
+  border-radius: 16px;
+  margin-top: 84px;
+  padding: 20px 16px;
+  text-align: center;
+  > .table {
+    width: 948px;
+    border-radius: 8px;
+    background-color: $subBlue;
+    > table {
+      width: 100%;
+      border-collapse: collapse;
+      border-style: hidden;
+      th {
+        font-size: 14px;
+        color: $gray01;
+        padding: 10px 0;
+      }
+      .odd {
+        td {
+          background-color: $subTableColor;
+        }
+      }
+      .even {
+        td {
+          background-color: $tableColor;
+        }
+      }
+      td {
+        font-size: 14px;
+        padding: 18px 0;
+      }
+    }
+  }
+}
+.createProjectWrap {
+  width: 980px;
+  min-height: 773px;
+  box-shadow: 0 0 3px 1px $footerColor;
+  border-radius: 16px;
+  padding: 40px 60px;
+  .projectInfo {
+    // height: 119px;
+    margin-bottom: 32px;
+    width: 100%;
+    hr {
+      width: 100%;
+      height: 1px;
+      border: none;
+      background-color: $footerColor;
+    }
+    input {
+      background-color: $subBlue;
+    }
+    > .row {
+      padding: 13px 0;
+      span {
+        @include txt-style(14px, $gray01);
+        width: 113px;
+      }
+      input {
+        height: 32px;
+        border-radius: 8px;
+        padding: 6px 16px;
+      }
+      &.projectName {
+        input {
+          width: 747px;
+        }
+      }
+      &.date {
+        input {
+          width: 300px;
+        }
+      }
+      .start::after {
+        content: '|';
+        color: transparent;
+        border-right: 1px solid $footerColor;
+        margin: 0 13.5px;
+      }
+    }
+  }
+  .quill {
+    height: 400px;
+    margin-bottom: 73px;
+  }
+  .projectSetting {
+    width: 100%;
+    align-items: flex-start;
+    span {
+      @include txt-style(14px, $black);
+      width: 97px;
+    }
+    > .row {
+      &:last-child {
+        margin-top: 16px;
+      }
+    }
+  }
+  .addPersonBtn {
+    background-color: $mainColor;
+    color: white;
+    padding: 4px 32px;
+    border-radius: 8px;
+    margin-left: 16px;
   }
 }

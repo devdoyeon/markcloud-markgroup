@@ -1,10 +1,13 @@
 .status {
-  background-color: white;
   border: 1px solid #eeeeee;
   color: #858585;
   width: 300px;
+  background-color: #eeeefa;
   padding: 4px 16px;
   border-radius: 8px;
+}
+.status.on {
+  border: 1px solid #5850cc;
 }
 .status .selectVal {
   cursor: pointer;
@@ -16,9 +19,10 @@
   flex-wrap: wrap;
 }
 .status .selectOptGroup {
+  z-index: 2;
   position: absolute;
   background-color: white;
-  border: 1px solid #eeeeee;
+  border: 1px solid #5850cc;
   width: 300px;
   transform: translateX(-16px) translateY(12px);
   border-radius: 8px;
@@ -29,7 +33,8 @@
   padding: 11px 16px;
 }
 .status .selectOptGroup > .selectOpt:hover {
-  color: #5850cc;
+  color: #15171a;
+  background-color: #eeeefa;
 }
 .status .selectOptGroup > .selectOpt.active {
   color: #15171a;
@@ -38,4 +43,169 @@
   content: "";
   border-left: 3px solid #5850cc;
   margin-right: 16px;
+}
+
+.selectArea {
+  width: 980px;
+  height: 254px;
+  padding: 40px 60px 15px;
+  box-shadow: 0 0 3px 1px #eeeeee;
+  border-radius: 16px;
+}
+.selectArea span {
+  font-size: 14px;
+  color: #585858;
+  width: 113px;
+}
+.selectArea hr {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background-color: #eeeeee;
+}
+.selectArea input {
+  font-size: 14px;
+  width: 300px;
+  height: 32px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+.selectArea > .row {
+  width: 860px;
+}
+.selectArea > .row.btnWrap {
+  margin-top: 20px;
+  position: relative;
+}
+.selectArea > .row .commonBtn {
+  width: 94px;
+  height: 47px;
+  padding: 12px;
+}
+.selectArea > .row .commonBtn.searchBtn {
+  background-color: #858585;
+  margin-right: 32px;
+}
+.selectArea > .row .commonBtn.resetBtn {
+  background-color: white;
+  border: 1px solid #858585;
+  color: #858585;
+}
+.selectArea > .row .commonBtn.applyBtn {
+  position: absolute;
+  right: 0;
+}
+.selectArea > .row > .row {
+  padding: 15px 0;
+}
+.selectArea > .row > .row:first-child::after {
+  content: ".";
+  color: transparent;
+  border-right: 1px solid #eeeeee;
+  margin: 0 13px;
+}
+
+.table-wrap {
+  width: 980px;
+  height: 360px;
+  box-shadow: 0 0 3px 1px #eeeeee;
+  border-radius: 16px;
+  margin-top: 84px;
+  padding: 20px 16px;
+  text-align: center;
+}
+.table-wrap > .table {
+  width: 948px;
+  border-radius: 8px;
+  background-color: #eeeefa;
+}
+.table-wrap > .table > table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+.table-wrap > .table > table th {
+  font-size: 14px;
+  color: #585858;
+  padding: 10px 0;
+}
+.table-wrap > .table > table .odd td {
+  background-color: #f8f8fd;
+}
+.table-wrap > .table > table .even td {
+  background-color: #fcfcfc;
+}
+.table-wrap > .table > table td {
+  font-size: 14px;
+  padding: 18px 0;
+}
+
+.createProjectWrap {
+  width: 980px;
+  min-height: 773px;
+  box-shadow: 0 0 3px 1px #eeeeee;
+  border-radius: 16px;
+  padding: 40px 60px;
+}
+.createProjectWrap .projectInfo {
+  margin-bottom: 32px;
+  width: 100%;
+}
+.createProjectWrap .projectInfo hr {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background-color: #eeeeee;
+}
+.createProjectWrap .projectInfo input {
+  background-color: #eeeefa;
+}
+.createProjectWrap .projectInfo > .row {
+  padding: 13px 0;
+}
+.createProjectWrap .projectInfo > .row span {
+  font-size: 14px;
+  color: #585858;
+  width: 113px;
+}
+.createProjectWrap .projectInfo > .row input {
+  height: 32px;
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+.createProjectWrap .projectInfo > .row.projectName input {
+  width: 747px;
+}
+.createProjectWrap .projectInfo > .row.date input {
+  width: 300px;
+}
+.createProjectWrap .projectInfo > .row .start::after {
+  content: "|";
+  color: transparent;
+  border-right: 1px solid #eeeeee;
+  margin: 0 13.5px;
+}
+.createProjectWrap .quill {
+  height: 400px;
+  margin-bottom: 73px;
+}
+.createProjectWrap .projectSetting {
+  width: 100%;
+  align-items: flex-start;
+}
+.createProjectWrap .projectSetting span {
+  font-size: 14px;
+  color: #15171a;
+  width: 97px;
+}
+.createProjectWrap .projectSetting > .row:last-child {
+  margin-top: 16px;
+}
+.createProjectWrap .addPersonBtn {
+  background-color: #5850cc;
+  color: white;
+  padding: 4px 32px;
+  border-radius: 8px;
+  margin-left: 16px;
 }

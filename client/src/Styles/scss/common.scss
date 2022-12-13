@@ -12,6 +12,43 @@
   height: 350px;
 }
 
+.alert-modal {
+  @include flex-style();
+  @include position-style($top: 0, $left: 0);
+  z-index: 5;
+  background-color: rgba($color: $black, $alpha: 0.3);
+  width: 100vw;
+  height: 100vh;
+  .modal {
+    @include flex-style(column, $justifyVal: flex-start);
+    border-radius: 16px;
+    background-color: white;
+    width: 500px;
+    min-height: 195px;
+    .alertContent {
+      @include flex-style(column);
+      width: 100%;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      min-height: 136px;
+      padding: 30px 0;
+      .head {
+        font-size: 22px;
+        font-family: $middleFont;
+        margin-bottom: 15px;
+      }
+    }
+    .btn-wrap {
+      @include flex-style($justifyVal: space-around);
+      width: 100%;
+      background-color: $subBlue;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      height: 59px
+    }
+  }
+}
+
 .commonBtn {
   @include flex-style();
   @include txt-style(16px, $white);
@@ -40,6 +77,9 @@
     width: 980px;
     background-color: $white;
     min-height: 100vh;
+    &.project {
+      min-height: 110vh;
+    }
     > .header {
       width: fit-content;
       border-bottom: 2px solid $mainBlue;
