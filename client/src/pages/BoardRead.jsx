@@ -116,7 +116,9 @@ const BoardRead = () => {
             onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
             수정
           </button>
-          <button className='commonBtn list' onClick={() => navigate(-1)}>
+          <button
+            className='commonBtn list'
+            onClick={() => navigate(`/${path.split('/')[1]}`)}>
             목록
           </button>
         </div>

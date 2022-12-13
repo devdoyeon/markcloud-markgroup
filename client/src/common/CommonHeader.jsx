@@ -17,9 +17,16 @@ const CommonHeader = ({
   const [select, setSelect] = useState('off');
 
   const returnHeader = () => {
-    if (path.includes('/board')) return '사내게시판';
-    else if (path.includes('/notice')) return '공지사항';
-    else if (path.includes('/weekly')) return '주간 업무 보고';
+    switch (path.split('/')[1]) {
+      case 'board':
+        return '사내게시판';
+      case 'notice':
+        return '공지사항';
+      case 'weekly':
+        return '주간 업무 보고';
+      default:
+        return '';
+    }
   };
 
   return (
