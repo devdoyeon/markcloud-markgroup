@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
 import selectArrow from 'image/selectArrow.svg';
@@ -15,6 +16,7 @@ const NewProject = () => {
     '정다은',
     '송지은',
   ];
+  const [alert, setAlert] = useState('')
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -25,9 +27,7 @@ const NewProject = () => {
   const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('===');
   const [participation, setParticipation] = useState([]);
-  useEffect(() => {
-    console.log(participation);
-  }, [participation]);
+  const navigate = useNavigate()
 
   return (
     <>
@@ -78,9 +78,9 @@ const NewProject = () => {
                             onClick={() => {
                               setParticipation(prev => {
                                 const clone = [...prev];
-                                clone.splice(clone.indexOf(person), 1)
+                                clone.splice(clone.indexOf(person), 1);
                                 return clone;
-                              })
+                              });
                             }}
                           />
                         </span>
@@ -200,6 +200,10 @@ const NewProject = () => {
                 </button>
               </div>
             </div>
+          </div>
+          <div className='btn-wrap'>
+            <button className='commonBtn applyBtn'>등록</button>
+            <button className='commonBtn listBtn' onClick={() => navigate('/project')}>목록</button>
           </div>
         </div>
       </div>

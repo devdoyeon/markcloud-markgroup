@@ -146,6 +146,15 @@
 .project {
   height: 130vh;
 }
+.project .btn-wrap {
+  margin-top: 60px;
+}
+.project .btn-wrap .commonBtn {
+  background-color: #5850cc;
+}
+.project .btn-wrap .commonBtn.listBtn {
+  background-color: #858585;
+}
 
 .createProjectWrap {
   width: 980px;
