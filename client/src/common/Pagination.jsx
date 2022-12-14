@@ -10,7 +10,6 @@ import { changeState } from 'js/commonUtils';
 const Pagination = ({ pageInfo, setPageInfo }) => {
   const [pageGroup, setPageGroup] = useState([]);
   const { totalPage, page } = pageInfo;
-
   // 부모컴포넌트의 종류에 따라 페이지 변경 함수가 달리 작용 됨
   const changePage = p => {
     if (page === p) return;

@@ -38,6 +38,7 @@ function App() {
         <Route path='/project/write/:id' element={<NewBoard />} />
         <Route path='/weekly/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />
+        <Route path='/notice/write/:id' element={<NewBoard />} />
         {/* -------------------------------------------------- */}
         <Route path='/*' element={<NotFound />} />
       </Routes>

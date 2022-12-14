@@ -9,7 +9,7 @@ const Notice = () => {
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 60,
+    totalPage: 9,
     limit: 9,
   });
   const [filter, setFilter] = useState('');
@@ -48,7 +48,6 @@ const Notice = () => {
     getNoticeApi();
   }, [pageInfo.page]);
 
-  useEffect(() => {}, [searchText, filter]);
   return (
     <div className='container'>
       <SideMenu />

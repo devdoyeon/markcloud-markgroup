@@ -49,7 +49,7 @@ const NewBoard = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         result = await getNoticeInfo(id);
-        return;
+        break;
       case 'board':
         result = await getBoardDetail(id);
         break;
@@ -69,7 +69,7 @@ const NewBoard = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         result = await createNotice(postInfo);
-        return;
+        break;
       case 'board':
         result = await createBoard(postInfo);
         break;
@@ -94,8 +94,8 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await editNotice(postInfo);
-        return;
+        result = await editNotice(postInfo, id);
+        break;
       case 'board':
         result = await editBoard(postInfo);
         break;
@@ -119,7 +119,6 @@ const NewBoard = () => {
   useEffect(() => {
     if (id?.length) getOriginDetail();
   }, []);
-
   return (
     <>
       <div className='container'>
@@ -133,6 +132,7 @@ const NewBoard = () => {
               <div className='writer'>
                 <span>작성자</span>
                 <div>{postInfo.created_id}</div>
+                {console.log(postInfo)}
               </div>
               <div className='title'>
                 <span>제목</span>

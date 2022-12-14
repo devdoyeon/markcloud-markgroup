@@ -1,23 +1,23 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
-  // app.use(
-  //   '/bw',
-  //   createProxyMiddleware({
-  //     target: 'http://192.168.0.38:8000/',
-  //     changeOrigin: true,
-  //     pathRewrite: {
-  //       '^/bw': '',
-  //     },
-  //   })
-  // );
   app.use(
-    '/notice',
+    '/bw',
     createProxyMiddleware({
-      target: 'http://192.168.0.38:8000',
+      target: 'http://192.168.0.38:8000/',
       changeOrigin: true,
+      pathRewrite: {
+        '^/bw': '',
+      },
     })
   );
+  // app.use(
+  //   '/notice',
+  //   createProxyMiddleware({
+  //     target: 'http://192.168.0.38:8000',
+  //     changeOrigin: true,
+  //   })
+  // );
   app.use(
     '/dy',
     createProxyMiddleware({
@@ -29,13 +29,3 @@ module.exports = function (app) {
     })
   );
 };
-
-// module.exports = function (app) {
-//   app.use(
-//     '/notice',
-//     createProxyMiddleware({
-//       target: 'http://192.168.0.38:8000',
-//       changeOrigin: true,
-//     })
-//   );
-// };
