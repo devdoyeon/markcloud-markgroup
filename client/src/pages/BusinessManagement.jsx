@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 const BusinessManagement = () => {
   const [num, setNum] = useState(0);
@@ -9,6 +10,8 @@ const BusinessManagement = () => {
     totalPage: 15,
     limit: 9,
   });
+
+  const navigate = useNavigate();
 
   return (
     <div className='container'>
@@ -35,7 +38,7 @@ const BusinessManagement = () => {
           </div>
 
           <div className='project-wrap'>
-            <div className='project'>
+            <div className='project-list'>
               <span>프로젝트</span>
               <div>프로젝트명===</div>
             </div>
@@ -87,7 +90,11 @@ const BusinessManagement = () => {
               <button className='commonBtn search'>검색</button>
               <button className='commonBtn clear'>초기화</button>
             </div>
-            <div className='commonBtn create'>등록</div>
+            <div
+              className='commonBtn create'
+              onClick={() => navigate(`/business/write`)}>
+              등록
+            </div>
           </div>
         </div>
 

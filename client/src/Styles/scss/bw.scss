@@ -102,7 +102,7 @@
         .project-wrap {
           @include flex-style($justifyVal: flex-start);
           > div {
-            &.project {
+            &.project-list {
               margin-right: 16px;
             }
             width: calc((100% / 3) - 14px);
@@ -213,6 +213,7 @@
           .commonBtn {
             &.create {
               margin-left: auto;
+              cursor: pointer;
             }
           }
         }
