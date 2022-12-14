@@ -15,7 +15,6 @@ const CommonHeader = ({
 }) => {
   const path = useLocation().pathname;
   const [select, setSelect] = useState('off');
-  const navigate = useNavigate();
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
@@ -36,7 +35,11 @@ const CommonHeader = ({
     <>
       <div
         className='header'
-        onClick={() => navigate(`/${path.split('/')[1]}`)}>
+        onClick={() => {
+          setFilter('created_id');
+          setSearchText('');
+          okFn();
+        }}>
         <h3>{returnHeader()}</h3>
       </div>
       {status ? (

@@ -16,7 +16,7 @@ const NewProject = () => {
     '정다은',
     '송지은',
   ];
-  const [alert, setAlert] = useState('')
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -27,7 +27,7 @@ const NewProject = () => {
   const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('===');
   const [participation, setParticipation] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
@@ -56,44 +56,11 @@ const NewProject = () => {
                 </div>
               </div>
               <hr />
-              <div
-                className={`row peopleWrap ${
-                  participation?.length === 0 ? 'nonePeople' : ''
-                }`}>
-                <span>
-                  {participation?.length === 0
-                    ? '참여 인원을 추가해 주세요.'
-                    : '참여 인원 목록'}
-                </span>
-                <div className='row'>
-                  {participation?.reduce((acc, person) => {
-                    return (
-                      <>
-                        {acc}
-                        <span className='personBtn'>
-                          {person}
-                          <img
-                            src={deletePerson}
-                            alt={`${person} 삭제 버튼`}
-                            onClick={() => {
-                              setParticipation(prev => {
-                                const clone = [...prev];
-                                clone.splice(clone.indexOf(person), 1);
-                                return clone;
-                              });
-                            }}
-                          />
-                        </span>
-                      </>
-                    );
-                  }, <></>)}
-                </div>
-              </div>
-              <hr />
             </div>
             <EditorComponent />
             <div className='projectSetting column'>
-              <div className='row'>
+              <hr />
+              <div className='row statusSelect'>
                 <span>프로젝트 상태</span>
                 <div className={`selectBox status ${statusSelect}`}>
                   <div
@@ -140,6 +107,36 @@ const NewProject = () => {
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+              <hr />
+              <div
+                className='row peopleWrap'>
+                <span>참여 목록</span>
+                <div className='row'>
+                  {participation?.length === 0
+                    ? '참여 인원을 추가해 주세요.'
+                    : participation?.reduce((acc, person) => {
+                        return (
+                          <>
+                            {acc}
+                            <span className='personBtn'>
+                              {person}
+                              <img
+                                src={deletePerson}
+                                alt={`${person} 삭제 버튼`}
+                                onClick={() => {
+                                  setParticipation(prev => {
+                                    const clone = [...prev];
+                                    clone.splice(clone.indexOf(person), 1);
+                                    return clone;
+                                  });
+                                }}
+                              />
+                            </span>
+                          </>
+                        );
+                      }, <></>)}
                 </div>
               </div>
               <div className='row'>
@@ -203,7 +200,11 @@ const NewProject = () => {
           </div>
           <div className='btn-wrap'>
             <button className='commonBtn applyBtn'>등록</button>
-            <button className='commonBtn listBtn' onClick={() => navigate('/project')}>목록</button>
+            <button
+              className='commonBtn listBtn'
+              onClick={() => navigate('/project')}>
+              목록
+            </button>
           </div>
         </div>
       </div>
