@@ -12,7 +12,7 @@ const Notice = () => {
     totalPage: 9,
     limit: 9,
   });
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   const status = !!list?.length;
   let prevent = false;
@@ -47,7 +47,7 @@ const Notice = () => {
   useEffect(() => {
     getNoticeApi();
   }, [pageInfo.page]);
-
+  console.log(list.length === true);
   return (
     <div className='container'>
       <SideMenu />

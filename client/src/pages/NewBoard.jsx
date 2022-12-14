@@ -97,7 +97,7 @@ const NewBoard = () => {
         result = await editNotice(postInfo, id);
         break;
       case 'board':
-        result = await editBoard(postInfo);
+        result = await editBoard(postInfo,id);
         break;
       case 'weekly':
         return;

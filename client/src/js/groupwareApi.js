@@ -84,18 +84,22 @@ export const createBoard = async ({ title, content }) => {
     return await axios.post(`/dy/board/create`, {
       title: title,
       content: content,
+      created_id: 'jenny',
+      organ_code: 'markcloud',
     });
   } catch (error) {
     return;
   }
 };
 
-export const editBoard = async ({ title, content, id }) => {
+export const editBoard = async ({ title, content, created_id }, id) => {
+  console.log(id);
   try {
-    return await axios.post(`/dy/board/update`, {
+    return await axios.post(`/dy/board/update?post_id=${id}`, {
       title: title,
       content: content,
-      post_id: id,
+      created_id: 'jenny',
+      organ_code: 'markcloud',
     });
   } catch (error) {
     return;
