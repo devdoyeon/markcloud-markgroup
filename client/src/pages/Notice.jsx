@@ -47,14 +47,15 @@ const Notice = () => {
   useEffect(() => {
     getNoticeApi();
   }, [pageInfo.page]);
-  console.log(list.length === true);
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
         <CommonHeader {...commonHeaderState} okFn={getNoticeApi} />
         <ListWrap list={list} />
-        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+        {list.length > 0 && (
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+        )}
       </div>
     </div>
   );

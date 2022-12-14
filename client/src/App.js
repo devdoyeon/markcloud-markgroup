@@ -11,6 +11,7 @@ import BoardRead from 'pages/BoardRead';
 import NewBoard from 'pages/NewBoard';
 import NewProject from 'pages/NewProject';
 import NotFound from 'pages/NotFound';
+import BusinessNewBoard from 'pages/BusinessNewBoard';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/weekly/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />
+        <Route path='/business/write' element={<BusinessNewBoard />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
         <Route path='/project/write/:id' element={<NewBoard />} />
         <Route path='/weekly/write/:id' element={<NewBoard />} />
