@@ -117,7 +117,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.container .content-wrap.business .work-wrap .project-wrap > div.project {
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list {
   margin-right: 16px;
 }
 .container .content-wrap.business .work-wrap .project-wrap > div::after {
@@ -235,6 +235,7 @@
 }
 .container .content-wrap.business .work-wrap .work-btn-wrap .commonBtn.create {
   margin-left: auto;
+  cursor: pointer;
 }
 .container .content-wrap.business .check-work-wrap .check-tab-list {
   display: flex;

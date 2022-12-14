@@ -34,9 +34,7 @@ const CommonHeader = ({
 
   return (
     <>
-      <div
-        className='header'
-        onClick={() => navigate(`/${path.split('/')[1]}`)}>
+      <div className='header'>
         <h3>{returnHeader()}</h3>
       </div>
       {status ? (

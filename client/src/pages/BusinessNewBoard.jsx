@@ -92,19 +92,6 @@ const BusinessNewBoard = () => {
 
   const editPost = async () => {
     let result;
-    switch (path.split('/')[1]) {
-      case 'notice':
-        result = await editNotice(postInfo, id);
-        break;
-      case 'board':
-        result = await editBoard(postInfo, id);
-        break;
-      case 'weekly':
-        return;
-      case 'project':
-        return;
-      default:
-    }
     if (typeof result === 'object') {
       setAlert('edit');
       return commonModalSetting(
