@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
-import selectArrow from 'image/selectArrow.svg';
 import deletePerson from 'image/deletePersonIcon.svg';
 import CommonModal from 'common/CommonModal';
 import { commonModalSetting } from 'js/commonUtils';
