@@ -13,12 +13,11 @@ router_notice = APIRouter(
     tags=['Notice API']
 )
 
-# 로그인+ 
 
 # 공지 리스트
 @router_notice.get('/list', response_model= Response[List[NoticeOut]])
 def read_notice_list(
-    filter_type: Optional[NoticeFilter] = None,
+    filter_type: Optional[NoticeFilter] = 'all',
     filter_val: Optional[str] = None, 
     user_id: str = 'songmoana', # 로그인 후 추가 
     page: int = 1,
@@ -63,7 +62,7 @@ def create_notice(
 # 공지 수정
 @router_notice.post('/update') # 관리자와 작성자 아이디를 받아와야함 created_id 와 같을 경우 삭제 가능하도록
 def update_notice(
-    inbound_data: NoticeIn,
+    inbound_data: NoticeEditDTO,
     notice_id:int,
     user_id:str = 'songmoana',
     db: Session = Depends(get_db)

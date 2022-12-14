@@ -6,6 +6,8 @@ def get_department_list(db, offset, limit):
     
     table = DepartmentTable
     
+    
+    
     try:
         department_list = db.query(table).offset(offset).limit(limit).all()
         return department_list

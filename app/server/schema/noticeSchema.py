@@ -7,18 +7,22 @@ class NoticeIn(BaseModel):
     
     title:str
     content:str
-    # organ_code:str
     created_id:str # 작성자
-    # updated_at:Optional[datetime]
-    # updated_id:Optional[str]
 
     class Config:
         orm_mode = True
         
 class NoticeFilter(str, Enum):
     
+    all = "all"
     title =  "title"
     created_id = "created_id"
+    
+class NoticeEditDTO(BaseModel):
+    
+    title:str
+    content:str
+    created_id:str
     
 class NoticeOut(BaseModel):
 
