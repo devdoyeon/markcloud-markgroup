@@ -22,13 +22,16 @@ const NewProject = () => {
       <SideMenu />
       <div className='content-wrap project'>
         <div className='header'>
-          <h3>새 프로젝트 생성</h3>
+          <h3>프로젝트 현황</h3>
         </div>
         <div className='createProjectWrap'>
+          <div className='projectTitle'>
+            제목
+          </div>
           <div className='projectInfo column'>
             <hr />
-            <div className='row projectName'>
-              <span>프로젝트명</span>
+            <div className='row makeProjectDate'>
+              <span>작성일</span>
               <input type='text' />
             </div>
             <hr />
@@ -45,6 +48,11 @@ const NewProject = () => {
             <hr />
             <div className='row'>
               <span>참여 인원</span>
+              <div className='row'>
+                <span className='personBtn'>
+                  권도연
+                </span>
+              </div>
             </div>
             <hr />
           </div>

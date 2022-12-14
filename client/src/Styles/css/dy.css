@@ -146,7 +146,19 @@
   min-height: 773px;
   box-shadow: 0 0 3px 1px #eeeeee;
   border-radius: 16px;
-  padding: 40px 60px;
+  padding: 0px 60px 40px;
+}
+.createProjectWrap .projectTitle {
+  font-size: 18px;
+  color: #15171a;
+  width: 980px;
+  height: 59px;
+  transform: translateX(-60px);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background-color: #eeeefa;
+  padding: 17px 80px;
+  margin-bottom: 32px;
 }
 .createProjectWrap .projectInfo {
   margin-bottom: 32px;
@@ -174,7 +186,7 @@
   border-radius: 8px;
   padding: 6px 16px;
 }
-.createProjectWrap .projectInfo > .row.projectName input {
+.createProjectWrap .projectInfo > .row.makeProjectDate input {
   width: 747px;
 }
 .createProjectWrap .projectInfo > .row.date input {

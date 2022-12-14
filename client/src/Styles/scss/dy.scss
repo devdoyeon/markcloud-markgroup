@@ -147,9 +147,19 @@
   min-height: 773px;
   box-shadow: 0 0 3px 1px $footerColor;
   border-radius: 16px;
-  padding: 40px 60px;
+  padding: 0px 60px 40px;
+  .projectTitle {
+    @include txt-style(18px, $black);
+    width: 980px;
+    height: 59px;
+    transform: translateX(-60px);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    background-color: $subBlue;
+    padding: 17px 80px;
+    margin-bottom: 32px;
+  }
   .projectInfo {
-    // height: 119px;
     margin-bottom: 32px;
     width: 100%;
     hr {
@@ -172,7 +182,7 @@
         border-radius: 8px;
         padding: 6px 16px;
       }
-      &.projectName {
+      &.makeProjectDate {
         input {
           width: 747px;
         }
