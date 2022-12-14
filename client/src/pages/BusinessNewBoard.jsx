@@ -13,7 +13,7 @@ import {
   createNotice,
 } from 'js/groupwareApi';
 
-const NewBoard = () => {
+const BusinessNewBoard = () => {
   const [alert, setAlert] = useState('');
   const [postInfo, setPostInfo] = useState({
     created_id: '',
@@ -196,4 +196,4 @@ const NewBoard = () => {
   );
 };
 
-export default NewBoard;
+export default BusinessNewBoard;

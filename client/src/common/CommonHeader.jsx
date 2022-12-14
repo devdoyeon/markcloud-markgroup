@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { enterFn } from 'js/commonUtils';
 import searchIcon from 'image/searchIcon.svg';
 import selectArrow from 'image/selectArrow.svg';
@@ -15,6 +15,7 @@ const CommonHeader = ({
 }) => {
   const path = useLocation().pathname;
   const [select, setSelect] = useState('off');
+  const navigate = useNavigate();
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
@@ -25,7 +26,7 @@ const CommonHeader = ({
       case 'weekly':
         return '주간 업무 보고';
       case 'project':
-        return '프로젝트 현황'
+        return '프로젝트 현황';
       default:
         return '';
     }
@@ -33,7 +34,9 @@ const CommonHeader = ({
 
   return (
     <>
-      <div className='header'>
+      <div
+        className='header'
+        onClick={() => navigate(`/${path.split('/')[1]}`)}>
         <h3>{returnHeader()}</h3>
       </div>
       {status ? (
