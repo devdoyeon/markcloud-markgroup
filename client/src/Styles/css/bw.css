@@ -120,6 +120,23 @@
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list {
   margin-right: 16px;
 }
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox {
+  position: relative;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectVal {
+  width: 100%;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectOptGroup {
+  top: 30px;
+  left: 15px;
+  width: 175px;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectOptGroup > div.active {
+  color: #5850cc;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectOptGroup > div:hover {
+  color: #5850cc;
+}
 .container .content-wrap.business .work-wrap .project-wrap > div::after {
   content: "";
   display: block;

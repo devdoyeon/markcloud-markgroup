@@ -2,9 +2,16 @@ import { useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
+import selectArrow from 'image/selectArrow.svg';
 
 const BusinessManagement = () => {
   const [num, setNum] = useState(0);
+  const [projectName, setProjectName] = useState('off');
+  const [projectValue, setProjectValue] = useState('===');
+  const [contactName, setContactName] = useState('off');
+  const [contactValue, setContactValue] = useState('===');
+  const [requesterName, setRequesterName] = useState('off');
+  const [requesterValue, setRequesterValue] = useState('===');
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
@@ -12,6 +19,17 @@ const BusinessManagement = () => {
   });
 
   const navigate = useNavigate();
+
+  const projectNameArr = [
+    '마크클라우드',
+    '마크뷰',
+    '마크통',
+    '마크링크',
+    '삼성전자',
+    '그린터치',
+  ];
+
+  const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
 
   return (
     <div className='container'>
@@ -38,17 +56,116 @@ const BusinessManagement = () => {
           </div>
 
           <div className='project-wrap'>
+            {/* ============================= */}
             <div className='project-list'>
               <span>프로젝트</span>
-              <div>프로젝트명===</div>
+              <div className={`selectBox ${projectName}`}>
+                <div
+                  className={`selectVal`}
+                  onClick={() =>
+                    projectName === 'on'
+                      ? setProjectName('off')
+                      : setProjectName('on')
+                  }>
+                  {projectValue}
+                  <img src={selectArrow} alt='선택 아이콘' />
+                </div>
+                {projectName === 'on' && (
+                  <div className='selectOptGroup'>
+                    {projectNameArr.map((item, idx) => {
+                      return (
+                        <>
+                          <div
+                            className={`selectOpt ${
+                              projectValue === item && 'active'
+                            }`}
+                            onClick={() => {
+                              setProjectValue(item);
+                              setProjectName('off');
+                            }}
+                            key={idx}>
+                            {item}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-            <div>
+            {/* ============================= */}
+            <div className='project-list'>
               <span>담당자</span>
-              <div>담당자이름===</div>
+              <div className={`selectBox ${contactName}`}>
+                <div
+                  className={`selectVal`}
+                  onClick={() =>
+                    contactName === 'on'
+                      ? setContactName('off')
+                      : setContactName('on')
+                  }>
+                  {contactValue}
+                  <img src={selectArrow} alt='선택 아이콘' />
+                </div>
+                {contactName === 'on' && (
+                  <div className='selectOptGroup'>
+                    {contactNameArr.map((item, idx) => {
+                      return (
+                        <>
+                          <div
+                            className={`selectOpt ${
+                              contactValue === item && 'active'
+                            }`}
+                            onClick={() => {
+                              setContactValue(item);
+                              setContactName('off');
+                            }}
+                            key={idx}>
+                            {item}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-            <div>
+            {/* ============================= */}
+            <div className='project-list'>
               <span>요청자</span>
-              <div>요청자이름===</div>
+              <div className={`selectBox ${requesterName}`}>
+                <div
+                  className={`selectVal`}
+                  onClick={() =>
+                    requesterName === 'on'
+                      ? setRequesterName('off')
+                      : setRequesterName('on')
+                  }>
+                  {requesterValue}
+                  <img src={selectArrow} alt='선택 아이콘' />
+                </div>
+                {requesterName === 'on' && (
+                  <div className='selectOptGroup'>
+                    {contactNameArr.map((item, idx) => {
+                      return (
+                        <>
+                          <div
+                            className={`selectOpt ${
+                              requesterValue === item && 'active'
+                            }`}
+                            onClick={() => {
+                              setRequesterValue(item);
+                              setRequesterName('off');
+                            }}
+                            key={idx}>
+                            {item}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className='content'>
