@@ -118,27 +118,62 @@
   }
 }
 
-.createProjectWrap {
+.projectWrapper {
   width: 980px;
   min-height: 773px;
   box-shadow: 0 0 3px 1px $footerColor;
   border-radius: 16px;
   padding: 40px 60px;
-  .projectTitle {
-    @include txt-style(18px, $black);
-    width: 980px;
-    height: 59px;
-    transform: translateX(-60px);
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    background-color: $subBlue;
-    padding: 17px 80px;
-    margin-bottom: 32px;
+  &.detail {
+    padding: 0 40px 60px;
+    .projectTitle {
+      @include txt-style(18px, $black);
+      transform: translateX(-40px);
+      width: 980px;
+      height: 59px;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      background-color: $subBlue;
+      padding: 17px 80px;
+      margin-bottom: 32px;
+    }
+    .projectInfo {
+      > .row {
+        width: 100%;
+        > div {
+          &.projectDate {
+            width: 747px;
+            padding: 6px 16px;
+            background-color: $subBlue;
+            border-radius: 8px;
+          }
+          &.row {
+            width: auto;
+            .date-start,
+            .date-end {
+              background-color: $subBlue;
+              width: 300px;
+              border-radius: 8px;
+              height: 32px;
+              padding: 6px 16px;
+            }
+          }
+        }
+      }
+      .content {
+        width: 980px;
+        margin: 32px 0;
+        height: 250px;
+        max-height: 250px;
+        overflow-y: auto;
+        transform: translateX(-40px);
+        padding: 10px 60px;
+      }
+    }
   }
   .projectInfo {
     margin-bottom: 32px;
     width: 100%;
-
     input {
       background-color: $subBlue;
     }
@@ -163,7 +198,7 @@
           width: 300px;
         }
       }
-      
+
       .start::after {
         content: '|';
         color: transparent;
@@ -217,7 +252,6 @@
       &.statusSelect {
         padding: 32px 0;
       }
-
     }
   }
   .addPersonBtn {

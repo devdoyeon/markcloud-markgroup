@@ -40,7 +40,7 @@ function App() {
         <Route path='/notice/write' element={<NewBoard />} />
         <Route path='/business/write' element={<BusinessNewBoard />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
-        <Route path='/project/write/:id' element={<NewBoard />} />
+        <Route path='/project/write/:id' element={<NewProject />} />
         <Route path='/weekly/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />
         <Route path='/notice/write/:id' element={<NewBoard />} />

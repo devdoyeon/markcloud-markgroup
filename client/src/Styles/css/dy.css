@@ -113,69 +113,101 @@
   background-color: #858585;
 }
 
-.createProjectWrap {
+.projectWrapper {
   width: 980px;
   min-height: 773px;
   box-shadow: 0 0 3px 1px #eeeeee;
   border-radius: 16px;
   padding: 40px 60px;
 }
-.createProjectWrap .projectTitle {
+.projectWrapper.detail {
+  padding: 0 40px 60px;
+}
+.projectWrapper.detail .projectTitle {
   font-size: 18px;
   color: #15171a;
+  transform: translateX(-40px);
   width: 980px;
   height: 59px;
-  transform: translateX(-60px);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   background-color: #eeeefa;
   padding: 17px 80px;
   margin-bottom: 32px;
 }
-.createProjectWrap .projectInfo {
+.projectWrapper.detail .projectInfo > .row {
+  width: 100%;
+}
+.projectWrapper.detail .projectInfo > .row > div.projectDate {
+  width: 747px;
+  padding: 6px 16px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+}
+.projectWrapper.detail .projectInfo > .row > div.row {
+  width: auto;
+}
+.projectWrapper.detail .projectInfo > .row > div.row .date-start,
+.projectWrapper.detail .projectInfo > .row > div.row .date-end {
+  background-color: #eeeefa;
+  width: 300px;
+  border-radius: 8px;
+  height: 32px;
+  padding: 6px 16px;
+}
+.projectWrapper.detail .projectInfo .content {
+  width: 980px;
+  margin: 32px 0;
+  height: 250px;
+  max-height: 250px;
+  overflow-y: auto;
+  transform: translateX(-40px);
+  padding: 10px 60px;
+}
+.projectWrapper .projectInfo {
   margin-bottom: 32px;
   width: 100%;
 }
-.createProjectWrap .projectInfo input {
+.projectWrapper .projectInfo input {
   background-color: #eeeefa;
 }
-.createProjectWrap .projectInfo > .row {
+.projectWrapper .projectInfo > .row {
   padding: 13px 0;
 }
-.createProjectWrap .projectInfo > .row span {
+.projectWrapper .projectInfo > .row span {
   font-size: 14px;
   color: #585858;
   width: 113px;
 }
-.createProjectWrap .projectInfo > .row input {
+.projectWrapper .projectInfo > .row input {
   height: 32px;
   border-radius: 8px;
   padding: 6px 16px;
 }
-.createProjectWrap .projectInfo > .row.makeProjectDate input {
+.projectWrapper .projectInfo > .row.makeProjectDate input {
   width: 747px;
 }
-.createProjectWrap .projectInfo > .row.date input {
+.projectWrapper .projectInfo > .row.date input {
   width: 300px;
 }
-.createProjectWrap .projectInfo > .row .start::after {
+.projectWrapper .projectInfo > .row .start::after {
   content: "|";
   color: transparent;
   border-right: 1px solid #eeeeee;
   margin: 0 13.5px;
 }
-.createProjectWrap .peopleWrap {
+.projectWrapper .peopleWrap {
   margin-top: 32px;
   width: 100%;
   justify-content: space-between;
 }
-.createProjectWrap .peopleWrap .row {
+.projectWrapper .peopleWrap .row {
   font-size: 14px;
   color: #15171a;
   justify-content: flex-start;
   width: calc(100% - 97px);
 }
-.createProjectWrap .peopleWrap .row .personBtn {
+.projectWrapper .peopleWrap .row .personBtn {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -189,33 +221,33 @@
   color: black;
   margin-right: 16px;
 }
-.createProjectWrap .peopleWrap .row .personBtn:last-child {
+.projectWrapper .peopleWrap .row .personBtn:last-child {
   margin-right: 0;
 }
-.createProjectWrap .peopleWrap .row .personBtn img {
+.projectWrapper .peopleWrap .row .personBtn img {
   margin-left: 8px;
   cursor: pointer;
 }
-.createProjectWrap .quill {
+.projectWrapper .quill {
   height: 400px;
   margin-bottom: 73px;
 }
-.createProjectWrap .projectSetting {
+.projectWrapper .projectSetting {
   width: 100%;
   align-items: flex-start;
 }
-.createProjectWrap .projectSetting span {
+.projectWrapper .projectSetting span {
   font-size: 14px;
   color: #585858;
   width: 97px;
 }
-.createProjectWrap .projectSetting > .row:last-child {
+.projectWrapper .projectSetting > .row:last-child {
   margin-top: 16px;
 }
-.createProjectWrap .projectSetting > .row.statusSelect {
+.projectWrapper .projectSetting > .row.statusSelect {
   padding: 32px 0;
 }
-.createProjectWrap .addPersonBtn {
+.projectWrapper .addPersonBtn {
   background-color: #5850cc;
   color: white;
   padding: 4px 32px;

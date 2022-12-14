@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
 import selectArrow from 'image/selectArrow.svg';
@@ -16,6 +16,7 @@ const NewProject = () => {
     '정다은',
     '송지은',
   ];
+  const { id } = useParams();
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -37,7 +38,7 @@ const NewProject = () => {
           <div className='header'>
             <h3>프로젝트 현황</h3>
           </div>
-          <div className='createProjectWrap'>
+          <div className='projectWrapper'>
             <div className='projectInfo column'>
               <hr />
               <div className='row makeProjectDate'>
@@ -181,6 +182,7 @@ const NewProject = () => {
                     setParticipation(prev => {
                       const clone = [...prev];
                       if (clone.includes(personValue)) {
+                        setAlert('duplicationPerson');
                         commonModalSetting(
                           setAlertBox,
                           true,
@@ -201,7 +203,17 @@ const NewProject = () => {
             <button className='commonBtn applyBtn'>등록</button>
             <button
               className='commonBtn listBtn'
-              onClick={() => navigate('/project')}>
+              onClick={() => {
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?<br/>${
+                    id?.length ? '수정' : '작성'
+                  }이 취소된 글은 복구할 수 없습니다.`
+                );
+                setAlert('cancel');
+              }}>
               목록
             </button>
           </div>
@@ -211,7 +223,10 @@ const NewProject = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
+          okFn={() => {
+            if (alert === 'duplicationPerson') return;
+            else if (alert === 'cancel') navigate('/project')
+          }}
           failFn={() => {}}
         />
       )}
