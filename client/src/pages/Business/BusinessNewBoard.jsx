@@ -25,24 +25,25 @@ const BusinessNewBoard = () => {
     context: '',
     bool: false,
   });
+  
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const returnHeader = () => {
-    switch (path.split('/')[1]) {
-      case 'project':
-        return '프로젝트 현황';
-      case 'weekly':
-        return '주간 업무 보고';
-      case 'board':
-        return '사내게시판';
-      case 'notice':
-        return '공지사항';
-      default:
-        break;
-    }
-  };
+  // const returnHeader = () => {
+  //   switch (path.split('/')[1]) {
+  //     case 'project':
+  //       return '프로젝트 현황';
+  //     case 'weekly':
+  //       return '주간 업무 보고';
+  //     case 'board':
+  //       return '사내게시판';
+  //     case 'notice':
+  //       return '공지사항';
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const getOriginDetail = async () => {
     let result;
@@ -112,7 +113,7 @@ const BusinessNewBoard = () => {
         <SideMenu />
         <div className='content-wrap'>
           <div className='header'>
-            <h3>{returnHeader()}</h3>
+            <h3>업무 관리</h3>
           </div>
           <div className='board-wrap'>
             <div className='body-wrap'>
