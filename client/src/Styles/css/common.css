@@ -367,6 +367,10 @@
   border: 1px solid #f5f5f5;
   transition: all 0.2s;
   border-radius: 8px;
+  color: #15171a;
+}
+.container .content-wrap > .search-wrap .search input::placeholder {
+  color: #15171a;
 }
 .container .content-wrap > .search-wrap .search input:focus {
   border: 1px solid #5850cc;

@@ -294,6 +294,10 @@
           border: 1px solid $gray05;
           transition: all 0.2s;
           border-radius: 8px;
+          color: $black;
+          &::placeholder {
+            color: $black;
+          }
           &:focus {
             border: 1px solid $mainColor;
             transition: all 0.2s;
