@@ -6,8 +6,10 @@ import selectArrow from 'image/selectArrow.svg';
 import deletePerson from 'image/deletePersonIcon.svg';
 import CommonModal from 'common/CommonModal';
 import { commonModalSetting } from 'js/commonUtils';
+import CommonSelect from 'common/CommonSelect';
 
 const NewProject = () => {
+  const statusArr = ['시작 전', '진행 중', '종료'];
   const personArr = [
     '권도연',
     '안병욱',
@@ -23,10 +25,8 @@ const NewProject = () => {
     context: '',
     bool: false,
   });
-  const [statusSelect, setStatusSelect] = useState('off');
-  const [personSelect, setPersonSelect] = useState('off');
-  const [statusValue, setStatusValue] = useState('===');
-  const [personValue, setPersonValue] = useState('===');
+  const [selectVal, setSelectVal] = useState('===');
+  const [peopleVal, setPeopleVal] = useState('===');
   const [participation, setParticipation] = useState([]);
   const navigate = useNavigate();
 
@@ -63,52 +63,11 @@ const NewProject = () => {
               <hr />
               <div className='row statusSelect'>
                 <span>프로젝트 상태</span>
-                <div className={`selectBox ${statusSelect}`}>
-                  <div
-                    className={`selectVal`}
-                    onClick={() =>
-                      statusSelect === 'on'
-                        ? setStatusSelect('off')
-                        : setStatusSelect('on')
-                    }>
-                    {statusValue}
-                    <img src={selectArrow} alt='선택 아이콘' />
-                  </div>
-                  {statusSelect === 'on' && (
-                    <div className='selectOptGroup'>
-                      <div
-                        className={`selectOpt ${
-                          statusValue === '시작 전' && 'active'
-                        }`}
-                        onClick={() => {
-                          setStatusValue('시작 전');
-                          setStatusSelect('off');
-                        }}>
-                        시작 전
-                      </div>
-                      <div
-                        className={`selectOpt ${
-                          statusValue === '진행 중' && 'active'
-                        }`}
-                        onClick={() => {
-                          setStatusValue('진행 중');
-                          setStatusSelect('off');
-                        }}>
-                        진행 중
-                      </div>
-                      <div
-                        className={`selectOpt ${
-                          statusValue === '종료' && 'active'
-                        }`}
-                        onClick={() => {
-                          setStatusValue('종료');
-                          setStatusSelect('off');
-                        }}>
-                        종료
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <CommonSelect
+                  opt={statusArr}
+                  selectVal={selectVal}
+                  setSelectVal={setSelectVal}
+                />
               </div>
               <hr />
               <div className='row peopleWrap'>
@@ -142,46 +101,18 @@ const NewProject = () => {
               <div className='row'>
                 <span>참여 인원 추가</span>
                 <div className='people column'>
-                  <div className={`selectBox ${personSelect}`}>
-                    <div
-                      className={`selectVal`}
-                      onClick={() =>
-                        personSelect === 'on'
-                          ? setPersonSelect('off')
-                          : setPersonSelect('on')
-                      }>
-                      {personValue}
-                      <img src={selectArrow} alt='선택 아이콘' />
-                    </div>
-                    {personSelect === 'on' && (
-                      <div className='selectOptGroup'>
-                        {personArr.reduce((acc, person) => {
-                          return (
-                            <>
-                              {acc}
-                              <div
-                                className={`selectOpt ${
-                                  personValue === person && 'active'
-                                }`}
-                                onClick={() => {
-                                  setPersonValue(person);
-                                  setPersonSelect('off');
-                                }}>
-                                {person}
-                              </div>
-                            </>
-                          );
-                        }, <></>)}
-                      </div>
-                    )}
-                  </div>
+                  <CommonSelect
+                    opt={personArr}
+                    selectVal={peopleVal}
+                    setSelectVal={setPeopleVal}
+                  />
                 </div>
                 <button
                   className='addPersonBtn'
                   onClick={() =>
                     setParticipation(prev => {
                       const clone = [...prev];
-                      if (clone.includes(personValue)) {
+                      if (clone.includes(peopleVal)) {
                         setAlert('duplicationPerson');
                         commonModalSetting(
                           setAlertBox,
@@ -190,7 +121,7 @@ const NewProject = () => {
                           '이미 추가된 인원입니다.'
                         );
                         return clone;
-                      } else clone.push(personValue);
+                      } else clone.push(peopleVal);
                       return clone;
                     })
                   }>
@@ -225,7 +156,7 @@ const NewProject = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicationPerson') return;
-            else if (alert === 'cancel') navigate('/project')
+            else if (alert === 'cancel') navigate('/project');
           }}
           failFn={() => {}}
         />
