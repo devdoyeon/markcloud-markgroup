@@ -22,6 +22,8 @@
     background-color: white;
     border: 1px solid $mainColor;
     width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
     transform: translateX(-16px) translateY(12px);
     border-radius: 8px;
     > .selectOpt {
@@ -142,12 +144,16 @@
     }
   }
 }
+.project {
+  height: 130vh;
+}
+
 .createProjectWrap {
   width: 980px;
   min-height: 773px;
   box-shadow: 0 0 3px 1px $footerColor;
   border-radius: 16px;
-  padding: 0px 60px 40px;
+  padding: 40px 60px;
   .projectTitle {
     @include txt-style(18px, $black);
     width: 980px;
@@ -190,6 +196,37 @@
       &.date {
         input {
           width: 300px;
+        }
+      }
+      &.peopleWrap {
+        width: 100%;
+        justify-content: space-between;
+        &.nonePeople {
+          span {
+            width: auto;
+          }
+        }
+        .row {
+          justify-content: flex-start;
+          width: calc(100% - 113px);
+          // background-color: skyblue;
+          .personBtn {
+            @include flex-style();
+            background-color: $subBlue;
+            width: 95px;
+            padding: 6px 16px;
+            height: 32px;
+            border-radius: 8px;
+            color: black;
+            margin-right: 8px;
+            &:last-child {
+              margin-right: 0;
+            }
+            img {
+              margin-left: 8px;
+              cursor: pointer;
+            }
+          }
         }
       }
       .start::after {

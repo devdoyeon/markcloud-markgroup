@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: 5;

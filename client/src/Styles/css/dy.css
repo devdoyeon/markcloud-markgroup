@@ -24,6 +24,8 @@
   background-color: white;
   border: 1px solid #5850cc;
   width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
   transform: translateX(-16px) translateY(12px);
   border-radius: 8px;
 }
@@ -141,12 +143,16 @@
   padding: 18px 0;
 }
 
+.project {
+  height: 130vh;
+}
+
 .createProjectWrap {
   width: 980px;
   min-height: 773px;
   box-shadow: 0 0 3px 1px #eeeeee;
   border-radius: 16px;
-  padding: 0px 60px 40px;
+  padding: 40px 60px;
 }
 .createProjectWrap .projectTitle {
   font-size: 18px;
@@ -191,6 +197,38 @@
 }
 .createProjectWrap .projectInfo > .row.date input {
   width: 300px;
+}
+.createProjectWrap .projectInfo > .row.peopleWrap {
+  width: 100%;
+  justify-content: space-between;
+}
+.createProjectWrap .projectInfo > .row.peopleWrap.nonePeople span {
+  width: auto;
+}
+.createProjectWrap .projectInfo > .row.peopleWrap .row {
+  justify-content: flex-start;
+  width: calc(100% - 113px);
+}
+.createProjectWrap .projectInfo > .row.peopleWrap .row .personBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #eeeefa;
+  width: 95px;
+  padding: 6px 16px;
+  height: 32px;
+  border-radius: 8px;
+  color: black;
+  margin-right: 8px;
+}
+.createProjectWrap .projectInfo > .row.peopleWrap .row .personBtn:last-child {
+  margin-right: 0;
+}
+.createProjectWrap .projectInfo > .row.peopleWrap .row .personBtn img {
+  margin-left: 8px;
+  cursor: pointer;
 }
 .createProjectWrap .projectInfo > .row .start::after {
   content: "|";
