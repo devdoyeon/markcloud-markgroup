@@ -62,7 +62,7 @@ const NewProject = () => {
               <hr />
               <div className='row statusSelect'>
                 <span>프로젝트 상태</span>
-                <div className={`selectBox status ${statusSelect}`}>
+                <div className={`selectBox ${statusSelect}`}>
                   <div
                     className={`selectVal`}
                     onClick={() =>
@@ -142,7 +142,7 @@ const NewProject = () => {
               <div className='row'>
                 <span>참여 인원 추가</span>
                 <div className='people column'>
-                  <div className={`selectBox status ${personSelect}`}>
+                  <div className={`selectBox ${personSelect}`}>
                     <div
                       className={`selectVal`}
                       onClick={() =>

@@ -1,52 +1,6 @@
 @import './style';
 // 프로젝트 현황, 주간 업무 보고, 게시판
 
-.status {
-  border: 1px solid $footerColor;
-  color: $gray02;
-  width: 300px;
-  background-color: $subBlue;
-  padding: 4px 16px;
-  border-radius: 8px;
-  &.on {
-    border: 1px solid $mainColor;
-  }
-  .selectVal {
-    cursor: pointer;
-    font-size: 14px;
-    color: $black;
-    @include flex-style($justifyVal: space-between);
-  }
-  .selectOptGroup {
-    z-index: 2;
-    position: absolute;
-    background-color: white;
-    border: 1px solid $mainColor;
-    width: 300px;
-    max-height: 300px;
-    overflow-y: auto;
-    transform: translateX(-16px) translateY(12px);
-    border-radius: 8px;
-    > .selectOpt {
-      cursor: pointer;
-      font-size: 14px;
-      padding: 11px 16px;
-      &:hover {
-        color: $black;
-        background-color: $subBlue;
-      }
-      &.active {
-        color: $black;
-        &::before {
-          content: '';
-          border-left: 3px solid $mainColor;
-          margin-right: 16px;
-        }
-      }
-    }
-  }
-}
-
 .selectArea {
   width: 980px;
   height: 254px;
@@ -232,9 +186,9 @@
         width: 95px;
         padding: 6px 16px;
         height: 32px;
-        border-radius: 8px;
+        border-radius: 16px;
         color: black;
-        margin-right: 8px;
+        margin-right: 16px;
         &:last-child {
           margin-right: 0;
         }

@@ -19,6 +19,56 @@
   height: 350px;
 }
 
+.selectBox {
+  border: 1px solid #eeeeee;
+  color: #858585;
+  width: 300px;
+  background-color: #eeeefa;
+  padding: 4px 16px;
+  border-radius: 8px;
+}
+.selectBox.on {
+  border: 1px solid #5850cc;
+}
+.selectBox .selectVal {
+  cursor: pointer;
+  font-size: 14px;
+  color: #15171a;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.selectBox .selectOptGroup {
+  z-index: 2;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #5850cc;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  transform: translateX(-16px) translateY(12px);
+  border-radius: 8px;
+}
+.selectBox .selectOptGroup > .selectOpt {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 11px 16px;
+}
+.selectBox .selectOptGroup > .selectOpt:hover {
+  color: #15171a;
+  background-color: #eeeefa;
+}
+.selectBox .selectOptGroup > .selectOpt.active {
+  color: #15171a;
+}
+.selectBox .selectOptGroup > .selectOpt.active::before {
+  content: "";
+  border-left: 3px solid #5850cc;
+  margin-right: 16px;
+}
+
 .alert-modal {
   display: flex;
   flex-direction: row;

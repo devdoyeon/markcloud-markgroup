@@ -57,7 +57,7 @@ const ProjectStatus = () => {
               </div>
               <div className='row'>
                 <span>프로젝트 상태</span>
-                <div className={`selectBox status ${select}`}>
+                <div className={`selectBox ${select}`}>
                   <div
                     className={`selectVal`}
                     onClick={() =>

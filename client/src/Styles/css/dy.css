@@ -1,53 +1,3 @@
-.status {
-  border: 1px solid #eeeeee;
-  color: #858585;
-  width: 300px;
-  background-color: #eeeefa;
-  padding: 4px 16px;
-  border-radius: 8px;
-}
-.status.on {
-  border: 1px solid #5850cc;
-}
-.status .selectVal {
-  cursor: pointer;
-  font-size: 14px;
-  color: #15171a;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.status .selectOptGroup {
-  z-index: 2;
-  position: absolute;
-  background-color: white;
-  border: 1px solid #5850cc;
-  width: 300px;
-  max-height: 300px;
-  overflow-y: auto;
-  transform: translateX(-16px) translateY(12px);
-  border-radius: 8px;
-}
-.status .selectOptGroup > .selectOpt {
-  cursor: pointer;
-  font-size: 14px;
-  padding: 11px 16px;
-}
-.status .selectOptGroup > .selectOpt:hover {
-  color: #15171a;
-  background-color: #eeeefa;
-}
-.status .selectOptGroup > .selectOpt.active {
-  color: #15171a;
-}
-.status .selectOptGroup > .selectOpt.active::before {
-  content: "";
-  border-left: 3px solid #5850cc;
-  margin-right: 16px;
-}
-
 .selectArea {
   width: 980px;
   height: 254px;
@@ -235,9 +185,9 @@
   width: 95px;
   padding: 6px 16px;
   height: 32px;
-  border-radius: 8px;
+  border-radius: 16px;
   color: black;
-  margin-right: 8px;
+  margin-right: 16px;
 }
 .createProjectWrap .peopleWrap .row .personBtn:last-child {
   margin-right: 0;
