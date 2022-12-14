@@ -110,8 +110,7 @@ const NewProject = () => {
                 </div>
               </div>
               <hr />
-              <div
-                className='row peopleWrap'>
+              <div className='row peopleWrap'>
                 <span>참여 목록</span>
                 <div className='row'>
                   {participation?.length === 0

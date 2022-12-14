@@ -1,17 +1,20 @@
-import './App.css';
+import 'App.css';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import ProjectStatus from './pages/ProjectStatus';
-import WeeklyReport from './pages/WeeklyReport';
-import Board from './pages/Board';
-import BusinessManagement from './pages/BusinessManagement';
-import PersonnelManagement from './pages/PersonnelManagement';
-import Notice from './pages/Notice';
-import BoardRead from 'pages/BoardRead';
-import NewBoard from 'pages/NewBoard';
-import NewProject from 'pages/NewProject';
-import NotFound from 'pages/NotFound';
-import BusinessNewBoard from 'pages/BusinessNewBoard';
+// =============== Pages ===============
+import Home from 'pages/Home';
+import Board from 'pages/Board';
+import WeeklyReport from 'pages/WeeklyReport';
+import Notice from 'pages/Notice';
+import ProjectStatus from 'pages/Project/ProjectStatus';
+import PersonnelManagement from 'pages/PersonnelManagement';
+import BusinessManagement from 'pages/Business/BusinessManagement';
+// =============== CommonPages ===============
+import NewBoard from 'pages/common/NewBoard';
+import BoardRead from 'pages/common/BoardRead';
+import ProjectDetail from 'pages/Project/ProjectDetail';
+import NewProject from 'pages/Project/NewProject';
+import BusinessNewBoard from 'pages/Business/BusinessNewBoard';
+import NotFound from 'pages/common/NotFound';
 
 function App() {
   return (
@@ -26,7 +29,7 @@ function App() {
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
-        <Route path='/project/:id' element={<BoardRead />} />
+        <Route path='/project/:id' element={<ProjectDetail />} />
         <Route path='/weekly/:id' element={<BoardRead />} />
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<BoardRead />} />
