@@ -17,10 +17,11 @@ class MetaBase(BaseModel):
         return self
 
 class Response(MetaBase,GenericModel, Generic[T]):
-
+    
     data: Optional[T] = None 
 
     def success_response(self, data: Optional[T] = None):
         self.data = data
         return {'data':self.data, 'meta':self.meta}
+
 

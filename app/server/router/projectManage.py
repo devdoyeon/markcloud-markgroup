@@ -13,18 +13,44 @@ router_project = APIRouter(
     tags=["Project Manage API"]
 )
 
-# 프로젝트 목록
+# 프로젝트 전체 목록
+@router_project.get('/')
+def read_projects(
+    user_id: str='songmoana',
+    page: int = 1,
+    limit: int = 10,
+    db:Session = Depends(get_db)
+):
+    
+    offset = (page - 1) * limit
+    total_count, project_list = get_project_list(db, offset, limit, user_id) # 나의 업무현황 데이터
+    total_page = total_count // limit
+    
+    if total_page % limit != 0:
+        total_page += 1
+    
+    manager_id = get_project_data(db,user_id)
+    
+    result = Response().metadata(
+        page=page,
+        totalPage=total_page,
+        offset=offset,
+        limit=limit,
+    ).success_response(project_list)
+    
+    result['manager_id'] = manager_id
+    return result
+    
+
+# 프로젝트 필터링 목록
 @router_project.get('/list', response_model = Response[List[ProjectManageOut]])
 def read_project_list(
     status_filter: Optional[ProjectManageStatusFilter] = 'MyProject',
-    # filter: Optional[ProjectManageFilter] = None,
-    # progress_filter : Optional[ProgressFilter] = None,
     user_id: str = 'songmoana',
     page: int = 1,
     limit: int = 10,
     db: Session = Depends(get_db)
 ):
-
     offset = (page - 1) * limit
     total_count, project_list = get_project_list(db, offset, limit, user_id,status_filter)
     total_page = total_count // limit
@@ -38,7 +64,6 @@ def read_project_list(
         offset=offset,
         limit=limit
     ).success_response(project_list)
-
 
 # 프로젝트 생성
 @router_project.post('/create')

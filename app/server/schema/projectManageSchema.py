@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional,List
 from enum import Enum
 from datetime import date
 
@@ -51,9 +51,10 @@ class ProjectManageOut(BaseModel):
     work_status:str
     created_at:date
     work_end_date:Optional[date]
-    
-    
-    
+        
     class Config:
         orm_mode = True
-        
+    
+class ProjectData(str):
+    
+    project_name: str

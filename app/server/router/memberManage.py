@@ -23,7 +23,7 @@ def read_department_list(
 ):
     offset = (page - 1) * limit
     
-    total_count, department_list = get_department_list(db, offset, limit)
+    total_count, department_list = get_department_list(db, offset, limit, user_id)
     total_page = total_count // limit
     
     if total_count % limit != 0:
@@ -44,18 +44,15 @@ def read_member_list(
 ):
     offset = (page -1) * limit
     
-    member_list = get_member_list(db,offset,limit)
-    total_count = len(member_list)
+    total_count,member_list = get_member_list(db,offset,limit)
     total_page = total_count // limit
     
     if total_count % limit != 0:
         total_page += 1    
-    try:
-        return Response().metadata(
+
+    return Response().metadata(
         page=page,
         totalPage=total_page,
         offset=offset,
         limit=limit
-        ).success_response(member_list)
-    except Exception as e:
-        print(e)
+    ).success_response(member_list)
