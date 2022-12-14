@@ -238,24 +238,30 @@
         height: 42px;
         border-radius: 8px;
         .selectBox {
-          transform: translateY(-2px);
-          display: inline-block;
+          @include flex-style();
           border: 1px solid $gray05;
-          border-radius: 8px;
+          transform: translateY(-2px);
           margin-right: 4px;
-          color: $gray02;
-          .selectVal {
+          background-color: white;
+          width: 100px;
+          height: 42px;
+          padding: 0 8px 0 16px;
+          &.on {
+            border: 1px solid $mainColor;
+          }
+          > .selectVal {
+            width: 100%;
             @include flex-style($justifyVal: space-between);
-            cursor: pointer;
-            padding: 0 13px;
+          }
+          >.selectOptGroup {
+            @include position-style();
+            transform: translateX(-4px) translateY(60px);
             width: 100px;
-            height: 42px;
-            transition: all 0.2s;
-            font-size: 14px;
-            border-radius: 8px;
-            &.on {
-              border: 1px solid $mainColor;
-              transition: all 0.2s;
+            height: auto;
+            overflow: hidden;
+            .selectOpt:hover {
+              color: $mainColor;
+              border-radius: 0;
             }
           }
         }

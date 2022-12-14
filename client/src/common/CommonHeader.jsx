@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { enterFn } from 'js/commonUtils';
 import searchIcon from 'image/searchIcon.svg';
-import selectArrow from 'image/selectArrow.svg';
+import CommonSelect from './CommonSelect';
 
 // 자주 쓰이는 헤더
 const CommonHeader = ({
@@ -14,7 +14,7 @@ const CommonHeader = ({
   okFn,
 }) => {
   const path = useLocation().pathname;
-  const [select, setSelect] = useState('off');
+  const searchOptionArr = ['작성자', '제목'];
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
@@ -31,6 +31,20 @@ const CommonHeader = ({
     }
   };
 
+  useEffect(() => {
+    let kor = filter;
+    switch (kor) {
+      case '제목':
+        setFilter('title');
+        break;
+      case '작성자':
+        setFilter('created_id');
+        break;
+      default:
+        return;
+    }
+  }, [filter]);
+
   return (
     <>
       <div
@@ -46,36 +60,11 @@ const CommonHeader = ({
         <>
           <div className='search-wrap'>
             <div className='search'>
-              <div className='selectBox'>
-                <div
-                  className={`selectVal ${select}`}
-                  onClick={() =>
-                    select === 'on' ? setSelect('off') : setSelect('on')
-                  }>
-                  {filter === 'title' ? '제목' : '작성자'}
-                  <img src={selectArrow} alt='선택 아이콘' />
-                </div>
-                {select === 'on' && (
-                  <div className='selectOptGroup'>
-                    <div
-                      className='selectOpt'
-                      onClick={() => {
-                        setFilter('created_id');
-                        setSelect('off');
-                      }}>
-                      작성자
-                    </div>
-                    <div
-                      className='selectOpt'
-                      onClick={() => {
-                        setFilter('title');
-                        setSelect('off');
-                      }}>
-                      제목
-                    </div>
-                  </div>
-                )}
-              </div>
+              <CommonSelect
+                opt={searchOptionArr}
+                selectVal={filter}
+                setSelectVal={setFilter}
+              />
               <input
                 type='text'
                 placeholder='검색어를 입력해 주세요.'

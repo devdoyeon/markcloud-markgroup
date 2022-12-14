@@ -4,6 +4,17 @@ import selectArrow from 'image/selectArrow.svg';
 const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
   const [statusSelect, setStatusSelect] = useState('off');
 
+  const changeSelectVal = () => {
+    switch (selectVal) {
+      case 'created_id':
+        return '작성자';
+      case 'title':
+        return '제목';
+      default:
+        return selectVal;
+    }
+  };
+
   return (
     <div className={`selectBox ${statusSelect}`}>
       <div
@@ -11,7 +22,7 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
         onClick={() =>
           statusSelect === 'on' ? setStatusSelect('off') : setStatusSelect('on')
         }>
-        {selectVal}
+        {changeSelectVal()}
         <img src={selectArrow} alt='선택 아이콘' />
       </div>
       {statusSelect === 'on' && (
