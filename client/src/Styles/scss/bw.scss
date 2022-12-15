@@ -104,6 +104,11 @@
         }
         .project-wrap {
           @include flex-style($justifyVal: flex-start);
+          &.board-head {
+            > .project-list {
+              padding-left: 8px;
+            }
+          }
           > div {
             &.project-list {
               margin-right: 16px;
@@ -152,6 +157,9 @@
               margin-right: 16px;
               font-size: 14px;
               color: $gray01;
+              &.pro {
+                margin-right: 10px;
+              }
             }
             > div {
               @include flex-style($justifyVal: flex-start);
@@ -169,8 +177,8 @@
             > span {
               font-size: 14px;
               color: $gray01;
-              margin-right: 16px;
-              margin-left: 12px;
+              margin-right: 21px;
+              margin-left: 6px;
             }
             > .title-input-wrap {
               width: 782px;
@@ -220,8 +228,12 @@
           }
           &.edit {
             padding: 20px 0;
+            height: 430px;
             .quill {
               height: 430px;
+              > .ql-container {
+                height: 346px;
+              }
             }
           }
         }
