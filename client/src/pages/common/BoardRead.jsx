@@ -43,9 +43,6 @@ const BoardRead = () => {
       case 'weekly':
         setHeader('주간 업무 보고');
         break;
-      case 'project':
-        setHeader('프로젝트 현황');
-        break;
       default:
         result = '';
     }
@@ -75,9 +72,6 @@ const BoardRead = () => {
         break;
       case 'weekly':
         setHeader('주간 업무 보고');
-        break;
-      case 'project':
-        setHeader('프로젝트 현황');
         break;
       default:
         result = '';

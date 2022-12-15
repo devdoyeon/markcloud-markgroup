@@ -31,8 +31,6 @@ const NewBoard = () => {
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
-      case 'project':
-        return '프로젝트 현황';
       case 'weekly':
         return '주간 업무 보고';
       case 'board':
@@ -54,8 +52,6 @@ const NewBoard = () => {
         result = await getBoardDetail(id);
         break;
       case 'weekly':
-        return;
-      case 'project':
         return;
       default:
     }
@@ -92,8 +88,6 @@ const NewBoard = () => {
         break;
       case 'weekly':
         return;
-      case 'project':
-        return;
       default:
     }
     if (typeof result === 'object') {
@@ -117,8 +111,6 @@ const NewBoard = () => {
         result = await editBoard(postInfo, id);
         break;
       case 'weekly':
-        return;
-      case 'project':
         return;
       default:
     }

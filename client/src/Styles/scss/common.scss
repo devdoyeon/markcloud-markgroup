@@ -205,9 +205,11 @@
           margin-bottom: 31px;
         }
         .content {
-          min-height: 300px;
+          min-height: 250px;
+          max-height: 425px;
+          overflow-y: auto;
           height: auto;
-          padding-bottom: 40px;
+          padding: 0 10px;
           white-space: normal;
           > p {
             word-wrap: break-word;

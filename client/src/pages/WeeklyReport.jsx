@@ -1,30 +1,60 @@
+import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
-import noneImg from 'image/noneList.svg';
-import { useNavigate } from 'react-router-dom';
+import Pagination from 'common/Pagination';
+import CommonHeader from 'common/CommonHeader';
+import ListWrap from 'common/ListWrap';
+import { getReportList } from 'js/groupwareApi';
 
 const WeeklyReport = () => {
-  const navigate = useNavigate();
+  const [list, setList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 9,
+    limit: 9,
+  });
+  const [filter, setFilter] = useState('created_id');
+  const [searchText, setSearchText] = useState('');
+  const status = !!list?.length;
+  let prevent = false;
+
+  const getReport = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getReportList(pageInfo, filter, searchText);
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setList(data);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
+  };
+
+  const commonHeaderState = {
+    filter,
+    setFilter,
+    searchText,
+    setSearchText,
+    status,
+  };
+
+  useEffect(() => {
+    getReport();
+  }, [pageInfo.page]);
 
   return (
     <div className='container'>
       <SideMenu />
       <div className='content-wrap notice'>
-        <div className='header'>
-          <h3>주간 업무 보고</h3>
-        </div>
-        <div className='list-wrap'>
-          <div className='noneList column'>
-            <img src={noneImg} alt='글 없음 아이콘' />
-            <span>등록된 게시글이 없습니다.</span>
-          </div>
-          <div className='btn-wrap'>
-            <button
-              className='commonBtn applyBtn'
-              onClick={() => navigate('/weekly/write')}>
-              등록
-            </button>
-          </div>
-        </div>
+        <CommonHeader {...commonHeaderState} okFn={getReport} />
+        <ListWrap list={list} />
+        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
     </div>
   );

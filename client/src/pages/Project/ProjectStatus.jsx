@@ -15,6 +15,7 @@ const ProjectStatus = () => {
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 30,
+    limit: 9,
   });
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState('created_id');
@@ -109,7 +110,7 @@ const ProjectStatus = () => {
               </table>
             </div>
           </div>
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo}/>
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
       </div>
       {alertBox.bool && (

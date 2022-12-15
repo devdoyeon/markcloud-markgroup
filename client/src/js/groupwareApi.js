@@ -55,8 +55,9 @@ export const deleteNotice = async id => {
   }
 };
 
-// -------------------------------------------------------------------------------
+// ----------------------------------사내 게시판----------------------------------
 
+//= 게시판 리스트 불러오기
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
@@ -69,6 +70,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   }
 };
 
+//= 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
     return await axios.get(`/dy/board/detail?post_id=${id}`);
@@ -77,6 +79,7 @@ export const getBoardDetail = async id => {
   }
 };
 
+//= 게시글 작성
 export const createBoard = async ({ title, content }) => {
   try {
     return await axios.post(`/dy/board/create`, {
@@ -90,6 +93,7 @@ export const createBoard = async ({ title, content }) => {
   }
 };
 
+//= 게시글 수정
 export const editBoard = async ({ title, content, created_id }, id) => {
   try {
     return await axios.post(`/dy/board/update?post_id=${id}`, {
@@ -103,9 +107,25 @@ export const editBoard = async ({ title, content, created_id }, id) => {
   }
 };
 
+//= 게시글 삭제
 export const deleteBoard = async id => {
   try {
     return await axios.post(`/dy/board/delete?post_id=${id}&user_id=mxxvii`);
+  } catch (error) {
+    return;
+  }
+};
+
+//----------------------------------주간 업무 보고----------------------------------
+
+//= 주간 업무 보고 불러오기
+export const getReportList = async ({ page, limit = 9 }, type, value) => {
+  try {
+    return await axios.get(
+      `/dy/report/list?page=${page}&limit=${limit}&filter_type=${
+        value?.length ? type : 'all'
+      }${value?.length ? `&filter_val=${value}` : ''}`
+    );
   } catch (error) {
     return;
   }

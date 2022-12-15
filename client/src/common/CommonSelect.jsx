@@ -2,7 +2,7 @@ import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
 
 const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
-  const [statusSelect, setStatusSelect] = useState('off');
+  const [select, setSelect] = useState('off');
 
   /*
     ! props
@@ -22,16 +22,14 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
   };
 
   return (
-    <div className={`selectBox ${statusSelect}`}>
+    <div className={`selectBox ${select}`}>
       <div
         className={`selectVal`}
-        onClick={() =>
-          statusSelect === 'on' ? setStatusSelect('off') : setStatusSelect('on')
-        }>
+        onClick={() => (select === 'on' ? setSelect('off') : setSelect('on'))}>
         {changeSelectVal()}
         <img src={selectArrow} alt='선택 아이콘' />
       </div>
-      {statusSelect === 'on' && (
+      {select === 'on' && (
         <div className='selectOptGroup'>
           {opt.reduce((acc, option) => {
             return (
@@ -41,7 +39,7 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
                   className={`selectOpt ${selectVal === option && 'active'}`}
                   onClick={() => {
                     setSelectVal(option);
-                    setStatusSelect('off');
+                    setSelect('off');
                   }}>
                   {option}
                 </div>
