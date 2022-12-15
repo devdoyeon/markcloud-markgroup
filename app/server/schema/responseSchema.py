@@ -23,5 +23,7 @@ class Response(MetaBase,GenericModel, Generic[T]):
     def success_response(self, data: Optional[T] = None):
         self.data = data
         return {'data':self.data, 'meta':self.meta}
+    
+
 
 

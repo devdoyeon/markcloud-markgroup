@@ -14,7 +14,7 @@ router_project = APIRouter(
 )
 
 # 프로젝트 전체 목록
-@router_project.get('/')
+@router_project.get('/read',response_model = Response[List[ProjectManageOut]])
 def read_projects(
     user_id: str='songmoana',
     page: int = 1,
@@ -29,21 +29,21 @@ def read_projects(
     if total_page % limit != 0:
         total_page += 1
     
-    manager_id = get_project_data(db,user_id)
+    project_name, member_id = get_project_data(db,user_id)
     
-    result = Response().metadata(
+    return Response().metadata(
+        project_name = project_name,
+        member_id = member_id,
         page=page,
         totalPage=total_page,
         offset=offset,
-        limit=limit,
+        limit=limit
     ).success_response(project_list)
-    
-    result['manager_id'] = manager_id
-    return result
+
     
 
 # 프로젝트 필터링 목록
-@router_project.get('/list', response_model = Response[List[ProjectManageOut]])
+@router_project.get('/filter_read', response_model = Response[List[ProjectManageOut]])
 def read_project_list(
     status_filter: Optional[ProjectManageStatusFilter] = 'MyProject',
     user_id: str = 'songmoana',

@@ -14,18 +14,15 @@ def get_project_data(db,user_id):
     try:
         user_organ_code = db.query(member_table.department_code).filter(member_table.user_id==user_id).first()[0] # 기업코드 확인
         
-        project_name = db.query(project_table.project_name).filter(project_manage_table.organ_code == user_organ_code).distinct().all()
+        # 전체 프로젝트명
+        project_name = db.query(project_table.project_name).filter(project_manage_table.organ_code == user_organ_code).all()
         project_name = [name for name, in project_name]
         
-        manager_id = db.query(project_manage_table.manager_id).filter(project_manage_table.organ_code == user_organ_code).distinct().all()
-        manager_id = [name for name, in manager_id]
-        
-        request_id = db.query(project_manage_table.request_id).filter(project_manage_table.organ_code == user_organ_code).distinct().all()
-        request_id = [name for name, in request_id]
-
+        # 전체 직원
+        member_id = db.query(member_table.name).filter(project_manage_table.organ_code == user_organ_code).distinct().all()
+        member_id = [name for name, in member_id]
              
-        return manager_id
-         
+        return project_name, member_id
     except:
         raise HTTPException(status_code=500, detail='DBError')        
     

@@ -26,3 +26,29 @@ class MemberOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class MemberIn(BaseModel):
+    
+    name:str
+    user_id:str
+    hashed_password:str
+    email:str
+    birthday:date
+    phone:int
+    gender:str
+    address:Optional[str] = ""
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    class Config:
+        orm_mode = True
+    

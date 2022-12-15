@@ -64,15 +64,15 @@ def change_notice(db,inbound_data,notice_id, user_id):
     
     notice_table = noticeModel.NoticeTable
     
-    values = {'title':inbound_data.title,
-              'content':inbound_data.content,
-              'created_id':user_id,
-              'updated_at':datetime.today()
-              }
-    
-    base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
+    try: 
+        values = {'title':inbound_data.title,
+                'content':inbound_data.content,
+                'created_id':user_id,
+                'updated_at':datetime.today()
+                }
+        
+        base_q = db.query(notice_table).filter(notice_table.id == notice_id) #.first()
 
-    try:
         if user_id == base_q.created_id:
             db.query(notice_table).filter_by(id = notice_id).update(values)
         else:
