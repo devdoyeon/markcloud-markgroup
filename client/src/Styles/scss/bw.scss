@@ -165,6 +165,7 @@
           &.title {
             width: 100%;
             padding-left: 10px;
+
             > span {
               font-size: 14px;
               color: $gray01;
@@ -215,6 +216,12 @@
               right: -6px;
               height: 36px;
               background-color: $footerColor;
+            }
+          }
+          &.edit {
+            padding: 20px 0;
+            .quill {
+              height: 430px;
             }
           }
         }
