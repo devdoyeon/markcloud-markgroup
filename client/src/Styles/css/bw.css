@@ -1,4 +1,3 @@
-@charset "UTF-8";
 [type=radio] {
   vertical-align: middle;
   appearance: none;
@@ -198,6 +197,10 @@
   background-color: #eeeefa;
   padding: 6px 0 6px 12px;
   border-radius: 8px;
+  border: 1px solid transparent;
+}
+.container .content-wrap.business .work-wrap .project-wrap.title > .title-input-wrap label input:focus {
+  border: 1px solid #5850cc;
 }
 .container .content-wrap.business .work-wrap .content {
   display: flex;
@@ -241,6 +244,7 @@
   height: 430px;
 }
 .container .content-wrap.business .work-wrap .content.edit .quill {
+  width: 100%;
   height: 430px;
 }
 .container .content-wrap.business .work-wrap .content.edit .quill > .ql-container {
@@ -343,7 +347,6 @@
 }
 .container .content-wrap.business .check-work-wrap .check-tab-list > div span {
   color: #585858;
-  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
   font-size: 16px;
 }
 .container .content-wrap.business .check-work-wrap .check-tab-list > div span.active {

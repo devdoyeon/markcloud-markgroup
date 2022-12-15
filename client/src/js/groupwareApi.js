@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// 공지사항 :
+// ----------------------------------공지사항----------------------------------
 export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
     if (type === '' || value === '') {
@@ -50,6 +50,41 @@ export const deleteNotice = async id => {
   try {
     const typeChange = parseInt(id);
     return await axios.post(`/bw/notice/delete?notice_id=${id}`);
+  } catch (error) {
+    return;
+  }
+};
+// ----------------------------------업무 관리----------------------------------
+
+export const getProjectRead = async () => {
+  try {
+    return await axios.get(`/bw/projects/read`, {
+      user_id: 'songmoana',
+      page: 1,
+      limit: 10,
+    });
+  } catch (error) {
+    return;
+  }
+};
+
+export const createProject = async ({
+  project_name,
+  title,
+  content,
+  work_status,
+  request_id,
+  manager_id,
+}) => {
+  try {
+    return await axios.post(`/bw/projects/create`, {
+      project_name,
+      title,
+      content,
+      work_status,
+      request_id,
+      manager_id,
+    });
   } catch (error) {
     return;
   }
