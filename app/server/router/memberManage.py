@@ -34,6 +34,41 @@ def read_department_list(
     totalPage=total_page,
     offset=offset,
     limit=limit).success_response(department_list)
+    
+@router_member.get('/department/info', response_model = DepartmentOut)    
+def read_department_info(
+    department_id:int,
+    db: Session = Depends(get_db)
+):
+    return get_department_info(db, department_id)
+
+# 부서 등록
+@router_member.post('/department/create')
+def create_department(
+    inbound_data:DepartmentIn,
+    user_id:str = 'songmoana',
+    db :Session = Depends(get_db)
+):
+    insert_department(db, inbound_data, user_id)
+
+# 부서 수정
+@router_member.post('/department/update')
+def update_department(
+    inbound_data:DepartmentIn,
+    department_id:int,
+    db: Session = Depends(get_db)
+):
+    change_department(db, inbound_data, department_id)
+
+
+# 부서 삭제
+@router_member.post('/department/delete')
+def delete_department(
+    department_id:int,
+    db: Session = Depends(get_db)
+):
+    remove_department(db, department_id)
+
 
 # 직원 리스트
 @router_member.get('/member/list', response_model= Response[List[MemberOut]])
@@ -57,6 +92,14 @@ def read_member_list(
         offset=offset,
         limit=limit
     ).success_response(member_list)
+    
+    
+@router_member.get('/member/info',response_model= MemberOut)
+def read_member_info(
+    member_id:int,
+    db: Session = Depends(get_db)
+):
+    return get_member_info(db, member_id)
 
 
 # 직원 등록
@@ -68,17 +111,20 @@ def create_member(
 ):
     insert_member(db,inbound_data,user_id)
 
+# 직원 수정
 @router_member.post('/member/update')
 def update_member(
-    db:Session = Depends(get_db)
+    inboud_data: MemberIn,
+    member_id:int,
+    db: Session = Depends(get_db)
 ):
-    pass
+    change_member(db, inboud_data ,member_id)
+    
 
-
+# 직원 삭제
 @router_member.post('/member/delete')
 def delete_member(
     member_id:str,
-    user_id:str = 'songmoana',
     db: Session = Depends(get_db)
 ):
-    remove_member(db,member_id,user_id)
+    remove_member(db,member_id)

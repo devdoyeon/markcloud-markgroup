@@ -1,6 +1,6 @@
 # 업무 관리
 from model import projectManageModel, memberManageModel
-from sqlalchemy import desc
+from sqlalchemy import desc, distinct
 from fastapi import HTTPException
 from datetime import datetime
 
@@ -18,9 +18,11 @@ def get_project_data(db,user_id):
         project_name = db.query(project_table.project_name).filter(project_manage_table.organ_code == user_organ_code).all()
         project_name = [name for name, in project_name]
         
-        # 전체 직원
-        member_id = db.query(member_table.name).filter(project_manage_table.organ_code == user_organ_code).distinct().all()
-        member_id = [name for name, in member_id]
+        # 전체 직원 (담당자, 요청자)
+
+        member_id = db.query(member_table.name, member_table.section).filter(member_table.department_code == user_organ_code).all()
+        member_id = [(i[0]+'('+str(i[1])+')')for i in member_id]
+
              
         return project_name, member_id
     except:
@@ -68,12 +70,12 @@ def insert_project(db,inbound_data,user_id):
     member_table = memberManageModel.MemberTable
 
     try:
-        organ_code = db.query(member_table.department_code).filter(member_table.user_id == user_id).first()
+        user_organ_code = db.query(member_table.department_code).filter(member_table.user_id == user_id).first()
         project_code = db.query(project_table.project_code).filter(project_table.project_name == inbound_data.project_name).first()
 
         
         db_query = project_manage_table(
-            organ_code=organ_code[0],
+            organ_code=user_organ_code[0],
             project_code=project_code[0],
             title=inbound_data.title,
             request_id=inbound_data.request_id,

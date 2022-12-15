@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime, timedelta, date
 from enum import Enum
+from model import memberManageModel
 
 class DepartmentOut(BaseModel):
     
@@ -11,7 +12,10 @@ class DepartmentOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class DepartmentIn(BaseModel):
     
+    department_name:str
     
 class MemberOut(BaseModel):
 
@@ -34,21 +38,13 @@ class MemberIn(BaseModel):
     hashed_password:str
     email:str
     birthday:date
-    phone:int
+    phone:str
     gender:str
-    address:Optional[str] = ""
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    zip_code:Optional[str]
+    address:Optional[str]
+    section:str
     
     class Config:
         orm_mode = True
+
     

@@ -86,11 +86,10 @@ def remove_notice(db,notice_id, user_id):
     notice_table = noticeModel.NoticeTable
 
     base_q = db.query(notice_table).filter(notice_table.id == notice_id)
-    try:
+    try:  
         if base_q.first().created_id == user_id:
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         HTTPException(status_code=500, detail='dbDeleteError')
-    
