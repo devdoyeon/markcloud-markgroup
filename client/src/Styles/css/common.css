@@ -255,11 +255,9 @@
   margin-bottom: 31px;
 }
 .container .content-wrap .board-wrap > .body-wrap .content {
-  min-height: 250px;
-  max-height: 425px;
   overflow-y: auto;
-  height: auto;
-  padding: 0 10px;
+  height: 244px;
+  padding: 10px;
   white-space: normal;
 }
 .container .content-wrap .board-wrap > .body-wrap .content > p {
