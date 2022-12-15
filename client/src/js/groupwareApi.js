@@ -60,7 +60,9 @@ export const deleteNotice = async id => {
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/dy/board/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`
+      `/dy/board/list?page=${page}&limit=${limit}&filter_type=${
+        value?.length ? type : 'all'
+      }${value?.length ? `&filter_val=${value}` : ''}`
     );
   } catch (error) {
     return;
@@ -103,7 +105,7 @@ export const editBoard = async ({ title, content, created_id }, id) => {
 
 export const deleteBoard = async id => {
   try {
-    return await axios.post(`/dy/board/delete`, { post_id: id });
+    return await axios.post(`/dy/board/delete?post_id=${id}&user_id=mxxvii`);
   } catch (error) {
     return;
   }
