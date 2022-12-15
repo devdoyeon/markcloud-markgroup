@@ -150,6 +150,7 @@
   position: relative;
   max-width: 100vw;
   min-height: 100vh;
+  height: auto;
   background-color: white;
 }
 .container.main button {
@@ -187,7 +188,6 @@
   width: 978px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
   min-height: 447px;
-  max-height: 663px;
   margin-bottom: 56px;
 }
 .container .content-wrap .board-wrap > .header {
@@ -207,7 +207,6 @@
   border-bottom-right-radius: 16px;
   padding: 40px 57px 34px 60px;
   min-height: 447px;
-  max-height: 663px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
 }
 .container .content-wrap .board-wrap > .body-wrap .writer,
@@ -262,9 +261,14 @@
   min-height: 300px;
   height: auto;
   padding-bottom: 40px;
+  white-space: normal;
+}
+.container .content-wrap .board-wrap > .body-wrap .content > p {
+  word-wrap: break-word;
 }
 .container .content-wrap .btn-wrap {
   width: 978px;
+  margin-bottom: 120px;
   display: flex;
   flex-direction: row;
   align-items: center;

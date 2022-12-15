@@ -12,7 +12,7 @@
   width: 100%;
   min-height: 300px;
   height: 300px;
-  max-height: 400px;;
+  max-height: 400px;
 }
 
 .selectBox {
@@ -116,6 +116,7 @@
   position: relative;
   max-width: 100vw;
   min-height: 100vh;
+  height: auto;
   background-color: white;
   &.main {
     button {
@@ -150,7 +151,7 @@
       width: 978px;
       box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
       min-height: 447px;
-      max-height: 663px;
+      // max-height: 663px;
       margin-bottom: 56px;
       > .header {
         @include flex-style($justifyVal: flex-start);
@@ -165,7 +166,6 @@
         border-bottom-right-radius: 16px;
         padding: 40px 57px 34px 60px;
         min-height: 447px;
-        max-height: 663px;
         box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
         .writer,
         .date,
@@ -211,11 +211,16 @@
           min-height: 300px;
           height: auto;
           padding-bottom: 40px;
+          white-space: normal;
+          > p {
+            word-wrap: break-word;
+          }
         }
       }
     }
     .btn-wrap {
       width: 978px;
+      margin-bottom: 120px;
       @include flex-style($justifyVal: flex-end);
       > button {
         margin-left: 24px;
@@ -256,7 +261,7 @@
             width: 100%;
             @include flex-style($justifyVal: space-between);
           }
-          >.selectOptGroup {
+          > .selectOptGroup {
             @include position-style();
             transform: translateX(-4px) translateY(60px);
             width: 100px;
