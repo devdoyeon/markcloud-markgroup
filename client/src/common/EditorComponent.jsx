@@ -15,8 +15,6 @@ class EditorComponent extends Component {
       [
         { list: 'ordered' },
         { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
       ],
       ['link', 'image'],
       [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
@@ -25,7 +23,6 @@ class EditorComponent extends Component {
   };
 
   formats = [
-    //'font',
     'header',
     'bold',
     'italic',
@@ -34,7 +31,6 @@ class EditorComponent extends Component {
     'blockquote',
     'list',
     'bullet',
-    'indent',
     'link',
     'image',
     'align',

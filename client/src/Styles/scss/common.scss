@@ -214,6 +214,20 @@
           white-space: normal;
           > p {
             word-wrap: break-word;
+            &.ql-align-center {
+              text-align: center;
+            }
+            &.ql-align-right {
+              text-align: right;
+            }
+          }
+          > blockquote::before {
+            content: '';
+            border-left: 3px solid $mainColor;
+            margin-right: 10px;
+          }
+          > ol, ul {
+            margin-left: 10px;
           }
         }
       }

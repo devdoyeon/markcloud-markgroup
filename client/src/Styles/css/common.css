@@ -266,6 +266,20 @@
 .container .content-wrap .board-wrap > .body-wrap .content > p {
   word-wrap: break-word;
 }
+.container .content-wrap .board-wrap > .body-wrap .content > p.ql-align-center {
+  text-align: center;
+}
+.container .content-wrap .board-wrap > .body-wrap .content > p.ql-align-right {
+  text-align: right;
+}
+.container .content-wrap .board-wrap > .body-wrap .content > blockquote::before {
+  content: "";
+  border-left: 3px solid #5850cc;
+  margin-right: 10px;
+}
+.container .content-wrap .board-wrap > .body-wrap .content > ol, .container .content-wrap .board-wrap > .body-wrap .content ul {
+  margin-left: 10px;
+}
 .container .content-wrap .list-wrap .btn-wrap {
   margin-bottom: 0;
 }
