@@ -5,6 +5,7 @@ import SideMenu from 'common/SideMenu';
 import { changeState, commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
+import { createProject, getProjectRead } from 'js/groupwareApi';
 import {
   getBoardDetail,
   createBoard,
@@ -16,38 +17,67 @@ import {
 
 const BusinessNewBoard = () => {
   const [alert, setAlert] = useState('');
+  const [list, setList] = useState([]);
+  const [meta, setMeta] = useState({});
   const [postInfo, setPostInfo] = useState({
-    created_id: '',
+    project_name: '==',
     title: '',
     content: '',
+    work_status: '==',
+    request_id: '==',
+    manager_id: '==',
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
   });
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 15,
+    limit: 9,
+  });
 
   const [projectValue, setProjectValue] = useState('===');
-  const [contactValue, setContactValue] = useState('===');
   const [requesterValue, setRequesterValue] = useState('===');
+  const [contactValue, setContactValue] = useState('===');
   const [progressValue, setProgressValue] = useState('===');
-
-  const projectNameArr = [
-    '마크클라우드',
-    '마크뷰',
-    '마크통',
-    '마크링크',
-    '삼성전자',
-    '그린터치',
-  ];
-
-  const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
-
+  console.log(progressValue);
   const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
+
+  let prevent = false;
+
+  const getProjectApi = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getProjectRead();
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setList(data);
+      setMeta(meta);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
+  };
+
+  const handleChangeRadioButton = (e, type) => {
+    if (type === 'title') {
+      changeState(setPostInfo, 'title', e.target.value);
+    } else if (type === 'content') {
+      changeState(setPostInfo, 'title', e.target.value);
+    }
+  };
 
   // const returnHeader = () => {
   //   switch (path.split('/')[1]) {
@@ -64,41 +94,29 @@ const BusinessNewBoard = () => {
   //   }
   // };
 
-  const getOriginDetail = async () => {
-    let result;
-    switch (path.split('/')[1]) {
-      case 'notice':
-        result = await getNoticeInfo(id);
-        break;
-      case 'board':
-        result = await getBoardDetail(id);
-        break;
-      case 'weekly':
-        return;
-      case 'project':
-        return;
-      default:
-    }
-    if (typeof result === 'object') {
-      setPostInfo(result?.data);
-    } else return; // 에러 처리
-  };
+  // const getOriginDetail = async () => {
+  //   let result;
+  //   switch (path.split('/')[1]) {
+  //     case 'notice':
+  //       result = await getNoticeInfo(id);
+  //       break;
+  //     case 'board':
+  //       result = await getBoardDetail(id);
+  //       break;
+  //     case 'weekly':
+  //       return;
+  //     case 'project':
+  //       return;
+  //     default:
+  //   }
+  //   if (typeof result === 'object') {
+  //     setPostInfo(result?.data);
+  //   } else return; // 에러 처리
+  // };
 
   const createNew = async () => {
-    let result;
-    switch (path.split('/')[1]) {
-      case 'notice':
-        result = await createNotice(postInfo);
-        break;
-      case 'board':
-        result = await createBoard(postInfo);
-        break;
-      case 'weekly':
-        return;
-      case 'project':
-        return;
-      default:
-    }
+    const result = await createProject(postInfo);
+
     if (typeof result === 'object') {
       setAlert('apply');
       return commonModalSetting(
@@ -124,8 +142,28 @@ const BusinessNewBoard = () => {
   };
 
   useEffect(() => {
-    if (id?.length) getOriginDetail();
+    // if (id?.length) getOriginDetail();
+    getProjectApi();
   }, []);
+
+  useEffect(() => {
+    changeState(setPostInfo, 'project_name', projectValue);
+  }, [projectValue]);
+
+  useEffect(() => {
+    changeState(setPostInfo, 'request_id', requesterValue);
+  }, [requesterValue]);
+
+  useEffect(() => {
+    changeState(setPostInfo, 'manager_id', contactValue);
+  }, [contactValue]);
+
+  useEffect(() => {
+    changeState(setPostInfo, 'work_status', progressValue);
+  }, [progressValue]);
+
+  const { member_id, project_name } = meta;
+
   return (
     <>
       <div className='container'>
@@ -140,7 +178,7 @@ const BusinessNewBoard = () => {
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
                 <CommonSelect
-                  opt={projectNameArr}
+                  opt={project_name}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
                 />
@@ -151,7 +189,7 @@ const BusinessNewBoard = () => {
               <div className='project-list'>
                 <span>요청자</span>
                 <CommonSelect
-                  opt={contactNameArr}
+                  opt={member_id}
                   selectVal={requesterValue}
                   setSelectVal={setRequesterValue}
                 />
@@ -160,7 +198,7 @@ const BusinessNewBoard = () => {
               <div className='project-list'>
                 <span>담당자</span>
                 <CommonSelect
-                  opt={contactNameArr}
+                  opt={member_id}
                   selectVal={contactValue}
                   setSelectVal={setContactValue}
                 />
@@ -179,7 +217,11 @@ const BusinessNewBoard = () => {
               <span>제목</span>
               <div className='title-input-wrap'>
                 <label>
-                  <input type='text' placeholder='제목을 입력해주세요.' />
+                  <input
+                    type='text'
+                    placeholder='제목을 입력해주세요.'
+                    onChange={e => handleChangeRadioButton(e, 'title')}
+                  />
                 </label>
               </div>
             </div>
@@ -190,7 +232,6 @@ const BusinessNewBoard = () => {
               />
             </div>
           </div>
-
           <div className='btn-wrap'>
             <button
               className='commonBtn applyBtn'

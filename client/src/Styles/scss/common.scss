@@ -84,7 +84,7 @@
       padding: 30px 0;
       .head {
         font-size: 22px;
-        font-family: $middleFont;
+
         margin-bottom: 15px;
       }
     }
@@ -140,7 +140,7 @@
       cursor: pointer;
       h3 {
         @include txt-style(22px, $black);
-        font-family: $middleFont;
+
         padding-bottom: 8px;
       }
     }
@@ -344,7 +344,7 @@
 .pagination {
   margin-bottom: 100px;
   > li {
-    @include txt-style(16px, $gray03);
+    @include txt-style(18px, $gray03);
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -369,14 +369,15 @@
     > li {
       @include txt-style(18px, $gray02);
       cursor: pointer;
+      font-family: 'NotoSansR';
       margin-bottom: 30px;
       a {
         @include txt-style(18px, $gray02);
       }
 
       &.active {
-        font-family: $boldFont;
         color: $black;
+        font-family: 'NotoSansM';
       }
     }
   }
@@ -451,7 +452,6 @@
           border-radius: 8px;
           padding: 2px 11px;
           background-color: $mainBlue;
-          font-family: $middleFont;
         }
       }
       .postTitle {
