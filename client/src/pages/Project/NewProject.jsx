@@ -83,13 +83,13 @@ const NewProject = () => {
                               <img
                                 src={deletePerson}
                                 alt={`${person} 삭제 버튼`}
-                                onClick={() => {
+                                onClick={() =>
                                   setParticipation(prev => {
                                     const clone = [...prev];
                                     clone.splice(clone.indexOf(person), 1);
                                     return clone;
-                                  });
-                                }}
+                                  })
+                                }
                               />
                             </span>
                           </>

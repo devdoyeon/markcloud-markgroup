@@ -45,7 +45,7 @@ class EditorComponent extends Component {
   render() {
     const { content, setContent } = this.props;
     return (
-      <div style={{ width: '100%', height: 'auto' }}>
+      <>
         <ReactQuill
           theme='snow'
           modules={this.modules}
@@ -59,7 +59,7 @@ class EditorComponent extends Component {
             })
           }
         />
-      </div>
+      </>
     );
   }
 }

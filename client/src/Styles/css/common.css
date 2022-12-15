@@ -16,7 +16,8 @@
 }
 
 .quill {
-  height: 350px;
+  min-height: 300px;
+  height: 100%;
 }
 
 .selectBox {
@@ -256,9 +257,8 @@
   margin-bottom: 31px;
 }
 .container .content-wrap .board-wrap > .body-wrap .content {
-  min-height: 400px;
-  max-height: 430px;
-  overflow-y: auto;
+  height: 430px;
+  padding-bottom: 40px;
 }
 .container .content-wrap .btn-wrap {
   width: 978px;

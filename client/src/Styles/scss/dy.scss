@@ -161,12 +161,12 @@
         }
       }
       .content {
-        width: 980px;
+        transform: translateX(-40px);
+        width: 100%;
         margin: 32px 0;
         height: 250px;
         max-height: 250px;
         overflow-y: auto;
-        transform: translateX(-40px);
         padding: 10px 60px;
       }
     }
