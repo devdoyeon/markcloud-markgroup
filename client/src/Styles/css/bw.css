@@ -110,6 +110,9 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 }
+.container .content-wrap.business .work-wrap .project-wrap.board-head > .project-list {
+  padding-left: 8px;
+}
 .container .content-wrap.business .work-wrap .project-wrap > div {
   width: calc(33.3333333333% - 14px);
   position: relative;
@@ -162,6 +165,9 @@
   font-size: 14px;
   color: #585858;
 }
+.container .content-wrap.business .work-wrap .project-wrap > div > span.pro {
+  margin-right: 10px;
+}
 .container .content-wrap.business .work-wrap .project-wrap > div > div {
   display: flex;
   flex-direction: row;
@@ -181,8 +187,8 @@
 .container .content-wrap.business .work-wrap .project-wrap.title > span {
   font-size: 14px;
   color: #585858;
-  margin-right: 16px;
-  margin-left: 12px;
+  margin-right: 21px;
+  margin-left: 6px;
 }
 .container .content-wrap.business .work-wrap .project-wrap.title > .title-input-wrap {
   width: 782px;
@@ -232,9 +238,13 @@
 }
 .container .content-wrap.business .work-wrap .content.edit {
   padding: 20px 0;
+  height: 430px;
 }
 .container .content-wrap.business .work-wrap .content.edit .quill {
   height: 430px;
+}
+.container .content-wrap.business .work-wrap .content.edit .quill > .ql-container {
+  height: 346px;
 }
 .container .content-wrap.business .work-wrap .progress {
   margin-bottom: 24px;
