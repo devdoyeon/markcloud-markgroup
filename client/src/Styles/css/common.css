@@ -266,6 +266,9 @@
 .container .content-wrap .board-wrap > .body-wrap .content > p {
   word-wrap: break-word;
 }
+.container .content-wrap .list-wrap .btn-wrap {
+  margin-bottom: 0;
+}
 .container .content-wrap .btn-wrap {
   width: 978px;
   margin-bottom: 120px;
