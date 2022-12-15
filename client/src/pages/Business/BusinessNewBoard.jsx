@@ -138,7 +138,7 @@ const BusinessNewBoard = () => {
           <div className='work-wrap project-work-wrap'>
             <div className='project-wrap project-name'>
               <div className='project-list'>
-                <span>프로젝트</span>
+                <span className='pro'>프로젝트</span>
                 <CommonSelect
                   opt={projectNameArr}
                   selectVal={projectValue}
@@ -146,7 +146,7 @@ const BusinessNewBoard = () => {
                 />
               </div>
             </div>
-            <div className='project-wrap'>
+            <div className='project-wrap board-head'>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
