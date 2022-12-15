@@ -64,6 +64,9 @@
   border-radius: 16px;
   margin-bottom: 40px;
 }
+.container .content-wrap.business .work-wrap.project-work-wrap {
+  height: 720px;
+}
 .container .content-wrap.business .work-wrap .work-situation {
   display: flex;
   flex-direction: row;
@@ -170,6 +173,25 @@
   padding: 6px 0 6px 12px;
   background-color: #eeeefa;
   font-size: 14px;
+}
+.container .content-wrap.business .work-wrap .project-wrap.title {
+  width: 100%;
+  padding-left: 10px;
+}
+.container .content-wrap.business .work-wrap .project-wrap.title > span {
+  font-size: 14px;
+  color: #585858;
+  margin-right: 16px;
+  margin-left: 12px;
+}
+.container .content-wrap.business .work-wrap .project-wrap.title > .title-input-wrap {
+  width: 782px;
+}
+.container .content-wrap.business .work-wrap .project-wrap.title > .title-input-wrap label input {
+  width: 782px;
+  background-color: #eeeefa;
+  padding: 6px 0 6px 12px;
+  border-radius: 8px;
 }
 .container .content-wrap.business .work-wrap .content {
   display: flex;

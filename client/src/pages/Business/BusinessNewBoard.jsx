@@ -4,6 +4,7 @@ import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
 import { changeState, commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
+import CommonSelect from 'common/CommonSelect';
 import {
   getBoardDetail,
   createBoard,
@@ -25,7 +26,25 @@ const BusinessNewBoard = () => {
     context: '',
     bool: false,
   });
-  
+
+  const [projectValue, setProjectValue] = useState('===');
+  const [contactValue, setContactValue] = useState('===');
+  const [requesterValue, setRequesterValue] = useState('===');
+  const [progressValue, setProgressValue] = useState('===');
+
+  const projectNameArr = [
+    '마크클라우드',
+    '마크뷰',
+    '마크통',
+    '마크링크',
+    '삼성전자',
+    '그린터치',
+  ];
+
+  const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
+
+  const progressArr = ['요청', '접수', '진행', '완료'];
+
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -111,39 +130,67 @@ const BusinessNewBoard = () => {
     <>
       <div className='container'>
         <SideMenu />
-        <div className='content-wrap'>
+        <div className='content-wrap business'>
           <div className='header'>
             <h3>업무 관리</h3>
           </div>
-          <div className='board-wrap'>
-            <div className='body-wrap'>
-              <div className='writer'>
-                <span>작성자</span>
-                <div>{postInfo.created_id}</div>
-              </div>
-              <div className='title'>
-                <span>제목</span>
-                <div>
-                  <input
-                    type='text'
-                    placeholder='제목을 입력해주세요.'
-                    className='title-input'
-                    value={postInfo.title}
-                    onChange={e =>
-                      changeState(setPostInfo, 'title', e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-              <div className='line'></div>
-              <div className='content'>
-                <EditorComponent
-                  content={postInfo.content}
-                  setContent={setPostInfo}
+
+          <div className='work-wrap project-work-wrap'>
+            <div className='project-wrap project-name'>
+              <div className='project-list'>
+                <span>프로젝트</span>
+                <CommonSelect
+                  opt={projectNameArr}
+                  selectVal={projectValue}
+                  setSelectVal={setProjectValue}
                 />
               </div>
             </div>
+            <div className='project-wrap'>
+              {/* ============================= */}
+              <div className='project-list'>
+                <span>요청자</span>
+                <CommonSelect
+                  opt={contactNameArr}
+                  selectVal={requesterValue}
+                  setSelectVal={setRequesterValue}
+                />
+              </div>
+              {/* ============================= */}
+              <div className='project-list'>
+                <span>담당자</span>
+                <CommonSelect
+                  opt={contactNameArr}
+                  selectVal={contactValue}
+                  setSelectVal={setContactValue}
+                />
+              </div>
+              {/* ============================= */}
+              <div className='project-list'>
+                <span>진행상태</span>
+                <CommonSelect
+                  opt={progressArr}
+                  selectVal={progressValue}
+                  setSelectVal={setProgressValue}
+                />
+              </div>
+            </div>
+            <div className='project-wrap title'>
+              <span>제목</span>
+              <div className='title-input-wrap'>
+                <label>
+                  <input type='text' placeholder='제목을 입력해주세요.' />
+                </label>
+              </div>
+            </div>
+            <div className='content'>
+              <EditorComponent
+                content={postInfo.content}
+                setContent={setPostInfo}
+              />
+            </div>
           </div>
+
           <div className='btn-wrap'>
             <button
               className='commonBtn applyBtn'

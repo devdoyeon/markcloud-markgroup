@@ -71,6 +71,9 @@
         box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
         border-radius: 16px;
         margin-bottom: 40px;
+        &.project-work-wrap {
+          height: 720px;
+        }
         .work-situation {
           @include flex-style($justifyVal: flex-start);
           padding: 12px 0;
@@ -157,6 +160,27 @@
               padding: 6px 0 6px 12px;
               background-color: $subBlue;
               font-size: 14px;
+            }
+          }
+          &.title {
+            width: 100%;
+            padding-left: 10px;
+            > span {
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 16px;
+              margin-left: 12px;
+            }
+            > .title-input-wrap {
+              width: 782px;
+              label {
+                input {
+                  width: 782px;
+                  background-color: $subBlue;
+                  padding: 6px 0 6px 12px;
+                  border-radius: 8px;
+                }
+              }
             }
           }
         }
