@@ -8,6 +8,8 @@ import { getProjectRead } from 'js/groupwareApi';
 const BusinessManagement = () => {
   const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [inputVal, setInputVal] = useState('나의 업무현황');
   const [projectValue, setProjectValue] = useState('===');
   const [contactValue, setContactValue] = useState('===');
   const [requesterValue, setRequesterValue] = useState('===');
@@ -40,20 +42,28 @@ const BusinessManagement = () => {
     }, 200);
     const result = await getProjectRead();
     if (typeof result === 'object') {
-      // const { data, meta } = result?.data;
-      // setList(data);
-      // setPageInfo(prev => {
-      //   const clone = { ...prev };
-      //   clone.page = meta?.page;
-      //   clone.totalPage = meta?.totalPage;
-      //   return clone;
-      // });
+      const { data, meta } = result?.data;
+      setList(data);
+      setMeta(meta);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
     }
   };
 
   useEffect(() => {
     getProjectApi();
   }, [pageInfo.page]);
+
+  const handleChangeRadioButton = e => {
+    console.log(e.target.value);
+    setInputVal(e.target.value);
+  };
+
+  const { member_id, project_name } = meta;
 
   return (
     <div className='container'>
@@ -66,15 +76,33 @@ const BusinessManagement = () => {
           <div className='work-situation'>
             <span>업무현황</span>
             <label className='work-bg'>
-              <input type='radio' name='work' />
+              <input
+                type='radio'
+                name='work'
+                value='나의 업무현황'
+                checked={inputVal === '나의 업무현황'}
+                onChange={handleChangeRadioButton}
+              />
               <span>나의 업무현황</span>
             </label>
             <label className='work-bg'>
-              <input type='radio' name='work' />
+              <input
+                type='radio'
+                name='work'
+                value='내가 요청한 업무'
+                checked={inputVal === '내가 요청한 업무'}
+                onChange={handleChangeRadioButton}
+              />
               <span>내가 요청한 업무</span>
             </label>
             <label className='work-bg'>
-              <input type='radio' name='work' />
+              <input
+                type='radio'
+                name='work'
+                value='전체 업무현황'
+                checked={inputVal === '전체 업무현황'}
+                onChange={handleChangeRadioButton}
+              />
               <span>전체 업무현황</span>
             </label>
           </div>
@@ -84,7 +112,7 @@ const BusinessManagement = () => {
             <div className='project-list'>
               <span>프로젝트</span>
               <CommonSelect
-                opt={projectNameArr}
+                opt={project_name}
                 selectVal={projectValue}
                 setSelectVal={setProjectValue}
               />
@@ -93,7 +121,7 @@ const BusinessManagement = () => {
             <div className='project-list'>
               <span>담당자</span>
               <CommonSelect
-                opt={contactNameArr}
+                opt={member_id}
                 selectVal={contactValue}
                 setSelectVal={setContactValue}
               />
@@ -102,7 +130,7 @@ const BusinessManagement = () => {
             <div className='project-list'>
               <span>요청자</span>
               <CommonSelect
-                opt={contactNameArr}
+                opt={member_id}
                 selectVal={requesterValue}
                 setSelectVal={setRequesterValue}
               />
@@ -192,56 +220,23 @@ const BusinessManagement = () => {
                   <th>완료일자</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>테스트제목</td>
-                    <td>프로젝트1</td>
-                    <td>김민지</td>
-                    <td>안병욱</td>
-                    <td>완료</td>
-                    <td>2022-12-09</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>테스트제목</td>
-                    <td>프로젝트1</td>
-                    <td>김민지</td>
-                    <td>안병욱</td>
-                    <td>완료</td>
-                    <td>2022-12-09</td>
-                    <td>2022-12-12</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>테스트제목</td>
-                    <td>프로젝트1</td>
-                    <td>김민지</td>
-                    <td>안병욱</td>
-                    <td>완료</td>
-                    <td>2022-12-09</td>
-                    <td>2022-12-12</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>테스트제목</td>
-                    <td>프로젝트1</td>
-                    <td>김민지</td>
-                    <td>안병욱</td>
-                    <td>완료</td>
-                    <td>2022-12-09</td>
-                    <td>2022-12-12</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>테스트제목</td>
-                    <td>프로젝트1</td>
-                    <td>김민지</td>
-                    <td>안병욱</td>
-                    <td>완료</td>
-                    <td>2022-12-09</td>
-                    <td>2022-12-12</td>
-                  </tr>
+                  {list.reduce((acc, cur, idx) => {
+                    return (
+                      <>
+                        {acc}
+                        <tr>
+                          <td>{idx + 1}</td>
+                          <td>{cur.title}</td>
+                          <td>{cur.project_name}</td>
+                          <td>{cur.request_id}</td>
+                          <td>{cur.manager_id}</td>
+                          <td>{cur.work_status}</td>
+                          <td>{cur.created_at}</td>
+                          <td>{cur.work_end_date}</td>
+                        </tr>
+                      </>
+                    );
+                  }, <></>)}
                 </tbody>
               </table>
             </div>

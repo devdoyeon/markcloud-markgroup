@@ -33,7 +33,7 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
       </div>
       {statusSelect === 'on' && (
         <div className='selectOptGroup'>
-          {opt.reduce((acc, option) => {
+          {opt?.reduce((acc, option) => {
             return (
               <>
                 {acc}

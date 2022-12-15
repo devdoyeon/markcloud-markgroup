@@ -67,6 +67,28 @@ export const getProjectRead = async () => {
   }
 };
 
+export const createProject = async ({
+  project_name,
+  title,
+  content,
+  work_status,
+  request_id,
+  manager_id,
+}) => {
+  try {
+    return await axios.post(`/bw/projects/create`, {
+      project_name,
+      title,
+      content,
+      work_status,
+      request_id,
+      manager_id,
+    });
+  } catch (error) {
+    return;
+  }
+};
+
 // -------------------------------------------------------------------------------
 
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
