@@ -183,7 +183,7 @@ const BusinessNewBoard = () => {
                 </label>
               </div>
             </div>
-            <div className='content'>
+            <div className='content edit'>
               <EditorComponent
                 content={postInfo.content}
                 setContent={setPostInfo}
