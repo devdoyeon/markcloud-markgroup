@@ -65,6 +65,23 @@ const NewBoard = () => {
   };
 
   const createNew = async () => {
+    if (!postInfo.title) {
+      setAlert('emptyTitle');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '제목을 입력해 주세요.'
+      );
+    } else if (!postInfo.content) {
+      setAlert('emptyContent');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '내용을 입력해 주세요.'
+      );
+    }
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
@@ -188,6 +205,7 @@ const NewBoard = () => {
             if (alert === 'cancel' || alert === 'apply')
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+            else if (alert === 'emptyTitle' || alert === 'emptyContent') return;
           }}
           failFn={() => {}}
         />

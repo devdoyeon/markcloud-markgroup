@@ -132,9 +132,6 @@
     width: 980px;
     background-color: $white;
     min-height: 100vh;
-    &.project {
-      min-height: 110vh;
-    }
     > .header {
       width: fit-content;
       border-bottom: 2px solid $mainBlue;
@@ -223,11 +220,8 @@
           }
           > blockquote::before {
             content: '';
-            border-left: 3px solid $mainColor;
+            border-left: 5px solid $mainColor;
             margin-right: 10px;
-          }
-          > ol, ul {
-            margin-left: 10px;
           }
         }
       }

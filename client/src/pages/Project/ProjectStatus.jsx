@@ -4,6 +4,7 @@ import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
+import Pagination from 'common/Pagination';
 
 const ProjectStatus = () => {
   const [alertBox, setAlertBox] = useState({
@@ -11,13 +12,17 @@ const ProjectStatus = () => {
     context: '',
     bool: false,
   });
+  const [pageInfo, setPageInfo] = useState({
+    page: 1,
+    totalPage: 30,
+  });
   const [list, setList] = useState([]);
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   const [selectVal, setSelectVal] = useState('===');
   const status = !!list?.length;
   const navigate = useNavigate();
-  const statusArr = ['시작 전', '진행 중', '종료']
+  const statusArr = ['시작 전', '진행 중', '종료'];
 
   const commonHeaderState = {
     filter,
@@ -42,7 +47,11 @@ const ProjectStatus = () => {
               </div>
               <div className='row'>
                 <span>프로젝트 상태</span>
-                <CommonSelect opt={statusArr} selectVal={selectVal} setSelectVal={setSelectVal}/>
+                <CommonSelect
+                  opt={statusArr}
+                  selectVal={selectVal}
+                  setSelectVal={setSelectVal}
+                />
               </div>
             </div>
             <hr />
@@ -100,6 +109,7 @@ const ProjectStatus = () => {
               </table>
             </div>
           </div>
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo}/>
         </div>
       </div>
       {alertBox.bool && (

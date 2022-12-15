@@ -12,10 +12,6 @@ class EditorComponent extends Component {
       //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-      ],
       ['link', 'image'],
       [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
       ['clean'],
@@ -29,8 +25,6 @@ class EditorComponent extends Component {
     'underline',
     'strike',
     'blockquote',
-    'list',
-    'bullet',
     'link',
     'image',
     'align',

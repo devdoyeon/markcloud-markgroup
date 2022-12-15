@@ -168,9 +168,6 @@
   background-color: #ffffff;
   min-height: 100vh;
 }
-.container .content-wrap.project {
-  min-height: 110vh;
-}
 .container .content-wrap > .header {
   width: fit-content;
   border-bottom: 2px solid #5b84e3;
@@ -274,11 +271,8 @@
 }
 .container .content-wrap .board-wrap > .body-wrap .content > blockquote::before {
   content: "";
-  border-left: 3px solid #5850cc;
+  border-left: 5px solid #5850cc;
   margin-right: 10px;
-}
-.container .content-wrap .board-wrap > .body-wrap .content > ol, .container .content-wrap .board-wrap > .body-wrap .content ul {
-  margin-left: 10px;
 }
 .container .content-wrap .list-wrap .btn-wrap {
   margin-bottom: 0;
