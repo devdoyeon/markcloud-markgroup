@@ -43,8 +43,9 @@ def read_projects(
     
 
 # 프로젝트 필터링 목록
-@router_project.get('/filter_read', response_model = Response[List[ProjectManageOut]])
+@router_project.post('/filter_read', response_model = Response[List[ProjectManageOut]])
 def read_project_list(
+    filter_data: Optional[ProjectManageFilter] = None,
     status_filter: Optional[ProjectManageStatusFilter] = 'MyProject',
     user_id: str = 'songmoana',
     page: int = 1,
@@ -52,7 +53,7 @@ def read_project_list(
     db: Session = Depends(get_db)
 ):
     offset = (page - 1) * limit
-    total_count, project_list = get_project_list(db, offset, limit, user_id,status_filter)
+    total_count, project_list = get_project_list(db, offset, limit, user_id ,status_filter, filter_data)
     total_page = total_count // limit
     
     if total_page % limit != 0:
@@ -64,6 +65,15 @@ def read_project_list(
         offset=offset,
         limit=limit
     ).success_response(project_list)
+    
+# 프로젝트 상세페이지
+@router_project.get('/info', response_model = ProjectManageOut)
+def read_project_info(
+    project_id:int,
+    db: Session = Depends(get_db)
+):
+    result = get_project_info(db,project_id)
+    return result
 
 # 프로젝트 생성
 @router_project.post('/create')

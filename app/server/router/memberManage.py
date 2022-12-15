@@ -13,6 +13,7 @@ router_member = APIRouter(
     tags=['Personnel Manage API']
 )
 
+##################################부서 관리##################################
 # 부서 리스트
 @router_member.get('/department/list', response_model= Response[List[DepartmentOut]])
 def read_department_list(
@@ -34,7 +35,8 @@ def read_department_list(
     totalPage=total_page,
     offset=offset,
     limit=limit).success_response(department_list)
-    
+
+# 부서 상세페이지
 @router_member.get('/department/info', response_model = DepartmentOut)    
 def read_department_info(
     department_id:int,
@@ -69,6 +71,7 @@ def delete_department(
 ):
     remove_department(db, department_id)
 
+##################################직원 관리##################################
 
 # 직원 리스트
 @router_member.get('/member/list', response_model= Response[List[MemberOut]])
@@ -92,8 +95,8 @@ def read_member_list(
         offset=offset,
         limit=limit
     ).success_response(member_list)
-    
-    
+
+# 직원 상세페이지
 @router_member.get('/member/info',response_model= MemberOut)
 def read_member_info(
     member_id:int,

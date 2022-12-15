@@ -28,8 +28,8 @@ def get_project_data(db,user_id):
     except:
         raise HTTPException(status_code=500, detail='DBError')        
     
-def get_project_list(db, offset, limit, user_id, *status_filter):
-    
+def get_project_list(db, offset, limit, user_id, *filter):
+
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
     member_table = memberManageModel.MemberTable
@@ -48,20 +48,65 @@ def get_project_list(db, offset, limit, user_id, *status_filter):
                         project_manage_table.work_end_date
                         ).filter(project_table.organ_code==user_organ_code
                         ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id))
-
+                        
+                        
+        # 여기 더러워 . .
+        status_filter = filter[0].value                
+        project_name = filter[1].project_name
+        manager_id = filter[1].manager_id
+        request_id = filter[1].request_id
+        title = filter[1].title
+        content = filter[1].content
+                    
+        
         # 필터 O
-        if status_filter:    
+        if status_filter:   
             if status_filter == 'MyProject':
                 query = query.filter(project_manage_table.manager_id == user_id)
             elif status_filter == 'MyRequest':
                 query = query.filter(project_manage_table.request_id == user_id)
+        
+        if project_name:
+            query = query.filter(project_table.project_name == project_name)
+        if manager_id:
+            query = query.filter(project_manage_table.manager_id == manager_id)
+        if request_id:
+            query = query.filter(project_manage_table.request_id == request_id)
+        if title:
+            query = query.filter(project_manage_table.title.ilike(f'%{title}%'))
+        if content:
+            query = query.filter(project_manage_table.content.ilike(f'%{content}%'))
+            
+
         # 필터 X
         project_count = query.count() # 캐시처리       
         project_list = query.offset(offset).limit(limit).all()
         
         return project_count, project_list
     except:
-        raise HTTPException(status_code=500, detail='DBError')        
+        raise HTTPException(status_code=500, detail='DBError')    
+    
+def get_project_info(db, project_id):
+    
+    project_manage_table = projectManageModel.ProjectManageTable
+    project_table = projectManageModel.ProjectTable
+    
+    try:
+        project_info = db.query(project_manage_table.id,
+                        project_manage_table.title,
+                        project_table.project_name,
+                        project_manage_table.request_id,
+                        project_manage_table.manager_id,
+                        project_manage_table.work_status,
+                        project_manage_table.created_at,
+                        project_manage_table.work_end_date
+                        ).filter(project_manage_table.id == project_id
+                        ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id)).first()
+                        
+        return project_info
+    
+    except:
+        raise HTTPException(status_code=500, detail='DBError')
 
 def insert_project(db,inbound_data,user_id):
     

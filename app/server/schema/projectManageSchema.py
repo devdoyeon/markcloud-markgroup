@@ -16,25 +16,26 @@ class ProjectManageIn(BaseModel):
     class Config:
         orm_mode = True
 
-class ProjectManageStatusFilter(str,Enum):
+class ProjectManageStatusFilter(Enum):
     
     All = "All" # 전체 업무 현황
     MyProject = "MyProject" # 나의 업무현황
     MyRequest = "MyRequest" # 내가 요청한 업무
-
-# class ProjectManageFilter(str):
     
-#     title:str
-#     content:str
-
-# class ProgressFilter(str):
+class ProjectManageFilter(BaseModel):
     
-#     Request:bool = False # 요청
-#     Receipt:bool = False # 접수
+    project_name:str
+    manager_id:str
+    request_id:str
+    title:str
+    content:str
+    
+    class Config:
+        orm_mode = True
+
     
 class ProjectManageEditDTO(BaseModel):
     
-    project_name:str
     request_id:str
     manager_id:str
     work_status:str
