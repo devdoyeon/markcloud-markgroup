@@ -230,6 +230,12 @@
   height: 36px;
   background-color: #eeeeee;
 }
+.container .content-wrap.business .work-wrap .content.edit {
+  padding: 20px 0;
+}
+.container .content-wrap.business .work-wrap .content.edit .quill {
+  height: 430px;
+}
 .container .content-wrap.business .work-wrap .progress {
   margin-bottom: 24px;
 }
