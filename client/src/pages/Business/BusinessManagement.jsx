@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
+import { getProjectRead } from 'js/groupwareApi';
 
 const BusinessManagement = () => {
   const [num, setNum] = useState(0);
+  const [list, setList] = useState([]);
   const [projectValue, setProjectValue] = useState('===');
   const [contactValue, setContactValue] = useState('===');
   const [requesterValue, setRequesterValue] = useState('===');
@@ -27,6 +29,31 @@ const BusinessManagement = () => {
   ];
 
   const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
+
+  let prevent = false;
+
+  const getProjectApi = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getProjectRead();
+    if (typeof result === 'object') {
+      // const { data, meta } = result?.data;
+      // setList(data);
+      // setPageInfo(prev => {
+      //   const clone = { ...prev };
+      //   clone.page = meta?.page;
+      //   clone.totalPage = meta?.totalPage;
+      //   return clone;
+      // });
+    }
+  };
+
+  useEffect(() => {
+    getProjectApi();
+  }, [pageInfo.page]);
 
   return (
     <div className='container'>

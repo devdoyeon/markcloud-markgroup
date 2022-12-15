@@ -55,6 +55,18 @@ export const deleteNotice = async id => {
   }
 };
 
+export const getProjectRead = async () => {
+  try {
+    return await axios.get(`/bw/projects/read`, {
+      user_id: 'songmoana',
+      page: 1,
+      limit: 10,
+    });
+  } catch (error) {
+    return;
+  }
+};
+
 // -------------------------------------------------------------------------------
 
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
