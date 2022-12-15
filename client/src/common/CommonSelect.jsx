@@ -4,6 +4,12 @@ import selectArrow from 'image/selectArrow.svg';
 const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
   const [statusSelect, setStatusSelect] = useState('off');
 
+  /*
+    ! props
+    & opt => type(Array) => 선택 옵션
+    = useState[selectVal, setSelectVal] => type(String) => 선택된 값
+  */
+
   const changeSelectVal = () => {
     switch (selectVal) {
       case 'created_id':

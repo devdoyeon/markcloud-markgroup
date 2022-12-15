@@ -42,7 +42,7 @@ const NewProject = () => {
               <hr />
               <div className='row makeProjectDate'>
                 <span>프로젝트명</span>
-                <input type='text' />
+                <input type='text' placeholder='제목을 입력해 주세요.' />
               </div>
               <hr />
               <div className='row date'>
