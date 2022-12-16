@@ -62,10 +62,10 @@ const Home = () => {
             <div>
               <img src={sub02} alt='메인 페이지 소개 이미지 3' />
             </div>
-          </div>
-          <div className='middle-decoration'>
-            <hr />
-            <span>Let's work easy</span>
+            <div className='middle-decoration'>
+              <hr />
+              <span>Let's work easy</span>
+            </div>
           </div>
         </div>
         <div className='service'>
@@ -158,10 +158,10 @@ const Home = () => {
             <div>
               <img src={companyImg} alt='회사 이미지' />
             </div>
-          </div>
-          <div className='company-decoration'>
-            <span>All the services you need it</span>
-            <hr />
+            <div className='company-decoration'>
+              <span>All the services you need it</span>
+              <hr />
+            </div>
           </div>
         </div>
         <div className='start-groupware column'>
