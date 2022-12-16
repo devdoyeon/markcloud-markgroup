@@ -3,7 +3,7 @@ const errorList = {
   accessDenied: '접근 권한이 없습니다.',
   NotAuthority: '권한이 없습니다.',
   duplicateLogin: '중복 로그인 되었습니다.<br/>다시 로그인해 주세요.',
-  tokenExpired: '토큰 만료되었습니다.<br/>다시 로그인해 주세요.',
+  tokenExpired: '토큰이 만료되었습니다.<br/>다시 로그인해 주세요.',
 };
 
 export const catchError = async (result, navigate, setModal, setAlert) => {
