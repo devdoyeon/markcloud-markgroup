@@ -186,9 +186,7 @@ const BusinessManagement = () => {
           <div className='check-work-head-wrap'>
             <div className='check-work-title'>
               <h4>내가 요청한 업무</h4>
-              <div className={num === 0 ? 'num active' : 'num'}>
-                {list.length}
-              </div>
+              <div className='rect-num'>{list.length}</div>
             </div>
             <div className='line'></div>
           </div>

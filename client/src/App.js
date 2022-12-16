@@ -6,7 +6,7 @@ import Board from 'pages/Board';
 import Report from 'pages/Report';
 import Notice from 'pages/Notice';
 import ProjectStatus from 'pages/Project/ProjectStatus';
-import PersonnelManagement from 'pages/PersonnelManagement';
+import PersonnelManagement from 'pages/Personnel/PersonnelManagement';
 import BusinessManagement from 'pages/Business/BusinessManagement';
 // =============== CommonPages ===============
 import NewBoard from 'pages/common/NewBoard';
