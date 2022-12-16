@@ -5,7 +5,7 @@ import SideMenu from 'common/SideMenu';
 import { changeState, commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { createProject, getProjectRead } from 'js/groupwareApi';
+import { createBusiness, getBusinessRead } from 'js/groupwareApi';
 import {
   getBoardDetail,
   createBoard,
@@ -56,7 +56,7 @@ const BusinessNewBoard = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectRead(pageInfo);
+    const result = await getBusinessRead(pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -124,7 +124,7 @@ const BusinessNewBoard = () => {
   };
 
   const createNew = async () => {
-    const result = await createProject(postInfo);
+    const result = await createBusiness(postInfo);
 
     if (typeof result === 'object') {
       setAlert('apply');

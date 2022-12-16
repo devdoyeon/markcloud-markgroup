@@ -5,7 +5,7 @@ import SideMenu from 'common/SideMenu';
 import { changeState, commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { getProjectInfo } from 'js/groupwareApi';
+import { getBusinessInfo } from 'js/groupwareApi';
 import {
   getBoardDetail,
   createBoard,
@@ -133,7 +133,7 @@ const BusinessBoardRead = () => {
   const getProjectDetail = async () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
-    const result = await getProjectInfo(id);
+    const result = await getBusinessInfo(id);
 
     if (typeof result === 'object') {
       setInfo(result?.data);

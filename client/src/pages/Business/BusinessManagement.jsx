@@ -3,7 +3,7 @@ import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
-import { getProjectRead } from 'js/groupwareApi';
+import { getBusinessRead } from 'js/groupwareApi';
 
 const BusinessManagement = () => {
   const [num, setNum] = useState(0);
@@ -40,7 +40,7 @@ const BusinessManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectRead(pageInfo);
+    const result = await getBusinessRead(pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -63,7 +63,7 @@ const BusinessManagement = () => {
 
   const handleChangeClear = () => {};
 
-  const { member_id, project_name } = meta;
+  const { project_member, project_name } = meta;
 
   return (
     <div className='container'>
@@ -121,7 +121,7 @@ const BusinessManagement = () => {
             <div className='project-list'>
               <span>담당자</span>
               <CommonSelect
-                opt={member_id}
+                opt={project_member}
                 selectVal={contactValue}
                 setSelectVal={setContactValue}
               />
@@ -130,7 +130,7 @@ const BusinessManagement = () => {
             <div className='project-list'>
               <span>요청자</span>
               <CommonSelect
-                opt={member_id}
+                opt={project_member}
                 selectVal={requesterValue}
                 setSelectVal={setRequesterValue}
               />

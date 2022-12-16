@@ -487,6 +487,60 @@
       }
     }
     .member-manage-wrap {
+      .head {
+        margin-bottom: 40px;
+      }
+      .page-wrap {
+        @include flex-style();
+        height: 47px;
+        margin-bottom: 40px;
+        > .pagination {
+          margin-bottom: 0px;
+        }
+        > .commonBtn {
+          position: absolute;
+          right: 0;
+        }
+      }
+      > .table {
+        position: relative;
+        z-index: 0;
+        padding: 19px 16px 20px 16px;
+        background-color: $white;
+        border: 1px solid $footerColor;
+        // box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 8px;
+        margin-bottom: 56px;
+        > div {
+          background-color: $subBlue;
+          border-radius: 8px;
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            border-style: hidden;
+            thead {
+              th {
+                padding: 10px 24px;
+                color: $gray01;
+                font-size: 14px;
+              }
+            }
+            tbody {
+              tr {
+                background-color: $tableColor;
+                &:nth-child(2n) {
+                  background-color: $subTableColor;
+                }
+                td {
+                  text-align: center;
+                  padding: 18px 0;
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

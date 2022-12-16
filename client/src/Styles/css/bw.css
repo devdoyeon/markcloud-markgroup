@@ -519,3 +519,56 @@
   position: absolute;
   right: 0;
 }
+.container .content-wrap .member-manage-wrap .head {
+  margin-bottom: 40px;
+}
+.container .content-wrap .member-manage-wrap .page-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 47px;
+  margin-bottom: 40px;
+}
+.container .content-wrap .member-manage-wrap .page-wrap > .pagination {
+  margin-bottom: 0px;
+}
+.container .content-wrap .member-manage-wrap .page-wrap > .commonBtn {
+  position: absolute;
+  right: 0;
+}
+.container .content-wrap .member-manage-wrap > .table {
+  position: relative;
+  z-index: 0;
+  padding: 19px 16px 20px 16px;
+  background-color: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  margin-bottom: 56px;
+}
+.container .content-wrap .member-manage-wrap > .table > div {
+  background-color: #eeeefa;
+  border-radius: 8px;
+}
+.container .content-wrap .member-manage-wrap > .table > div table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+.container .content-wrap .member-manage-wrap > .table > div table thead th {
+  padding: 10px 24px;
+  color: #585858;
+  font-size: 14px;
+}
+.container .content-wrap .member-manage-wrap > .table > div table tbody tr {
+  background-color: #fcfcfc;
+}
+.container .content-wrap .member-manage-wrap > .table > div table tbody tr:nth-child(2n) {
+  background-color: #f8f8fd;
+}
+.container .content-wrap .member-manage-wrap > .table > div table tbody tr td {
+  text-align: center;
+  padding: 18px 0;
+  font-size: 14px;
+}
