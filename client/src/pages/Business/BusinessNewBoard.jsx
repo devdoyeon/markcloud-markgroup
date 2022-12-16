@@ -83,7 +83,7 @@ const BusinessNewBoard = () => {
   //   switch (path.split('/')[1]) {
   //     case 'project':
   //       return '프로젝트 현황';
-  //     case 'weekly':
+  //     case 'report':
   //       return '주간 업무 보고';
   //     case 'board':
   //       return '사내게시판';
@@ -103,7 +103,7 @@ const BusinessNewBoard = () => {
   //     case 'board':
   //       result = await getBoardDetail(id);
   //       break;
-  //     case 'weekly':
+  //     case 'report':
   //       return;
   //     case 'project':
   //       return;
@@ -219,7 +219,7 @@ const BusinessNewBoard = () => {
                 <label>
                   <input
                     type='text'
-                    placeholder='제목을 입력해주세요.'
+                    placeholder='제목을 입력해 주세요.'
                     onChange={e => handleChangeRadioButton(e, 'title')}
                   />
                 </label>

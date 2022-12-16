@@ -8,6 +8,9 @@ import {
   getBoardDetail,
   createBoard,
   editBoard,
+  getReportDetail,
+  createReport,
+  editReport,
   editNotice,
   getNoticeInfo,
   createNotice,
@@ -31,7 +34,7 @@ const NewBoard = () => {
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
-      case 'weekly':
+      case 'report':
         return '주간 업무 보고';
       case 'board':
         return '사내게시판';
@@ -39,6 +42,17 @@ const NewBoard = () => {
         return '공지사항';
       default:
         break;
+    }
+  };
+
+  const findEmptyValue = () => {
+    const tagRegExp = /<[^>]*>?/g;
+    if (postInfo.title.trim() === '') {
+      setAlert('emptyTitle');
+      return 'emptyTitle';
+    } else if (postInfo.content.replace(tagRegExp, '').trim() === '') {
+      setAlert('emptyContent');
+      return 'emptyContent';
     }
   };
 
@@ -51,9 +65,11 @@ const NewBoard = () => {
       case 'board':
         result = await getBoardDetail(id);
         break;
-      case 'weekly':
-        return;
+      case 'report':
+        result = await getReportDetail(id);
+        break;
       default:
+        return;
     }
     if (typeof result === 'object') {
       setPostInfo(result?.data);
@@ -61,23 +77,20 @@ const NewBoard = () => {
   };
 
   const createNew = async () => {
-    if (!postInfo.title) {
-      setAlert('emptyTitle');
+    if (findEmptyValue() === 'emptyTitle')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '제목을 입력해 주세요.'
       );
-    } else if (!postInfo.content) {
-      setAlert('emptyContent');
+    else if (findEmptyValue() === 'emptyContent')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '내용을 입력해 주세요.'
       );
-    }
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
@@ -86,8 +99,9 @@ const NewBoard = () => {
       case 'board':
         result = await createBoard(postInfo);
         break;
-      case 'weekly':
-        return;
+      case 'report':
+        result = await createReport(postInfo);
+        break;
       default:
     }
     if (typeof result === 'object') {
@@ -102,6 +116,20 @@ const NewBoard = () => {
   };
 
   const editPost = async () => {
+    if (findEmptyValue() === 'emptyTitle')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '제목을 입력해 주세요.'
+      );
+    else if (findEmptyValue() === 'emptyContent')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '내용을 입력해 주세요.'
+      );
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
@@ -110,9 +138,11 @@ const NewBoard = () => {
       case 'board':
         result = await editBoard(postInfo, id);
         break;
-      case 'weekly':
-        return;
+      case 'report':
+        result = await editReport(postInfo, id);
+        break;
       default:
+        return;
     }
     if (typeof result === 'object') {
       setAlert('edit');
@@ -147,7 +177,7 @@ const NewBoard = () => {
                 <div>
                   <input
                     type='text'
-                    placeholder='제목을 입력해주세요.'
+                    placeholder='제목을 입력해 주세요.'
                     className='title-input'
                     value={postInfo.title}
                     onChange={e =>
@@ -163,6 +193,7 @@ const NewBoard = () => {
                   setContent={setPostInfo}
                 />
               </div>
+              <div className='line'></div>
             </div>
           </div>
           <div className='btn-wrap'>

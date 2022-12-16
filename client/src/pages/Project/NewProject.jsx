@@ -68,65 +68,6 @@ const NewProject = () => {
                   setSelectVal={setSelectVal}
                 />
               </div>
-              <hr />
-              <div className='row peopleWrap'>
-                <span>참여 목록</span>
-                <div className='row'>
-                  {participation?.length === 0
-                    ? '참여 인원을 추가해 주세요.'
-                    : participation?.reduce((acc, person) => {
-                        return (
-                          <>
-                            {acc}
-                            <span className='personBtn'>
-                              {person}
-                              <img
-                                src={deletePerson}
-                                alt={`${person} 삭제 버튼`}
-                                onClick={() =>
-                                  setParticipation(prev => {
-                                    const clone = [...prev];
-                                    clone.splice(clone.indexOf(person), 1);
-                                    return clone;
-                                  })
-                                }
-                              />
-                            </span>
-                          </>
-                        );
-                      }, <></>)}
-                </div>
-              </div>
-              <div className='row'>
-                <span>참여 인원 추가</span>
-                <div className='people column'>
-                  <CommonSelect
-                    opt={personArr}
-                    selectVal={peopleVal}
-                    setSelectVal={setPeopleVal}
-                  />
-                </div>
-                <button
-                  className='addPersonBtn'
-                  onClick={() =>
-                    setParticipation(prev => {
-                      const clone = [...prev];
-                      if (clone.includes(peopleVal)) {
-                        setAlert('duplicationPerson');
-                        commonModalSetting(
-                          setAlertBox,
-                          true,
-                          'alert',
-                          '이미 추가된 인원입니다.'
-                        );
-                        return clone;
-                      } else clone.push(peopleVal);
-                      return clone;
-                    })
-                  }>
-                  추가
-                </button>
-              </div>
             </div>
           </div>
           <div className='btn-wrap'>

@@ -8,6 +8,8 @@ import {
   deleteBoard,
   getNoticeInfo,
   deleteNotice,
+  getReportDetail,
+  deleteReport,
 } from 'js/groupwareApi';
 
 const BoardRead = () => {
@@ -40,8 +42,9 @@ const BoardRead = () => {
         setHeader('사내게시판');
         result = await getBoardDetail(id);
         break;
-      case 'weekly':
+      case 'report':
         setHeader('주간 업무 보고');
+        result = await getReportDetail(id);
         break;
       default:
         result = '';
@@ -70,8 +73,9 @@ const BoardRead = () => {
         setHeader('사내게시판');
         result = await deleteBoard(id);
         break;
-      case 'weekly':
+      case 'report':
         setHeader('주간 업무 보고');
+        result = await deleteReport(id);
         break;
       default:
         result = '';
@@ -79,7 +83,7 @@ const BoardRead = () => {
     if (typeof result === 'object') {
       setAlert('deleteAlert');
       commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
-    }
+    } else return
   };
 
   useEffect(() => {

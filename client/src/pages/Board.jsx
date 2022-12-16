@@ -14,7 +14,6 @@ const Board = () => {
   });
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
-  const status = !!list?.length;
   let prevent = false;
 
   const getBoard = async () => {
@@ -41,7 +40,6 @@ const Board = () => {
     setFilter,
     searchText,
     setSearchText,
-    status,
   };
 
   useEffect(() => {

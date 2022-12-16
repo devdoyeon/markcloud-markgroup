@@ -20,8 +20,8 @@ const SideMenu = () => {
           프로젝트 현황
         </li>
         <li
-          className={path.includes('/weekly') && 'active'}
-          onClick={() => navigate('/weekly')}>
+          className={path.includes('/report') && 'active'}
+          onClick={() => navigate('/report')}>
           주간 업무 보고
         </li>
         <li

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 // =============== Pages ===============
 import Home from 'pages/Home';
 import Board from 'pages/Board';
-import WeeklyReport from 'pages/WeeklyReport';
+import Report from 'pages/Report';
 import Notice from 'pages/Notice';
 import ProjectStatus from 'pages/Project/ProjectStatus';
 import PersonnelManagement from 'pages/PersonnelManagement';
@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/project' element={<ProjectStatus />} />
-        <Route path='/weekly' element={<WeeklyReport />} />
+        <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />
         <Route path='/sample' element={<BoardRead />} />
         <Route path='/business' element={<BusinessManagement />} />
@@ -30,18 +30,18 @@ function App() {
         <Route path='/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
         <Route path='/project/:id' element={<ProjectDetail />} />
-        <Route path='/weekly/:id' element={<BoardRead />} />
+        <Route path='/report/:id' element={<BoardRead />} />
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<BoardRead />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewProject />} />
-        <Route path='/weekly/write' element={<NewBoard />} />
+        <Route path='/report/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />
         <Route path='/business/write' element={<BusinessNewBoard />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
         <Route path='/project/write/:id' element={<NewProject />} />
-        <Route path='/weekly/write/:id' element={<NewBoard />} />
+        <Route path='/report/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />
         <Route path='/notice/write/:id' element={<NewBoard />} />
         {/* -------------------------------------------------- */}

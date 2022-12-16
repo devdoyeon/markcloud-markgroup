@@ -140,7 +140,7 @@ const BusinessManagement = () => {
             <div className='title'>
               <label>
                 <span>제목</span>
-                <input type='text' placeholder='제목을 입력해주세요.' />
+                <input type='text' placeholder='제목을 입력해 주세요.' />
               </label>
             </div>
             <div className='content-text'>

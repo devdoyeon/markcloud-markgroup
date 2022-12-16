@@ -20,10 +20,10 @@
 | 3    | Project Status Detail         | 프로젝트 현황 상세    | “/groupware/project/:id”       |
 | 4    | Project Status Create         | 프로젝트 현황 등록    | “/groupware/project/write”     |
 | 5    | Project Status Update         | 프로젝트 상세 수정    | “/groupware/project/write/:id” |
-| 6    | Weekly Business Report List   | 주간 업무 보고 리스트 | “/groupware/weekly”            |
-| 7    | Weekly Business Report Detail | 주간 업무 보고 상세   | “/groupware/weekly/:id”        |
-| 8    | Weekly Business Report Create | 주간 업무 보고 등록   | “/groupware/weekly/write”      |
-| 9    | Weekly Business Report Update | 주간 업무 보고 수정   | “/groupware/weekly/write/:id”  |
+| 6    | report Business Report List   | 주간 업무 보고 리스트 | “/groupware/report”            |
+| 7    | report Business Report Detail | 주간 업무 보고 상세   | “/groupware/report/:id”        |
+| 8    | report Business Report Create | 주간 업무 보고 등록   | “/groupware/report/write”      |
+| 9    | report Business Report Update | 주간 업무 보고 수정   | “/groupware/report/write/:id”  |
 | 10   | Board List                    | 게시판 리스트         | “/groupware/board"             |
 | 11   | Board Detail                  | 게시판 상세           | “/groupware/board/:id"         |
 | 12   | Board Create                  | 게시판 등록           | “/groupware/board/write"       |

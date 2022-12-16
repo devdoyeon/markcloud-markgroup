@@ -5,7 +5,7 @@ import CommonHeader from 'common/CommonHeader';
 import ListWrap from 'common/ListWrap';
 import { getReportList } from 'js/groupwareApi';
 
-const WeeklyReport = () => {
+const Report = () => {
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
@@ -14,7 +14,6 @@ const WeeklyReport = () => {
   });
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
-  const status = !!list?.length;
   let prevent = false;
 
   const getReport = async () => {
@@ -41,7 +40,6 @@ const WeeklyReport = () => {
     setFilter,
     searchText,
     setSearchText,
-    status,
   };
 
   useEffect(() => {
@@ -60,4 +58,4 @@ const WeeklyReport = () => {
   );
 };
 
-export default WeeklyReport;
+export default Report;

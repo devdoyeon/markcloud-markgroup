@@ -18,19 +18,20 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   // 페이지 그룹 다르게 보이게 함
   const changePageGroup = p => {
     const arr = [];
-    let first = p - 4;
-    let last = p + 4;
-    // 현재 페이지가 5보다 작을 때
-    if (p <= 5) {
-      first = 1;
-      last = 9;
-    }
-    // 현재 페이지가 totalPage에서 4를 뺀 값보다 크거나 같을 때
-    if (p >= totalPage - 4) {
-      first = totalPage - 8;
-      last = totalPage;
-    }
-    // totalPage가 10보다 작을 때
+    let first =
+      p % 10 === 0
+        ? p - 9
+        : parseInt(p / 10) === 0
+        ? 1
+        : parseInt(p / 10) * 10 + 1;
+    let last =
+      p % 10 === 0
+        ? p
+        : parseInt(p / 10) === 0
+        ? 10
+        : parseInt(p / 10) * 10 + 10 > totalPage
+        ? totalPage
+        : parseInt(p / 10) * 10 + 10;
     if (totalPage < 10) {
       first = 1;
       last = totalPage;
@@ -43,7 +44,13 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   // 페이지를 입력하여 이동할 때 사용 하는 함수
   const changePara = direction => {
     if (!direction) return;
-    changePage(direction === 'prev' ? page - 1 : page + 1);
+    changePage(
+      direction === 'prev'
+        ? page - 10
+        : page + 10 > totalPage
+        ? totalPage
+        : page + 10
+    );
   };
 
   useEffect(() => {
@@ -51,7 +58,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   }, [pageInfo]);
 
   const renderPagination = () => {
-    const prevCheck = page > 1;
+    const prevCheck = page > 10;
     const middle = pageGroup.reduce((acc, nowPage) => {
       return (
         <>
@@ -69,15 +76,27 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
       <>
         <li
           onClick={() => changePara(prevCheck ? 'prev' : null)}
-          className={`prev ${page === 1 ? 'block' : 'active'}`}>
-          <img src={page === 1 ? prevPage : activePrevPage} alt='이전 버튼' />
+          className={`prev ${page >= 11 ? 'active' : 'block'}`}>
+          <img src={page >= 11 ? activePrevPage : prevPage} alt='이전 버튼' />
         </li>
         {middle}
         <li
           onClick={() => changePara(nextCheck ? 'next' : null)}
-          className={`next ${totalPage === page ? 'block' : 'active'}`}>
+          className={`next ${
+            totalPage >= 11
+              ? pageGroup.includes(totalPage)
+                ? 'block'
+                : 'active'
+              : 'block'
+          }`}>
           <img
-            src={totalPage === page ? nextPage : activeNextPage}
+            src={
+              totalPage >= 11
+                ? pageGroup.includes(totalPage)
+                  ? nextPage
+                  : activeNextPage
+                : nextPage
+            }
             alt='다음 버튼'
           />
         </li>

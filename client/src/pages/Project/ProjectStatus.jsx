@@ -21,7 +21,6 @@ const ProjectStatus = () => {
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   const [selectVal, setSelectVal] = useState('===');
-  const status = !!list?.length;
   const navigate = useNavigate();
   const statusArr = ['시작 전', '진행 중', '종료'];
 
@@ -30,7 +29,6 @@ const ProjectStatus = () => {
     setFilter,
     searchText,
     setSearchText,
-    status,
   };
 
   return (

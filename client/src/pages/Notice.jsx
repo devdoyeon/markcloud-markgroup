@@ -14,7 +14,6 @@ const Notice = () => {
   });
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
-  const status = !!list?.length;
   let prevent = false;
 
   const getNoticeApi = async () => {
@@ -41,7 +40,6 @@ const Notice = () => {
     setFilter,
     searchText,
     setSearchText,
-    status,
   };
 
   useEffect(() => {

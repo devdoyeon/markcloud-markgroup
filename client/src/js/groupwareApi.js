@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+const apiErrorHandling = async error => {
+  console.log(error);
+};
+
 // ----------------------------------공지사항----------------------------------
 export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
@@ -11,14 +15,14 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
       );
     }
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 export const getNoticeInfo = async id => {
   try {
     return await axios.get(`/bw/notice/info?notice_id=${id}`);
-  } catch {
-    return null;
+  } catch (error) {
+    return apiErrorHandling(error);
   }
 };
 
@@ -30,7 +34,7 @@ export const createNotice = async ({ title, content }) => {
       created_id: 'songmoana',
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -42,7 +46,7 @@ export const editNotice = async ({ title, content, created_id }, id) => {
       created_id: 'songmoana',
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -51,7 +55,7 @@ export const deleteNotice = async id => {
     const typeChange = parseInt(id);
     return await axios.post(`/bw/notice/delete?notice_id=${id}`);
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 // ----------------------------------업무 관리----------------------------------
@@ -64,7 +68,7 @@ export const getProjectRead = async () => {
       limit: 10,
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -86,7 +90,7 @@ export const createProject = async ({
       manager_id,
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -101,7 +105,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
       }${value?.length ? `&filter_val=${value}` : ''}`
     );
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -110,7 +114,7 @@ export const getBoardDetail = async id => {
   try {
     return await axios.get(`/dy/board/detail?post_id=${id}`);
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -120,25 +124,25 @@ export const createBoard = async ({ title, content }) => {
     return await axios.post(`/dy/board/create`, {
       title: title,
       content: content,
-      created_id: 'jenny',
+      created_id: 'mxxvii',
       organ_code: 'markcloud',
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
 //= 게시글 수정
-export const editBoard = async ({ title, content, created_id }, id) => {
+export const editBoard = async ({ title, content }, id) => {
   try {
     return await axios.post(`/dy/board/update?post_id=${id}`, {
       title: title,
       content: content,
-      created_id: 'jenny',
+      created_id: 'mxxvii',
       organ_code: 'markcloud',
     });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -147,7 +151,7 @@ export const deleteBoard = async id => {
   try {
     return await axios.post(`/dy/board/delete?post_id=${id}&user_id=mxxvii`);
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
 
@@ -162,6 +166,48 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
       }${value?.length ? `&filter_val=${value}` : ''}`
     );
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
+  }
+};
+
+export const getReportDetail = async id => {
+  try {
+    return await axios.get(`/dy/report/detail?report_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const createReport = async ({ title, content }) => {
+  try {
+    return await axios.post(`/dy/report/create`, {
+      title: title,
+      content: content,
+      created_id: 'mxxvii',
+    });
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const editReport = async ({ title, content }, id) => {
+  try {
+    return await axios.post(
+      `/dy/report/update?report_id=${id}&user_id=mxxvii`,
+      {
+        title: title,
+        content: content,
+      }
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const deleteReport = async id => {
+  try {
+    return await axios.post(`/dy/report/delete?report_id=${id}&user_id=d`);
+  } catch (error) {
+    return apiErrorHandling(error);
   }
 };
