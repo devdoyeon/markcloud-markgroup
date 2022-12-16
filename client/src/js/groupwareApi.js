@@ -60,7 +60,7 @@ export const deleteNotice = async id => {
 };
 // ----------------------------------업무 관리----------------------------------
 
-export const getProjectRead = async ({ page, limit }) => {
+export const getBusinessRead = async ({ page, limit }) => {
   try {
     return await axios.get(`/bw/projects/read?limit=${limit}&page=${page}`);
   } catch (error) {
@@ -68,7 +68,7 @@ export const getProjectRead = async ({ page, limit }) => {
   }
 };
 
-export const createProject = async ({
+export const createBusiness = async ({
   project_name,
   title,
   content,
@@ -90,13 +90,17 @@ export const createProject = async ({
   }
 };
 
-export const getProjectInfo = async id => {
+export const getBusinessInfo = async id => {
   try {
     return await axios.get(`/bw/projects/info?project_id=${id}`);
   } catch (error) {
     return;
   }
 };
+// ----------------------------------인사 관리----------------------------------
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~member~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // ----------------------------------사내 게시판----------------------------------
 
