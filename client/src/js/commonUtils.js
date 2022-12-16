@@ -1,3 +1,5 @@
+// ================================== 도연 ==================================
+
 const errorList = {
   serverError: '잠시 후 다시 시도해 주세요.',
   accessDenied: '접근 권한이 없습니다.',
@@ -17,10 +19,6 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
     setAlert(result);
     return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'notFound') return navigate('/error');
-};
-
-export const numberWithCommas = x => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 export const emptyCheck = value => {
@@ -54,4 +52,14 @@ export const commonModalSetting = (setAlertBox, bool, mode, context) => {
       bool: bool,
     });
   }
+};
+
+export const changeTitle = txt => {
+  document.title = txt;
+};
+
+//================================== 병욱님 ==================================
+
+export const numberWithCommas = x => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

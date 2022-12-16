@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
+import { changeTitle } from 'js/commonUtils';
 
 const ProjectStatus = () => {
   const [alertBox, setAlertBox] = useState({
@@ -30,6 +31,10 @@ const ProjectStatus = () => {
     searchText,
     setSearchText,
   };
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 프로젝트 현황')
+  }, [])
 
   return (
     <>

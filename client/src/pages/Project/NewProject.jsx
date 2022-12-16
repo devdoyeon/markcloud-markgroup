@@ -1,22 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
-import deletePerson from 'image/deletePersonIcon.svg';
 import CommonModal from 'common/CommonModal';
-import { commonModalSetting } from 'js/commonUtils';
 import CommonSelect from 'common/CommonSelect';
+import { commonModalSetting, changeTitle} from 'js/commonUtils';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
-  const personArr = [
-    '권도연',
-    '안병욱',
-    '김남호',
-    '장지원',
-    '정다은',
-    '송지은',
-  ];
   const { id } = useParams();
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
@@ -25,9 +16,11 @@ const NewProject = () => {
     bool: false,
   });
   const [selectVal, setSelectVal] = useState('===');
-  const [peopleVal, setPeopleVal] = useState('===');
-  const [participation, setParticipation] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 프로젝트 작성')
+  }, [])
 
   return (
     <>
@@ -35,7 +28,7 @@ const NewProject = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3>프로젝트 현황</h3>
+            <h3>새 프로젝트 생성</h3>
           </div>
           <div className='projectWrapper'>
             <div className='projectInfo column'>

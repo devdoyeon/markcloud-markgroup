@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
-import deletePerson from 'image/deletePersonIcon.svg';
-import { commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
+import { commonModalSetting, changeTitle } from 'js/commonUtils';
+import deletePerson from 'image/deletePersonIcon.svg';
 
 const ProjectDetail = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -32,6 +32,10 @@ const ProjectDetail = () => {
     setAlert('completeDelete');
     commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
   };
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 프로젝트 상세 보기');
+  }, []);
 
   return (
     <>

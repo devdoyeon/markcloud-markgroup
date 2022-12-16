@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Pagination from 'common/Pagination';
 import SideMenu from 'common/SideMenu';
+import { changeTitle } from 'js/commonUtils';
 
 const PersonnelManagement = () => {
   const [departmentPageInfo, setDepartmentPageInfo] = useState({
@@ -14,6 +15,11 @@ const PersonnelManagement = () => {
     limit: 9,
   });
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 인사 관리');
+  }, []);
+
   return (
     <div className='container'>
       <SideMenu />

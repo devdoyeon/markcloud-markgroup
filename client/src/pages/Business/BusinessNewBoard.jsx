@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { changeState, commonModalSetting, catchError } from 'js/commonUtils';
+import {
+  changeState,
+  commonModalSetting,
+  catchError,
+  changeTitle,
+} from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { createBusiness, getBusinessRead } from 'js/groupwareApi';
@@ -80,8 +85,6 @@ const BusinessNewBoard = () => {
 
   // const returnHeader = () => {
   //   switch (path.split('/')[1]) {
-  //     case 'project':
-  //       return '프로젝트 현황';
   //     case 'report':
   //       return '주간 업무 보고';
   //     case 'board':
@@ -103,8 +106,6 @@ const BusinessNewBoard = () => {
   //       result = await getBoardDetail(id);
   //       break;
   //     case 'report':
-  //       return;
-  //     case 'project':
   //       return;
   //     default:
   //   }
@@ -151,6 +152,7 @@ const BusinessNewBoard = () => {
   };
 
   useEffect(() => {
+    changeTitle('그룹웨어 > 업무 작성');
     // if (id?.length) getOriginDetail();
     getProjectApi();
   }, []);

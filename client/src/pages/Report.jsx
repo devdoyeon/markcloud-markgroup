@@ -6,7 +6,7 @@ import CommonHeader from 'common/CommonHeader';
 import CommonModal from 'common/CommonModal';
 import ListWrap from 'common/ListWrap';
 import { getReportList } from 'js/groupwareApi';
-import { catchError } from 'js/commonUtils';
+import { catchError, changeTitle } from 'js/commonUtils';
 
 const Report = () => {
   const [alert, setAlert] = useState('');
@@ -51,6 +51,10 @@ const Report = () => {
     searchText,
     setSearchText,
   };
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 주간 업무 보고')
+  }, [])
 
   useEffect(() => {
     getReport();

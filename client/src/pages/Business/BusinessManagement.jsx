@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
 import { getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
-import { catchError } from 'js/commonUtils';
+import { catchError, changeTitle } from 'js/commonUtils';
 
 const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
@@ -61,6 +61,11 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 업무 관리');
+  }, []);
+
   useEffect(() => {
     getProjectApi();
   }, [pageInfo.page]);

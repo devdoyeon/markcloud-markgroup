@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CommonMenu from 'common/CommonMenu';
+import CommonFooter from 'common/CommonFooter';
+import { changeTitle } from 'js/commonUtils';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';
@@ -13,10 +16,14 @@ import notice from 'image/noticeIcon.svg';
 import board from 'image/boardIcon.svg';
 import personnel from 'image/personnelIcon.svg';
 import companyImg from 'image/companyImg.jpg';
-import CommonFooter from 'common/CommonFooter';
 
 const Home = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 메인')
+  }, [])
+
   return (
     <div className='main container column'>
       <CommonMenu />

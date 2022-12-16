@@ -4,9 +4,9 @@ import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import Pagination from 'common/Pagination';
 import ListWrap from 'common/ListWrap';
-import { getBoardList } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
-import { catchError } from 'js/commonUtils';
+import { getBoardList } from 'js/groupwareApi';
+import { catchError, changeTitle } from 'js/commonUtils';
 
 const Board = () => {
   const [alert, setAlert] = useState('');
@@ -51,6 +51,10 @@ const Board = () => {
     searchText,
     setSearchText,
   };
+
+  useEffect(() => {
+    changeTitle('그룹웨어 > 사내 게시판')
+  }, [])
 
   useEffect(() => {
     getBoard();

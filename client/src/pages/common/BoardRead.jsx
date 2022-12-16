@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import { commonModalSetting, catchError } from 'js/commonUtils';
+import { commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
 import {
   getBoardDetail,
   deleteBoard,
@@ -85,6 +85,10 @@ const BoardRead = () => {
       commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
+
+  useEffect(() => {
+    changeTitle(`그룹웨어 > 상세 보기`)
+  }, [])
 
   useEffect(() => {
     getDetail();

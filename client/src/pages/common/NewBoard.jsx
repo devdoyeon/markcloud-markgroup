@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { changeState, commonModalSetting, catchError } from 'js/commonUtils';
+import { changeState, commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
   getBoardDetail,
@@ -152,8 +152,13 @@ const NewBoard = () => {
   };
 
   useEffect(() => {
+    changeTitle('그룹웨어 > 작성')
+  }, [])
+
+  useEffect(() => {
     if (id?.length) getOriginDetail();
   }, []);
+
   return (
     <>
       <div className='container'>

@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signIn } from 'js/groupwareApi';
-import { setCookie, getCookie } from 'js/cookie';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
+import { signIn } from 'js/groupwareApi';
+import { setCookie, getCookie } from 'js/cookie';
 import {
   catchError,
   changeState,
-  commonModalSetting,
   enterFn,
 } from 'js/commonUtils';
 

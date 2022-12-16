@@ -4,9 +4,9 @@ import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import CommonHeader from 'common/CommonHeader';
 import ListWrap from 'common/ListWrap';
-import { getNoticeList } from 'js/groupwareApi';
-import { catchError } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
+import { getNoticeList } from 'js/groupwareApi';
+import { catchError, changeTitle } from 'js/commonUtils';
 
 const Notice = () => {
   const [alert, setAlert] = useState('');
@@ -53,8 +53,13 @@ const Notice = () => {
   };
 
   useEffect(() => {
+    changeTitle('그룹웨어 > 공지사항');
+  }, []);
+
+  useEffect(() => {
     getNoticeApi();
   }, [pageInfo.page]);
+
   return (
     <>
       <div className='container'>
