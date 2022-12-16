@@ -144,11 +144,6 @@
   height: auto;
   background-color: white;
 }
-.container.main button {
-  background-color: #5850cc;
-  color: white;
-  padding: 30px 50px;
-}
 .container .content-wrap {
   padding: 80px 0 0 80px;
   border-top-left-radius: 28px;

@@ -1,3 +1,254 @@
+@charset "UTF-8";
+.main .mainContent-wrap .intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.main .mainContent-wrap .intro .intro-content {
+  position: absolute;
+  left: 370px;
+  color: white;
+}
+.main .mainContent-wrap .intro .intro-content h3 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 60px;
+  margin-bottom: 8px;
+}
+.main .mainContent-wrap .intro .intro-content p {
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+.main .mainContent-wrap .intro .intro-content button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  color: white;
+}
+.main .mainContent-wrap .intro .intro-content button img {
+  margin-left: 16px;
+}
+.main .mainContent-wrap .intro > img {
+  width: 100%;
+}
+.main .mainContent-wrap .middle {
+  position: relative;
+  width: 100%;
+  height: 810px;
+}
+.main .mainContent-wrap .middle .middle-section {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  background-color: #edf8f8;
+}
+.main .mainContent-wrap .middle .middle-section .middle-content {
+  position: absolute;
+  left: 370px;
+  top: 70px;
+}
+.main .mainContent-wrap .middle .middle-section .middle-content h3 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 40px;
+  margin-bottom: 24px;
+}
+.main .mainContent-wrap .middle .middle-section .middle-content p {
+  font-size: 18px;
+}
+.main .mainContent-wrap .middle .middle-img {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+  right: 370px;
+  top: 70px;
+  width: 490px;
+  height: 490px;
+}
+.main .mainContent-wrap .middle .middle-img > div {
+  border-top-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  width: 230px;
+  height: 230px;
+  overflow: hidden;
+  margin-right: 30px;
+}
+.main .mainContent-wrap .middle .middle-img > div:nth-child(2n) {
+  margin-right: 0;
+}
+.main .mainContent-wrap .middle .middle-img > div > img {
+  height: 230px;
+}
+.main .mainContent-wrap .middle .middle-decoration {
+  position: absolute;
+  right: 810px;
+  bottom: 266px;
+}
+.main .mainContent-wrap .middle .middle-decoration hr {
+  width: 250px;
+  border: none;
+  height: 1px;
+  background-color: #f74848;
+  margin-bottom: 4px;
+}
+.main .mainContent-wrap .service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: 854px;
+  width: 100%;
+  padding: 0 370px;
+}
+.main .mainContent-wrap .service > .row {
+  width: 753px;
+  justify-content: space-between;
+}
+.main .mainContent-wrap .service > .row .service-content {
+  text-align: right;
+}
+.main .mainContent-wrap .service > .row .service-content h5 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+.main .mainContent-wrap .service > .row .service-content p {
+  font-size: 18px;
+  color: #585858;
+}
+.main .mainContent-wrap .service > hr {
+  width: 753px;
+  border: none;
+  background-color: #585858;
+  height: 1px;
+  margin: 26px 0 102px;
+}
+.main .mainContent-wrap .service .service-explanation {
+  width: 100%;
+  height: 344px;
+}
+.main .mainContent-wrap .service .service-explanation > div .column {
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 301px;
+  height: 137px;
+  margin-right: 130px;
+}
+.main .mainContent-wrap .service .service-explanation > div .column:last-child {
+  margin-right: 0;
+}
+.main .mainContent-wrap .service .service-explanation > div .column .row {
+  margin-bottom: 47px;
+}
+.main .mainContent-wrap .service .service-explanation > div .column .row img {
+  margin-right: 16px;
+}
+.main .mainContent-wrap .service .service-explanation > div .column .row span {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+}
+.main .mainContent-wrap .service .service-explanation > div:first-child {
+  margin-bottom: 70px;
+}
+.main .mainContent-wrap .company-explanation {
+  position: relative;
+  width: 100%;
+  height: 1046px;
+}
+.main .mainContent-wrap .company-explanation .section {
+  background-color: #edf8f8;
+  height: 531px;
+  width: 100%;
+}
+.main .mainContent-wrap .company-explanation .section .company-content {
+  position: absolute;
+  left: 370px;
+  top: 50px;
+}
+.main .mainContent-wrap .company-explanation .section .company-content h5 {
+  font-size: 40px;
+}
+.main .mainContent-wrap .company-explanation .section .company-content h3 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 40px;
+}
+.main .mainContent-wrap .company-explanation .section .company-content span {
+  display: inline-block;
+  margin: 24px 0;
+}
+.main .mainContent-wrap .company-explanation .section .company-content p {
+  line-height: 32px;
+  color: #585858;
+}
+.main .mainContent-wrap .company-explanation .company-img {
+  position: absolute;
+  right: 370px;
+  bottom: 250px;
+}
+.main .mainContent-wrap .company-explanation .company-img > div {
+  width: 570px;
+  height: 400px;
+  border: 1px solid #f74848;
+}
+.main .mainContent-wrap .company-explanation .company-img > div > img {
+  width: 570px;
+  height: 400px;
+  transform: translateX(-24px) translateY(-24px);
+}
+.main .mainContent-wrap .company-explanation .company-decoration {
+  position: absolute;
+  left: 730px;
+  bottom: 368px;
+}
+.main .mainContent-wrap .company-explanation .company-decoration hr {
+  width: 250px;
+  border: none;
+  height: 1px;
+  background-color: #f74848;
+}
+.main .mainContent-wrap .start-groupware {
+  background-color: #15171a;
+  color: white;
+  height: 700px;
+  width: 100%;
+}
+.main .mainContent-wrap .start-groupware h3 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 40px;
+}
+.main .mainContent-wrap .start-groupware span {
+  font-size: 18px;
+  margin: 8px 0 50px;
+}
+.main .mainContent-wrap .start-groupware button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background-color: #5850cc;
+  transition: all 0.2s;
+  color: white;
+  border-radius: 8px;
+}
+.main .mainContent-wrap .start-groupware button:hover {
+  background-color: #5b84e3;
+  transition: all 0.2s;
+}
+.main .mainContent-wrap .start-groupware button img {
+  margin-left: 16px;
+}
+
 .selectArea {
   width: 980px;
   height: 254px;

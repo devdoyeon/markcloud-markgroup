@@ -111,13 +111,6 @@
   min-height: 100vh;
   height: auto;
   background-color: white;
-  &.main {
-    button {
-      background-color: $mainColor;
-      color: white;
-      padding: 30px 50px;
-    }
-  }
   .content-wrap {
     padding: 80px 0 0 80px;
     border-top-left-radius: 28px;
