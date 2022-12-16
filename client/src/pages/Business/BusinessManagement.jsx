@@ -16,7 +16,7 @@ const BusinessManagement = () => {
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
-    limit: 9,
+    limit: 5,
   });
 
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const BusinessManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectRead();
+    const result = await getProjectRead(pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -53,15 +53,15 @@ const BusinessManagement = () => {
       });
     }
   };
-
   useEffect(() => {
     getProjectApi();
   }, [pageInfo.page]);
 
   const handleChangeRadioButton = e => {
-    console.log(e.target.value);
     setInputVal(e.target.value);
   };
+
+  const handleChangeClear = () => {};
 
   const { member_id, project_name } = meta;
 
@@ -182,14 +182,25 @@ const BusinessManagement = () => {
             </div>
           </div>
         </div>
-
-        <div className='check-work-wrap'>
-          <div className='check-tab-list'>
+        <div className='work-table-wrap'>
+          <div className='check-work-head-wrap'>
+            <div className='check-work-title'>
+              <h4>내가 요청한 업무</h4>
+              <div className={num === 0 ? 'num active' : 'num'}>
+                {list.length}
+              </div>
+            </div>
+            <div className='line'></div>
+          </div>
+          <div className='check-work-wrap'>
+            {/* <div className='check-tab-list'>
             <div
               className={num === 0 ? 'my-check active' : 'my-check'}
               onClick={() => setNum(0)}>
               <span className={num === 0 ? 'active' : ''}>나의 업무현황</span>
-              <div className={num === 0 ? 'num active' : 'num'}>0</div>
+              <div className={num === 0 ? 'num active' : 'num'}>
+                {list.length}
+              </div>
             </div>
             <div
               className={num === 1 ? 'request-check active' : 'request-check'}
@@ -205,43 +216,44 @@ const BusinessManagement = () => {
               <span className={num === 2 ? 'active' : ''}>전체 업무현황</span>
               <div className={num === 2 ? 'num active' : 'num'}>0</div>
             </div>
-          </div>
-          <div className='table'>
-            <div>
-              <table>
-                <thead>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>프로젝트</th>
-                  <th>요청자</th>
-                  <th>담당자</th>
-                  <th>진행상태</th>
-                  <th>요청일자</th>
-                  <th>완료일자</th>
-                </thead>
-                <tbody>
-                  {list.reduce((acc, cur, idx) => {
-                    return (
-                      <>
-                        {acc}
-                        <tr>
-                          <td>{idx + 1}</td>
-                          <td>{cur.title}</td>
-                          <td>{cur.project_name}</td>
-                          <td>{cur.request_id}</td>
-                          <td>{cur.manager_id}</td>
-                          <td>{cur.work_status}</td>
-                          <td>{cur.created_at}</td>
-                          <td>{cur.work_end_date}</td>
-                        </tr>
-                      </>
-                    );
-                  }, <></>)}
-                </tbody>
-              </table>
+          </div> */}
+            <div className='table'>
+              <div>
+                <table>
+                  <thead>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>프로젝트</th>
+                    <th>요청자</th>
+                    <th>담당자</th>
+                    <th>진행상태</th>
+                    <th>요청일자</th>
+                    <th>완료일자</th>
+                  </thead>
+                  <tbody>
+                    {list.reduce((acc, cur, idx) => {
+                      return (
+                        <>
+                          {acc}
+                          <tr>
+                            <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
+                            <td>{cur.title}</td>
+                            <td>{cur.project_name}</td>
+                            <td>{cur.request_id}</td>
+                            <td>{cur.manager_id}</td>
+                            <td>{cur.work_status}</td>
+                            <td>{cur.created_at}</td>
+                            <td>{cur.work_end_date}</td>
+                          </tr>
+                        </>
+                      );
+                    }, <></>)}
+                  </tbody>
+                </table>
+              </div>
             </div>
+            <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
           </div>
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
       </div>
     </div>
