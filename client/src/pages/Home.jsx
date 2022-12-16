@@ -170,7 +170,7 @@ const Home = () => {
             MarkCloud의 기술력으로 모든 회사에 필요한 기능만 최소화하여
             담아냈습니다.
           </span>
-          <button>
+          <button onClick={() => navigate('/business')}>
             그룹웨어 바로가기 <img src={goIcon} alt='바로가기 아이콘' />
           </button>
         </div>
