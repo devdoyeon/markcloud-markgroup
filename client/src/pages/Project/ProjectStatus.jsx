@@ -95,11 +95,11 @@ const ProjectStatus = () => {
                         {acc}
                         <tr className={idx % 2 === 1 ? 'odd' : 'even'}>
                           <td>{idx}</td>
-                          <td>{idx}</td>
-                          <td>{idx}</td>
-                          <td>{idx}</td>
-                          <td>{idx}</td>
-                          <td>{idx}</td>
+                          <td>진행 중</td>
+                          <td>그룹웨어</td>
+                          <td>2022-12-09</td>
+                          <td>2022-12-31</td>
+                          <td>8명</td>
                         </tr>
                       </>
                     );

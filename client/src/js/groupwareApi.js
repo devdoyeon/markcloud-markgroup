@@ -1,7 +1,31 @@
 import axios from 'axios';
 
 const apiErrorHandling = async error => {
-  console.log(error);
+  const { status } = error?.response;
+  const { detail } = error?.response?.data;
+  switch (status) {
+    case 401:
+      if (detail === 'Access Denied') return 'accessDenied';
+      break;
+    case 403:
+      
+    case 404:
+      return 'notFound'
+    case 422:
+      switch (detail) {
+        case 'InvalidClient':
+          return 'NotAuthority';
+        default:
+          return '';
+      }
+    case 499:
+      return 'tokenError';
+    case 500:
+    case 501:
+      return 'serverError';
+    default:
+      return '';
+  }
 };
 
 // ----------------------------------공지사항----------------------------------
@@ -174,6 +198,7 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
   }
 };
 
+//= 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
     return await axios.get(`/dy/report/detail?report_id=${id}`);
@@ -182,6 +207,7 @@ export const getReportDetail = async id => {
   }
 };
 
+//= 주간 업무 보고 등록
 export const createReport = async ({ title, content }) => {
   try {
     return await axios.post(`/dy/report/create`, {
@@ -194,6 +220,7 @@ export const createReport = async ({ title, content }) => {
   }
 };
 
+//= 주간 업무 보고 수정
 export const editReport = async ({ title, content }, id) => {
   try {
     return await axios.post(
@@ -208,9 +235,20 @@ export const editReport = async ({ title, content }, id) => {
   }
 };
 
+//= 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
     return await axios.post(`/dy/report/delete?report_id=${id}&user_id=d`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//----------------------------------프로젝트 현황----------------------------------
+
+//= 프로젝트 현황 불러오기
+export const getProjectList = async () => {
+  try {
   } catch (error) {
     return apiErrorHandling(error);
   }

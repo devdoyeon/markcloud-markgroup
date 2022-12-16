@@ -1,3 +1,16 @@
+const errorList = {
+  serverError: '잠시 후 다시 시도해 주세요.',
+  NotAuthority: ''
+
+}
+
+export const errorHandling = async (result, navigate, setModal, setAlert) => {
+  if (result === 'serverError') {
+    return commonModalSetting(setModal, true, 'alert')
+  }
+  else if (result === 'notFound') return navigate('/error')
+}
+
 export const numberWithCommas = x => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

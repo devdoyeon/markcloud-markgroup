@@ -2,6 +2,7 @@ import 'App.css';
 import { Routes, Route } from 'react-router-dom';
 // =============== Pages ===============
 import Home from 'pages/Home';
+import SignIn from 'pages/SignIn';
 import Board from 'pages/Board';
 import Report from 'pages/Report';
 import Notice from 'pages/Notice';
@@ -22,6 +23,7 @@ function App() {
     <div className='App'>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/sign-in' element={<SignIn />} />
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />

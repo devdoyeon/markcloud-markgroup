@@ -228,6 +228,211 @@
   }
 }
 
+.commonNav {
+  @include flex-style();
+  @include position-style($top: 50px, $right: 100px, $zIndex: 5);
+  li {
+    cursor: pointer;
+    &:first-child::after {
+      content: '|';
+      color: white;
+      margin: 0 20px;
+    }
+    a,
+    button {
+      font-size: 14px;
+      color: white;
+    }
+  }
+}
+
+.main-footer {
+  @include flex-style(column, $alignVal: center, $justifyVal: center);
+  width: 100%;
+  height: 350px;
+  background-color: $footerColor;
+  padding: 28px 0;
+
+  * {
+    font-size: 12px;
+    color: $gray02;
+  }
+
+  .content-container {
+    width: 100%;
+    padding: 0 320px;
+  }
+
+  .top {
+    @include flex-style($alignVal: center, $justifyVal: space-between);
+
+    > ul {
+      @include flex-style;
+
+      > li {
+        .highlight {
+          color: $cloudMainColor;
+        }
+
+        a {
+          font-family: $middleFont;
+        }
+
+        &:first-child {
+          @include position-style(relative);
+
+          > ul {
+            display: none;
+            @include position-style($left: 0, $right: 0);
+            width: 150px;
+            height: 105px;
+            background-color: $white;
+            border: 1px solid $viewMainColor;
+            border-radius: 10px;
+            margin: 5px auto;
+
+            > li {
+              line-height: 35px;
+
+              a {
+                display: block;
+                width: 100%;
+                padding-left: 15px;
+                color: $black;
+
+                &:hover {
+                  background-color: $viewMainColor;
+                  color: $white;
+                }
+
+                &.first:hover {
+                  border-radius: 10px 10px 0px 0px;
+                }
+
+                &.last:hover {
+                  border-radius: 0px 0px 10px 10px;
+                }
+              }
+            }
+          }
+        }
+
+        &.nav-list {
+          &::after {
+            @include position-style(relative, $top: -2px);
+            content: '|';
+            margin: 0 10px;
+            font-size: 10px;
+          }
+
+          &:last-child::after {
+            content: '';
+          }
+        }
+
+        &.sns-icon {
+          @include flex-style(column, $alignVal: center, $justifyVal: center);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: $viewMainColor;
+
+          a {
+            font-family: 'UbuntuB', '맑은고딕', 'sans-serif';
+            @include txt-style(14px, $footerColor);
+          }
+
+          &:nth-child(2) {
+            margin: 0 10px;
+          }
+        }
+      }
+    }
+
+    button {
+      @include flex-style();
+      width: 160px;
+      height: 40px;
+      border-radius: 30px;
+      background-color: $viewMainColor;
+      color: $white;
+      padding: 0;
+      img {
+        margin-left: 25px;
+      }
+      &:hover {
+        background-color: $viewMainColor;
+        border-color: $viewMainColor;
+      }
+    }
+  }
+
+  .bottom {
+    @include flex-style($alignVal: flex-end, $justifyVal: space-between);
+    margin-top: 30px;
+
+    p:nth-child(2) {
+      margin: 30px 0 20px;
+      line-height: 26px;
+    }
+  }
+}
+
+.signIn {
+  @include flex-style(column);
+  min-height: 100vh;
+  .loginForm {
+    @include flex-style(column);
+    width: 20%;
+    height: 504px;
+    h3 {
+      font-family: $boldFont;
+      font-size: 40px;
+    }
+    .line {
+      width: 1px;
+      height: 60px;
+      background-color: #3c8fef;
+      margin: 30px 0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border: 2px solid $gray03;
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:focus {
+        border-color: #3c8fef;
+      }
+    }
+    button {
+      background-color: #3c8fef;
+      color: white;
+      border-radius: 45px;
+      width: 100%;
+      height: 45px;
+      font-size: 16px;
+      margin: 25px 0 30px;
+    }
+    .row {
+      a {
+        font-size: 14px;
+        &::after {
+          content: '|';
+          color: $gray02;
+          margin: 0 10px;
+        }
+        &:last-child::after {
+          content: '';
+        }
+      }
+    }
+  }
+}
+
 .selectArea {
   width: 980px;
   height: 254px;

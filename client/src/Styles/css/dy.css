@@ -251,6 +251,227 @@
   background-color: #5b84e3;
 }
 
+.commonNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+  right: 100px;
+  top: 50px;
+  z-index: 5;
+}
+.commonNav li {
+  cursor: pointer;
+}
+.commonNav li:first-child::after {
+  content: "|";
+  color: white;
+  margin: 0 20px;
+}
+.commonNav li a,
+.commonNav li button {
+  font-size: 14px;
+  color: white;
+}
+
+.main-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 350px;
+  background-color: #eeeeee;
+  padding: 28px 0;
+}
+.main-footer * {
+  font-size: 12px;
+  color: #858585;
+}
+.main-footer .content-container {
+  width: 100%;
+  padding: 0 320px;
+}
+.main-footer .top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.main-footer .top > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.main-footer .top > ul > li .highlight {
+  color: #3c8fef;
+}
+.main-footer .top > ul > li a {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.main-footer .top > ul > li:first-child {
+  position: relative;
+}
+.main-footer .top > ul > li:first-child > ul {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 150px;
+  height: 105px;
+  background-color: #ffffff;
+  border: 1px solid #434343;
+  border-radius: 10px;
+  margin: 5px auto;
+}
+.main-footer .top > ul > li:first-child > ul > li {
+  line-height: 35px;
+}
+.main-footer .top > ul > li:first-child > ul > li a {
+  display: block;
+  width: 100%;
+  padding-left: 15px;
+  color: #15171a;
+}
+.main-footer .top > ul > li:first-child > ul > li a:hover {
+  background-color: #434343;
+  color: #ffffff;
+}
+.main-footer .top > ul > li:first-child > ul > li a.first:hover {
+  border-radius: 10px 10px 0px 0px;
+}
+.main-footer .top > ul > li:first-child > ul > li a.last:hover {
+  border-radius: 0px 0px 10px 10px;
+}
+.main-footer .top > ul > li.nav-list::after {
+  position: relative;
+  top: -2px;
+  content: "|";
+  margin: 0 10px;
+  font-size: 10px;
+}
+.main-footer .top > ul > li.nav-list:last-child::after {
+  content: "";
+}
+.main-footer .top > ul > li.sns-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #434343;
+}
+.main-footer .top > ul > li.sns-icon a {
+  font-family: "UbuntuB", "맑은고딕", "sans-serif";
+  font-size: 14px;
+  color: #eeeeee;
+}
+.main-footer .top > ul > li.sns-icon:nth-child(2) {
+  margin: 0 10px;
+}
+.main-footer .top button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 160px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: #434343;
+  color: #ffffff;
+  padding: 0;
+}
+.main-footer .top button img {
+  margin-left: 25px;
+}
+.main-footer .top button:hover {
+  background-color: #434343;
+  border-color: #434343;
+}
+.main-footer .bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+.main-footer .bottom p:nth-child(2) {
+  margin: 30px 0 20px;
+  line-height: 26px;
+}
+
+.signIn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+.signIn .loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 20%;
+  height: 504px;
+}
+.signIn .loginForm h3 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 40px;
+}
+.signIn .loginForm .line {
+  width: 1px;
+  height: 60px;
+  background-color: #3c8fef;
+  margin: 30px 0;
+}
+.signIn .loginForm input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 2px solid #cdcdcd;
+  margin-bottom: 10px;
+}
+.signIn .loginForm input:last-child {
+  margin-bottom: 0;
+}
+.signIn .loginForm input:focus {
+  border-color: #3c8fef;
+}
+.signIn .loginForm button {
+  background-color: #3c8fef;
+  color: white;
+  border-radius: 45px;
+  width: 100%;
+  height: 45px;
+  font-size: 16px;
+  margin: 25px 0 30px;
+}
+.signIn .loginForm .row a {
+  font-size: 14px;
+}
+.signIn .loginForm .row a::after {
+  content: "|";
+  color: #858585;
+  margin: 0 10px;
+}
+.signIn .loginForm .row a:last-child::after {
+  content: "";
+}
+
 .selectArea {
   width: 980px;
   height: 254px;
