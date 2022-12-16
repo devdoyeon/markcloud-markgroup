@@ -1,4 +1,24 @@
 @charset "UTF-8";
+.main .mainContent-wrap button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  transition: all 0.2s;
+  color: white;
+}
+.main .mainContent-wrap button img {
+  margin-left: 16px;
+}
+.main .mainContent-wrap button:hover {
+  background-color: #5850cc;
+  transition: all 0.2s;
+  border-color: #5850cc;
+}
 .main .mainContent-wrap .intro {
   position: relative;
   display: flex;
@@ -20,20 +40,6 @@
 .main .mainContent-wrap .intro .intro-content p {
   font-size: 18px;
   margin-bottom: 50px;
-}
-.main .mainContent-wrap .intro .intro-content button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 14px 16px;
-  border: 1px solid white;
-  border-radius: 8px;
-  color: white;
-}
-.main .mainContent-wrap .intro .intro-content button img {
-  margin-left: 16px;
 }
 .main .mainContent-wrap .intro > img {
   width: 100%;
@@ -230,23 +236,11 @@
   margin: 8px 0 50px;
 }
 .main .mainContent-wrap .start-groupware button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 14px 16px;
   background-color: #5850cc;
-  transition: all 0.2s;
-  color: white;
-  border-radius: 8px;
+  border: none;
 }
 .main .mainContent-wrap .start-groupware button:hover {
   background-color: #5b84e3;
-  transition: all 0.2s;
-}
-.main .mainContent-wrap .start-groupware button img {
-  margin-left: 16px;
 }
 
 .selectArea {
