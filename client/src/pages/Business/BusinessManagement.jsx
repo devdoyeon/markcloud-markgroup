@@ -16,7 +16,7 @@ const BusinessManagement = () => {
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
-    limit: 9,
+    limit: 5,
   });
 
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const BusinessManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectRead();
+    const result = await getProjectRead(pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -53,15 +53,15 @@ const BusinessManagement = () => {
       });
     }
   };
-
   useEffect(() => {
     getProjectApi();
   }, [pageInfo.page]);
 
   const handleChangeRadioButton = e => {
-    console.log(e.target.value);
     setInputVal(e.target.value);
   };
+
+  const handleChangeClear = () => {};
 
   const { member_id, project_name } = meta;
 
@@ -189,7 +189,9 @@ const BusinessManagement = () => {
               className={num === 0 ? 'my-check active' : 'my-check'}
               onClick={() => setNum(0)}>
               <span className={num === 0 ? 'active' : ''}>나의 업무현황</span>
-              <div className={num === 0 ? 'num active' : 'num'}>0</div>
+              <div className={num === 0 ? 'num active' : 'num'}>
+                {list.length}
+              </div>
             </div>
             <div
               className={num === 1 ? 'request-check active' : 'request-check'}
@@ -225,7 +227,7 @@ const BusinessManagement = () => {
                       <>
                         {acc}
                         <tr>
-                          <td>{idx + 1}</td>
+                          <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
                           <td>{cur.title}</td>
                           <td>{cur.project_name}</td>
                           <td>{cur.request_id}</td>

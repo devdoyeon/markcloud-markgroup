@@ -56,13 +56,9 @@ export const deleteNotice = async id => {
 };
 // ----------------------------------업무 관리----------------------------------
 
-export const getProjectRead = async () => {
+export const getProjectRead = async ({ page, limit }) => {
   try {
-    return await axios.get(`/bw/projects/read`, {
-      user_id: 'songmoana',
-      page: 1,
-      limit: 10,
-    });
+    return await axios.get(`/bw/projects/read?limit=${limit}&page=${page}`);
   } catch (error) {
     return;
   }
@@ -85,6 +81,14 @@ export const createProject = async ({
       request_id,
       manager_id,
     });
+  } catch (error) {
+    return;
+  }
+};
+
+export const getProjectInfo = async id => {
+  try {
+    return await axios.get(`/bw/projects/info?project_id=${id}`);
   } catch (error) {
     return;
   }

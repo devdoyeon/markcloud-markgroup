@@ -5,7 +5,7 @@ import SideMenu from 'common/SideMenu';
 import { changeState, commonModalSetting } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { createProject, getProjectRead } from 'js/groupwareApi';
+import { getProjectInfo } from 'js/groupwareApi';
 import {
   getBoardDetail,
   createBoard,
@@ -15,7 +15,7 @@ import {
   createNotice,
 } from 'js/groupwareApi';
 
-const BusinessNewBoard = () => {
+const BusinessBoardRead = () => {
   const [alert, setAlert] = useState('');
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
@@ -32,11 +32,7 @@ const BusinessNewBoard = () => {
     context: '',
     bool: false,
   });
-  const [pageInfo, setPageInfo] = useState({
-    page: 1,
-    totalPage: 15,
-    limit: 5,
-  });
+  const [info, setInfo] = useState({});
 
   const [projectValue, setProjectValue] = useState('===');
   const [requesterValue, setRequesterValue] = useState('===');
@@ -50,33 +46,54 @@ const BusinessNewBoard = () => {
 
   let prevent = false;
 
-  const getProjectApi = async () => {
+  const getDetail = async () => {
     if (prevent) return;
-    prevent = true;
+    prevent = false;
     setTimeout(() => {
-      prevent = false;
+      prevent = true;
     }, 200);
-    const result = await getProjectRead(pageInfo);
+    let result;
+
     if (typeof result === 'object') {
-      const { data, meta } = result?.data;
-      setList(data);
-      setMeta(meta);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.page = meta?.page;
-        clone.totalPage = meta?.totalPage;
-        return clone;
-      });
+      setInfo(result?.data);
+      document.querySelector('.content').innerHTML =
+        new DOMParser().parseFromString(
+          result?.data?.content,
+          'text/html'
+        ).body.innerHTML;
+    } else {
+      //에러핸들링
+      return;
     }
   };
 
-  const handleChangeRadioButton = (e, type) => {
-    if (type === 'title') {
-      changeState(setPostInfo, 'title', e.target.value);
-    } else if (type === 'content') {
-      changeState(setPostInfo, 'title', e.target.value);
-    }
-  };
+  // const getProjectApi = async () => {
+  //   if (prevent) return;
+  //   prevent = true;
+  //   setTimeout(() => {
+  //     prevent = false;
+  //   }, 200);
+  //   const result = await getProjectRead(pageInfo);
+  //   if (typeof result === 'object') {
+  //     const { data, meta } = result?.data;
+  //     setList(data);
+  //     setMeta(meta);
+  //     setPageInfo(prev => {
+  //       const clone = { ...prev };
+  //       clone.page = meta?.page;
+  //       clone.totalPage = meta?.totalPage;
+  //       return clone;
+  //     });
+  //   }
+  // };
+
+  // const handleChangeRadioButton = (e, type) => {
+  //   if (type === 'title') {
+  //     changeState(setPostInfo, 'title', e.target.value);
+  //   } else if (type === 'content') {
+  //     changeState(setPostInfo, 'title', e.target.value);
+  //   }
+  // };
 
   // const returnHeader = () => {
   //   switch (path.split('/')[1]) {
@@ -113,31 +130,21 @@ const BusinessNewBoard = () => {
   //   } else return; // 에러 처리
   // };
 
-  const getProjectInfo = async () => {
+  const getProjectDetail = async () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
-    // const result = await
-
-    // if (typeof result === 'object') {
-    //   setPostInfo(result?.data);
-    // } else return; // 에러 처리
-  };
-
-  const createNew = async () => {
-    const result = await createProject(postInfo);
+    const result = await getProjectInfo(id);
 
     if (typeof result === 'object') {
-      setAlert('apply');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '등록이 완료되었습니다.'
-      );
-    } else return; // 에러 처리
+      setInfo(result?.data);
+      document.querySelector('.content').innerHTML =
+        new DOMParser().parseFromString(
+          result?.data?.content,
+          'text/html'
+        ).body.innerHTML;
+    } else return;
   };
-
-  const editPost = async () => {
+  const editProject = async () => {
     let result;
     if (typeof result === 'object') {
       setAlert('edit');
@@ -151,8 +158,7 @@ const BusinessNewBoard = () => {
   };
 
   useEffect(() => {
-    // if (id?.length) getOriginDetail();
-    getProjectApi();
+    if (id?.length) getProjectDetail();
   }, []);
 
   useEffect(() => {
@@ -171,11 +177,19 @@ const BusinessNewBoard = () => {
     changeState(setPostInfo, 'work_status', progressValue);
   }, [progressValue]);
 
-  // useEffect(()=> {
-  //   if(id?.length) getProjectInfo();
-  // },[])
+  useEffect(() => {
+    if (id?.length) getProjectDetail();
+  }, []);
 
-  const { member_id, project_name } = meta;
+  const {
+    created_at,
+    manager_id,
+    project_name,
+    request_id,
+    title,
+    work_end_date,
+    work_status,
+  } = info;
 
   return (
     <>
@@ -190,66 +204,42 @@ const BusinessNewBoard = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <CommonSelect
-                  opt={project_name}
-                  selectVal={projectValue}
-                  setSelectVal={setProjectValue}
-                />
+                <div>{project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
-                <CommonSelect
-                  opt={member_id}
-                  selectVal={requesterValue}
-                  setSelectVal={setRequesterValue}
-                />
+                <div>{request_id}</div>
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
-                <CommonSelect
-                  opt={member_id}
-                  selectVal={contactValue}
-                  setSelectVal={setContactValue}
-                />
+                <div>{manager_id}</div>
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>진행상태</span>
-                <CommonSelect
-                  opt={progressArr}
-                  selectVal={progressValue}
-                  setSelectVal={setProgressValue}
-                />
+                <div>{work_status}</div>
               </div>
             </div>
             <div className='project-wrap title'>
               <span>제목</span>
               <div className='title-input-wrap'>
-                <label>
-                  <input
-                    type='text'
-                    placeholder='제목을 입력해주세요.'
-                    onChange={e => handleChangeRadioButton(e, 'title')}
-                  />
-                </label>
+                <div className='input-read'>{title}</div>
               </div>
             </div>
             <div className='content edit'>
-              <EditorComponent
+              {/* <EditorComponent
                 content={postInfo.content}
                 setContent={setPostInfo}
-              />
+              /> */}
             </div>
           </div>
           <div className='btn-wrap'>
-            <button
-              className='commonBtn applyBtn'
-              onClick={id?.length ? editPost : createNew}>
-              등록
+            <button className='commonBtn applyBtn' onClick={editProject}>
+              수정
             </button>
             <button
               className='commonBtn list'
@@ -259,9 +249,9 @@ const BusinessNewBoard = () => {
                   setAlertBox,
                   true,
                   'confirm',
-                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?<br/>${
-                    id?.length ? '수정' : '작성'
-                  }이 취소된 글은 복구할 수 없습니다.`
+                  `수정을 취소하시겠습니까?<br/>
+                    수정
+                  이 취소된 글은 복구할 수 없습니다.`
                 );
               }}>
               목록
@@ -285,4 +275,4 @@ const BusinessNewBoard = () => {
   );
 };
 
-export default BusinessNewBoard;
+export default BusinessBoardRead;
