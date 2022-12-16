@@ -68,6 +68,36 @@ export const getBusinessRead = async ({ page, limit }) => {
   }
 };
 
+export const getBusinessFilterRead = async (
+  { page, limit },
+  status_filter,
+  { project_name, manager_id, request_id, title, content, progress_status }
+) => {
+  try {
+    return await axios.get(
+      `/bw/projects/filter_read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+      {
+        project_name,
+        manager_id,
+        request_id,
+        title,
+        content,
+        progress_status,
+      }
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getBusinessInfo = async id => {
+  try {
+    return await axios.get(`/bw/projects/info?project_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
 export const createBusiness = async ({
   project_name,
   title,
@@ -90,17 +120,143 @@ export const createBusiness = async ({
   }
 };
 
-export const getBusinessInfo = async id => {
+export const updateBusiness = async (
+  { request_id, manager_id, work_status, title, content },
+  id
+) => {
   try {
-    return await axios.get(`/bw/projects/info?project_id=${id}`);
+    return await axios.post(`/bw/projects/update?project_id=${id}`, {
+      request_id,
+      manager_id,
+      work_status,
+      title,
+      content,
+    });
   } catch (error) {
-    return;
+    return apiErrorHandling(error);
   }
 };
+
 // ----------------------------------인사 관리----------------------------------
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export const getDepartmentList = async ({ page, limit }) => {
+  try {
+    return await axios.get(
+      `/bw/personnel/department/list?page=${page}&limit=${limit}`
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getDepartmentInfo = async id => {
+  try {
+    return await axios.get(`/bw/personnel/department/info?department_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getDepartmentCreate = async name => {
+  try {
+    return await axios.post(`/bw/personnel/department/create`, {
+      department_name: name,
+    });
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getDepartmentUpdate = async (id, name) => {
+  try {
+    return await axios.post(
+      `/bw/personnel/department/update?department_id=${id}`,
+      {
+        department_name: name,
+      }
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getDepartmentDelete = async id => {
+  try {
+    return await axios.post(
+      `/bw/personnel/department/delete?department_id=${id}`
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~member~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export const getMemberList = async ({ page, limit }) => {
+  try {
+    return await axios.get(
+      `/bw/personnel/member/list?page=${page}&limit=${limit}`
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getMemberInfo = async id => {
+  try {
+    return await axios.get(`/bw/personnel/member/info?member_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getMemberCreate = async () => {
+  try {
+    return await axios.post(`/bw/personnel/member/create`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getMemberUpdate = async (
+  {
+    name,
+    user_id,
+    hashed_password,
+    email,
+    birthday,
+    phone,
+    gender,
+    zip_code,
+    address,
+    section,
+  },
+  id
+) => {
+  try {
+    return await axios.post(`/bw/personnel/member/update?member_id=${id}`, {
+      name,
+      user_id,
+      hashed_password,
+      email,
+      birthday,
+      phone,
+      gender,
+      zip_code,
+      address,
+      section,
+    });
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+export const getMemberDelete = async id => {
+  try {
+    return await axios.post(`/bw/personnel/member/delete?member_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
 
 // ----------------------------------사내 게시판----------------------------------
 
