@@ -89,7 +89,7 @@ const ProjectStatus = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {new Array(5).fill('').reduce((acc, i, idx) => {
+                  {new Array(10).fill('').reduce((acc, i, idx) => {
                     return (
                       <>
                         {acc}
