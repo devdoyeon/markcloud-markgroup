@@ -3,7 +3,6 @@ from fastapi import HTTPException
 from sqlalchemy import desc
 from datetime import datetime,date
 
-
     
 ##################################부서 관리##################################
 def get_department_list(db, offset, limit, user_id):

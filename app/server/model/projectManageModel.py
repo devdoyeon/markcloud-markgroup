@@ -35,3 +35,16 @@ class ProjectTable(Base):
     created_id = Column(VARCHAR(30), nullable = False)
     updated_at = Column(DateTime, nullable = False)
     updated_id = Column(VARCHAR(30), nullable = False)
+    
+class ProjectMemberTable(Base):
+    __tablename__ = "groupware_project_members"
+    
+    id = Column(BigInteger, nullable = False, primary_key = True, autoincrement = True)
+    project_code = Column(VARCHAR(14),nullable = False)
+    user_id = Column(VARCHAR(14),nullable = False)
+    delete_yn= Column(VARCHAR(1),default = 'N',nullable = False)
+    created_at = Column(DateTime, nullable = False)
+    created_id = Column(VARCHAR(30), nullable = False)
+    updated_at = Column(DateTime, nullable = False)
+    updated_id = Column(VARCHAR(30), nullable = False)
+    

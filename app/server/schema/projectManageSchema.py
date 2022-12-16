@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional,List
+from typing import Optional,List, Union
 from enum import Enum
 from datetime import date
 
@@ -29,6 +29,7 @@ class ProjectManageFilter(BaseModel):
     request_id:str
     title:str
     content:str
+    progress_status:list
     
     class Config:
         orm_mode = True
@@ -46,12 +47,13 @@ class ProjectManageOut(BaseModel):
     
     id:int # 번호
     title:str # 제목
+    content:str
     project_name:str#프로젝트명
-    request_id:str
-    manager_id:str
-    work_status:str
-    created_at:date
-    work_end_date:Optional[date]
+    request_id:str # 요청자
+    manager_id:str # 담당자
+    work_status:str #진행상태
+    created_at:date # 작성일
+    work_end_date:Optional[date] # 완료일자
         
     class Config:
         orm_mode = True

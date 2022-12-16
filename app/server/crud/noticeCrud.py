@@ -71,9 +71,10 @@ def change_notice(db,inbound_data,notice_id, user_id):
                 'updated_at':datetime.today()
                 }
         
-        base_q = db.query(notice_table).filter(notice_table.id == notice_id) #.first()
-
+        base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
+        
         if user_id == base_q.created_id:
+            
             db.query(notice_table).filter_by(id = notice_id).update(values)
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
@@ -92,4 +93,4 @@ def remove_notice(db,notice_id, user_id):
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
-        HTTPException(status_code=500, detail='dbDeleteError')
+        raise HTTPException(status_code=500, detail='dbDeleteError')

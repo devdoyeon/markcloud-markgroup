@@ -17,7 +17,7 @@ db = {
 }
 
 DB_URL = f"mysql+pymysql://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['database']}?charset=utf8"
-engine = create_engine(DB_URL, max_overflow=0, pool_recycle=1000, pool_pre_ping=True,echo= True) 
+engine = create_engine(DB_URL, max_overflow=0, pool_recycle=1000, pool_pre_ping=True) 
 Base = declarative_base()
 
 def get_db():
