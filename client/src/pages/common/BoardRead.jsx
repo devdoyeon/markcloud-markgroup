@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import { commonModalSetting } from 'js/commonUtils';
+import { commonModalSetting, catchError } from 'js/commonUtils';
 import {
   getBoardDetail,
   deleteBoard,
@@ -58,7 +58,7 @@ const BoardRead = () => {
         ).body.innerHTML;
     } else {
       //에러핸들링
-      return;
+      return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -83,7 +83,7 @@ const BoardRead = () => {
     if (typeof result === 'object') {
       setAlert('deleteAlert');
       commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
-    } else return
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -150,6 +150,9 @@ const BoardRead = () => {
             if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'deleteAlert')
               navigate(`/${path.split('/')[1]}`);
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />

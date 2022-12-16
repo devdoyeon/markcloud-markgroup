@@ -115,7 +115,10 @@ const ProjectStatus = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
+          okFn={() => {
+            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+          }}
           failFn={() => {}}
         />
       )}

@@ -95,8 +95,10 @@ const NewProject = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicationPerson') return;
-            else if (alert === 'cancel') navigate('/project');
+            if (alert === 'cancel') navigate('/project');
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />

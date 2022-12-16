@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { changeState, commonModalSetting } from 'js/commonUtils';
+import { changeState, commonModalSetting, catchError } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { createBusiness, getBusinessRead } from 'js/groupwareApi';
@@ -67,7 +67,7 @@ const BusinessNewBoard = () => {
         clone.totalPage = meta?.totalPage;
         return clone;
       });
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const handleChangeRadioButton = (e, type) => {
@@ -110,7 +110,7 @@ const BusinessNewBoard = () => {
   //   }
   //   if (typeof result === 'object') {
   //     setPostInfo(result?.data);
-  //   } else return; // 에러 처리
+  //   } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   // };
 
   const getProjectInfo = async () => {
@@ -120,7 +120,7 @@ const BusinessNewBoard = () => {
 
     // if (typeof result === 'object') {
     //   setPostInfo(result?.data);
-    // } else return; // 에러 처리
+    // } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   const createNew = async () => {
@@ -134,7 +134,7 @@ const BusinessNewBoard = () => {
         'alert',
         '등록이 완료되었습니다.'
       );
-    } else return; // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   const editPost = async () => {
@@ -147,7 +147,7 @@ const BusinessNewBoard = () => {
         'alert',
         '수정이 완료되었습니다.'
       );
-    } else return; // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   useEffect(() => {
@@ -277,6 +277,9 @@ const BusinessNewBoard = () => {
             if (alert === 'cancel' || alert === 'apply')
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />

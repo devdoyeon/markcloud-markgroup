@@ -1,16 +1,25 @@
 import axios from 'axios';
+import { getCookie, removeCookie, setCookie } from './cookie';
 
+//# API 통신 중 발생하는 에러 핸들링 함수
 const apiErrorHandling = async error => {
   const { status } = error?.response;
   const { detail } = error?.response?.data;
+  const failCount = detail?.split(',')[1];
   switch (status) {
     case 401:
       if (detail === 'Access Denied') return 'accessDenied';
       break;
     case 403:
-      
+      if (detail === 'AccessTokenExpired') return await tokenReissue();
+      else if (detail === 'LoginRequired') return 'tokenExpired';
+      else if (detail === 'DuplicateLoginDetection') return 'duplicateLogin';
+      else if (detail === 'Invaild User ID') return 'wrongId';
+      else if (detail === `Invaild Password,${failCount}`)
+        return `wrongPw,${failCount}`;
+      break;
     case 404:
-      return 'notFound'
+      return 'notFound';
     case 422:
       switch (detail) {
         case 'InvalidClient':
@@ -18,8 +27,6 @@ const apiErrorHandling = async error => {
         default:
           return '';
       }
-    case 499:
-      return 'tokenError';
     case 500:
     case 501:
       return 'serverError';
@@ -28,7 +35,42 @@ const apiErrorHandling = async error => {
   }
 };
 
-// ----------------------------------공지사항----------------------------------
+//# 토큰 재발급
+const tokenReissue = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+    'refresh-token': getCookie('rfToken'),
+  };
+  try {
+    const result = await axios.get(`/api/users/self/token`, { headers });
+    removeCookie('myToken');
+    setCookie('myToken', result?.data?.data?.access_token, {
+      path: '/',
+    });
+    window.location.reload();
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+
+//# 로그인
+export const signIn = async (userId, userPw) => {
+  const header = { 'Content-Type': 'application/json' };
+  try {
+    const ipSearch = await axios.get('https://api.ip.pe.kr/');
+    const ip = ipSearch.data;
+    return await axios.post(
+      '/api/admin/login',
+      { user_id: userId, password: userPw, login_ip: ip },
+      { header }
+    );
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+
+// ==============================공지사항==============================
 export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
     if (type === '' || value === '') {
@@ -82,7 +124,7 @@ export const deleteNotice = async id => {
     return apiErrorHandling(error);
   }
 };
-// ----------------------------------업무 관리----------------------------------
+// ================================ 업무 관리 ================================
 
 export const getBusinessRead = async ({ page, limit }) => {
   try {
@@ -161,7 +203,7 @@ export const updateBusiness = async (
   }
 };
 
-// ----------------------------------인사 관리----------------------------------
+// ================================인사 관리 ================================
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export const getDepartmentList = async ({ page, limit }) => {
   try {
@@ -282,9 +324,9 @@ export const getMemberDelete = async id => {
   }
 };
 
-// ----------------------------------사내 게시판----------------------------------
+// ================================ 사내 게시판 ================================
 
-//= 게시판 리스트 불러오기
+//& 게시판 리스트 불러오기
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
@@ -297,7 +339,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   }
 };
 
-//= 게시판 상세내역 불러오기
+//& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
     return await axios.get(`/dy/board/detail?post_id=${id}`);
@@ -306,7 +348,7 @@ export const getBoardDetail = async id => {
   }
 };
 
-//= 게시글 작성
+//& 게시글 작성
 export const createBoard = async ({ title, content }) => {
   try {
     return await axios.post(`/dy/board/create`, {
@@ -320,7 +362,7 @@ export const createBoard = async ({ title, content }) => {
   }
 };
 
-//= 게시글 수정
+//& 게시글 수정
 export const editBoard = async ({ title, content }, id) => {
   try {
     return await axios.post(`/dy/board/update?post_id=${id}`, {
@@ -334,7 +376,7 @@ export const editBoard = async ({ title, content }, id) => {
   }
 };
 
-//= 게시글 삭제
+//& 게시글 삭제
 export const deleteBoard = async id => {
   try {
     return await axios.post(`/dy/board/delete?post_id=${id}&user_id=mxxvii`);
@@ -343,9 +385,9 @@ export const deleteBoard = async id => {
   }
 };
 
-//----------------------------------주간 업무 보고----------------------------------
+// ================================ 주간 업무 보고 ================================
 
-//= 주간 업무 보고 불러오기
+//& 주간 업무 보고 불러오기
 export const getReportList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
@@ -358,7 +400,7 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
   }
 };
 
-//= 주간 업무 보고 상세내역 불러오기
+//& 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
     return await axios.get(`/dy/report/detail?report_id=${id}`);
@@ -367,7 +409,7 @@ export const getReportDetail = async id => {
   }
 };
 
-//= 주간 업무 보고 등록
+//& 주간 업무 보고 등록
 export const createReport = async ({ title, content }) => {
   try {
     return await axios.post(`/dy/report/create`, {
@@ -380,7 +422,7 @@ export const createReport = async ({ title, content }) => {
   }
 };
 
-//= 주간 업무 보고 수정
+//& 주간 업무 보고 수정
 export const editReport = async ({ title, content }, id) => {
   try {
     return await axios.post(
@@ -395,7 +437,7 @@ export const editReport = async ({ title, content }, id) => {
   }
 };
 
-//= 주간 업무 보고 삭제
+//& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
     return await axios.post(`/dy/report/delete?report_id=${id}&user_id=d`);
@@ -404,9 +446,9 @@ export const deleteReport = async id => {
   }
 };
 
-//----------------------------------프로젝트 현황----------------------------------
+// ================================ 프로젝트 현황 ================================
 
-//= 프로젝트 현황 불러오기
+//& 프로젝트 현황 불러오기
 export const getProjectList = async () => {
   try {
   } catch (error) {

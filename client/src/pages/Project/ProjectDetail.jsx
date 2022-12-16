@@ -117,7 +117,6 @@ const ProjectDetail = () => {
                       setParticipation(prev => {
                         const clone = [...prev];
                         if (clone.includes(personValue)) {
-                          setAlert('duplicationPerson');
                           commonModalSetting(
                             setAlertBox,
                             true,
@@ -167,10 +166,12 @@ const ProjectDetail = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicationPerson') return;
-            else if (alert === 'cancel' || alert === 'completeDelete')
+            if (alert === 'cancel' || alert === 'completeDelete')
               navigate('/project');
             else if (alert === 'confirmDelete') deleteProject();
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />

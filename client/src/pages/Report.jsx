@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import CommonHeader from 'common/CommonHeader';
+import CommonModal from 'common/CommonModal';
 import ListWrap from 'common/ListWrap';
 import { getReportList } from 'js/groupwareApi';
+import { catchError } from 'js/commonUtils';
 
 const Report = () => {
+  const [alert, setAlert] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+  });
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
@@ -15,6 +24,7 @@ const Report = () => {
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   let prevent = false;
+  const navigate = useNavigate;
 
   const getReport = async () => {
     if (prevent) return;
@@ -32,7 +42,7 @@ const Report = () => {
         clone.totalPage = meta?.totalPage;
         return clone;
       });
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const commonHeaderState = {
@@ -47,14 +57,27 @@ const Report = () => {
   }, [pageInfo.page]);
 
   return (
-    <div className='container'>
-      <SideMenu />
-      <div className='content-wrap notice'>
-        <CommonHeader {...commonHeaderState} okFn={getReport} />
-        <ListWrap list={list} />
-        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+    <>
+      <div className='container'>
+        <SideMenu />
+        <div className='content-wrap notice'>
+          <CommonHeader {...commonHeaderState} okFn={getReport} />
+          <ListWrap list={list} />
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+        </div>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+          }}
+          failFn={() => {}}
+        />
+      )}
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { changeState, commonModalSetting } from 'js/commonUtils';
+import { changeState, commonModalSetting, catchError } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
   getBoardDetail,
@@ -47,13 +47,9 @@ const NewBoard = () => {
 
   const findEmptyValue = () => {
     const tagRegExp = /<[^>]*>?/g;
-    if (postInfo.title.trim() === '') {
-      setAlert('emptyTitle');
-      return 'emptyTitle';
-    } else if (postInfo.content.replace(tagRegExp, '').trim() === '') {
-      setAlert('emptyContent');
+    if (postInfo.title.trim() === '') return 'emptyTitle';
+    else if (postInfo.content.replace(tagRegExp, '').trim() === '')
       return 'emptyContent';
-    }
   };
 
   const getOriginDetail = async () => {
@@ -73,7 +69,7 @@ const NewBoard = () => {
     }
     if (typeof result === 'object') {
       setPostInfo(result?.data);
-    } else return; // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   const createNew = async () => {
@@ -112,7 +108,7 @@ const NewBoard = () => {
         'alert',
         '등록이 완료되었습니다.'
       );
-    } else return; // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   const editPost = async () => {
@@ -152,7 +148,7 @@ const NewBoard = () => {
         'alert',
         '수정이 완료되었습니다.'
       );
-    } else return; // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
   useEffect(() => {
@@ -228,7 +224,9 @@ const NewBoard = () => {
             if (alert === 'cancel' || alert === 'apply')
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
-            else if (alert === 'emptyTitle' || alert === 'emptyContent') return;
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />

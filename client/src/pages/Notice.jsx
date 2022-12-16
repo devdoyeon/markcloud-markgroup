@@ -1,11 +1,20 @@
-import SideMenu from 'common/SideMenu';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import CommonHeader from 'common/CommonHeader';
 import ListWrap from 'common/ListWrap';
 import { getNoticeList } from 'js/groupwareApi';
+import { catchError } from 'js/commonUtils';
+import CommonModal from 'common/CommonModal';
 
 const Notice = () => {
+  const [alert, setAlert] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+  });
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
@@ -15,6 +24,7 @@ const Notice = () => {
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');
   let prevent = false;
+  const navigate = useNavigate();
 
   const getNoticeApi = async () => {
     if (prevent) return;
@@ -32,7 +42,7 @@ const Notice = () => {
         clone.totalPage = meta?.totalPage;
         return clone;
       });
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const commonHeaderState = {
@@ -46,16 +56,29 @@ const Notice = () => {
     getNoticeApi();
   }, [pageInfo.page]);
   return (
-    <div className='container'>
-      <SideMenu />
-      <div className='content-wrap notice'>
-        <CommonHeader {...commonHeaderState} okFn={getNoticeApi} />
-        <ListWrap list={list} />
-        {list.length > 0 && (
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
-        )}
+    <>
+      <div className='container'>
+        <SideMenu />
+        <div className='content-wrap notice'>
+          <CommonHeader {...commonHeaderState} okFn={getNoticeApi} />
+          <ListWrap list={list} />
+          {list.length > 0 && (
+            <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+          )}
+        </div>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+              return navigate('/sign-in');
+          }}
+          failFn={() => {}}
+        />
+      )}
+    </>
   );
 };
 
