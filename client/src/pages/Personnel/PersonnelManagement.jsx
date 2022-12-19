@@ -59,10 +59,9 @@ const PersonnelManagement = () => {
       setCurDepartment(result?.data);
     }
   };
-  console.log(curDepartment);
   useEffect(() => {
-    getPersonDepartmentApi();
-  }, [departmentPageInfo.page]);
+    if (!popup) getPersonDepartmentApi();
+  }, [departmentPageInfo.page, popup]);
 
   return (
     <>
