@@ -591,6 +591,11 @@
                 width: 190px;
               }
             }
+            &:first-child {
+              span {
+                padding-left: 5px;
+              }
+            }
           }
 
           .gender-wrap {
@@ -690,11 +695,21 @@
           }
         }
         .phone-line {
-          @include flex-style();
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
           padding: 12px 0;
           border-bottom: 1px solid $footerColor;
           > div {
-            width: 50%;
+            width: 442px;
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 1px;
+              height: 32px;
+              background-color: $footerColor;
+            }
             span {
               font-family: 'NotoSansR';
               font-size: 14px;
@@ -709,10 +724,42 @@
               width: 358px;
             }
             &:last-child {
+              width: 417px;
+              &::after {
+                display: none;
+              }
               span {
                 margin-right: 4px;
+                padding-left: 15px;
               }
             }
+          }
+        }
+        .address-line {
+          @include flex-style($justifyVal: flex-start);
+          padding: 12px 0;
+          span {
+            font-family: 'NotoSansR';
+            font-size: 14px;
+            color: $gray01;
+            margin-right: 29px;
+            padding-left: 12px;
+          }
+          input {
+            background-color: $subBlue;
+            padding: 6px 6px 6px 6px;
+            border-radius: 8px;
+            height: 32px;
+            width: 501px;
+            margin-right: 16px;
+          }
+          > .commonBtn {
+            background-color: $white;
+            border: 1px solid $mainColor;
+            color: $mainColor;
+            padding: 6px 12px;
+            font-family: 'NotoSansR';
+            font-size: 14px;
           }
         }
       }
