@@ -33,15 +33,17 @@ const ProjectStatus = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 프로젝트 현황')
-  }, [])
+    changeTitle('그룹웨어 > 프로젝트 현황');
+  }, []);
 
   return (
     <>
       <div className='container'>
         <SideMenu />
         <div className='content-wrap'>
-          <CommonHeader {...commonHeaderState} />
+          <div className='header' onClick={() => window.location.reload()}>
+            <h3>프로젝트 현황</h3>
+          </div>
           <div className='selectArea column'>
             <hr />
             <div className='row'>

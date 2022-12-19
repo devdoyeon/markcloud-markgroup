@@ -83,7 +83,7 @@ const BusinessManagement = () => {
       <div className='container'>
         <SideMenu />
         <div className='content-wrap business'>
-          <div className='header'>
+          <div className='header' onClick={() => window.location.reload()}>
             <h3>업무 관리</h3>
           </div>
           <div className='work-wrap'>

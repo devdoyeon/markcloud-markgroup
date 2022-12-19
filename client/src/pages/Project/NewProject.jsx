@@ -30,7 +30,7 @@ const NewProject = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3>새 프로젝트 생성</h3>
+            <h3>프로젝트 현황</h3>
           </div>
           <div className='projectWrapper'>
             <div className='projectInfo column'>

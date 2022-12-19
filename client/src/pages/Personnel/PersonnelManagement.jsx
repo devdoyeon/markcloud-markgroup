@@ -68,7 +68,7 @@ const PersonnelManagement = () => {
       <div className='container'>
         <SideMenu />
         <div className='content-wrap personnel'>
-          <div className='header'>
+          <div className='header' onClick={() => window.location.reload()}>
             <h3>인사 관리</h3>
           </div>
           <div className='department-manage-wrap'>

@@ -46,13 +46,7 @@ const CommonHeader = ({
 
   return (
     <>
-      <div
-        className='header'
-        onClick={() => {
-          setFilter('created_id');
-          setSearchText('');
-          okFn();
-        }}>
+      <div className='header' onClick={() => window.location.reload()}>
         <h3>{returnHeader()}</h3>
       </div>
       <div className='search-wrap'>
