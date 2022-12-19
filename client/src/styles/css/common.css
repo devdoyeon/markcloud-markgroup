@@ -23,6 +23,25 @@
   height: 100%;
   background-color: white;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #eeeefa inset;
+  box-shadow: 0 0 0px 1000px #eeeefa inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #eeeefa inset;
+  box-shadow: 0 0 0px 1000px #eeeefa inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 .selectBox {
   user-select: none;
@@ -73,7 +92,7 @@
   color: #15171a;
 }
 .selectBox .selectOptGroup > .selectOpt.active::before {
-  content: "";
+  content: '';
   border-left: 3px solid #5850cc;
   margin-right: 16px;
 }
@@ -274,8 +293,13 @@
 .container .content-wrap .board-wrap > .body-wrap .content > p.ql-align-right {
   text-align: right;
 }
-.container .content-wrap .board-wrap > .body-wrap .content > blockquote::before {
-  content: "";
+.container
+  .content-wrap
+  .board-wrap
+  > .body-wrap
+  .content
+  > blockquote::before {
+  content: '';
   border-left: 5px solid #5850cc;
   margin-right: 10px;
 }
@@ -356,7 +380,13 @@
   height: auto;
   overflow: hidden;
 }
-.container .content-wrap > .search-wrap .search .selectBox > .selectOptGroup .selectOpt:hover {
+.container
+  .content-wrap
+  > .search-wrap
+  .search
+  .selectBox
+  > .selectOptGroup
+  .selectOpt:hover {
   color: #5850cc;
   border-radius: 0;
 }
@@ -377,7 +407,12 @@
   cursor: pointer;
   transition: all 0.1s;
 }
-.container .content-wrap > .search-wrap .search .selectOptGroup > .selectOpt:hover {
+.container
+  .content-wrap
+  > .search-wrap
+  .search
+  .selectOptGroup
+  > .selectOpt:hover {
   transition: all 0.1s;
   background-color: #eeeefa;
 }
@@ -447,7 +482,7 @@
   font-size: 18px;
   color: #858585;
   cursor: pointer;
-  font-family: "NotoSansR";
+  font-family: 'NotoSansR';
   margin-bottom: 30px;
 }
 .sidebar > ul > li a {
@@ -456,7 +491,7 @@
 }
 .sidebar > ul > li.active {
   color: #15171a;
-  font-family: "NotoSansM";
+  font-family: 'NotoSansM';
 }
 .sidebar .tools {
   position: absolute;

@@ -805,7 +805,7 @@
 }
 .container .content-wrap.member .member-wrap .address-line input {
   background-color: #eeeefa;
-  padding: 6px 6px 6px 6px;
+  padding: 6px 6px 6px 12px;
   border-radius: 8px;
   height: 32px;
   width: 501px;
