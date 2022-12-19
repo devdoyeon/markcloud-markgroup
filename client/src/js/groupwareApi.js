@@ -449,8 +449,11 @@ export const deleteReport = async id => {
 // ================================ 프로젝트 현황 ================================
 
 //& 프로젝트 현황 불러오기
-export const getProjectList = async () => {
+export const getProjectList = async (name, status, start, end) => {
   try {
+    return await axios.get(
+      `/dy/project/list?project_name=${name}&project_status=${status}&start_date=${start}&end_date=${end}`
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

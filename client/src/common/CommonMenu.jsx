@@ -1,19 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getCookie, removeCookie } from 'js/cookie';
 
 const CommonMenu = () => {
-  const navigate = useNavigate();
-
   return (
     <ul className='commonNav'>
-      <li
-        onClick={() =>
-          getCookie('myToken') ? removeCookie('myToken') : navigate('/sign-in')
-        }>
+      <li onClick={() => (getCookie('myToken') ? removeCookie('myToken') : '')}>
         {getCookie('myToken') ? (
           <button>로그아웃</button>
         ) : (
-          <button onClick={() => navigate('/sign-in')}>로그인</button>
+          <Link to='/sign-in'>로그인</Link>
         )}
       </li>
       <li>

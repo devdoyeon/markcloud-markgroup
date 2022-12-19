@@ -4,11 +4,7 @@ import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
 import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
-import {
-  catchError,
-  changeState,
-  enterFn,
-} from 'js/commonUtils';
+import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
 
 const SignIn = () => {
   const [alert, setAlert] = useState('');
@@ -76,9 +72,8 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    //& 토큰을 가지고 있으면 홈으로 푸시
     if (getCookie('myToken')) navigate('/home');
-    document.title = '마크클라우드 관리자 로그인';
+    changeTitle('그룹웨어 > 로그인');
   }, []);
 
   return (
