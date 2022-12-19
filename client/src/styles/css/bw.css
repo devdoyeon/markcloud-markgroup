@@ -629,6 +629,9 @@
 .container .content-wrap.member .member-wrap > .id-line > div.name input {
   width: 190px;
 }
+.container .content-wrap.member .member-wrap > .id-line > div:first-child span {
+  padding-left: 5px;
+}
 .container .content-wrap.member .member-wrap > .id-line .gender-wrap {
   width: 274px;
   height: 32px;
@@ -741,16 +744,26 @@
   height: 32px;
 }
 .container .content-wrap.member .member-wrap .phone-line {
+  width: 860px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding: 12px 0;
   border-bottom: 1px solid #eeeeee;
 }
 .container .content-wrap.member .member-wrap .phone-line > div {
-  width: 50%;
+  width: 442px;
+  position: relative;
+}
+.container .content-wrap.member .member-wrap .phone-line > div::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1px;
+  height: 32px;
+  background-color: #eeeeee;
 }
 .container .content-wrap.member .member-wrap .phone-line > div span {
   font-family: "NotoSansR";
@@ -765,8 +778,46 @@
   height: 32px;
   width: 358px;
 }
+.container .content-wrap.member .member-wrap .phone-line > div:last-child {
+  width: 417px;
+}
+.container .content-wrap.member .member-wrap .phone-line > div:last-child::after {
+  display: none;
+}
 .container .content-wrap.member .member-wrap .phone-line > div:last-child span {
   margin-right: 4px;
+  padding-left: 15px;
+}
+.container .content-wrap.member .member-wrap .address-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+.container .content-wrap.member .member-wrap .address-line span {
+  font-family: "NotoSansR";
+  font-size: 14px;
+  color: #585858;
+  margin-right: 29px;
+  padding-left: 12px;
+}
+.container .content-wrap.member .member-wrap .address-line input {
+  background-color: #eeeefa;
+  padding: 6px 6px 6px 6px;
+  border-radius: 8px;
+  height: 32px;
+  width: 501px;
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap .address-line > .commonBtn {
+  background-color: #ffffff;
+  border: 1px solid #5850cc;
+  color: #5850cc;
+  padding: 6px 12px;
+  font-family: "NotoSansR";
+  font-size: 14px;
 }
 
 .popup-bg {

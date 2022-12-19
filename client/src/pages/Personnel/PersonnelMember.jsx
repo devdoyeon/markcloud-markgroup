@@ -6,6 +6,7 @@ import CommonSelect from 'common/CommonSelect';
 import { getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeTitle } from 'js/commonUtils';
+import PostCode from './PostCode';
 
 const PersonnelMember = () => {
   const [alert, setAlert] = useState('');
@@ -24,6 +25,15 @@ const PersonnelMember = () => {
     totalPage: 15,
     limit: 5,
   });
+  const [inputValue, setInputValue] = useState('');
+
+  //팝업창 상태 관리
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  //주소 관련 state
+  const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState(''); //상세주소
+  const [writeAddress, setWriteAddress] = useState(''); //사용자가 입력하는 상세주소
 
   const navigate = useNavigate();
 
@@ -61,20 +71,32 @@ const PersonnelMember = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 업무 관리');
+    changeTitle('그룹웨어 > 인사 관리');
   }, []);
 
   useEffect(() => {
     getProjectApi();
   }, [pageInfo.page]);
 
-  const handleChangeRadioButton = e => {
-    setInputVal(e.target.value);
+  useEffect(() => {
+    if (inputValue.length === 10) {
+      setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    }
+    if (inputValue.length === 13) {
+      setInputValue(
+        inputValue
+          .replace(/-/g, '')
+          .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+      );
+    }
+  }, [inputValue]);
+
+  const handleChange = e => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setInputValue(e.target.value);
+    }
   };
-
-  const handleChangeClear = () => {};
-
-  const { project_member, project_name } = meta;
 
   return (
     <>
@@ -130,20 +152,32 @@ const PersonnelMember = () => {
             <div className='phone-line'>
               <div>
                 <span>휴대전화</span>
-                <input type='text' />
+                <input type='text' onChange={handleChange} value={inputValue} />
               </div>
               <div>
                 <span>이메일</span>
                 <input type='text' />
               </div>
             </div>
-            <div>
-              <label>
-                <span>주소</span>
-                <input type='text' placeholder='(선택)' />
-              </label>
-              <button className='commonBtn'>주소찾기</button>
+            <div className='address-line'>
+              <span>주소</span>
+              <input
+                type='text'
+                placeholder='주소 입력'
+                value={addressDetail}
+                onChange={e => setAddressDetail(e.target.value)}
+              />
+              <button
+                className='commonBtn'
+                onClick={() => setIsPopupOpen(true)}>
+                주소찾기
+              </button>
             </div>
+          </div>
+          <div className='btn-wrap'>
+            <button className='commonBtn'>수정</button>
+            <button className='commonBtn'>삭제</button>
+            <button className='commonBtn'>목록</button>
           </div>
         </div>
       </div>
@@ -157,6 +191,15 @@ const PersonnelMember = () => {
           }}
           failFn={() => {}}
         />
+      )}
+      {isPopupOpen ? (
+        <PostCode
+          onClose={() => setIsPopupOpen(false)}
+          setAddress={setAddress}
+          setAddressDetail={setAddressDetail}
+        />
+      ) : (
+        ''
       )}
     </>
   );
