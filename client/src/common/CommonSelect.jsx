@@ -31,21 +31,27 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
       </div>
       {select === 'on' && (
         <div className='selectOptGroup'>
-          {opt?.reduce((acc, option) => {
-            return (
-              <>
-                {acc}
-                <div
-                  className={`selectOpt ${selectVal === option && 'active'}`}
-                  onClick={() => {
-                    setSelectVal(option);
-                    setSelect('off');
-                  }}>
-                  {option}
-                </div>
-              </>
-            );
-          }, <></>)}
+          {opt?.length > 0 ? (
+            opt?.reduce((acc, option) => {
+              return (
+                <>
+                  {acc}
+                  <div
+                    className={`selectOpt ${selectVal === option && 'active'}`}
+                    onClick={() => {
+                      setSelectVal(option);
+                      setSelect('off');
+                    }}>
+                    {option}
+                  </div>
+                </>
+              );
+            }, <></>)
+          ) : (
+            <>
+              <div className='selectOpt'>목록이 없습니다.</div>
+            </>
+          )}
         </div>
       )}
     </div>
