@@ -25,7 +25,7 @@ const ProjectDetail = () => {
     bool: false,
   });
   const [statusValue, setStatusValue] = useState('===');
-  const [personValue, setPersonValue] = useState('===');
+  const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
 
   const deleteProject = async () => {
@@ -139,19 +139,6 @@ const ProjectDetail = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button
-              className='commonBtn deleteBtn'
-              onClick={() => {
-                setAlert('confirmDelete');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  `해당 프로젝트를 삭제하시겠습니까?<br/>삭제된 프로젝트는 복구할 수 없습니다.`
-                );
-              }}>
-              삭제
-            </button>
             <button
               className='commonBtn editBtn'
               onClick={() => navigate(`/project/write/${id}`)}>

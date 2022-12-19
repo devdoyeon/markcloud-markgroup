@@ -208,19 +208,23 @@ const NewBoard = () => {
               onClick={id?.length ? editPost : createNew}>
               등록
             </button>
-            <button
-              className='commonBtn delete'
-              onClick={() => {
-                setAlert('deleteConfirm');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
-                );
-              }}>
-              삭제
-            </button>
+            {id?.length ? (
+              <button
+                className='commonBtn delete'
+                onClick={() => {
+                  setAlert('deleteConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                  );
+                }}>
+                삭제
+              </button>
+            ) : (
+              <></>
+            )}
             <button
               className='commonBtn list'
               onClick={() => {

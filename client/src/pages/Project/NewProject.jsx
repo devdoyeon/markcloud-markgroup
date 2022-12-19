@@ -4,9 +4,9 @@ import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { commonModalSetting, changeTitle} from 'js/commonUtils';
+import { commonModalSetting, changeTitle } from 'js/commonUtils';
 
-//= 입력값 체크 / 
+//= 입력값 체크 /
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -17,12 +17,12 @@ const NewProject = () => {
     context: '',
     bool: false,
   });
-  const [selectVal, setSelectVal] = useState('===');
+  const [selectVal, setSelectVal] = useState('선택');
   const navigate = useNavigate();
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 프로젝트 작성')
-  }, [])
+    changeTitle('그룹웨어 > 프로젝트 작성');
+  }, []);
 
   return (
     <>
@@ -67,6 +67,11 @@ const NewProject = () => {
           </div>
           <div className='btn-wrap'>
             <button className='commonBtn applyBtn'>등록</button>
+            {id?.length ? (
+              <button className='commonBtn delete'>삭제</button>
+            ) : (
+              <></>
+            )}
             <button
               className='commonBtn listBtn'
               onClick={() => {

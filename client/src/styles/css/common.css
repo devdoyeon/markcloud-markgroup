@@ -15,6 +15,7 @@
 }
 
 .selectBox {
+  user-select: none;
   border: 1px solid #eeeeee;
   color: #858585;
   width: 300px;
@@ -26,6 +27,7 @@
   border: 1px solid #5850cc;
 }
 .selectBox .selectVal {
+  user-select: none;
   cursor: pointer;
   font-size: 14px;
   color: #15171a;
@@ -36,6 +38,7 @@
   flex-wrap: wrap;
 }
 .selectBox .selectOptGroup {
+  user-select: none;
   z-index: 2;
   position: absolute;
   background-color: white;
@@ -47,6 +50,7 @@
   border-radius: 8px;
 }
 .selectBox .selectOptGroup > .selectOpt {
+  user-select: none;
   cursor: pointer;
   font-size: 14px;
   padding: 11px 16px;

@@ -9,6 +9,7 @@
 }
 
 .selectBox {
+  user-select: none;
   border: 1px solid $footerColor;
   color: $gray02;
   width: 300px;
@@ -19,12 +20,14 @@
     border: 1px solid $mainColor;
   }
   .selectVal {
+    user-select: none;
     cursor: pointer;
     font-size: 14px;
     color: $black;
     @include flex-style($justifyVal: space-between);
   }
   .selectOptGroup {
+    user-select: none;
     z-index: 2;
     position: absolute;
     background-color: white;
@@ -35,6 +38,7 @@
     transform: translateX(-16px) translateY(12px);
     border-radius: 8px;
     > .selectOpt {
+      user-select: none;
       cursor: pointer;
       font-size: 14px;
       padding: 11px 16px;

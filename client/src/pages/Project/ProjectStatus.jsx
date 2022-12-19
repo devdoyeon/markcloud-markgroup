@@ -17,9 +17,9 @@ const ProjectStatus = () => {
     totalPage: 30,
     limit: 9,
   });
-  const [selectVal, setSelectVal] = useState('===');
+  const [selectVal, setSelectVal] = useState('전체');
   const navigate = useNavigate();
-  const statusArr = ['시작 전', '진행 중', '종료'];
+  const statusArr = ['전체','시작 전', '진행 중', '종료'];
 
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 현황');
