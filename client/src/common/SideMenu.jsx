@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { removeCookie } from 'js/cookie';
 import rightArrow from 'image/rightArrow.svg';
 import goHomeIcon from 'image/goHomeIcon.svg';
+import mainLogo from 'image/groupware-logo.png';
 
 const SideMenu = () => {
   const path = useLocation().pathname;
@@ -9,6 +10,11 @@ const SideMenu = () => {
 
   return (
     <div className='sidebar'>
+      <img
+        src={mainLogo}
+        alt='마크그룹 로고'
+        onClick={() => navigate('/business')}
+      />
       <ul>
         <li
           className={path.includes('/business') && 'active'}
