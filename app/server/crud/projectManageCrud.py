@@ -1,5 +1,7 @@
 # 업무 관리
 from model import projectManageModel, memberManageModel
+from router import author_chk
+
 from sqlalchemy import desc, distinct
 from fastapi import HTTPException
 from datetime import datetime
@@ -25,7 +27,7 @@ def get_project_member(db, project_name):
         raise HTTPException(status_code=500, detail='DBError')     
 
 
-def get_project_name(db, user_id, is_admin):
+def get_project_name(db, user_pk, is_admin):
 
     try:
         if is_admin == 'admin':
@@ -36,7 +38,7 @@ def get_project_name(db, user_id, is_admin):
             FROM groupware_project
             WHERE organ_code = (SELECT department_code 
             FROM members
-            WHERE user_id = "{user_id}")
+            WHERE id = "{user_pk}")
             '''
             
         if is_admin == 'guest': 
@@ -45,7 +47,7 @@ def get_project_name(db, user_id, is_admin):
             p_name_query = f'''
             SELECT project_name FROM groupware_project 
             WHERE project_code = ANY(SELECT project_code 
-            FROM groupware_project_members WHERE user_id = "{user_id}")
+            FROM groupware_project_members WHERE id = "{user_pk}")
             '''
 
         project_name = db.execute(p_name_query).fetchall()
@@ -57,14 +59,14 @@ def get_project_name(db, user_id, is_admin):
     except:
         raise HTTPException(status_code=500, detail='DBError')        
     
-def get_project_list(db, offset, limit, user_id, *filter):
+def get_project_list(db, offset, limit, user_pk, *filter):
 
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
     member_table = memberManageModel.MemberTable
 
     try:    
-        user_organ_code = db.query(member_table.department_code).filter(member_table.user_id==user_id) # 기업코드 확인        
+        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
         
         query = db.query(project_manage_table.id,
                         project_manage_table.title,
@@ -106,7 +108,7 @@ def get_project_list(db, offset, limit, user_id, *filter):
              
             if status_filter:  
                 # 유저 아이디로 유저 이름+ 부서명 추출 ex) 송모아나(SI팀)
-                member_name = db.query(member_table.name, member_table.section).filter(member_table.user_id == user_id).all()
+                member_name = db.query(member_table.name, member_table.section).filter(member_table.id == user_pk).all()
                 member_name = [(i[0]+'('+str(i[1])+')')for i in member_name] 
                 if status_filter == 'MyProject': # default
                     query = query.filter(project_manage_table.manager_id == member_name)
@@ -144,26 +146,25 @@ def get_project_info(db, project_id):
     except:
         raise HTTPException(status_code=500, detail='DBError')
 
-def insert_project(db,inbound_data,user_id):
+def insert_project(db,inbound_data,user_pk):
     
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
-    member_table = memberManageModel.MemberTable
 
     try:
 
-        user_organ_code = db.query(member_table.department_code).filter(member_table.user_id == user_id).first()
+        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
         project_code = db.query(project_table.project_code).filter(project_table.project_name == inbound_data.project_name).first()
         
         db_query = project_manage_table(
-            organ_code=user_organ_code[0],
+            organ_code=user_organ_code,
             project_code=project_code[0],
             title=inbound_data.title,
             request_id=inbound_data.request_id,
             manager_id=inbound_data.manager_id,
             content=inbound_data.content,
             work_status=inbound_data.work_status,
-            created_id=user_id)
+            created_id=user_pk)
         
         db.add(db_query)
 
@@ -172,42 +173,42 @@ def insert_project(db,inbound_data,user_id):
         raise HTTPException(status_code=500, detail='DBError')
     
 
-def change_project(db,inbound_data, project_id, user_id):
+def change_project(db,inbound_data, project_id, user_pk):
     
     project_manage_table = projectManageModel.ProjectManageTable
     
     try:
         base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
-            
         values = {
                 'request_id':inbound_data.request_id,
                 'manager_id':inbound_data.manager_id,
                 'work_status':inbound_data.work_status,
                 'title':inbound_data.title,
                 'content':inbound_data.content,
-                'created_id':user_id,
+                'created_id':user_pk,
                 'updated_at':datetime.today()}
         
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_id == base_q.created_id:
+        if user_pk == int(base_q.created_id): # 자신의 작성글만 해당
+            
             db.query(project_manage_table).filter_by(id = project_id).update(values)
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
-    except:
+    except Exception as e:
         raise HTTPException(status_code=500, detail='DBError')
     
 
-def remove_project(db, notice_id, user_id):
+def remove_project(db, notice_id, user_pk):
 
     project_table = projectManageModel.ProjectManageTable
     
     try:
         base_q = db.query(project_table).filter(project_table.id == notice_id)
-        if base_q.first().created_id == user_id:
+        if int(base_q.first().created_id) == user_pk:
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
-        raise HTTPException(status_code=500, detail='dbDeleteError')
+        raise HTTPException(status_code=500, detail='DBError')
