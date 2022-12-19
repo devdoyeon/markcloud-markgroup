@@ -17,6 +17,7 @@ import NewProject from 'pages/Project/NewProject';
 import BusinessNewBoard from 'pages/Business/BusinessNewBoard';
 import NotFound from 'pages/common/NotFound';
 import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
+import PersonnelMember from 'pages/Personnel/PersonnelMember';
 
 function App() {
   return (
@@ -37,18 +38,21 @@ function App() {
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<BoardRead />} />
         <Route path='/business/:id' element={<BusinessBoardRead />} />
+        <Route path='/personnel/:id' element={<PersonnelMember />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewProject />} />
         <Route path='/report/write' element={<NewBoard />} />
         <Route path='/board/write' element={<NewBoard />} />
         <Route path='/notice/write' element={<NewBoard />} />
         <Route path='/business/write' element={<BusinessNewBoard />} />
+        <Route path='/personnel/write' element={<PersonnelMember />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
         <Route path='/project/write/:id' element={<NewProject />} />
         <Route path='/report/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />
         <Route path='/notice/write/:id' element={<NewBoard />} />
         <Route path='/business/write/:id' element={<BusinessNewBoard />} />
+        <Route path='/personnel/write/:id' element={<PersonnelMember />} />
         {/* -------------------------------------------------- */}
         <Route path='/*' element={<NotFound />} />
       </Routes>

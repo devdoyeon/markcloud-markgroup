@@ -573,6 +573,201 @@
   padding: 18px 0;
   font-size: 14px;
 }
+.container .content-wrap.member {
+  width: 1060px;
+}
+.container .content-wrap.member .member-wrap {
+  padding: 40px 60px 24px 60px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  margin-bottom: 50px;
+}
+.container .content-wrap.member .member-wrap > .id-line {
+  width: 860px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  padding: 12px 0;
+}
+.container .content-wrap.member .member-wrap > .id-line > div {
+  width: 320px;
+  position: relative;
+}
+.container .content-wrap.member .member-wrap > .id-line > div::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1px;
+  height: 32px;
+  background-color: #eeeeee;
+}
+.container .content-wrap.member .member-wrap > .id-line > div span {
+  font-family: "NotoSansR";
+  font-size: 14px;
+  color: #585858;
+  margin-right: 23px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div > input {
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 0 6px 12px;
+  width: 236px;
+  height: 32px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div.name {
+  width: 264px;
+  padding-left: 16px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div.name span {
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div.name input {
+  width: 190px;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap {
+  width: 274px;
+  height: 32px;
+  padding-left: 29px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap::after {
+  display: none;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap .gender-input-wrap {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap .gender-input-wrap > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 6px 6px 6px 10px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap .gender-input-wrap > div:last-child {
+  margin-right: 0;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap .gender-input-wrap > div span {
+  margin-right: 0;
+}
+.container .content-wrap.member .member-wrap > .id-line .gender-wrap span {
+  margin-right: 29px;
+}
+.container .content-wrap.member .member-wrap .date-line {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+.container .content-wrap.member .member-wrap .date-line > div {
+  height: 32px;
+  position: relative;
+}
+.container .content-wrap.member .member-wrap .date-line > div::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1px;
+  height: 32px;
+  background-color: #eeeeee;
+}
+.container .content-wrap.member .member-wrap .date-line > div > span {
+  font-family: "NotoSansR";
+  font-size: 14px;
+  color: #585858;
+}
+.container .content-wrap.member .member-wrap .date-line > div.birth-date {
+  width: 320px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.birth-date span {
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.birth-date input {
+  background-color: #eeeefa;
+  padding: 6px 12px 6px 12px;
+  width: 236px;
+  height: 32px;
+  border-radius: 8px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.affiliation {
+  width: 264px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.member .member-wrap .date-line > div.affiliation span {
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.affiliation > .selectBox {
+  width: 190px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.password {
+  width: 274px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.password::after {
+  display: none;
+}
+.container .content-wrap.member .member-wrap .date-line > div.password span {
+  padding-left: 16px;
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap .date-line > div.password input {
+  background-color: #eeeefa;
+  padding: 6px 6px 6px 6px;
+  border-radius: 8px;
+  height: 32px;
+}
+.container .content-wrap.member .member-wrap .phone-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 12px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+.container .content-wrap.member .member-wrap .phone-line > div {
+  width: 50%;
+}
+.container .content-wrap.member .member-wrap .phone-line > div span {
+  font-family: "NotoSansR";
+  font-size: 14px;
+  color: #585858;
+  margin-right: 16px;
+}
+.container .content-wrap.member .member-wrap .phone-line > div input {
+  background-color: #eeeefa;
+  padding: 6px 6px 6px 6px;
+  border-radius: 8px;
+  height: 32px;
+  width: 358px;
+}
+.container .content-wrap.member .member-wrap .phone-line > div:last-child span {
+  margin-right: 4px;
+}
 
 .popup-bg {
   width: 100vw;
