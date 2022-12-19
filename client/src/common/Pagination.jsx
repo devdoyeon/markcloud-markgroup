@@ -58,7 +58,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   }, [pageInfo]);
 
   const renderPagination = () => {
-    const prevCheck = page > 10;
+    const prevCheck = page >= 11;
     const middle = pageGroup.reduce((acc, nowPage) => {
       return (
         <>
@@ -71,34 +71,20 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
         </>
       );
     }, <></>);
-    const nextCheck = page < totalPage;
+    const nextCheck =
+      totalPage >= 11 ? (pageGroup.includes(totalPage) ? false : true) : true;
     return (
       <>
         <li
           onClick={() => changePara(prevCheck ? 'prev' : null)}
-          className={`prev ${page >= 11 ? 'active' : 'block'}`}>
-          <img src={page >= 11 ? activePrevPage : prevPage} alt='이전 버튼' />
+          className={`prev ${prevCheck ? 'active' : 'block'}`}>
+          <img src={prevCheck ? activePrevPage : prevPage} alt='이전 버튼' />
         </li>
         {middle}
         <li
           onClick={() => changePara(nextCheck ? 'next' : null)}
-          className={`next ${
-            totalPage >= 11
-              ? pageGroup.includes(totalPage)
-                ? 'block'
-                : 'active'
-              : 'block'
-          }`}>
-          <img
-            src={
-              totalPage >= 11
-                ? pageGroup.includes(totalPage)
-                  ? nextPage
-                  : activeNextPage
-                : nextPage
-            }
-            alt='다음 버튼'
-          />
+          className={`next ${nextCheck ? 'active' : 'block'}`}>
+          <img src={nextCheck ? activeNextPage : nextPage} alt='다음 버튼' />
         </li>
       </>
     );
