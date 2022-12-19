@@ -35,7 +35,7 @@ class MemberIn(BaseModel):
     
     name:str
     user_id:str
-    hashed_password:str
+    password:str
     email:str
     birthday:date
     phone:str
@@ -47,4 +47,3 @@ class MemberIn(BaseModel):
     class Config:
         orm_mode = True
 
-    

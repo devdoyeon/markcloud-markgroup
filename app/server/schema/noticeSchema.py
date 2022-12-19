@@ -7,7 +7,6 @@ class NoticeIn(BaseModel):
     
     title:str
     content:str
-    created_id:str # 작성자
 
     class Config:
         orm_mode = True
@@ -20,7 +19,7 @@ class NoticeFilter(str, Enum):
     
 class NoticeEditDTO(BaseModel):
     
-    title:str
+    title:str    
     content:str
     created_id:str
     

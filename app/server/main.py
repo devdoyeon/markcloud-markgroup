@@ -8,7 +8,7 @@ def get_server():
         title='markcloud-groupware-api', docs_url="/docs", redoc_url=None,
         openapi_url=f'/openapi.json'
     )
-    
+        
     server.include_router(router_project)
     server.include_router(router_notice)
     server.include_router(router_member)

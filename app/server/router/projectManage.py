@@ -16,7 +16,7 @@ router_project = APIRouter(
 # 프로젝트 관련 데이터 
 @router_project.get('/read',response_model = Response[List[ProjectManageOut]])
 def read_projects(
-    user_id: str,
+    user_id: str = 'songmoana',
     is_admin:Optional[str] = 'guest',
     project_name: Optional[str] = None,
     status_filter='MyProject',
@@ -24,7 +24,6 @@ def read_projects(
     limit: int = 10,
     db:Session = Depends(get_db)
 ):
-    
     offset = (page - 1) * limit
     total_count, project_list = get_project_list(db, offset, limit, user_id, status_filter) # 나의 업무현황 데이터
     total_page = total_count // limit

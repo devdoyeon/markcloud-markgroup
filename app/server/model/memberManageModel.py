@@ -15,7 +15,6 @@ class roleEnum(str, enum.Enum):
     guest= "guest"
 
 
-
 class DepartmentTable(Base):
     __tablename__ = 'groupware_department'
     
@@ -57,3 +56,4 @@ class MemberTable(Base):
     associated_token = Column(Integer)
     event_in_use = Column(Integer)
     groupware_only_yn = Column(VARCHAR(1), default = 'N')
+    
