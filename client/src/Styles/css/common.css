@@ -455,7 +455,7 @@
   border-bottom: 1px solid #eeeeee;
 }
 .sidebar .tools > div.help {
-  color: #858585;
+  padding: 14px 16px;
 }
 .sidebar .tools > div.logoutBtn {
   color: #df0000;
@@ -463,10 +463,10 @@
 .sidebar .tools > div.row {
   justify-content: space-between;
 }
-.sidebar .tools > div.row .user {
+.sidebar .tools > div.row span {
   color: #585858;
 }
-.sidebar .tools > div.row .user img {
+.sidebar .tools > div.row img {
   border-radius: 50%;
   width: 24px;
   height: 24px;

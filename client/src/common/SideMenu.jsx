@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import sampleImg from 'image/sample.jpg';
+import { removeCookie } from 'js/cookie';
 import rightArrow from 'image/rightArrow.svg';
+import goHomeIcon from 'image/goHomeIcon.svg';
 
 const SideMenu = () => {
   const path = useLocation().pathname;
@@ -49,14 +50,15 @@ const SideMenu = () => {
         </li>
       </ul>
       <div className='column tools'>
-        <div className='help'>도움말</div>
-        <div className='logoutBtn'>로그아웃</div>
+        <div className='help'>
+          <img src={goHomeIcon} alt='홈으로 가기 아이콘' />
+        </div>
+        <div className='logoutBtn' onClick={() => removeCookie('myToken')}>
+          로그아웃
+        </div>
         <div className='row'>
-          <div className='row user'>
-            <img src={sampleImg} alt='프로필 사진 샘플' />
-            <span>사용자</span>
-          </div>
-          <img src={rightArrow} alt='더보기' />
+          <span>사용자(user0101)</span>
+          <img src={rightArrow} alt='더보기 아이콘' />
         </div>
       </div>
     </div>

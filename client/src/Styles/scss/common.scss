@@ -384,22 +384,22 @@
       padding: 12px 16px;
       border-bottom: 1px solid $footerColor;
       &.help {
-        color: $gray02;
+        padding: 14px 16px;
       }
       &.logoutBtn {
         color: #df0000;
       }
       &.row {
         justify-content: space-between;
-        .user {
+        span {
           color: $gray01;
-          img {
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            overflow: hidden;
-            margin-right: 8px;
-          }
+        }
+        img {
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          overflow: hidden;
+          margin-right: 8px;
         }
       }
     }
