@@ -1,4 +1,5 @@
 import { changeState } from 'js/commonUtils';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDepartmentUpdate } from 'js/groupwareApi';
 
@@ -10,10 +11,12 @@ const PersonnelBusinessPopup = ({
   curDepartment,
   setCurDepartment,
 }) => {
+  const navigate = useNavigate();
+
   const updatePersonnelDepartment = async () => {
-    const update = await getDepartmentUpdate(curDepartment);
+    const curData = await getDepartmentUpdate(curDepartment);
   };
-  useEffect(() => {}, [popup]);
+
 
   return (
     <div className='popup-bg'>
