@@ -233,12 +233,12 @@ export const getDepartmentCreate = async name => {
   }
 };
 
-export const getDepartmentUpdate = async (id, name) => {
+export const getDepartmentUpdate = async ({ id, department_name }) => {
   try {
     return await axios.post(
       `/bw/personnel/department/update?department_id=${id}`,
       {
-        department_name: name,
+        department_name: department_name,
       }
     );
   } catch (error) {

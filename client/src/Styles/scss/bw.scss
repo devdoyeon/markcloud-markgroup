@@ -452,6 +452,7 @@
         .card {
           margin: 0 25px 25px 0;
           // width: 310px;
+          cursor: pointer;
           width: calc((100% / 3) - 18px);
           height: 97px;
           border: 1px solid $footerColor;
@@ -538,6 +539,75 @@
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+.popup-bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  > .popup {
+    width: 437px;
+    height: 262px;
+    border-radius: 16px;
+    background-color: $white;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-45%, -50%);
+    > .head {
+      padding: 16px 0 16px 24px;
+      color: $gray02;
+      font-family: 'NotoSansR';
+      background-color: $subBlue;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    > .content-wrap {
+      margin-top: 40px;
+      .content {
+        @include flex-style();
+        margin-bottom: 40px;
+        > label {
+          span {
+            margin-right: 16px;
+            font-size: 14px;
+            font-family: 'NotoSansR';
+            color: $gray01;
+          }
+          input {
+            width: 296px;
+            height: 48px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            padding: 14px 0 14px 13px;
+            &:focus {
+              border: 1px solid $mainColor;
+            }
+          }
+        }
+      }
+      .btn-wrap {
+        @include flex-style($alignVal: flex-start);
+        .commonBtn {
+          margin-right: 24px;
+          &.close {
+            margin-right: 0;
+            background-color: $gray02;
+          }
+          &.delete {
+            border: 1px solid $gray02;
+            color: $gray02;
+            background-color: $white;
           }
         }
       }

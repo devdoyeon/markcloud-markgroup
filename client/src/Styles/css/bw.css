@@ -475,6 +475,7 @@
 }
 .container .content-wrap .department-manage-wrap > .card-wrap .card {
   margin: 0 25px 25px 0;
+  cursor: pointer;
   width: calc(33.3333333333% - 18px);
   height: 97px;
   border: 1px solid #eeeeee;
@@ -571,4 +572,79 @@
   text-align: center;
   padding: 18px 0;
   font-size: 14px;
+}
+
+.popup-bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.popup-bg > .popup {
+  width: 437px;
+  height: 262px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-45%, -50%);
+}
+.popup-bg > .popup > .head {
+  padding: 16px 0 16px 24px;
+  color: #858585;
+  font-family: "NotoSansR";
+  background-color: #eeeefa;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.popup-bg > .popup > .content-wrap {
+  margin-top: 40px;
+}
+.popup-bg > .popup > .content-wrap .content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.popup-bg > .popup > .content-wrap .content > label span {
+  margin-right: 16px;
+  font-size: 14px;
+  font-family: "NotoSansR";
+  color: #585858;
+}
+.popup-bg > .popup > .content-wrap .content > label input {
+  width: 296px;
+  height: 48px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 14px 0 14px 13px;
+}
+.popup-bg > .popup > .content-wrap .content > label input:focus {
+  border: 1px solid #5850cc;
+}
+.popup-bg > .popup > .content-wrap .btn-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.popup-bg > .popup > .content-wrap .btn-wrap .commonBtn {
+  margin-right: 24px;
+}
+.popup-bg > .popup > .content-wrap .btn-wrap .commonBtn.close {
+  margin-right: 0;
+  background-color: #858585;
+}
+.popup-bg > .popup > .content-wrap .btn-wrap .commonBtn.delete {
+  border: 1px solid #858585;
+  color: #858585;
+  background-color: #ffffff;
 }
