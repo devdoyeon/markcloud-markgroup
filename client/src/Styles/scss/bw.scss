@@ -543,6 +543,180 @@
         }
       }
     }
+    &.member {
+      width: 1060px;
+      .member-wrap {
+        padding: 40px 60px 24px 60px;
+        border: 1px solid $footerColor;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 16px;
+        margin-bottom: 50px;
+        > .id-line {
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          border-top: 1px solid $footerColor;
+          border-bottom: 1px solid $footerColor;
+          padding: 12px 0;
+          > div {
+            width: 320px;
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 1px;
+              height: 32px;
+              background-color: $footerColor;
+            }
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 23px;
+            }
+            > input {
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 0 6px 12px;
+              width: 236px;
+              height: 32px;
+            }
+            &.name {
+              width: 264px;
+              padding-left: 16px;
+              span {
+                margin-right: 16px;
+              }
+              input {
+                width: 190px;
+              }
+            }
+          }
+
+          .gender-wrap {
+            width: 274px;
+            height: 32px;
+            padding-left: 29px;
+            @include flex-style($justifyVal: flex-start);
+            &::after {
+              display: none;
+            }
+            .gender-input-wrap {
+              width: auto;
+              @include flex-style(
+                $justifyVal: flex-start,
+                $alignVal: flex-start
+              );
+              > div {
+                @include flex-style();
+                padding: 6px 6px 6px 10px;
+                background-color: $subBlue;
+                border-radius: 8px;
+                margin-right: 16px;
+                &:last-child {
+                  margin-right: 0;
+                }
+                span {
+                  margin-right: 0;
+                }
+              }
+            }
+            span {
+              margin-right: 29px;
+            }
+          }
+        }
+        .date-line {
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+          > div {
+            height: 32px;
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 1px;
+              height: 32px;
+              background-color: $footerColor;
+            }
+            > span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+            }
+            &.birth-date {
+              width: 320px;
+              span {
+                margin-right: 16px;
+              }
+              input {
+                background-color: $subBlue;
+                padding: 6px 12px 6px 12px;
+                width: 236px;
+                height: 32px;
+                border-radius: 8px;
+              }
+            }
+            &.affiliation {
+              width: 264px;
+              padding-left: 16px;
+              @include flex-style($justifyVal: flex-start);
+              span {
+                margin-right: 16px;
+              }
+              > .selectBox {
+                width: 190px;
+                // margin-right: 0;
+              }
+            }
+            &.password {
+              width: 274px;
+              &::after {
+                display: none;
+              }
+              span {
+                padding-left: 16px;
+                margin-right: 16px;
+              }
+              input {
+                background-color: $subBlue;
+                padding: 6px 6px 6px 6px;
+                border-radius: 8px;
+                height: 32px;
+              }
+            }
+          }
+        }
+        .phone-line {
+          @include flex-style();
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+          > div {
+            width: 50%;
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 16px;
+            }
+            input {
+              background-color: $subBlue;
+              padding: 6px 6px 6px 6px;
+              border-radius: 8px;
+              height: 32px;
+              width: 358px;
+            }
+            &:last-child {
+              span {
+                margin-right: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
