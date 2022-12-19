@@ -53,8 +53,8 @@ const Board = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 사내 게시판')
-  }, [])
+    changeTitle('그룹웨어 > 게시판');
+  }, []);
 
   useEffect(() => {
     getBoard();

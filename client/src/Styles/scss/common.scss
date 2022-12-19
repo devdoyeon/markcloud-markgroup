@@ -228,9 +228,10 @@
       @include flex-style($justifyVal: flex-end);
       > button {
         margin-left: 24px;
-        &:first-child {
-          margin-left: 0;
-          background-color: $gray02;
+        &.delete {
+          background-color: transparent;
+          color: $gray02;
+          border: 1px solid $gray02;
         }
         &.applyBtn {
           background-color: $mainColor;

@@ -21,8 +21,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 메인')
-  }, [])
+    changeTitle('그룹웨어 > 메인');
+  }, []);
 
   return (
     <div className='main container column'>
@@ -129,8 +129,8 @@ const Home = () => {
               </div>
               <div className='column'>
                 <div className='row'>
-                  <img src={board} alt='사내게시판 아이콘' />
-                  <span>사내게시판</span>
+                  <img src={board} alt='게시판 아이콘' />
+                  <span>게시판</span>
                 </div>
                 <span>Lorem ipsum dolor sit amet consectetur.</span>
                 <span>Lorem ipsum dolor sit amet consectetur.</span>

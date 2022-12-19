@@ -279,9 +279,10 @@
 .container .content-wrap .btn-wrap > button {
   margin-left: 24px;
 }
-.container .content-wrap .btn-wrap > button:first-child {
-  margin-left: 0;
-  background-color: #858585;
+.container .content-wrap .btn-wrap > button.delete {
+  background-color: transparent;
+  color: #858585;
+  border: 1px solid #858585;
 }
 .container .content-wrap .btn-wrap > button.applyBtn {
   background-color: #5850cc;

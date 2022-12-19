@@ -88,7 +88,7 @@ const BusinessNewBoard = () => {
   //     case 'report':
   //       return '주간 업무 보고';
   //     case 'board':
-  //       return '사내게시판';
+  //       return '게시판';
   //     case 'notice':
   //       return '공지사항';
   //     default:

@@ -18,7 +18,7 @@ const CommonHeader = ({
   const returnHeader = () => {
     switch (path.split('/')[1]) {
       case 'board':
-        return '사내게시판';
+        return '게시판';
       case 'notice':
         return '공지사항';
       case 'report':

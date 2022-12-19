@@ -39,7 +39,7 @@ const BoardRead = () => {
         result = await getNoticeInfo(id);
         break;
       case 'board':
-        setHeader('사내게시판');
+        setHeader('게시판');
         result = await getBoardDetail(id);
         break;
       case 'report':
@@ -70,7 +70,7 @@ const BoardRead = () => {
         result = await deleteNotice(id);
         break;
       case 'board':
-        setHeader('사내게시판');
+        setHeader('게시판');
         result = await deleteBoard(id);
         break;
       case 'report':
@@ -87,8 +87,8 @@ const BoardRead = () => {
   };
 
   useEffect(() => {
-    changeTitle(`그룹웨어 > 상세 보기`)
-  }, [])
+    changeTitle(`그룹웨어 > 상세 보기`);
+  }, []);
 
   useEffect(() => {
     getDetail();
@@ -121,6 +121,11 @@ const BoardRead = () => {
           </div>
           <div className='btn-wrap'>
             <button
+              className='commonBtn'
+              onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
+              수정
+            </button>
+            <button
               className='commonBtn delete'
               onClick={() => {
                 setAlert('deleteConfirm');
@@ -132,11 +137,6 @@ const BoardRead = () => {
                 );
               }}>
               삭제
-            </button>
-            <button
-              className='commonBtn'
-              onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
-              수정
             </button>
             <button
               className='commonBtn list'

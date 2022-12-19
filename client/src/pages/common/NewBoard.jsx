@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { changeState, commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
+import {
+  changeState,
+  commonModalSetting,
+  catchError,
+  changeTitle,
+} from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
   getBoardDetail,
@@ -37,7 +42,7 @@ const NewBoard = () => {
       case 'report':
         return '주간 업무 보고';
       case 'board':
-        return '사내게시판';
+        return '게시판';
       case 'notice':
         return '공지사항';
       default:
@@ -152,8 +157,8 @@ const NewBoard = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 작성')
-  }, [])
+    changeTitle('그룹웨어 > 작성');
+  }, []);
 
   useEffect(() => {
     if (id?.length) getOriginDetail();
