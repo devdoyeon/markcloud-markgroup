@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
-import CommonHeader from 'common/CommonHeader';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
@@ -18,19 +17,9 @@ const ProjectStatus = () => {
     totalPage: 30,
     limit: 9,
   });
-  const [list, setList] = useState([]);
-  const [filter, setFilter] = useState('created_id');
-  const [searchText, setSearchText] = useState('');
   const [selectVal, setSelectVal] = useState('===');
   const navigate = useNavigate();
   const statusArr = ['시작 전', '진행 중', '종료'];
-
-  const commonHeaderState = {
-    filter,
-    setFilter,
-    searchText,
-    setSearchText,
-  };
 
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 현황');
