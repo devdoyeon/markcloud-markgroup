@@ -1,7 +1,13 @@
 import { changeState } from 'js/commonUtils';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getDepartmentUpdate } from 'js/groupwareApi';
+import {
+  getDepartmentCreate,
+  getDepartmentDelete,
+  getDepartmentUpdate,
+} from 'js/groupwareApi';
+import { commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
+import CommonModal from 'common/CommonModal';
 
 const PersonnelBusinessPopup = ({
   popup,
@@ -12,11 +18,25 @@ const PersonnelBusinessPopup = ({
   setCurDepartment,
 }) => {
   const navigate = useNavigate();
+  const [alert, setAlert] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+  });
+
+  const createPersonnelDepartment = async () => {
+    const create = await getDepartmentCreate(curDepartment?.department_name);
+    changeState(setCurDepartment, 'department_name', '');
+  };
 
   const updatePersonnelDepartment = async () => {
     const curData = await getDepartmentUpdate(curDepartment);
   };
 
+  const deletePersonnelDepartment = async () => {
+    const del = await getDepartmentDelete(curDepartment?.id);
+  };
 
   return (
     <div className='popup-bg'>
@@ -51,6 +71,7 @@ const PersonnelBusinessPopup = ({
                 onClick={() => {
                   setPopup(false);
                   setButtonControl('');
+                  createPersonnelDepartment();
                 }}>
                 등록
               </button>
@@ -79,6 +100,7 @@ const PersonnelBusinessPopup = ({
                 onClick={() => {
                   setPopup(false);
                   setButtonControl('');
+                  deletePersonnelDepartment();
                 }}>
                 삭제
               </button>
