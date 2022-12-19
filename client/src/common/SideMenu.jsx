@@ -50,7 +50,7 @@ const SideMenu = () => {
         </li>
       </ul>
       <div className='column tools'>
-        <div className='help'>
+        <div className='go-home' onClick={() => navigate('/')}>
           <img src={goHomeIcon} alt='홈으로 가기 아이콘' />
         </div>
         <div className='logoutBtn' onClick={() => removeCookie('myToken')}>

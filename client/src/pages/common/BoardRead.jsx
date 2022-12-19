@@ -126,19 +126,6 @@ const BoardRead = () => {
               수정
             </button>
             <button
-              className='commonBtn delete'
-              onClick={() => {
-                setAlert('deleteConfirm');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
-                );
-              }}>
-              삭제
-            </button>
-            <button
               className='commonBtn list'
               onClick={() => navigate(`/${path.split('/')[1]}`)}>
               목록

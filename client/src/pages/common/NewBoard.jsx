@@ -176,7 +176,7 @@ const NewBoard = () => {
             <div className='body-wrap'>
               <div className='writer'>
                 <span>작성자</span>
-                <div>{postInfo.created_id}</div>
+                <div>{postInfo?.created_id}</div>
               </div>
               <div className='title'>
                 <span>제목</span>
@@ -185,7 +185,7 @@ const NewBoard = () => {
                     type='text'
                     placeholder='제목을 입력해 주세요.'
                     className='title-input'
-                    value={postInfo.title}
+                    value={postInfo?.title}
                     onChange={e =>
                       changeState(setPostInfo, 'title', e.target.value)
                     }
@@ -195,7 +195,7 @@ const NewBoard = () => {
               <div className='line'></div>
               <div className='content'>
                 <EditorComponent
-                  content={postInfo.content}
+                  content={postInfo?.content}
                   setContent={setPostInfo}
                 />
               </div>
@@ -207,6 +207,19 @@ const NewBoard = () => {
               className='commonBtn applyBtn'
               onClick={id?.length ? editPost : createNew}>
               등록
+            </button>
+            <button
+              className='commonBtn delete'
+              onClick={() => {
+                setAlert('deleteConfirm');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                );
+              }}>
+              삭제
             </button>
             <button
               className='commonBtn list'

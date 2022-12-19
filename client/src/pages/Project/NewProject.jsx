@@ -6,6 +6,8 @@ import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { commonModalSetting, changeTitle} from 'js/commonUtils';
 
+//= 입력값 체크 / 
+
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
   const { id } = useParams();
