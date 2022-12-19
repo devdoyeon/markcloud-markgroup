@@ -5,6 +5,7 @@ import CommonFooter from 'common/CommonFooter';
 import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
+import logo from 'image/groupware-logo.png';
 
 const SignIn = () => {
   const [alert, setAlert] = useState('');
@@ -60,6 +61,7 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
+      navigate('/')
     } else {
       //@ Error Handling
       const failCount = result?.split(',')[1];
@@ -79,6 +81,7 @@ const SignIn = () => {
   return (
     <div className='container'>
       <div className='signIn'>
+        <img src={logo} alt='마크그룹 로고' onClick={() => navigate('/')} />
         <div className='loginForm'>
           <h3>로그인</h3>
           <div className='line'></div>

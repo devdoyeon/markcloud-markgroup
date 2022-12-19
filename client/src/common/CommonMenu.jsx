@@ -4,9 +4,16 @@ import { getCookie, removeCookie } from 'js/cookie';
 const CommonMenu = () => {
   return (
     <ul className='commonNav'>
-      <li onClick={() => (getCookie('myToken') ? removeCookie('myToken') : '')}>
+      <li>
         {getCookie('myToken') ? (
-          <button>로그아웃</button>
+          <button
+            onClick={() => {
+              removeCookie('myToken');
+              window.location.reload();
+              return;
+            }}>
+            로그아웃
+          </button>
         ) : (
           <Link to='/sign-in'>로그인</Link>
         )}

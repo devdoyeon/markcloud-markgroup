@@ -2,6 +2,12 @@
 // 프로젝트 현황, 주간 업무 보고, 게시판
 
 .main {
+  > .row {
+    > img {
+      cursor: pointer;
+      @include position-style($top: 50px, $left: 150px, $zIndex: 2);
+    }
+  }
   .mainContent-wrap {
     button {
       @include flex-style();
@@ -380,7 +386,12 @@
 
 .signIn {
   @include flex-style(column);
+  position: relative;
   min-height: 100vh;
+  > img {
+    cursor: pointer;
+    @include position-style($top: 50px, $left: 150px);
+  }
   .loginForm {
     @include flex-style(column);
     width: 20%;

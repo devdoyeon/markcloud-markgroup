@@ -1,4 +1,11 @@
 @charset "UTF-8";
+.main > .row > img {
+  cursor: pointer;
+  position: absolute;
+  left: 150px;
+  top: 50px;
+  z-index: 2;
+}
 .main .mainContent-wrap button {
   display: flex;
   flex-direction: row;
@@ -417,7 +424,14 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  position: relative;
   min-height: 100vh;
+}
+.signIn > img {
+  cursor: pointer;
+  position: absolute;
+  left: 150px;
+  top: 50px;
 }
 .signIn .loginForm {
   display: flex;
