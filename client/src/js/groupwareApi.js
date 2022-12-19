@@ -29,6 +29,7 @@ const apiErrorHandling = async error => {
       }
     case 500:
     case 501:
+    case 504:
       return 'serverError';
     default:
       return '';
