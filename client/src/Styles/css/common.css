@@ -243,6 +243,7 @@
   overflow-y: auto;
   height: 430px;
   padding: 0 10px;
+  margin-bottom: 24px;
   white-space: normal;
 }
 .container .content-wrap .board-wrap > .body-wrap .content .quill {
