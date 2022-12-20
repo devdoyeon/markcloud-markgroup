@@ -8,6 +8,7 @@ import {
 } from 'js/groupwareApi';
 import { commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
+import { getCookie } from 'js/cookie';
 
 const PersonnelBusinessPopup = ({
   popup,
@@ -24,9 +25,13 @@ const PersonnelBusinessPopup = ({
     context: '',
     bool: false,
   });
+  const cookie = getCookie('myToken');
 
   const createPersonnelDepartment = async () => {
-    const create = await getDepartmentCreate(curDepartment?.department_name);
+    const create = await getDepartmentCreate(
+      curDepartment?.department_name,
+      cookie
+    );
     changeState(setCurDepartment, 'department_name', '');
   };
 

@@ -560,6 +560,30 @@
           > div {
             width: 320px;
             position: relative;
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 23px;
+            }
+            > input {
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 0 6px 12px;
+              width: 236px;
+              height: 32px;
+            }
+          }
+        }
+        > .name-line {
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          border-top: 1px solid $footerColor;
+          border-bottom: 1px solid $footerColor;
+          padding: 12px 0;
+          > div {
+            // width: 320px;
+            position: relative;
             &::after {
               content: '';
               position: absolute;
@@ -582,13 +606,13 @@
               height: 32px;
             }
             &.name {
-              width: 264px;
-              padding-left: 16px;
+              padding-left: 0px;
+              padding-right: 16px;
               span {
-                margin-right: 16px;
+                margin-right: 31px;
               }
               input {
-                width: 190px;
+                width: 200px;
               }
             }
             &:first-child {
@@ -596,16 +620,29 @@
                 padding-left: 5px;
               }
             }
+            &.birth-date {
+              &::after {
+                display: none;
+              }
+              span {
+                margin-right: 12px;
+                padding-left: 16px;
+              }
+              input {
+                background-color: $subBlue;
+                padding: 6px 12px 6px 12px;
+                width: 200px;
+                height: 32px;
+                border-radius: 8px;
+              }
+            }
           }
 
           .gender-wrap {
-            width: 274px;
+            width: 294px;
             height: 32px;
             padding-left: 29px;
             @include flex-style($justifyVal: flex-start);
-            &::after {
-              display: none;
-            }
             .gender-input-wrap {
               width: auto;
               @include flex-style(
@@ -631,7 +668,7 @@
             }
           }
         }
-        .date-line {
+        .affiliation-line {
           @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
           padding: 12px 0;
           border-bottom: 1px solid $footerColor;
@@ -651,41 +688,47 @@
               font-size: 14px;
               color: $gray01;
             }
-            &.birth-date {
-              width: 320px;
-              span {
-                margin-right: 16px;
-              }
-              input {
-                background-color: $subBlue;
-                padding: 6px 12px 6px 12px;
-                width: 236px;
-                height: 32px;
-                border-radius: 8px;
-              }
-            }
+
             &.affiliation {
-              width: 264px;
-              padding-left: 16px;
+              // width: 264px;
+              padding-left: 6px;
+              padding-right: 16px;
               @include flex-style($justifyVal: flex-start);
               span {
-                margin-right: 16px;
+                margin-right: 30px;
               }
               > .selectBox {
-                width: 190px;
+                width: 200px;
                 // margin-right: 0;
               }
             }
+
+            &.phone {
+              padding-right: 15px;
+              span {
+                padding-left: 16px;
+                margin-right: 12px;
+              }
+              input {
+                width: 200px;
+                background-color: $subBlue;
+                padding: 6px 6px 6px 6px;
+                border-radius: 8px;
+                height: 32px;
+              }
+            }
+
             &.password {
-              width: 274px;
+              // width: 274px;
               &::after {
                 display: none;
               }
               span {
                 padding-left: 16px;
-                margin-right: 16px;
+                margin-right: 12px;
               }
               input {
+                width: 200px;
                 background-color: $subBlue;
                 padding: 6px 6px 6px 6px;
                 border-radius: 8px;
@@ -694,44 +737,28 @@
             }
           }
         }
-        .phone-line {
+        .email-line {
           width: 860px;
           @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
           padding: 12px 0;
           border-bottom: 1px solid $footerColor;
           > div {
-            width: 442px;
             position: relative;
-            &::after {
-              content: '';
-              position: absolute;
-              right: 0;
-              width: 1px;
-              height: 32px;
-              background-color: $footerColor;
-            }
+
             span {
               font-family: 'NotoSansR';
               font-size: 14px;
               color: $gray01;
-              margin-right: 16px;
+              margin-right: 23px;
             }
             input {
               background-color: $subBlue;
-              padding: 6px 6px 6px 6px;
+              padding: 6px 6px 6px 12px;
               border-radius: 8px;
               height: 32px;
-              width: 358px;
-            }
-            &:last-child {
-              width: 417px;
-              &::after {
-                display: none;
-              }
-              span {
-                margin-right: 4px;
-                padding-left: 15px;
-              }
+              width: 498px;
+              font-size: 14px;
+              font-family: 'NotoSansR';
             }
           }
         }
@@ -742,15 +769,15 @@
             font-family: 'NotoSansR';
             font-size: 14px;
             color: $gray01;
-            margin-right: 29px;
-            padding-left: 12px;
+            margin-right: 31px;
+            padding-left: 5px;
           }
           input {
             background-color: $subBlue;
             padding: 6px 6px 6px 12px;
             border-radius: 8px;
             height: 32px;
-            width: 501px;
+            width: 498px;
             margin-right: 16px;
           }
           > .commonBtn {

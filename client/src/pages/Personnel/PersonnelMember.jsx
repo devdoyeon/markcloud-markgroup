@@ -1,12 +1,26 @@
 import { useEffect, useState } from 'react';
 import SideMenu from 'common/SideMenu';
-import Pagination from 'common/Pagination';
-import { useNavigate } from 'react-router-dom';
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
-import { getDepartmentList, getBusinessRead } from 'js/groupwareApi';
+import {
+  getDepartmentList,
+  getBusinessRead,
+  getMemberCreate,
+} from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
-import { catchError, changeTitle } from 'js/commonUtils';
+import {
+  catchError,
+  changeState,
+  changeTitle,
+  commonModalSetting,
+} from 'js/commonUtils';
 import PostCode from './PostCode';
+import { getCookie } from 'js/cookie';
 
 const PersonnelMember = () => {
   const [alert, setAlert] = useState('');
@@ -15,7 +29,19 @@ const PersonnelMember = () => {
     context: '',
     bool: false,
   });
-  const [num, setNum] = useState(0);
+  // 이름,아이디,비밀번호,이메일,생일,휴대폰,성별,우편번호,주소,소속
+  const [memberInfo, setMemberInfo] = useState({
+    name: '',
+    user_id: '',
+    password: '',
+    email: '',
+    birthday: '',
+    phone: '',
+    gender: '',
+    zip_code: '',
+    address: '',
+    section: '',
+  });
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
   const [departmentName, setDepartmentName] = useState([]);
@@ -45,16 +71,9 @@ const PersonnelMember = () => {
   const [addressDetail, setAddressDetail] = useState(''); //상세주소
   const [writeAddress, setWriteAddress] = useState(''); //사용자가 입력하는 상세주소
 
+  const path = useLocation().pathname;
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const projectNameArr = [
-    '마크클라우드',
-    '마크뷰',
-    '마크통',
-    '마크링크',
-    '삼성전자',
-    '그린터치',
-  ];
 
   let prevent = false;
 
@@ -69,9 +88,7 @@ const PersonnelMember = () => {
       const { data, meta } = result?.data;
       setDepartmentList(data);
       setDepartmentMeta(meta);
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i].department_name);
         setDepartmentName(name => [...name, data[i].department_name]);
       }
       setDepartmentPageInfo(prev => {
@@ -103,6 +120,22 @@ const PersonnelMember = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  const createMember = async () => {
+    //유효성 검사
+
+    // --
+    const result = await getMemberCreate(memberInfo);
+    if (typeof result === 'object') {
+      setAlert('apply');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '등록이 완료되었습니다.'
+      );
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
     getPersonDepartmentApi();
@@ -123,9 +156,20 @@ const PersonnelMember = () => {
           .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
       );
     }
+    changeState(setMemberInfo, 'phone', inputValue);
   }, [inputValue]);
+  useEffect(() => {
+    changeState(setMemberInfo, 'section', contactValue);
+  }, [contactValue]);
 
-  const handleChange = e => {
+  // 주소 검색
+  useEffect(() => {
+    if (!isPopupOpen) {
+      changeState(setMemberInfo, 'address', addressDetail);
+      changeState(setMemberInfo, 'zip_code', address);
+    }
+  }, [isPopupOpen]);
+  const phoneNumRegex = e => {
     const regex = /^[0-9\b -]{0,13}$/;
     if (regex.test(e.target.value)) {
       setInputValue(e.target.value);
@@ -144,32 +188,80 @@ const PersonnelMember = () => {
             <div className='id-line'>
               <div>
                 <span>아이디</span>
-                <input type='text' autocomplete='off' />
+                <input
+                  type='text'
+                  value={memberInfo.user_id}
+                  autoComplete='off'
+                  onChange={e =>
+                    changeState(setMemberInfo, 'user_id', e.target.value)
+                  }
+                />
+                <button className='commonBtn'></button>
               </div>
+            </div>
+            <div className='name-line'>
               <div className='name'>
                 <span>성명</span>
-                <input type='text' autocomplete='off' />
+                <input
+                  type='text'
+                  value={memberInfo.name}
+                  autoComplete='off'
+                  onChange={e =>
+                    changeState(setMemberInfo, 'name', e.target.value)
+                  }
+                />
               </div>
               <div className='gender-wrap'>
                 <span>성별</span>
                 <div className='gender-input-wrap'>
                   <div>
-                    <input type='radio' name='gender' />
+                    <input
+                      type='radio'
+                      name='gender'
+                      autoComplete='off'
+                      data-gender='male'
+                      onClick={e =>
+                        changeState(
+                          setMemberInfo,
+                          'gender',
+                          e.target.dataset.gender
+                        )
+                      }
+                    />
                     <span>남</span>
                   </div>
 
                   <div>
-                    <input type='radio' name='gender' />
+                    <input
+                      type='radio'
+                      name='gender'
+                      autoComplete='female'
+                      data-gender='여'
+                      onClick={e =>
+                        changeState(
+                          setMemberInfo,
+                          'gender',
+                          e.target.dataset.gender
+                        )
+                      }
+                    />
                     <span>여</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className='date-line'>
               <div className='birth-date'>
                 <span>생년월일</span>
-                <input type='date' />
+                <input
+                  type='date'
+                  autoComplete='off'
+                  onChange={e =>
+                    changeState(setMemberInfo, 'birthday', e.target.value)
+                  }
+                />
               </div>
+            </div>
+
+            <div className='affiliation-line'>
               <div className='affiliation'>
                 <span>소속</span>
                 <CommonSelect
@@ -178,24 +270,36 @@ const PersonnelMember = () => {
                   setSelectVal={setContactValue}
                 />
               </div>
-              <div className='password'>
-                <span>비밀번호</span>
-                <input type='password' autocomplete='off' />
-              </div>
-            </div>
-            <div className='phone-line'>
-              <div>
+              <div className='phone'>
                 <span>휴대전화</span>
                 <input
                   type='text'
-                  onChange={handleChange}
+                  autoComplete='off'
+                  onChange={phoneNumRegex}
                   value={inputValue}
-                  autocomplete='off'
                 />
               </div>
+              <div className='password'>
+                <span>비밀번호</span>
+                <input
+                  type='password'
+                  autoComplete='off'
+                  onChange={e =>
+                    changeState(setMemberInfo, 'password', e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className='email-line'>
               <div>
                 <span>이메일</span>
-                <input type='text' autocomplete='off' />
+                <input
+                  type='text'
+                  autoComplete='off'
+                  onChange={e =>
+                    changeState(setMemberInfo, 'email', e.target.value)
+                  }
+                />
               </div>
             </div>
             <div className='address-line'>
@@ -203,8 +307,9 @@ const PersonnelMember = () => {
               <input
                 type='text'
                 placeholder='주소 입력'
+                autoComplete='off'
+                disabled='disabled'
                 value={addressDetail}
-                autocomplete='off'
                 onChange={e => setAddressDetail(e.target.value)}
               />
               <button
@@ -215,10 +320,16 @@ const PersonnelMember = () => {
             </div>
           </div>
           <div className='btn-wrap'>
+            <button className='commonBtn' onClick={createMember}>
+              등록
+            </button>
+            <button className='commonBtn list'>목록</button>
+          </div>
+          {/* <div className='btn-wrap'>
             <button className='commonBtn'>수정</button>
             <button className='commonBtn delete'>삭제</button>
             <button className='commonBtn list'>목록</button>
-          </div>
+          </div> */}
         </div>
       </div>
       {alertBox.bool && (
@@ -226,8 +337,11 @@ const PersonnelMember = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
+            if (alert === 'cancel' || alert === 'apply') navigate(`/personnel`);
+            else if (alert === 'edit') navigate(`/personnel/${id}`);
+            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
+            else return;
           }}
           failFn={() => {}}
         />
