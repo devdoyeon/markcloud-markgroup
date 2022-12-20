@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonMenu from 'common/CommonMenu';
 import CommonFooter from 'common/CommonFooter';
 import CommonModal from 'common/CommonModal';
+import CommonSiteMap from 'common/CommonSiteMap';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
@@ -57,14 +58,7 @@ const Home = () => {
   return (
     <>
       <div className='main container column'>
-        <div className='row'>
-          <img
-            src={mainLogo}
-            alt='그룹웨어 로고'
-            onClick={() => window.location.reload()}
-          />
-          <CommonMenu />
-        </div>
+        <CommonSiteMap color='white' />
         <div className='mainContent-wrap'>
           <div className='intro'>
             <div className='intro-content'>

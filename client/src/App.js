@@ -10,6 +10,7 @@ import ProjectStatus from 'pages/Project/ProjectStatus';
 import PersonnelManagement from 'pages/Personnel/PersonnelManagement';
 import BusinessManagement from 'pages/Business/BusinessManagement';
 // =============== CommonPages ===============
+import Cost from 'pages/Cost';
 import NewBoard from 'pages/common/NewBoard';
 import BoardRead from 'pages/common/BoardRead';
 import ProjectDetail from 'pages/Project/ProjectDetail';
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/cost' element={<Cost />} />
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />

@@ -372,6 +372,225 @@ input {
   }
 }
 
+.common-header {
+  @include position-style($top: 0, $zIndex: 4);
+  @include flex-style($alignVal: center, $justifyVal: center);
+  width: 100%;
+  height: 100px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  &.dark {
+    a {
+      color: $black;
+    }
+  }
+  &.free-header {
+    z-index: 0;
+  }
+  .menu {
+    color: white;
+    a {
+      color: white;
+    }
+  }
+  .commonNav {
+    @include flex-style();
+    li {
+      cursor: pointer;
+      &:first-child::after {
+        content: '|';
+        color: white;
+        margin: 0 20px;
+      }
+      a,
+      button {
+        font-size: 14px;
+        color: white;
+      }
+    }
+  }
+  .header-container {
+    width: 100%;
+    padding: 0 10.5%;
+
+    nav {
+      @include flex-style($alignVal: center, $justifyVal: space-between);
+
+      > ul {
+        @include flex-style($alignVal: center);
+
+        a {
+          display: inline-block;
+          color: $white;
+        }
+
+        &:first-child {
+          > li {
+            @include position-style(relative);
+            font-size: 20px;
+
+            > a {
+              font-size: 20px;
+              padding-right: 70px;
+              line-height: 100px;
+            }
+
+            &:first-child > a {
+              line-height: 0;
+            }
+
+            button {
+              margin-right: 50px;
+              height: 100px;
+              font-size: 20px;
+              line-height: 0;
+              color: $white;
+            }
+          }
+        }
+
+        &:last-child {
+          > li {
+            @include flex-style($alignVal: center, $justifyVal: center);
+            font-size: 14px;
+
+            &:first-child::after {
+              content: '|';
+              margin: 0 20px;
+              font-family: $middleFont;
+              @include txt-style(10px, $white);
+            }
+
+            &:last-child {
+              @include position-style(relative);
+              height: 30px;
+              transition: 0.3s;
+
+              ul {
+                @include position-style($top: 28px);
+                @include flex-style(column, $alignVal: center);
+                width: calc(100% + 2px);
+                height: 0px;
+                border-radius: 0 0 5px 5px;
+                overflow: hidden;
+
+                li {
+                  flex: 1;
+                  @include flex-style($alignVal: center);
+                }
+              }
+
+              &:hover {
+                ul {
+                  height: 120px;
+                  border: 1px solid $white;
+                  border-top: none;
+                }
+              }
+            }
+          }
+
+          button {
+            padding: 0;
+            @include txt-style(14px, $white);
+          }
+        }
+      }
+    }
+
+    .sub-nav {
+      display: none;
+      @include position-style($top: 100px, $zIndex: 5);
+      width: 700px;
+      height: 80px;
+      font-family: $regularFont;
+      font-size: 18px;
+
+      > li {
+        display: inline-block;
+        line-height: 80px;
+        color: $white;
+
+        &::after {
+          content: '|';
+          @include position-style(relative, $top: -3px);
+          margin: 0 30px;
+          font-size: 12px;
+        }
+
+        &:last-child::after {
+          content: '';
+        }
+
+        a {
+          color: $white;
+        }
+      }
+    }
+
+    .main-move {
+      width: 112px;
+      height: 30px;
+      margin-right: 50px;
+      padding: 0;
+      background: url('image/groupware-logo.png') no-repeat left top / contain;
+    }
+  }
+
+  .sub-nav-bg {
+    display: none;
+    @include position-style($top: 100px, $zIndex: 3);
+    width: 100%;
+    height: 80px;
+    background-color: rgba(21, 23, 26, 0.5);
+  }
+}
+
+.black-header {
+  background-color: $white !important;
+  -webkit-transition: 0s !important;
+  -o-transition: 0s !important;
+  transition: 0s !important;
+  .header-container {
+    * {
+      color: $black !important;
+    }
+
+    .main-move {
+      background: url('image/groupware-logo.png') no-repeat left top /
+        contain;
+    }
+
+    + .sub-nav-bg {
+      background-color: $gray05 !important;
+      border-top: 1px solid $gray03;
+      border-bottom: 1px solid $gray03;
+    }
+
+    nav > ul {
+      &:last-child {
+        > li {
+          &:first-child::after {
+            color: $black;
+          }
+
+          &:last-child {
+            &:hover {
+              ul {
+                border: 1px solid $black;
+                border-top: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .pagination {
   margin-bottom: 100px;
   > li {

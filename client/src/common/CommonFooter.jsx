@@ -1,7 +1,11 @@
-import React from 'react';
+import $ from 'jquery';
 import plusIcon from 'image/plusIcon.svg';
 
 const CommonFooter = () => {
+  const slideList = async () => {
+    $('.family-site').stop().slideToggle('fast');
+  };
+
   return (
     <footer className='main-footer'>
       <div className='content-container'>
@@ -46,14 +50,14 @@ const CommonFooter = () => {
           </ul>
           <ul>
             <li>
-              <button>
+              <button onClick={() => slideList()}>
                 패밀리사이트
                 <img src={plusIcon} alt='플러스 아이콘' />
               </button>
               <ul className='family-site'>
                 <li>
                   <a
-                    href='/'
+                    href='https://markcloud.co.kr/'
                     rel='noopener noreferrer'
                     target='_self'
                     className='first'>
@@ -61,7 +65,10 @@ const CommonFooter = () => {
                   </a>
                 </li>
                 <li>
-                  <a href='/mark-view' rel='noopener noreferrer' target='_self'>
+                  <a
+                    href='https://markcloud.co.kr/mark-view'
+                    rel='noopener noreferrer'
+                    target='_self'>
                     마크뷰
                   </a>
                 </li>
@@ -69,9 +76,17 @@ const CommonFooter = () => {
                   <a
                     href={`https://play.google.com/store/apps/details?id=com.marktong.marktong&referrer=utm_source%3Dmarkcloud_mainpage%26utm_medium%3Dtag%26anid%3Dadmob`}
                     rel='noopener noreferrer'
-                    target='_blank'
-                    className='last'>
+                    target='_blank'>
                     마크통
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href='/'
+                    rel='noopener noreferrer'
+                    target='_self'
+                    className='last'>
+                    그룹웨어
                   </a>
                 </li>
               </ul>

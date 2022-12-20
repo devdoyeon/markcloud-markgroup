@@ -1,11 +1,4 @@
 @charset "UTF-8";
-.main > .row > img {
-  cursor: pointer;
-  position: absolute;
-  left: 150px;
-  top: 50px;
-  z-index: 2;
-}
 .main .mainContent-wrap button {
   display: flex;
   flex-direction: row;
@@ -258,29 +251,10 @@
   background-color: #5b84e3;
 }
 
-.commonNav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  position: absolute;
-  right: 100px;
-  top: 50px;
-  z-index: 5;
-}
-.commonNav li {
-  cursor: pointer;
-}
-.commonNav li:first-child::after {
-  content: "|";
-  color: white;
-  margin: 0 20px;
-}
-.commonNav li a,
-.commonNav li button {
-  font-size: 14px;
-  color: white;
+.cost {
+  background-color: #dddddd;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .main-footer {
@@ -331,7 +305,7 @@
   left: 0;
   right: 0;
   width: 150px;
-  height: 105px;
+  height: 140px;
   background-color: #ffffff;
   border: 1px solid #434343;
   border-radius: 10px;
@@ -378,7 +352,7 @@
   background-color: #434343;
 }
 .main-footer .top > ul > li.sns-icon a {
-  font-family: "UbuntuB", "맑은고딕", "sans-serif";
+  font-family: "NotoSansBlack", "맑은 고딕", "sans-serif";
   font-size: 14px;
   color: #eeeeee;
 }

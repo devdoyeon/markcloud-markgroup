@@ -2,12 +2,6 @@
 // 프로젝트 현황, 주간 업무 보고, 게시판
 
 .main {
-  > .row {
-    > img {
-      cursor: pointer;
-      @include position-style($top: 50px, $left: 150px, $zIndex: 2);
-    }
-  }
   .mainContent-wrap {
     button {
       @include flex-style();
@@ -234,22 +228,10 @@
   }
 }
 
-.commonNav {
-  @include flex-style();
-  @include position-style($top: 50px, $right: 100px, $zIndex: 5);
-  li {
-    cursor: pointer;
-    &:first-child::after {
-      content: '|';
-      color: white;
-      margin: 0 20px;
-    }
-    a,
-    button {
-      font-size: 14px;
-      color: white;
-    }
-  }
+.cost {
+  background-color: $gray04;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .main-footer {
@@ -291,7 +273,7 @@
             display: none;
             @include position-style($left: 0, $right: 0);
             width: 150px;
-            height: 105px;
+            height: 140px;
             background-color: $white;
             border: 1px solid $viewMainColor;
             border-radius: 10px;
@@ -344,7 +326,7 @@
           background-color: $viewMainColor;
 
           a {
-            font-family: 'UbuntuB', '맑은고딕', 'sans-serif';
+            font-family: $blackFont;
             @include txt-style(14px, $footerColor);
           }
 

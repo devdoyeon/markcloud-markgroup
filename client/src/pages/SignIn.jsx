@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
+import CommonSiteMap from 'common/CommonSiteMap';
 import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
@@ -81,7 +82,7 @@ const SignIn = () => {
   return (
     <div className='container'>
       <div className='signIn'>
-        <img src={logo} alt='마크그룹 로고' onClick={() => navigate('/')} />
+        <CommonSiteMap color='black' />
         <div className='loginForm'>
           <h3>로그인</h3>
           <div className='line'></div>

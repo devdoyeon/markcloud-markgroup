@@ -441,6 +441,217 @@ input {
   height: 24px;
 }
 
+.common-header {
+  position: absolute;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+.common-header.dark a {
+  color: #15171a;
+}
+.common-header.free-header {
+  z-index: 0;
+}
+.common-header .menu {
+  color: white;
+}
+.common-header .menu a {
+  color: white;
+}
+.common-header .commonNav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.common-header .commonNav li {
+  cursor: pointer;
+}
+.common-header .commonNav li:first-child::after {
+  content: "|";
+  color: white;
+  margin: 0 20px;
+}
+.common-header .commonNav li a,
+.common-header .commonNav li button {
+  font-size: 14px;
+  color: white;
+}
+.common-header .header-container {
+  width: 100%;
+  padding: 0 10.5%;
+}
+.common-header .header-container nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.common-header .header-container nav > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.common-header .header-container nav > ul a {
+  display: inline-block;
+  color: #ffffff;
+}
+.common-header .header-container nav > ul:first-child > li {
+  position: relative;
+  font-size: 20px;
+}
+.common-header .header-container nav > ul:first-child > li > a {
+  font-size: 20px;
+  padding-right: 70px;
+  line-height: 100px;
+}
+.common-header .header-container nav > ul:first-child > li:first-child > a {
+  line-height: 0;
+}
+.common-header .header-container nav > ul:first-child > li button {
+  margin-right: 50px;
+  height: 100px;
+  font-size: 20px;
+  line-height: 0;
+  color: #ffffff;
+}
+.common-header .header-container nav > ul:last-child > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+.common-header .header-container nav > ul:last-child > li:first-child::after {
+  content: "|";
+  margin: 0 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 10px;
+  color: #ffffff;
+}
+.common-header .header-container nav > ul:last-child > li:last-child {
+  position: relative;
+  height: 30px;
+  transition: 0.3s;
+}
+.common-header .header-container nav > ul:last-child > li:last-child ul {
+  position: absolute;
+  top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: calc(100% + 2px);
+  height: 0px;
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
+}
+.common-header .header-container nav > ul:last-child > li:last-child ul li {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.common-header .header-container nav > ul:last-child > li:last-child:hover ul {
+  height: 120px;
+  border: 1px solid #ffffff;
+  border-top: none;
+}
+.common-header .header-container nav > ul:last-child button {
+  padding: 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+.common-header .header-container .sub-nav {
+  display: none;
+  position: absolute;
+  top: 100px;
+  z-index: 5;
+  width: 700px;
+  height: 80px;
+  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
+  font-size: 18px;
+}
+.common-header .header-container .sub-nav > li {
+  display: inline-block;
+  line-height: 80px;
+  color: #ffffff;
+}
+.common-header .header-container .sub-nav > li::after {
+  content: "|";
+  position: relative;
+  top: -3px;
+  margin: 0 30px;
+  font-size: 12px;
+}
+.common-header .header-container .sub-nav > li:last-child::after {
+  content: "";
+}
+.common-header .header-container .sub-nav > li a {
+  color: #ffffff;
+}
+.common-header .header-container .main-move {
+  width: 112px;
+  height: 30px;
+  margin-right: 50px;
+  padding: 0;
+  background: url("image/groupware-logo.png") no-repeat left top/contain;
+}
+.common-header .sub-nav-bg {
+  display: none;
+  position: absolute;
+  top: 100px;
+  z-index: 3;
+  width: 100%;
+  height: 80px;
+  background-color: rgba(21, 23, 26, 0.5);
+}
+
+.black-header {
+  background-color: #ffffff !important;
+  -webkit-transition: 0s !important;
+  -o-transition: 0s !important;
+  transition: 0s !important;
+}
+.black-header .header-container * {
+  color: #15171a !important;
+}
+.black-header .header-container .main-move {
+  background: url("image/groupware-logo.png") no-repeat left top/contain;
+}
+.black-header .header-container + .sub-nav-bg {
+  background-color: #f5f5f5 !important;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
+}
+.black-header .header-container nav > ul:last-child > li:first-child::after {
+  color: #15171a;
+}
+.black-header .header-container nav > ul:last-child > li:last-child:hover ul {
+  border: 1px solid #15171a;
+  border-top: none;
+}
+
 .pagination {
   margin-bottom: 100px;
 }

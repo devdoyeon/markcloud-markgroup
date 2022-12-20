@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 // ================================== 도연 ==================================
 
 const errorList = {
@@ -59,6 +61,34 @@ export const commonModalSetting = (setAlertBox, bool, mode, content) => {
 
 export const changeTitle = txt => {
   document.title = txt;
+};
+
+export const headerHoverEvent = () => {
+  const main = '.main-nav';
+  const sub = '.sub-nav';
+  const bg = '.sub-nav-bg';
+  const speed = 300;
+  $(main).mouseenter(function () {
+    $('.common-header').css({
+      backgroundColor: 'rgba(21, 23, 26, 0.5)',
+      borderBottom: '1px solid #FFFFFF',
+    });
+    $(sub + ',' + bg)
+      .stop()
+      .slideUp(0);
+    $(this).next().stop().slideDown(speed);
+    $(bg).stop().slideDown(speed);
+    $(this)
+      .parent()
+      .mouseleave(function () {
+        $(this).find(sub).stop().slideUp(speed);
+        $(bg).stop().slideUp(speed);
+        $('.common-header').css({
+          backgroundColor: 'transparent',
+          borderBottom: 'none',
+        });
+      });
+  });
 };
 
 //================================== 병욱님 ==================================
