@@ -88,11 +88,15 @@ const SideMenu = () => {
               onClick={() => {
                 removeCookie('myToken');
                 navigate('/');
+                localStorage.clear();
               }}>
               로그아웃
             </div>
             <div className='row'>
-              <span>{localStorage.getItem('userName')}({localStorage.getItem('userId')})</span>
+              <span>
+                {localStorage.getItem('userName')}(
+                {localStorage.getItem('userId')})
+              </span>
               <img src={rightArrow} alt='더보기 아이콘' />
             </div>
           </div>

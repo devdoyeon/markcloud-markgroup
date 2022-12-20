@@ -36,6 +36,17 @@ const apiErrorHandling = async error => {
   }
 };
 
+//# 아이피
+
+const getIp = async () => {
+  try {
+    const ip = await axios.get('https://api.ip.pe.kr/');
+    return ip?.data;
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
 //# 토큰 재발급
 const tokenReissue = async () => {
   const headers = {
@@ -58,26 +69,25 @@ const tokenReissue = async () => {
 //# 로그인
 export const signIn = async (userId, userPw) => {
   try {
-    const ipSearch = await axios.get('https://api.ip.pe.kr/');
-    const ip = ipSearch.data;
     return await axios.post('/api/auth/login', {
       user_id: userId,
       password: userPw,
-      login_ip: ip,
+      login_ip: await getIp(),
     });
   } catch (error) {
     return await apiErrorHandling(error);
   }
 };
 
+//# 유저 정보
 export const checkUserInfo = async () => {
   const headers = {
     'access-token': getCookie('myToken'),
   };
-  const ipSearch = await axios.get('https://api.ip.pe.kr/');
-  const ip = ipSearch.data;
   try {
-    return await axios.get(`/api/users/self?current_ip=${ip}`, { headers });
+    return await axios.get(`/api/users/self?current_ip=${await getIp()}`, {
+      headers,
+    });
   } catch (error) {
     return apiErrorHandling(error);
   }

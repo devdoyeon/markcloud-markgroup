@@ -10,6 +10,7 @@ const CommonMenu = () => {
             onClick={() => {
               removeCookie('myToken');
               window.location.reload();
+              localStorage.clear();
               return;
             }}>
             로그아웃
