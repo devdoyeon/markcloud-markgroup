@@ -416,6 +416,7 @@
 }
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr {
   background-color: #fcfcfc;
+  cursor: pointer;
 }
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr:nth-child(2n) {
   background-color: #f8f8fd;
@@ -564,6 +565,7 @@
 }
 .container .content-wrap .member-manage-wrap > .table > div table tbody tr {
   background-color: #fcfcfc;
+  cursor: pointer;
 }
 .container .content-wrap .member-manage-wrap > .table > div table tbody tr:nth-child(2n) {
   background-color: #f8f8fd;
@@ -595,8 +597,12 @@
   padding: 12px 0;
 }
 .container .content-wrap.member .member-wrap > .id-line > div {
-  width: 320px;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .container .content-wrap.member .member-wrap > .id-line > div span {
   font-family: "NotoSansR";
@@ -609,6 +615,22 @@
   border-radius: 8px;
   padding: 6px 0 6px 12px;
   width: 236px;
+  height: 32px;
+  margin-right: 8px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div > button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+  background-color: #ffffff;
+  color: #5850cc;
+  border: 1px solid #5850cc;
+  font-size: 14px;
+  font-family: "NotoSansR";
+  width: 76px;
   height: 32px;
 }
 .container .content-wrap.member .member-wrap > .name-line {
@@ -752,6 +774,9 @@
 .container .content-wrap.member .member-wrap .affiliation-line > div.affiliation > .selectBox {
   width: 200px;
 }
+.container .content-wrap.member .member-wrap .affiliation-line > div.affiliation .selectOptGroup {
+  width: 200px;
+}
 .container .content-wrap.member .member-wrap .affiliation-line > div.phone {
   padding-right: 15px;
 }
@@ -832,10 +857,17 @@
   margin-right: 16px;
 }
 .container .content-wrap.member .member-wrap .address-line > .commonBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 76px;
   background-color: #ffffff;
   border: 1px solid #5850cc;
   color: #5850cc;
-  padding: 6px 12px;
+  height: 32px;
   font-family: "NotoSansR";
   font-size: 14px;
 }
