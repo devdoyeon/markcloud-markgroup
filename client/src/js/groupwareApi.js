@@ -62,7 +62,7 @@ export const signIn = async (userId, userPw) => {
     const ipSearch = await axios.get('https://api.ip.pe.kr/');
     const ip = ipSearch.data;
     return await axios.post(
-      '/api/admin/login',
+      '/api/auth/login',
       { user_id: userId, password: userPw, login_ip: ip },
       { header }
     );
