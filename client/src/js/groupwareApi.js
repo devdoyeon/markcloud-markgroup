@@ -247,7 +247,7 @@ export const getDepartmentList = async ({ page, limit }, cookie) => {
   try {
     return await axios.get(
       `/bw/personnel/department/list?page=${page}&limit=${limit}`,
-      { headers }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -263,17 +263,16 @@ export const getDepartmentInfo = async id => {
 };
 
 export const getDepartmentCreate = async (name, cookie) => {
-  const header = {
+  const headers = {
     'access-token': cookie,
   };
-  console.log(header);
   try {
     return await axios.post(
       `/bw/personnel/department/create`,
       {
         department_name: name,
       },
-      { header }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -305,13 +304,13 @@ export const getDepartmentDelete = async id => {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~member~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export const getMemberList = async ({ page, limit }, cookie) => {
-  const header = {
+  const headers = {
     'access-token': cookie,
   };
   try {
     return await axios.get(
       `/bw/personnel/member/list?page=${page}&limit=${limit}`,
-      { header }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -341,7 +340,7 @@ export const getMemberCreate = async (
   },
   cookie
 ) => {
-  const header = {
+  const headers = {
     'access-token': cookie,
   };
   try {
@@ -359,7 +358,7 @@ export const getMemberCreate = async (
         address,
         section,
       },
-      { header }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);

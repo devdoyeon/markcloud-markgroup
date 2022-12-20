@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import {
   useLoaderData,
@@ -75,6 +75,8 @@ const PersonnelMember = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const cookie = getCookie('myToken');
+
   let prevent = false;
 
   const getPersonDepartmentApi = async () => {
@@ -83,7 +85,7 @@ const PersonnelMember = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getDepartmentList(departmentPageInfo);
+    const result = await getDepartmentList(departmentPageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(data);
@@ -100,31 +102,31 @@ const PersonnelMember = () => {
     }
   };
 
-  const getProjectApi = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
-    const result = await getBusinessRead(pageInfo);
-    if (typeof result === 'object') {
-      const { data, meta } = result?.data;
-      setList(data);
-      setMeta(meta);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.page = meta?.page;
-        clone.totalPage = meta?.totalPage;
-        return clone;
-      });
-    } else return catchError(result, navigate, setAlertBox, setAlert);
-  };
+  // const getProjectApi = async () => {
+  //   if (prevent) return;
+  //   prevent = true;
+  //   setTimeout(() => {
+  //     prevent = false;
+  //   }, 200);
+  //   const result = await getBusinessRead(pageInfo);
+  //   if (typeof result === 'object') {
+  //     const { data, meta } = result?.data;
+  //     setList(data);
+  //     setMeta(meta);
+  //     setPageInfo(prev => {
+  //       const clone = { ...prev };
+  //       clone.page = meta?.page;
+  //       clone.totalPage = meta?.totalPage;
+  //       return clone;
+  //     });
+  //   } else return catchError(result, navigate, setAlertBox, setAlert);
+  // };
 
   const createMember = async () => {
     //유효성 검사
 
     // --
-    const result = await getMemberCreate(memberInfo);
+    const result = await getMemberCreate(memberInfo, cookie);
     if (typeof result === 'object') {
       setAlert('apply');
       return commonModalSetting(
@@ -141,9 +143,9 @@ const PersonnelMember = () => {
     getPersonDepartmentApi();
   }, []);
 
-  useEffect(() => {
-    getProjectApi();
-  }, [pageInfo.page]);
+  // useEffect(() => {
+  //   getProjectApi();
+  // }, [pageInfo.page]);
 
   useEffect(() => {
     if (inputValue.length === 10) {
@@ -192,11 +194,12 @@ const PersonnelMember = () => {
                   type='text'
                   value={memberInfo.user_id}
                   autoComplete='off'
+                  placeholder='아이디를 입력해주세요.'
                   onChange={e =>
                     changeState(setMemberInfo, 'user_id', e.target.value)
                   }
                 />
-                <button className='commonBtn'></button>
+                <button className='commonBtn'>중복체크</button>
               </div>
             </div>
             <div className='name-line'>
@@ -205,6 +208,7 @@ const PersonnelMember = () => {
                 <input
                   type='text'
                   value={memberInfo.name}
+                  placeholder='성명을 입력해주세요.'
                   autoComplete='off'
                   onChange={e =>
                     changeState(setMemberInfo, 'name', e.target.value)
@@ -235,8 +239,8 @@ const PersonnelMember = () => {
                     <input
                       type='radio'
                       name='gender'
-                      autoComplete='female'
-                      data-gender='여'
+                      autoComplete='off'
+                      data-gender='female'
                       onClick={e =>
                         changeState(
                           setMemberInfo,
@@ -275,6 +279,7 @@ const PersonnelMember = () => {
                 <input
                   type='text'
                   autoComplete='off'
+                  placeholder='전화번호를 입력해주세요.'
                   onChange={phoneNumRegex}
                   value={inputValue}
                 />
@@ -284,6 +289,7 @@ const PersonnelMember = () => {
                 <input
                   type='password'
                   autoComplete='off'
+                  placeholder='비밀번호를 입력해주세요.'
                   onChange={e =>
                     changeState(setMemberInfo, 'password', e.target.value)
                   }
@@ -296,6 +302,7 @@ const PersonnelMember = () => {
                 <input
                   type='text'
                   autoComplete='off'
+                  placeholder='이메일을 입력해주세요.'
                   onChange={e =>
                     changeState(setMemberInfo, 'email', e.target.value)
                   }
@@ -306,7 +313,7 @@ const PersonnelMember = () => {
               <span>주소</span>
               <input
                 type='text'
-                placeholder='주소 입력'
+                placeholder='주소 찾기 버튼을 클릭해주세요'
                 autoComplete='off'
                 disabled='disabled'
                 value={addressDetail}
@@ -323,7 +330,11 @@ const PersonnelMember = () => {
             <button className='commonBtn' onClick={createMember}>
               등록
             </button>
-            <button className='commonBtn list'>목록</button>
+            <button
+              className='commonBtn list'
+              onClick={() => navigate('/personnel')}>
+              목록
+            </button>
           </div>
           {/* <div className='btn-wrap'>
             <button className='commonBtn'>수정</button>
