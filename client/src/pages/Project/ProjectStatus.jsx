@@ -4,7 +4,7 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
-import { changeTitle } from 'js/commonUtils';
+import { changeTitle, changeState } from 'js/commonUtils';
 
 const ProjectStatus = () => {
   const [alertBox, setAlertBox] = useState({
@@ -18,8 +18,13 @@ const ProjectStatus = () => {
     limit: 9,
   });
   const [selectVal, setSelectVal] = useState('전체');
+  const [search, setSearch] = useState({
+    name: '',
+    start_date: new Date(),
+    end_date: new Date(),
+  });
   const navigate = useNavigate();
-  const statusArr = ['전체','시작 전', '진행 중', '종료'];
+  const statusArr = ['전체', '시작 전', '진행 중', '종료'];
 
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 현황');
@@ -38,7 +43,12 @@ const ProjectStatus = () => {
             <div className='row'>
               <div className='row'>
                 <span>프로젝트명</span>
-                <input type='text' />
+                <input
+                  type='text'
+                  placeholder='프로젝트명을 입력해 주세요.'
+                  value={search.name}
+                  onChange={e => changeState(setSearch, 'name', e.target.value)}
+                />
               </div>
               <div className='row'>
                 <span>프로젝트 상태</span>
@@ -53,11 +63,31 @@ const ProjectStatus = () => {
             <div className='row'>
               <div className='row'>
                 <span>프로젝트 시작일</span>
-                <input type='date' />
+                <input
+                  type='date'
+                  value={`${search.start_date.getFullYear()}-${
+                    search.start_date.getMonth() + 1
+                  }-${search.start_date.getDate()}`}
+                  onChange={e =>
+                    changeState(
+                      setSearch,
+                      'start_date',
+                      new Date(e.target.value)
+                    )
+                  }
+                />
               </div>
               <div className='row'>
                 <span>프로젝트 종료일</span>
-                <input type='date' />
+                <input
+                  type='date'
+                  value={`${search.end_date.getFullYear()}-${
+                    search.end_date.getMonth() + 1
+                  }-${search.end_date.getDate()}`}
+                  onChange={e =>
+                    changeState(setSearch, 'end_date', new Date(e.target.value))
+                  }
+                />
               </div>
             </div>
             <hr />

@@ -38,11 +38,11 @@ export const enterFn = (e, okFn) => {
   if (e.key === 'Enter') okFn();
 };
 
-export const commonModalSetting = (setAlertBox, bool, mode, context) => {
+export const commonModalSetting = (setAlertBox, bool, mode, content) => {
   if (bool) {
     setAlertBox({
       mode: mode,
-      context: context,
+      context: content,
       bool: bool,
     });
   } else {

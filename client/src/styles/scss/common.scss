@@ -1,12 +1,5 @@
 @import './_style';
 
-.row {
-  @include flex-style();
-}
-
-.column {
-  @include flex-style(column);
-}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -25,6 +18,19 @@ input:autofill:active {
   -webkit-box-shadow: 0 0 0px 1000px $subBlue inset;
   box-shadow: 0 0 0px 1000px $subBlue inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type='date'] {
+  user-select: none;
+  cursor: pointer;
+}
+
+.row {
+  @include flex-style();
+}
+
+.column {
+  @include flex-style(column);
 }
 
 .blockContent {
