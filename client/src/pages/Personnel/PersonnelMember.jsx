@@ -110,11 +110,11 @@ const PersonnelMember = () => {
             <div className='id-line'>
               <div>
                 <span>아이디</span>
-                <input type='text' />
+                <input type='text' autocomplete='off' />
               </div>
               <div className='name'>
                 <span>성명</span>
-                <input type='text' />
+                <input type='text' autocomplete='off' />
               </div>
               <div className='gender-wrap'>
                 <span>성별</span>
@@ -146,17 +146,22 @@ const PersonnelMember = () => {
               </div>
               <div className='password'>
                 <span>비밀번호</span>
-                <input type='password' />
+                <input type='password' autocomplete='off' />
               </div>
             </div>
             <div className='phone-line'>
               <div>
                 <span>휴대전화</span>
-                <input type='text' onChange={handleChange} value={inputValue} />
+                <input
+                  type='text'
+                  onChange={handleChange}
+                  value={inputValue}
+                  autocomplete='off'
+                />
               </div>
               <div>
                 <span>이메일</span>
-                <input type='text' />
+                <input type='text' autocomplete='off' />
               </div>
             </div>
             <div className='address-line'>
@@ -165,6 +170,7 @@ const PersonnelMember = () => {
                 type='text'
                 placeholder='주소 입력'
                 value={addressDetail}
+                autocomplete='off'
                 onChange={e => setAddressDetail(e.target.value)}
               />
               <button
@@ -176,8 +182,8 @@ const PersonnelMember = () => {
           </div>
           <div className='btn-wrap'>
             <button className='commonBtn'>수정</button>
-            <button className='commonBtn'>삭제</button>
-            <button className='commonBtn'>목록</button>
+            <button className='commonBtn delete'>삭제</button>
+            <button className='commonBtn list'>목록</button>
           </div>
         </div>
       </div>
