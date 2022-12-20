@@ -17,7 +17,7 @@ const apiErrorHandling = async error => {
       else if (detail === 'Invaild User ID') return 'wrongId';
       else if (detail === `Invaild Password,${failCount}`)
         return `wrongPw,${failCount}`;
-      else if (detail === 'Logins Exceeded') return 'loginExceeded'
+      else if (detail === 'Logins Exceeded') return 'loginExceeded';
       break;
     case 404:
       return 'notFound';
@@ -476,8 +476,30 @@ export const deleteReport = async id => {
 export const getProjectList = async (name, status, start, end) => {
   try {
     return await axios.get(
-      `/dy/project/list?project_name=${name}&project_status=${status}&start_date=${start}&end_date=${end}`
+      `/dy/project/list?${name?.length ? `project_name=${name}` : ''}${
+        status?.length ? `&project_status=${status}` : ''
+      }${start?.length ? `&start_date=${start}` : ''}${
+        end?.length ? `end_date=${end}` : ''
+      }`
     );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트 상세 보기
+export const getProjectDetail = async id => {
+  try {
+    return await axios.get(`/dy/project/detail?project_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트 생성
+export const createProject = async projectInfo => {
+  try {
+    return await axios.post(`/dy/project/create?user_id=mxxvii`, projectInfo);
   } catch (error) {
     return apiErrorHandling(error);
   }

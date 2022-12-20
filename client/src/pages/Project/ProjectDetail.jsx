@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { commonModalSetting, changeTitle } from 'js/commonUtils';
+import { commonModalSetting, changeTitle, catchError } from 'js/commonUtils';
+import { getProjectDetail } from 'js/groupwareApi';
 import deletePerson from 'image/deletePersonIcon.svg';
 
 const ProjectDetail = () => {
@@ -24,6 +25,7 @@ const ProjectDetail = () => {
     context: '',
     bool: false,
   });
+  const [projectInfo, setProjectInfo] = useState({});
   const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
@@ -33,8 +35,17 @@ const ProjectDetail = () => {
     commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
   };
 
+  const projectDetail = async () => {
+    const result = await getProjectDetail(id);
+    if (typeof result === 'object') {
+      setProjectInfo(result?.data);
+      setStatusValue(result?.data?.project_status);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 상세 보기');
+    projectDetail();
   }, []);
 
   return (
@@ -43,29 +54,33 @@ const ProjectDetail = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3>프로젝트 현황</h3>
+            <h3 onClick={projectDetail}>프로젝트 현황</h3>
           </div>
           <div className='projectWrapper detail'>
-            <div className='projectTitle'>제목제목제목제목</div>
+            <div className='projectTitle'>{projectInfo?.project_name}</div>
             <div className='projectInfo column'>
               <hr />
               <div className='row makeProjectDate'>
                 <span>작성일</span>
-                <div className='projectDate'>0000-00-00</div>
+                <div className='projectDate'>{projectInfo?.created_at}</div>
               </div>
               <hr />
               <div className='row date'>
                 <div className='row start'>
                   <span>프로젝트 시작일</span>
-                  <div className='date-start'>0000-00-00</div>
+                  <div className='date-start'>
+                    {projectInfo?.project_start_date}
+                  </div>
                 </div>
                 <div className='row'>
                   <span>프로젝트 종료일</span>
-                  <div className='date-end'>0000-00-00</div>
+                  <div className='date-end'>
+                    {projectInfo?.project_end_date}
+                  </div>
                 </div>
               </div>
               <hr />
-              <div className='content'>프로젝트입니다.</div>
+              <div className='content'>{projectInfo?.project_description}</div>
               <hr />
               <div className='projectSetting column'>
                 <hr />

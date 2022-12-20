@@ -33,7 +33,7 @@ class EditorComponent extends Component {
   ];
 
   render() {
-    const { content, setContent } = this.props;
+    const { content, setContent, col } = this.props;
     return (
       <>
         <ReactQuill
@@ -44,7 +44,7 @@ class EditorComponent extends Component {
           onChange={(c, d, s, editor) =>
             setContent(prev => {
               const clone = { ...prev };
-              clone.content = editor.getHTML();
+              clone[col] = editor.getHTML();
               return clone;
             })
           }

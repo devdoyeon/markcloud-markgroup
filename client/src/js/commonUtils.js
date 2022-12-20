@@ -21,7 +21,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
   ) {
     setAlert(result);
     return commonModalSetting(setModal, true, 'alert', errorList[result]);
-  } else if (result === 'notFound') return navigate('/error');
+  } else if (result === 'notFound') return navigate('/not-found');
 };
 
 export const emptyCheck = value => {

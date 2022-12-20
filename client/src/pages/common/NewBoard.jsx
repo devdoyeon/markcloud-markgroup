@@ -197,6 +197,7 @@ const NewBoard = () => {
                 <EditorComponent
                   content={postInfo?.content}
                   setContent={setPostInfo}
+                  col='content'
                 />
               </div>
               <div className='line'></div>

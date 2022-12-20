@@ -5,6 +5,7 @@ import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
 import { changeTitle, changeState } from 'js/commonUtils';
+import { getProjectList } from 'js/groupwareApi';
 
 const ProjectStatus = () => {
   const [alertBox, setAlertBox] = useState({
@@ -14,20 +15,76 @@ const ProjectStatus = () => {
   });
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 30,
-    limit: 9,
+    totalPage: 1,
+    limit: 10,
   });
   const [selectVal, setSelectVal] = useState('전체');
+  const [list, setList] = useState([]);
   const [search, setSearch] = useState({
     name: '',
-    start_date: new Date(),
+  start_date: new Date(),
     end_date: new Date(),
   });
   const navigate = useNavigate();
   const statusArr = ['전체', '시작 전', '진행 중', '종료'];
+  const eng2kor = {
+    all: '전체',
+    before: '시작 전',
+    ongoing: '진행 중',
+    complete: '종료',
+  };
+  let prevent = false;
+
+  const projectList = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getProjectList();
+    if (typeof result === 'object') {
+      setList(result?.data);
+      console.log(result)
+    }
+  };
+
+  const renderTable = () => {
+    return list.reduce(
+      (
+        acc,
+        {
+          id,
+          project_status,
+          project_name,
+          project_start_date,
+          project_end_date,
+          member_cnt,
+        },
+        idx
+      ) => {
+        return (
+          <>
+            {acc}
+            <tr
+              className={idx % 2 === 1 ? 'odd' : 'even'}
+              onClick={() => navigate(`/project/${id}`)}>
+              <td>{idx + 1}</td>
+              <td>{eng2kor[project_status]}</td>
+              <td>{project_name}</td>
+              <td>{project_start_date}</td>
+              <td>{project_end_date}</td>
+              <td>{member_cnt}</td>
+            </tr>
+          </>
+        );
+      },
+      <></>
+    );
+  };
 
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 현황');
+    projectList();
   }, []);
 
   return (
@@ -114,23 +171,7 @@ const ProjectStatus = () => {
                     <th>참여 인원</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {new Array(10).fill('').reduce((acc, i, idx) => {
-                    return (
-                      <>
-                        {acc}
-                        <tr className={idx % 2 === 1 ? 'odd' : 'even'}>
-                          <td>{idx}</td>
-                          <td>진행 중</td>
-                          <td>그룹웨어</td>
-                          <td>2022-12-09</td>
-                          <td>2022-12-31</td>
-                          <td>8명</td>
-                        </tr>
-                      </>
-                    );
-                  }, <></>)}
-                </tbody>
+                <tbody>{renderTable()}</tbody>
               </table>
             </div>
           </div>

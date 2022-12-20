@@ -589,8 +589,12 @@
   background-color: #fcfcfc;
 }
 .table-wrap > .table > table td {
+  cursor: pointer;
   font-size: 14px;
   padding: 18px 0;
+}
+.table-wrap > .table > table tr:hover {
+  color: #5850cc;
 }
 
 .project {

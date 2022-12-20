@@ -236,6 +236,7 @@ const BusinessBoardRead = () => {
               {/* <EditorComponent
                 content={postInfo.content}
                 setContent={setPostInfo}
+                col='content'
               /> */}
             </div>
           </div>
