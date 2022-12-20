@@ -89,6 +89,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
       </>
     );
   };
+  console.log(pageInfo);
   return (
     <>
       {pageInfo.totalPage > 1 ? (

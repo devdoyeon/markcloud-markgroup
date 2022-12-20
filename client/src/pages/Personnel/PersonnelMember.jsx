@@ -3,7 +3,7 @@ import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
-import { getBusinessRead } from 'js/groupwareApi';
+import { getDepartmentList, getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeTitle } from 'js/commonUtils';
 import PostCode from './PostCode';
@@ -18,12 +18,22 @@ const PersonnelMember = () => {
   const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
+  const [departmentName, setDepartmentName] = useState([]);
+
+  const [departmentList, setDepartmentList] = useState([]);
+  const [departmentMeta, setDepartmentMeta] = useState({});
+
   const [inputVal, setInputVal] = useState('나의 업무현황');
   const [contactValue, setContactValue] = useState('===');
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
     limit: 5,
+  });
+  const [departmentPageInfo, setDepartmentPageInfo] = useState({
+    page: 1,
+    totalPage: 9,
+    limit: 6,
   });
   const [inputValue, setInputValue] = useState('');
 
@@ -46,9 +56,32 @@ const PersonnelMember = () => {
     '그린터치',
   ];
 
-  const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
-
   let prevent = false;
+
+  const getPersonDepartmentApi = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getDepartmentList(departmentPageInfo);
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setDepartmentList(data);
+      setDepartmentMeta(meta);
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        console.log(data[i].department_name);
+        setDepartmentName(name => [...name, data[i].department_name]);
+      }
+      setDepartmentPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
+  };
 
   const getProjectApi = async () => {
     if (prevent) return;
@@ -72,6 +105,7 @@ const PersonnelMember = () => {
 
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
+    getPersonDepartmentApi();
   }, []);
 
   useEffect(() => {
@@ -139,7 +173,7 @@ const PersonnelMember = () => {
               <div className='affiliation'>
                 <span>소속</span>
                 <CommonSelect
-                  opt={projectNameArr}
+                  opt={departmentName}
                   selectVal={contactValue}
                   setSelectVal={setContactValue}
                 />
