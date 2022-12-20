@@ -34,7 +34,7 @@ const BusinessNewBoard = () => {
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [pageInfo, setPageInfo] = useState({
@@ -284,7 +284,6 @@ const BusinessNewBoard = () => {
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

@@ -25,7 +25,7 @@ const Home = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const navigate = useNavigate();
@@ -237,7 +237,6 @@ const Home = () => {
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

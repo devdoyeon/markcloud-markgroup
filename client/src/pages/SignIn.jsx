@@ -24,7 +24,7 @@ const SignIn = () => {
   const [formCheck, setFormCheck] = useState(obj);
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const navigate = useNavigate();
@@ -158,7 +158,6 @@ const SignIn = () => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
           }}
-          failFn={() => {}}
         />
       )}
       <CommonFooter />

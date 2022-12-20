@@ -30,7 +30,7 @@ const NewBoard = () => {
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const path = useLocation().pathname;
@@ -256,7 +256,6 @@ const NewBoard = () => {
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

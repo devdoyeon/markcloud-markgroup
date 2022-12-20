@@ -19,7 +19,7 @@ const BoardRead = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const { id } = useParams();
@@ -145,7 +145,6 @@ const BoardRead = () => {
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

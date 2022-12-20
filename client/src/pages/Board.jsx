@@ -12,7 +12,7 @@ const Board = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [list, setList] = useState([]);
@@ -78,7 +78,6 @@ const Board = () => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
           }}
-          failFn={() => {}}
         />
       )}
     </>

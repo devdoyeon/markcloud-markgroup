@@ -10,9 +10,7 @@ import {
   changeState,
   catchError,
 } from 'js/commonUtils';
-import { createProject } from 'js/groupwareApi';
-
-//= 입력값 체크 /
+import { getProjectDetail, createProject } from 'js/groupwareApi';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -21,7 +19,7 @@ const NewProject = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [selectVal, setSelectVal] = useState('선택');
@@ -38,6 +36,31 @@ const NewProject = () => {
   });
   const navigate = useNavigate();
 
+  //= 수정일 때 기존 디테일 불러오기
+  const getOrigin = async () => {
+    const result = await getProjectDetail(id);
+    if (typeof result === 'object') {
+      const {
+        project_name,
+        project_description,
+        project_start_date,
+        project_end_date,
+        project_status,
+      } = result?.data;
+
+      setProjectInfo(prev => {
+        const clone = { ...prev };
+        clone.project_name = project_name;
+        clone.project_description = project_description;
+        clone.project_start_date = project_start_date;
+        clone.project_end_date = project_end_date;
+        return clone;
+      });
+      setSelectVal(project_status);
+    } else catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  //= 작성일 때 입력값 확인 후 새 프로젝트 생성
   const postProject = async () => {
     if (projectInfo.project_name.trim() === '')
       commonModalSetting(
@@ -74,8 +97,16 @@ const NewProject = () => {
     }
   };
 
+  //= 프로젝트 삭제
+  const deleteProject = async () => {
+    setAlert('completeDelete');
+    commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
+  };
+
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 작성');
+    if (id?.length) getOrigin();
+    else return;
   }, []);
 
   useEffect(() => {
@@ -172,7 +203,9 @@ const NewProject = () => {
               등록
             </button>
             {id?.length ? (
-              <button className='commonBtn delete'>삭제</button>
+              <button className='commonBtn delete' onClick={deleteProject}>
+                삭제
+              </button>
             ) : (
               <></>
             )}
@@ -199,13 +232,16 @@ const NewProject = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'completePost')
+            if (
+              alert === 'cancel' ||
+              alert === 'completePost' ||
+              alert === 'completeDelete'
+            )
               navigate('/project');
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

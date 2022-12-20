@@ -1,29 +1,16 @@
 import { useEffect } from 'react';
 import { commonModalSetting } from 'js/commonUtils';
 
-const CommonModal = ({ setModal, modal, okFn, failFn }) => {
+const CommonModal = ({ setModal, modal, okFn }) => {
   useEffect(() => {
-    if (modal.context === undefined || modal.context === 'undefined')
+    if (modal.content === undefined || modal.content === 'undefined')
       setModal(false);
     document.querySelector('.alert-content').innerHTML =
       new DOMParser().parseFromString(
-        modal.context,
+        modal.content,
         'text/html'
       ).body.innerHTML;
     // 줄바꿈 태그 <br/> 사용하기 위해서 String2DOM 변환
-    window.onkeydown = e => {
-      if (e.key === 'Enter') {
-        if (modal.mode === 'confirm') {
-          okFn();
-          commonModalSetting(setModal, false);
-        } else commonModalSetting(setModal, false);
-      } else if (e.key === 'Escape') {
-        if (modal.mode === 'confirm') {
-          failFn();
-          commonModalSetting(setModal, false);
-        } else commonModalSetting(setModal, false);
-      } else return;
-    };
   }, []);
 
   return (
@@ -44,7 +31,6 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
           {modal.mode === 'confirm' && (
             <button
               onClick={() => {
-                failFn();
                 commonModalSetting(setModal, false);
               }}>
               취소

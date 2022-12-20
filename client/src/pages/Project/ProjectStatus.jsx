@@ -11,7 +11,7 @@ const ProjectStatus = () => {
   const date = new Date();
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [pageInfo, setPageInfo] = useState({
@@ -186,7 +186,6 @@ const ProjectStatus = () => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
           }}
-          failFn={() => {}}
         />
       )}
     </>

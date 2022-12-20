@@ -22,7 +22,7 @@ const PersonnelBusinessPopup = ({
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const cookie = getCookie('myToken');

@@ -12,7 +12,7 @@ const Report = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [list, setList] = useState([]);
@@ -53,8 +53,8 @@ const Report = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 주간 업무 보고')
-  }, [])
+    changeTitle('그룹웨어 > 주간 업무 보고');
+  }, []);
 
   useEffect(() => {
     getReport();
@@ -78,7 +78,6 @@ const Report = () => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
           }}
-          failFn={() => {}}
         />
       )}
     </>

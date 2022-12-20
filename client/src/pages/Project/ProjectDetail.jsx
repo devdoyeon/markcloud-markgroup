@@ -22,7 +22,7 @@ const ProjectDetail = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [projectInfo, setProjectInfo] = useState({});
@@ -30,11 +30,7 @@ const ProjectDetail = () => {
   const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
 
-  const deleteProject = async () => {
-    setAlert('completeDelete');
-    commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
-  };
-
+  //= 프로젝트 상세 내역
   const projectDetail = async () => {
     const result = await getProjectDetail(id);
     if (typeof result === 'object') {
@@ -174,12 +170,10 @@ const ProjectDetail = () => {
           okFn={() => {
             if (alert === 'cancel' || alert === 'completeDelete')
               navigate('/project');
-            else if (alert === 'confirmDelete') deleteProject();
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

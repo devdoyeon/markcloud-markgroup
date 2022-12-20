@@ -11,7 +11,7 @@ const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [num, setNum] = useState(0);
@@ -277,7 +277,6 @@ const BusinessManagement = () => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
           }}
-          failFn={() => {}}
         />
       )}
     </>

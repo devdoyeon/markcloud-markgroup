@@ -11,7 +11,7 @@ const SideMenu = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
 
@@ -112,7 +112,6 @@ const SideMenu = () => {
             if (alert === 'needLogin') return navigate('/');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

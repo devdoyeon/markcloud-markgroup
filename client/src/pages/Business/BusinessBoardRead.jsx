@@ -34,7 +34,7 @@ const BusinessBoardRead = () => {
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   const [info, setInfo] = useState({});
@@ -274,7 +274,6 @@ const BusinessBoardRead = () => {
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

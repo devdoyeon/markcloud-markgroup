@@ -45,13 +45,13 @@ export const commonModalSetting = (setAlertBox, bool, mode, content) => {
   if (bool) {
     setAlertBox({
       mode: mode,
-      context: content,
+      content: content,
       bool: bool,
     });
   } else {
     setAlertBox({
       mode: '',
-      context: '',
+      content: '',
       bool: bool,
     });
   }

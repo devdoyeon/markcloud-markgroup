@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { usecontent, useEffect, useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import {
   useLoaderData,
@@ -26,7 +26,7 @@ const PersonnelMember = () => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
-    context: '',
+    content: '',
     bool: false,
   });
   // 이름,아이디,비밀번호,이메일,생일,휴대폰,성별,우편번호,주소,소속
@@ -354,7 +354,6 @@ const PersonnelMember = () => {
               return navigate('/sign-in');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
       {isPopupOpen ? (
