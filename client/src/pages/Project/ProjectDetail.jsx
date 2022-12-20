@@ -54,7 +54,7 @@ const ProjectDetail = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3 onClick={projectDetail}>프로젝트 현황</h3>
+            <h3 onClick={() => navigate('/project')}>프로젝트 현황</h3>
           </div>
           <div className='projectWrapper detail'>
             <div className='projectTitle'>{projectInfo?.project_name}</div>

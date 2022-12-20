@@ -88,7 +88,20 @@ const NewProject = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3>프로젝트 현황</h3>
+            <h3
+              onClick={() => {
+                setAlert('cancel');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?<br/>${
+                    id?.length ? '수정' : '작성'
+                  }이 취소된 글은 복구할 수 없습니다.`
+                );
+              }}>
+              프로젝트 현황
+            </h3>
           </div>
           <div className='projectWrapper'>
             <div className='projectInfo column'>
@@ -166,6 +179,7 @@ const NewProject = () => {
             <button
               className='commonBtn listBtn'
               onClick={() => {
+                setAlert('cancel');
                 commonModalSetting(
                   setAlertBox,
                   true,
@@ -174,7 +188,6 @@ const NewProject = () => {
                     id?.length ? '수정' : '작성'
                   }이 취소된 글은 복구할 수 없습니다.`
                 );
-                setAlert('cancel');
               }}>
               목록
             </button>

@@ -8,6 +8,7 @@ import { changeTitle, changeState } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 
 const ProjectStatus = () => {
+  const date = new Date();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -22,8 +23,10 @@ const ProjectStatus = () => {
   const [list, setList] = useState([]);
   const [search, setSearch] = useState({
     name: '',
-  start_date: new Date(),
-    end_date: new Date(),
+    start_date: `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`,
+    end_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
   });
   const navigate = useNavigate();
   const statusArr = ['전체', '시작 전', '진행 중', '종료'];
@@ -43,13 +46,18 @@ const ProjectStatus = () => {
     }, 200);
     const result = await getProjectList();
     if (typeof result === 'object') {
-      setList(result?.data);
-      console.log(result)
+      setList(result?.data?.data);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.totalPage = result?.data?.meta?.totalPage;
+        clone.page = result?.data?.meta?.page;
+        return clone;
+      });
     }
   };
 
   const renderTable = () => {
-    return list.reduce(
+    return list?.reduce(
       (
         acc,
         {
@@ -122,15 +130,9 @@ const ProjectStatus = () => {
                 <span>프로젝트 시작일</span>
                 <input
                   type='date'
-                  value={`${search.start_date.getFullYear()}-${
-                    search.start_date.getMonth() + 1
-                  }-${search.start_date.getDate()}`}
+                  value={search.start_date}
                   onChange={e =>
-                    changeState(
-                      setSearch,
-                      'start_date',
-                      new Date(e.target.value)
-                    )
+                    changeState(setSearch, 'start_date', e.target.value)
                   }
                 />
               </div>
@@ -138,11 +140,9 @@ const ProjectStatus = () => {
                 <span>프로젝트 종료일</span>
                 <input
                   type='date'
-                  value={`${search.end_date.getFullYear()}-${
-                    search.end_date.getMonth() + 1
-                  }-${search.end_date.getDate()}`}
+                  value={search.end_date}
                   onChange={e =>
-                    changeState(setSearch, 'end_date', new Date(e.target.value))
+                    changeState(setSearch, 'end_date', e.target.value)
                   }
                 />
               </div>
