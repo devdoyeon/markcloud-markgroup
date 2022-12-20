@@ -400,7 +400,7 @@ input[type='date'] {
     > li {
       @include txt-style(18px, $gray02);
       cursor: pointer;
-      font-family: 'NotoSansR';
+      font-family: $regularFont;
       margin-bottom: 30px;
       a {
         @include txt-style(18px, $gray02);
@@ -408,7 +408,7 @@ input[type='date'] {
 
       &.active {
         color: $black;
-        font-family: 'NotoSansM';
+        font-family: $middleFont;
       }
     }
   }
@@ -508,5 +508,58 @@ input[type='date'] {
     @include flex-style($justifyVal: right, $alignVal: flex-start);
     width: $width02;
     margin-top: 56px;
+  }
+}
+
+.error-home {
+  width: 100%;
+  height: 100vh;
+  background: url('image/error_bg.png') no-repeat center bottom/ cover;
+  overflow: hidden;
+  @include flex-style(column);
+  > div {
+    &:first-child {
+      @include flex-style($alignVal: center, $justifyVal: center);
+      transform: rotate(7.53deg) scale(1.05);
+      position: relative;
+      width: 100%;
+      height: 166px;
+      background-color: #ffe509;
+      margin-top: -150px;
+      overflow: hidden;
+
+      span {
+        font-size: 100px;
+        white-space: nowrap;
+        will-change: transform;
+        font-family: $boldFont;
+        animation: marquee 5000s linear infinite;
+      }
+    }
+  }
+  .content-container {
+    @include flex-style(column, $alignVal: center, $justifyVal: center);
+    margin: 70px auto 0;
+    strong {
+      margin: 16px 0 8px;
+      font-size: 40px;
+      color: #484848;
+      line-height: 57.92px;
+    }
+    p {
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: #cecece;
+    }
+    a {
+      height: 45px;
+      margin-top: 10px;
+      padding: 0 30px;
+      background-color: #ffe509;
+      border-radius: 45px;
+      color: $gray02;
+      line-height: 45px;
+      font-family: $middleFont;
+    }
   }
 }

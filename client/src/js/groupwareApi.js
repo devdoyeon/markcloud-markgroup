@@ -17,6 +17,7 @@ const apiErrorHandling = async error => {
       else if (detail === 'Invaild User ID') return 'wrongId';
       else if (detail === `Invaild Password,${failCount}`)
         return `wrongPw,${failCount}`;
+      else if (detail === 'Logins Exceeded') return 'loginExceeded'
       break;
     case 404:
       return 'notFound';

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -472,7 +473,7 @@ input[type=date] {
   font-size: 18px;
   color: #858585;
   cursor: pointer;
-  font-family: "NotoSansR";
+  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
   margin-bottom: 30px;
 }
 .sidebar > ul > li a {
@@ -481,7 +482,7 @@ input[type=date] {
 }
 .sidebar > ul > li.active {
   color: #15171a;
-  font-family: "NotoSansM";
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
 .sidebar .tools {
   position: absolute;
@@ -591,4 +592,66 @@ input[type=date] {
   flex-wrap: wrap;
   width: 980px;
   margin-top: 56px;
+}
+
+.error-home {
+  width: 100%;
+  height: 100vh;
+  background: url("image/error_bg.png") no-repeat center bottom/cover;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.error-home > div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  transform: rotate(7.53deg) scale(1.05);
+  position: relative;
+  width: 100%;
+  height: 166px;
+  background-color: #ffe509;
+  margin-top: -150px;
+  overflow: hidden;
+}
+.error-home > div:first-child span {
+  font-size: 100px;
+  white-space: nowrap;
+  will-change: transform;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  animation: marquee 5000s linear infinite;
+}
+.error-home .content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 70px auto 0;
+}
+.error-home .content-container strong {
+  margin: 16px 0 8px;
+  font-size: 40px;
+  color: #484848;
+  line-height: 57.92px;
+}
+.error-home .content-container p {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #cecece;
+}
+.error-home .content-container a {
+  height: 45px;
+  margin-top: 10px;
+  padding: 0 30px;
+  background-color: #ffe509;
+  border-radius: 45px;
+  color: #858585;
+  line-height: 45px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }

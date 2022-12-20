@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
-import { signIn, checkUserInfo } from 'js/groupwareApi';
+import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
 import logo from 'image/groupware-logo.png';
@@ -61,12 +61,6 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
-      const userInfo = await checkUserInfo();
-      if (typeof userInfo === 'object') {
-        const { name, user_id } = userInfo?.data?.data;
-        localStorage.setItem('userName', name);
-        localStorage.setItem('userId', user_id);
-      } else catchError(userInfo, navigate, setAlertBox, setAlert);
       navigate('/');
     } else {
       //@ Error Handling

@@ -6,6 +6,8 @@ const errorList = {
   NotAuthority: '권한이 없습니다.',
   duplicateLogin: '중복 로그인 되었습니다.<br/>다시 로그인해 주세요.',
   tokenExpired: '토큰이 만료되었습니다.<br/>다시 로그인해 주세요.',
+  loginExceeded:
+    '로그인 횟수가 초과되었습니다.<br/>잠시 후 다시 시도해 주세요.',
 };
 
 export const catchError = async (result, navigate, setModal, setAlert) => {
@@ -14,7 +16,8 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
     result === 'accessDenied' ||
     result === 'NotAuthority' ||
     result === 'duplicateLogin' ||
-    result === 'tokenExpired'
+    result === 'tokenExpired' ||
+    result === 'loginExceeded'
   ) {
     setAlert(result);
     return commonModalSetting(setModal, true, 'alert', errorList[result]);

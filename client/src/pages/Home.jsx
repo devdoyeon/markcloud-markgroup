@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import CommonMenu from 'common/CommonMenu';
 import CommonFooter from 'common/CommonFooter';
 import CommonModal from 'common/CommonModal';
-import { changeTitle, commonModalSetting } from 'js/commonUtils';
+import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
+import { checkUserInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import mainLogo from 'image/groupware-logo.png';
 import mainBg from 'image/mainBg.png';
@@ -33,7 +34,7 @@ const Home = () => {
     changeTitle('그룹웨어 > 메인');
   }, []);
 
-  const navigateHandling = () => {
+  const navigateHandling = async () => {
     if (!getCookie('myToken')) {
       commonModalSetting(
         setAlertBox,
@@ -42,7 +43,15 @@ const Home = () => {
         '로그인이 필요한 서비스입니다.'
       );
       setAlert('needLogin');
-    } else navigate('/business');
+    } else {
+      const result = await checkUserInfo();
+      if (typeof result === 'object') {
+        const { name, user_id } = result?.data?.data;
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userId', user_id);
+        navigate('/business');
+      } else catchError(result, navigate, setAlertBox, setAlert);
+    }
   };
 
   return (
