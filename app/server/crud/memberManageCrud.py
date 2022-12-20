@@ -43,7 +43,7 @@ def insert_department(db, inbound_data, user_pk):
         db_query = department_table(
         department_name=inbound_data.department_name,
         organ_code = user_organ_code,
-        created_id=user_pk)
+        created_id = user_pk)
         
         db.add(db_query)
 

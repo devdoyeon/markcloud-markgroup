@@ -7,43 +7,60 @@ from datetime import datetime
 
 
 def get_notice_list(db, offset, limit, user_pk,filter_type, filter_val):
+    
+    notice_table = noticeModel.NoticeTable
+    member_table = memberManageModel.MemberTable
 
     try:
+        
         # 유저 정보 확인
         user_info = author_chk.get_user_info(db, user_pk)
         
-        sql = f'''
-        SELECT a.id, a.created_at, b.name as created_id, a.title
-        FROM groupware_notice as a
-        INNER JOIN members as b 
-        ON a.created_id = b.id
-        WHERE a.organ_code = "{user_info.department_code}"'''        
-        
+        # sql = f'''
+        # SELECT a.id, a.created_at, b.name as created_id, a.title
+        # FROM groupware_notice as a
+        # INNER JOIN members as b 
+        # ON a.created_id = b.id
+        # WHERE a.organ_code = "{user_info.department_code}"'''     
+              
+        query = db.query(notice_table.id, notice_table.created_at, member_table.name.label('created_id'), notice_table.title).filter(
+            notice_table.organ_code == user_info.department_code).join(
+            member_table, notice_table.created_id == member_table.id).order_by(desc(notice_table.id))
+
         # 필터 O
         if filter_type:    
             if filter_type == 'title':
-                sql = sql + f'AND a.title LIKE "%{filter_val}%"'
+                query = query.filter(notice_table.title.ilike(f'%{filter_val}%'))
+                # sql = sql + f'AND a.title LIKE "%{filter_val}%"'
             elif filter_type == 'created_id':
-                sql = sql + f'AND b.name LIKE "%{filter_val}%"'
-        # 정렬
-        sql = sql + f' ORDER BY a.id DESC LIMIT {limit} OFFSET {offset} '
+                # sql = sql + f'AND b.name LIKE "%{filter_val}%"'
+                query = query.filter(member_table.name.ilike(f'%{filter_val}%'))
+        
+        # notice_count = len(db.execute(sql).fetchall())
+        # sql = sql + f' ORDER BY a.id DESC LIMIT {limit} OFFSET {offset} '
+        
+        notice_count = query.count()
+        notice_list = query.offset(offset).limit(limit).all()
+
         # 필터 X
-        notice_list = db.execute(sql).fetchall()
-        notice_count = len(notice_list) # 캐시처리       
-        # return notice_count, notice_list
+        # notice_list = db.execute(sql).fetchall()
+  
         return notice_count, notice_list
     
-    except Exception as e:
-        print(e)
+    except:
         raise HTTPException(status_code=500, detail='DBError')    
 
 
 def get_notice_info(db, notice_id):
     
     notice_table = noticeModel.NoticeTable
+    member_table = memberManageModel.MemberTable
      
     try:
-        notice_info = db.query(notice_table).filter(notice_table.id == notice_id).first()
+        notice_info = db.query(notice_table.title,notice_table.created_at, notice_table.updated_at, notice_table.content, member_table.name.label('created_id')
+                               ).filter(notice_table.id == notice_id
+                                ).join(member_table,notice_table.created_id == member_table.id).first()
+
         return notice_info
     except:
         raise HTTPException(status_code=500, detail='DBError')

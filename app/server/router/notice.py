@@ -35,7 +35,7 @@ def read_notice_list(
     
     if total_count % limit != 0:
         total_page += 1
-
+        
     return Response().metadata(
         page=page,
         totalPage=total_page,
@@ -50,7 +50,7 @@ def read_notice_list(
 def read_notice_info(
     notice_id :int,
     access_token:str = Header(None),
-    user_pk:int = None,
+    user_pk:int = 100,
     db: Session = Depends(get_db)
 ):
     notice_info =  get_notice_info(db, notice_id)

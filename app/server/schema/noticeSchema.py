@@ -37,8 +37,8 @@ class NoticeInfo(BaseModel):
     
     title:str
     created_id:str
-    created_at:Optional[date]
-    updated_at:Optional[date]
+    created_at:date
+    updated_at:date
     content:str
     
     class Config:

@@ -27,35 +27,29 @@ def get_project_member(db, project_name):
         raise HTTPException(status_code=500, detail='DBError')     
 
 
-def get_project_name(db, user_pk, is_admin):
+def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 프로젝트 데이터
+    
+    project_table = projectManageModel.ProjectTable
 
     try:
-        if is_admin == 'admin':
-            # 전체 프로젝트명
-            
-            p_name_query = f'''
-            SELECT project_name
-            FROM groupware_project
-            WHERE organ_code = (SELECT department_code 
-            FROM members
-            WHERE id = "{user_pk}")
-            '''
-            
-        if is_admin == 'guest': 
-            # 자신이 속한 프로젝트명
+        user_info = author_chk.get_user_info(db, user_pk)
+        
+        # admin 계정일 경우 전체 프로젝트명 가져오기
+        if user_info.groupware_only_yn == 'N': 
+            all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).all()
 
+        else: 
+            # 자신이 속한 프로젝트명 가져오기
             p_name_query = f'''
             SELECT project_name FROM groupware_project 
             WHERE project_code = ANY(SELECT project_code 
-            FROM groupware_project_members WHERE id = "{user_pk}")
+            FROM groupware_project_members WHERE user_id = "{user_info.user_id}")
             '''
 
-        project_name = db.execute(p_name_query).fetchall()
-        project_name = [name for name, in project_name]   
+            all_pjt_name = db.execute(p_name_query).fetchall()
 
-             
-        return project_name
-    
+        all_pjt_name = [name for name, in all_pjt_name] 
+        return all_pjt_name
     except:
         raise HTTPException(status_code=500, detail='DBError')        
     
@@ -115,7 +109,8 @@ def get_project_list(db, offset, limit, user_pk, *filter):
                 elif status_filter == 'MyRequest':
                     query = query.filter(project_manage_table.request_id == member_name)
                     
-        project_count = query.count()     
+        project_count = query.count()
+        
         project_list = query.offset(offset).limit(limit).all()
         
         return project_count, project_list
@@ -168,8 +163,7 @@ def insert_project(db,inbound_data,user_pk):
         
         db.add(db_query)
 
-    except Exception as e:
-        print(e)
+    except:
         raise HTTPException(status_code=500, detail='DBError')
     
 
@@ -196,7 +190,7 @@ def change_project(db,inbound_data, project_id, user_pk):
             db.query(project_manage_table).filter_by(id = project_id).update(values)
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
-    except Exception as e:
+    except:
         raise HTTPException(status_code=500, detail='DBError')
     
 
