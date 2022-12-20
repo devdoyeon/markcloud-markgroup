@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
-import { signIn } from 'js/groupwareApi';
+import { signIn, checkUserInfo } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
 import logo from 'image/groupware-logo.png';
@@ -61,7 +61,13 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
-      navigate('/')
+      const userInfo = await checkUserInfo();
+      if (typeof userInfo === 'object') {
+        const { name, user_id } = userInfo?.data?.data;
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userId', user_id);
+      } else catchError(userInfo, navigate, setAlertBox, setAlert);
+      navigate('/');
     } else {
       //@ Error Handling
       const failCount = result?.split(',')[1];
@@ -74,7 +80,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (getCookie('myToken')) navigate('/home');
+    if (getCookie('myToken')) navigate('/');
     changeTitle('그룹웨어 > 로그인');
   }, []);
 

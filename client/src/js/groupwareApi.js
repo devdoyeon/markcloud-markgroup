@@ -57,17 +57,29 @@ const tokenReissue = async () => {
 
 //# 로그인
 export const signIn = async (userId, userPw) => {
-  const header = { 'Content-Type': 'application/json' };
   try {
     const ipSearch = await axios.get('https://api.ip.pe.kr/');
     const ip = ipSearch.data;
-    return await axios.post(
-      '/api/auth/login',
-      { user_id: userId, password: userPw, login_ip: ip },
-      { header }
-    );
+    return await axios.post('/api/auth/login', {
+      user_id: userId,
+      password: userPw,
+      login_ip: ip,
+    });
   } catch (error) {
     return await apiErrorHandling(error);
+  }
+};
+
+export const checkUserInfo = async () => {
+  const headers = {
+    'access-token': getCookie('myToken'),
+  };
+  const ipSearch = await axios.get('https://api.ip.pe.kr/');
+  const ip = ipSearch.data;
+  try {
+    return await axios.get(`/api/users/self?current_ip=${ip}`, { headers });
+  } catch (error) {
+    return apiErrorHandling(error);
   }
 };
 
