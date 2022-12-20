@@ -30,12 +30,6 @@ const ProjectStatus = () => {
   });
   const navigate = useNavigate();
   const statusArr = ['전체', '시작 전', '진행 중', '종료'];
-  const eng2kor = {
-    all: '전체',
-    before: '시작 전',
-    ongoing: '진행 중',
-    complete: '종료',
-  };
   let prevent = false;
 
   const projectList = async () => {
@@ -77,7 +71,7 @@ const ProjectStatus = () => {
               className={idx % 2 === 1 ? 'odd' : 'even'}
               onClick={() => navigate(`/project/${id}`)}>
               <td>{idx + 1}</td>
-              <td>{eng2kor[project_status]}</td>
+              <td>{project_status}</td>
               <td>{project_name}</td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>
