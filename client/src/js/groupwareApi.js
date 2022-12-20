@@ -71,6 +71,18 @@ export const signIn = async (userId, userPw) => {
   }
 };
 
+//# 인사관리 중복 아이디 체크
+export const duplicateIdCheck = async userId => {
+  const header = { 'Content-Type': 'application/json' };
+  try {
+    const result = await axios.post(`/api/auth/check/id-duplicate`, {
+      user_id: userId,
+    });
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+
 // ==============================공지사항==============================
 export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
@@ -206,10 +218,14 @@ export const updateBusiness = async (
 
 // ================================인사 관리 ================================
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-export const getDepartmentList = async ({ page, limit }) => {
+export const getDepartmentList = async ({ page, limit }, cookie) => {
+  const headers = {
+    'access-token': cookie,
+  };
   try {
     return await axios.get(
-      `/bw/personnel/department/list?page=${page}&limit=${limit}`
+      `/bw/personnel/department/list?page=${page}&limit=${limit}`,
+      { headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -224,11 +240,19 @@ export const getDepartmentInfo = async id => {
   }
 };
 
-export const getDepartmentCreate = async name => {
+export const getDepartmentCreate = async (name, cookie) => {
+  const header = {
+    'access-token': cookie,
+  };
+  console.log(header);
   try {
-    return await axios.post(`/bw/personnel/department/create`, {
-      department_name: name,
-    });
+    return await axios.post(
+      `/bw/personnel/department/create`,
+      {
+        department_name: name,
+      },
+      { header }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -258,10 +282,14 @@ export const getDepartmentDelete = async id => {
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~member~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-export const getMemberList = async ({ page, limit }) => {
+export const getMemberList = async ({ page, limit }, cookie) => {
+  const header = {
+    'access-token': cookie,
+  };
   try {
     return await axios.get(
-      `/bw/personnel/member/list?page=${page}&limit=${limit}`
+      `/bw/personnel/member/list?page=${page}&limit=${limit}`,
+      { header }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -276,9 +304,41 @@ export const getMemberInfo = async id => {
   }
 };
 
-export const getMemberCreate = async () => {
+export const getMemberCreate = async (
+  {
+    name,
+    user_id,
+    password,
+    email,
+    birthday,
+    phone,
+    gender,
+    zip_code,
+    address,
+    section,
+  },
+  cookie
+) => {
+  const header = {
+    'access-token': cookie,
+  };
   try {
-    return await axios.post(`/bw/personnel/member/create`);
+    return await axios.post(
+      `/bw/personnel/member/create`,
+      {
+        name,
+        user_id,
+        password,
+        email,
+        birthday,
+        phone,
+        gender,
+        zip_code,
+        address,
+        section,
+      },
+      { header }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

@@ -9,6 +9,7 @@ import {
   getDepartmentList,
   getMemberList,
 } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const PersonnelManagement = () => {
   const [departmentList, setDepartmentList] = useState([]);
@@ -24,11 +25,12 @@ const PersonnelManagement = () => {
   const [managePageInfo, setManagePageInfo] = useState({
     page: 1,
     totalPage: 9,
-    limit: 11,
+    limit: 10,
   });
   const [popup, setPopup] = useState(false);
   const [buttonControl, setButtonControl] = useState('');
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const cookie = getCookie('myToken');
 
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
@@ -46,7 +48,7 @@ const PersonnelManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getDepartmentList(departmentPageInfo);
+    const result = await getDepartmentList(departmentPageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(data);
@@ -59,7 +61,6 @@ const PersonnelManagement = () => {
       });
     }
   };
-
   const getPersonDepartmentInfo = async id => {
     const result = await getDepartmentInfo(id);
     if (typeof result === 'object') {
@@ -73,7 +74,7 @@ const PersonnelManagement = () => {
     setTimeout(() => {
       prevent2 = false;
     }, 200);
-    const result = await getMemberList(managePageInfo);
+    const result = await getMemberList(managePageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setManageList(data);
@@ -94,7 +95,7 @@ const PersonnelManagement = () => {
   useEffect(() => {
     getPersonMemberApi();
   }, [managePageInfo.page]);
-  console.log(manageList);
+
   return (
     <>
       <div className='container'>
