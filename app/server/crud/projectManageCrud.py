@@ -45,7 +45,7 @@ def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 �
             WHERE project_code = ANY(SELECT project_code 
             FROM groupware_project_members WHERE user_id = "{user_info.user_id}")
             '''
-
+            
             all_pjt_name = db.execute(p_name_query).fetchall()
 
         all_pjt_name = [name for name, in all_pjt_name] 
@@ -110,7 +110,7 @@ def get_project_list(db, offset, limit, user_pk, *filter):
                     query = query.filter(project_manage_table.request_id == member_name)
                     
         project_count = query.count()
-        
+
         project_list = query.offset(offset).limit(limit).all()
         
         return project_count, project_list
@@ -172,6 +172,8 @@ def change_project(db,inbound_data, project_id, user_pk):
     project_manage_table = projectManageModel.ProjectManageTable
     
     try:
+        user_info = author_chk.get_user_info(db, user_pk)
+        
         base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
         values = {
                 'request_id':inbound_data.request_id,
@@ -179,15 +181,14 @@ def change_project(db,inbound_data, project_id, user_pk):
                 'work_status':inbound_data.work_status,
                 'title':inbound_data.title,
                 'content':inbound_data.content,
-                'created_id':user_pk,
                 'updated_at':datetime.today()}
         
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_pk == int(base_q.created_id): # 자신의 작성글만 해당
-            
+        if user_pk == int(base_q.created_id) or user_info.groupware_only_yn == 'N':
             db.query(project_manage_table).filter_by(id = project_id).update(values)
+            
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
@@ -199,8 +200,11 @@ def remove_project(db, notice_id, user_pk):
     project_table = projectManageModel.ProjectManageTable
     
     try:
+        
+        user_info = author_chk.get_user_info(db, user_pk)
+        
         base_q = db.query(project_table).filter(project_table.id == notice_id)
-        if int(base_q.first().created_id) == user_pk:
+        if int(base_q.first().created_id) == user_pk or user_info.groupware_only_yn == 'N':
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')

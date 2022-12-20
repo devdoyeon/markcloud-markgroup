@@ -17,17 +17,16 @@ router_notice = APIRouter(
 
 # 공지 리스트
 @router_notice.get('/list', response_model= Response[List[NoticeOut]])
-# @author_chk.varify_access_token
+@author_chk.varify_access_token
 def read_notice_list(
     access_token: str = Header(None),
-    user_pk:int = 100,
+    user_pk:int = None,
     filter_type: Optional[NoticeFilter] = 'all',
     filter_val: Optional[str] = None,
     page: int = 1,
     limit: int = 9,
     db: Session = Depends(get_db)
 ):
-    
     offset = (page - 1) * limit
     
     total_count, notice_list = get_notice_list(db, offset, limit, user_pk, filter_type, filter_val)
@@ -45,31 +44,28 @@ def read_notice_list(
 
 
 # 공지 상세페이지
-# @author_chk.varify_access_token
 @router_notice.get('/info',response_model = NoticeInfo)
 def read_notice_info(
     notice_id :int,
-    access_token:str = Header(None),
-    user_pk:int = 100,
     db: Session = Depends(get_db)
 ):
     notice_info =  get_notice_info(db, notice_id)
     return notice_info
 
 # 공지 생성
-# @author_chk.varify_access_token
 @router_notice.post('/create')
+@author_chk.varify_access_token
 def create_notice(
     inbound_data: NoticeIn,
     access_token:str = Header(None),
-    user_pk:int = 100,
+    user_pk:int = None,
     db: Session = Depends(get_db),
 ):
     insert_notice(db,inbound_data, user_pk)
     
 # 공지 수정
-# @author_chk.varify_access_token
-@router_notice.post('/update') # 관리자와 작성자 아이디를 받아와야함 created_id 와 같을 경우 삭제 가능하도록
+@router_notice.post('/update') 
+@author_chk.varify_access_token
 def update_notice(
     inbound_data: NoticeEditDTO,
     notice_id:int,
@@ -80,8 +76,8 @@ def update_notice(
     return change_notice(db,inbound_data,notice_id,user_pk)
 
 # 공지 삭제
-# @author_chk.varify_access_token
-@router_notice.post('/delete') # 관리자와 작성자 아이디를 받아와야함 created_id 와 같을 경우 삭제 가능하도록
+@router_notice.post('/delete')
+@author_chk.varify_access_token
 def delete_notice(
     notice_id:int,
     user_pk:int = None,

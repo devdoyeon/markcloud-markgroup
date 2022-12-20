@@ -1,12 +1,11 @@
 from functools import wraps
 from fastapi import HTTPException
 from dotenv import load_dotenv
-# from jose import JWTError, jwt
+import jwt
 import os
 from model import memberManageModel
-
-# from passlib.context import CryptContext
-# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto") 
+from passlib.context import CryptContext
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto") 
 
 
 load_dotenv()
@@ -14,31 +13,31 @@ load_dotenv()
 SECRET_KEY = os.environ['SECRET_KEY']
 SECURITY_ALGORITHM = os.environ['SECURITY_ALGORITHM']
 
-# def varify_access_token(f):
-#     @wraps(f)
-#     def decode(*args, **kwargs):
-#         access_token = kwargs['access_token']
+def varify_access_token(f):
+    @wraps(f)
+    def decode(*args, **kwargs):
+        access_token = kwargs['access_token']
 
-#         try:
-#             access_payload = jwt.decode(access_token,SECRET_KEY, algorithms=SECURITY_ALGORITHM)
-#             kwargs['user_pk'] = access_payload['user_pk']
+        try:
+            access_payload = jwt.decode(access_token,SECRET_KEY, algorithms=SECURITY_ALGORITHM)
+            kwargs['user_pk'] = access_payload['user_pk']
             
-#         # # 토큰만료
-#         # except jwt.ExpiredSignatureError:
-#         #     # access_token 만료 에러 raise
-#         #     print('AccessTokenExpired')
-#         #     raise HTTPException(status_code=403, detail='AccessTokenExpired')
+        # 토큰만료
+        except jwt.ExpiredSignatureError:
+            # access_token 만료 에러 raise
+            print('AccessTokenExpired')
+            raise HTTPException(status_code=403, detail='AccessTokenExpired')
         
-#         # # 그 외 토큰 관련 오류
-#         # except (jwt.DecodeError, jwt.InvalidTokenError):
-#         #     print('jwt.DecodeError, jwt.InvalidTokenError')
-#         #     raise HTTPException(status_code=499, detail="Invalid Token Format")
+        # 그 외 토큰 관련 오류
+        except (jwt.DecodeError, jwt.InvalidTokenError):
+            print('jwt.DecodeError, jwt.InvalidTokenError')
+            raise HTTPException(status_code=499, detail="Invalid Token Format")
 
-#         except Exception as e:
-#             print('access token error', e)
-#             raise HTTPException(status_code=499, detail='Invalid Token Format')
-#         return f(*args, **kwargs)
-#     return decode
+        except Exception as e:
+            print('access token error', e)
+            raise HTTPException(status_code=499, detail='Invalid Token Format')
+        return f(*args, **kwargs)
+    return decode
 
 def get_user_info(db, user_pk):
     member_table = memberManageModel.MemberTable
@@ -47,23 +46,5 @@ def get_user_info(db, user_pk):
     except:
         HTTPException(status_code=500, detail='DBError')
 
-
-
-# def get_hashed_password(password: str):
-#     return pwd_context.hash(password)
-
-# def varify_admin(f):
-#     @wraps(f)
-#     def challenge(*args, **kwargs):
-#         user_pk = kwargs['user_pk']
-#         db = kwargs['db']
-
-#         user_db = CRUDmembers.get_user(db, user_pk)
-#         role = user_db.member_role
-        
-#         if role == 'admin':
-#             kwargs['role'] = True
-#         else:
-#             kwargs['role'] = False
-#         return f(*args, **kwargs)
-#     return challenge
+def get_hashed_password(password: str):
+    return pwd_context.hash(password)

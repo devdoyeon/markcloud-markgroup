@@ -70,7 +70,7 @@ def insert_notice(db,inbound_data, user_pk):
     notice_table = noticeModel.NoticeTable
     
     try:    
-        user_info =author_chk.get_user_info(db,user_pk)
+        user_info = author_chk.get_user_info(db,user_pk)
         
         db_query = notice_table(
             title=inbound_data.title,
@@ -83,21 +83,21 @@ def insert_notice(db,inbound_data, user_pk):
         raise HTTPException(status_code=500, detail='DBError')
 
 
-def change_notice(db,inbound_data,notice_id, user_id):
+def change_notice(db,inbound_data,notice_id, user_pk):
     
     notice_table = noticeModel.NoticeTable
     
     try: 
+        user_info = author_chk.get_user_info(db,user_pk)
+        
         values = {'title':inbound_data.title,
                 'content':inbound_data.content,
-                'created_id':user_id,
                 'updated_at':datetime.today()
                 }
         
         base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
         
-        if user_id == base_q.created_id:
-            
+        if user_pk == base_q.created_id or user_info.groupware_only_yn == 'N':
             db.query(notice_table).filter_by(id = notice_id).update(values)
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
@@ -105,13 +105,16 @@ def change_notice(db,inbound_data,notice_id, user_id):
         raise HTTPException(status_code=500, detail='DBError')
     
 
-def remove_notice(db,notice_id, user_id):
+def remove_notice(db,notice_id, user_pk):
 
     notice_table = noticeModel.NoticeTable
 
-    base_q = db.query(notice_table).filter(notice_table.id == notice_id)
     try:  
-        if base_q.first().created_id == user_id:
+        user_info = author_chk.get_user_info(db,user_pk)
+        
+        base_q = db.query(notice_table).filter(notice_table.id == notice_id)
+        
+        if base_q.first().created_id == user_pk or user_info.groupware_only_yn == 'N':
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')

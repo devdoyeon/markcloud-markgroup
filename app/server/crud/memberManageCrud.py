@@ -51,13 +51,14 @@ def insert_department(db, inbound_data, user_pk):
         raise HTTPException(status_code=500, detail='DBError')
     
 
-def change_department(db, inboud_data,department_id):
+def change_department(db, inboud_data, department_id):
     
     department_table = memberManageModel.DepartmentTable
     
     try:
         values = {'department_name':inboud_data.department_name,
                   'updated_at':datetime.today()}
+        
         db.query(department_table).filter_by(id = department_id).update(values)
     except:
         raise HTTPException(status_code=500, detail='DBError')
@@ -110,12 +111,12 @@ def insert_member(db,inbound_data,user_pk):
         user_info = author_chk.get_user_info(db, user_pk)
         
 
-        # hashed_password = author_chk.get_hashed_password(inbound_data.hashed_password)
+        hashed_password = author_chk.get_hashed_password(inbound_data.hashed_password)
         
         db_query = member_table(
             name = inbound_data.name,
             user_id = inbound_data.user_id,
-            hashed_password = inbound_data.password,
+            hashed_password = hashed_password,
             email = inbound_data.email,
             birthday = inbound_data.birthday,
             phone = inbound_data.phone,

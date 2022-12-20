@@ -1,7 +1,8 @@
 # 업무관리
-from fastapi import APIRouter, Depends,Query
+from fastapi import APIRouter, Depends,Header
 from sqlalchemy.orm import Session
 from typing import Optional,List
+
 
 from database import *
 from crud.projectManageCrud import *
@@ -15,8 +16,10 @@ router_project = APIRouter(
 
 # 프로젝트 관련 데이터 
 @router_project.get('/read',response_model = Response[List[ProjectManageOut]])
+@author_chk.varify_access_token
 def read_projects(
-    user_pk: int = 100,
+    access_token: str = Header(None),
+    user_pk: int = None,
     project_name: Optional[str] = None,
     status_filter='MyProject',
     page: int = 1,
@@ -48,10 +51,12 @@ def read_projects(
 
 # 프로젝트 리스트 
 @router_project.post('/filter_read', response_model = Response[List[ProjectManageOut]])
+@author_chk.varify_access_token
 def read_project_list(
+    access_token: str = Header(None),
     filter_data: Optional[ProjectManageFilter] = None,
     status_filter: Optional[ProjectManageStatusFilter] = 'MyProject',
-    user_pk: int = 100,
+    user_pk: int = None,
     page: int = 1,
     limit: int = 10,
     db: Session = Depends(get_db)
@@ -61,10 +66,9 @@ def read_project_list(
     total_page = total_count // limit
 
     
-    if total_page % limit != 0:
+    if total_count % limit != 0:
         total_page += 1
     
-
     return Response().metadata(
         page=page,
         totalPage=total_page,
@@ -83,28 +87,34 @@ def read_project_info(
 
 # 프로젝트 생성
 @router_project.post('/create')
+@author_chk.varify_access_token
 def create_project(
     inbound_data: ProjectManageIn,
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     db: Session = Depends(get_db),
 ):
     insert_project(db,inbound_data, user_pk)
     
 # 프로젝트 수정
 @router_project.post('/update')
+@author_chk.varify_access_token
 def update_project(
     inbound_data:ProjectManageEditDTO,
     project_id:int,
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     db:Session = Depends(get_db)
 ):
     change_project(db,inbound_data,project_id,user_pk)
 
 # 프로젝트 삭제    
 @router_project.post('/delete')
+@author_chk.varify_access_token
 def delete_project(
     project_id:int,
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     db:Session = Depends(get_db)
 ):
     remove_project(db,project_id,user_pk)

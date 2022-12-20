@@ -1,5 +1,5 @@
 # 인사관리
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
@@ -16,14 +16,15 @@ router_member = APIRouter(
     prefix = '/personnel',
     tags=['Personnel Manage API']
 )
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 ##################################부서 관리##################################
 # 부서 리스트
 
 @router_member.get('/department/list', response_model= Response[List[DepartmentOut]])
+@author_chk.varify_access_token
 def read_department_list(
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     page:int = 1,
     limit:int = 5,
     db: Session = Depends(get_db)
@@ -53,9 +54,11 @@ def read_department_info(
 
 # 부서 등록
 @router_member.post('/department/create')
+@author_chk.varify_access_token
 def create_department(
     inbound_data:DepartmentIn,
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     db :Session = Depends(get_db)
 ):
     insert_department(db, inbound_data, user_pk)
@@ -82,10 +85,12 @@ def delete_department(
 
 # 직원 리스트
 @router_member.get('/member/list', response_model= Response[List[MemberOut]])
+@author_chk.varify_access_token
 def read_member_list(
+    access_token: str = Header(None),
     page:int = 1,
     limit:int = 10,
-    user_pk:int = 100,
+    user_pk:int = None,
     db: Session = Depends(get_db)
 ):
     offset = (page -1) * limit
@@ -114,9 +119,11 @@ def read_member_info(
 
 # 직원 등록
 @router_member.post('/member/create')
+@author_chk.varify_access_token
 def create_member(
     inbound_data: MemberIn,
-    user_pk:int = 100,
+    access_token: str = Header(None),
+    user_pk:int = None,
     db: Session = Depends(get_db)
 ):
     insert_member(db,inbound_data,user_pk)
@@ -129,7 +136,6 @@ def update_member(
     db: Session = Depends(get_db)
 ):
     change_member(db, inboud_data ,member_id)
-    
 
 # 직원 삭제
 @router_member.post('/member/delete')

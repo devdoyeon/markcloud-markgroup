@@ -21,7 +21,6 @@ class NoticeEditDTO(BaseModel):
     
     title:str    
     content:str
-    created_id:str
     
 class NoticeOut(BaseModel):
 
