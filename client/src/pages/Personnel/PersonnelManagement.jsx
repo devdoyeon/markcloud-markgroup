@@ -163,7 +163,6 @@ const PersonnelManagement = () => {
                     <th>소속</th>
                     <th>휴대전화</th>
                     <th>이메일</th>
-                    <th>입사일</th>
                     <th>생년월일</th>
                   </thead>
                   <tbody>
@@ -178,7 +177,6 @@ const PersonnelManagement = () => {
                             <td>{cur.department}</td>
                             <td>{cur.phone}</td>
                             <td>{cur.email}</td>
-                            <td>{cur.created_at}</td>
                             <td>{cur.birthday}</td>
                           </tr>
                         </>

@@ -392,6 +392,7 @@
                 tbody {
                   tr {
                     background-color: $tableColor;
+                    cursor: pointer;
                     &:nth-child(2n) {
                       background-color: $subTableColor;
                     }
@@ -529,6 +530,7 @@
             tbody {
               tr {
                 background-color: $tableColor;
+                cursor: pointer;
                 &:nth-child(2n) {
                   background-color: $subTableColor;
                 }
@@ -558,8 +560,8 @@
           border-bottom: 1px solid $footerColor;
           padding: 12px 0;
           > div {
-            width: 320px;
             position: relative;
+            @include flex-style();
             span {
               font-family: 'NotoSansR';
               font-size: 14px;
@@ -571,6 +573,18 @@
               border-radius: 8px;
               padding: 6px 0 6px 12px;
               width: 236px;
+              height: 32px;
+              margin-right: 8px;
+            }
+            > button {
+              @include flex-style();
+              padding: 0;
+              background-color: $white;
+              color: $mainColor;
+              border: 1px solid $mainColor;
+              font-size: 14px;
+              font-family: 'NotoSansR';
+              width: 76px;
               height: 32px;
             }
           }
@@ -701,6 +715,9 @@
                 width: 200px;
                 // margin-right: 0;
               }
+              .selectOptGroup {
+                width: 200px;
+              }
             }
 
             &.phone {
@@ -781,10 +798,13 @@
             margin-right: 16px;
           }
           > .commonBtn {
+            @include flex-style();
+            padding: 0;
+            width: 76px;
             background-color: $white;
             border: 1px solid $mainColor;
             color: $mainColor;
-            padding: 6px 12px;
+            height: 32px;
             font-family: 'NotoSansR';
             font-size: 14px;
           }
