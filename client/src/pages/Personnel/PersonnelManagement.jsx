@@ -4,7 +4,11 @@ import Pagination from 'common/Pagination';
 import SideMenu from 'common/SideMenu';
 import { changeTitle } from 'js/commonUtils';
 import PersonnelBusinessPopup from './PersonnelBusinessPopup';
-import { getDepartmentInfo, getDepartmentList } from 'js/groupwareApi';
+import {
+  getDepartmentInfo,
+  getDepartmentList,
+  getMemberList,
+} from 'js/groupwareApi';
 
 const PersonnelManagement = () => {
   const [departmentList, setDepartmentList] = useState([]);
@@ -15,10 +19,12 @@ const PersonnelManagement = () => {
     totalPage: 9,
     limit: 6,
   });
+  const [manageList, setManageList] = useState([]);
+  const [manageMeta, setManageMeta] = useState({});
   const [managePageInfo, setManagePageInfo] = useState({
     page: 1,
     totalPage: 9,
-    limit: 9,
+    limit: 11,
   });
   const [popup, setPopup] = useState(false);
   const [buttonControl, setButtonControl] = useState('');
@@ -32,6 +38,7 @@ const PersonnelManagement = () => {
   const navigate = useNavigate();
 
   let prevent = false;
+  let prevent2 = false;
 
   const getPersonDepartmentApi = async () => {
     if (prevent) return;
@@ -59,10 +66,35 @@ const PersonnelManagement = () => {
       setCurDepartment(result?.data);
     }
   };
+
+  const getPersonMemberApi = async () => {
+    if (prevent2) return;
+    prevent2 = true;
+    setTimeout(() => {
+      prevent2 = false;
+    }, 200);
+    const result = await getMemberList(managePageInfo);
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setManageList(data);
+      setManageMeta(meta);
+      setManagePageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
+  };
+
   useEffect(() => {
     if (!popup) getPersonDepartmentApi();
   }, [departmentPageInfo.page, popup]);
 
+  useEffect(() => {
+    getPersonMemberApi();
+  }, [managePageInfo.page]);
+  console.log(manageList);
   return (
     <>
       <div className='container'>
@@ -134,19 +166,19 @@ const PersonnelManagement = () => {
                     <th>생년월일</th>
                   </thead>
                   <tbody>
-                    {arr.reduce((acc, cur, idx) => {
+                    {manageList?.reduce((acc, cur, idx) => {
                       return (
                         <>
                           {acc}
                           <tr>
                             <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
-                            <td>케로로</td>
-                            <td>권도연</td>
-                            <td>SI팀</td>
-                            <td>010-1234-5678</td>
-                            <td>info@markcloud.co.kr</td>
-                            <td>2022-06-20</td>
-                            <td>2022-11-26</td>
+                            <td>{cur.user_id}</td>
+                            <td>{cur.name}</td>
+                            <td>{cur.department}</td>
+                            <td>{cur.phone}</td>
+                            <td>{cur.email}</td>
+                            <td>{cur.created_at}</td>
+                            <td>{cur.birthday}</td>
                           </tr>
                         </>
                       );
@@ -160,7 +192,11 @@ const PersonnelManagement = () => {
                 pageInfo={managePageInfo}
                 setPageInfo={setManagePageInfo}
               />
-              <button className='commonBtn'>등록</button>
+              <button
+                className='commonBtn'
+                onClick={() => navigate('/personnel/write')}>
+                등록
+              </button>
             </div>
           </div>
         </div>

@@ -67,9 +67,9 @@ const Notice = () => {
         <div className='content-wrap notice'>
           <CommonHeader {...commonHeaderState} okFn={getNoticeApi} />
           <ListWrap list={list} />
-          {list.length > 0 && (
-            <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
-          )}
+          {/* {list.length > 0 && ( */}
+          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+          {/* )} */}
         </div>
       </div>
       {alertBox.bool && (
