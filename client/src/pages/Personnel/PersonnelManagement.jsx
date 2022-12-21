@@ -88,6 +88,28 @@ const PersonnelManagement = () => {
     }
   };
 
+  const renderTable = () => {
+    return manageList?.reduce(
+      (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {
+        return (
+          <>
+            {acc}
+            <tr onClick={() => navigate(`/personnel/write/${id}`)}>
+              <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
+              <td>{user_id}</td>
+              <td>{name}</td>
+              <td>{section}</td>
+              <td>{phone}</td>
+              <td>{email}</td>
+              <td>{birthday}</td>
+            </tr>
+          </>
+        );
+      },
+      []
+    );
+  };
+
   useEffect(() => {
     if (!popup) getPersonDepartmentApi();
   }, [departmentPageInfo.page, popup]);
@@ -157,35 +179,17 @@ const PersonnelManagement = () => {
               <div>
                 <table>
                   <thead>
-                    <th>번호</th>
-                    <th>아이디</th>
-                    <th>성명</th>
-                    <th>소속</th>
-                    <th>휴대전화</th>
-                    <th>이메일</th>
-                    <th>생년월일</th>
+                    <tr>
+                      <th>번호</th>
+                      <th>아이디</th>
+                      <th>성명</th>
+                      <th>소속</th>
+                      <th>휴대전화</th>
+                      <th>이메일</th>
+                      <th>생년월일</th>
+                    </tr>
                   </thead>
-                  <tbody>
-                    {manageList?.reduce((acc, cur, idx) => {
-                      return (
-                        <>
-                          {acc}
-                          <tr
-                            onClick={() =>
-                              navigate(`/personnel/write/${cur.id}`)
-                            }>
-                            <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
-                            <td>{cur.user_id}</td>
-                            <td>{cur.name}</td>
-                            <td>{cur.section}</td>
-                            <td>{cur.phone}</td>
-                            <td>{cur.email}</td>
-                            <td>{cur.birthday}</td>
-                          </tr>
-                        </>
-                      );
-                    }, [])}
-                  </tbody>
+                  <tbody>{renderTable()}</tbody>
                 </table>
               </div>
             </div>
