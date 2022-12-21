@@ -41,32 +41,32 @@ const SideMenu = () => {
           />
           <ul>
             <li
-              className={path.includes('/business') && 'active'}
+              className={path.includes('/business') ? 'active' : ''}
               onClick={() => navigate('/business')}>
               업무 관리
             </li>
             <li
-              className={path.includes('/project') && 'active'}
+              className={path.includes('/project') ? 'active' : ''}
               onClick={() => navigate('/project')}>
               프로젝트 현황
             </li>
             <li
-              className={path.includes('/report') && 'active'}
+              className={path.includes('/report') ? 'active' : ''}
               onClick={() => navigate('/report')}>
               주간 업무 보고
             </li>
             <li
-              className={path.includes('/notice') && 'active'}
+              className={path.includes('/notice') ? 'active' : ''}
               onClick={() => navigate('/notice')}>
               공지사항
             </li>
             <li
-              className={path.includes('/board') && 'active'}
+              className={path.includes('/board') ? 'active' : ''}
               onClick={() => navigate('/board')}>
               게시판
             </li>
             <li
-              className={path.includes('/personnel') && 'active'}
+              className={path.includes('/personnel') ? 'active' : ''}
               onClick={() => navigate('/personnel')}>
               인사 관리
             </li>
