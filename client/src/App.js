@@ -30,7 +30,6 @@ function App() {
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />
-        <Route path='/sample' element={<BoardRead />} />
         <Route path='/business' element={<BusinessManagement />} />
         <Route path='/personnel' element={<PersonnelManagement />} />
         <Route path='/notice' element={<Notice />} />
