@@ -14,6 +14,7 @@ import {
   getMemberInfo,
   duplicateIdCheck,
   getMemberUpdate,
+  getMemberDelete,
 } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import {
@@ -111,6 +112,7 @@ const PersonnelMember = () => {
     const result = await getMemberInfo(id);
     if (typeof result === 'object') {
       setMemberInfo(result?.data);
+      setContactValue(result?.data.section);
     }
   };
   const createMember = async () => {
@@ -229,12 +231,35 @@ const PersonnelMember = () => {
   //~~~~~~ 업데이트 ~~~~~~~
   const updateMemberApi = async () => {
     const result = await getMemberUpdate(memberInfo);
-    return commonModalSetting(
-      setAlertBox,
-      true,
-      'alert',
-      '수정이 완료되었습니다.'
-    );
+    if (typeof result === 'object') {
+      setAlert('apply');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '수정이 완료되었습니다.'
+      );
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+  //~~~~~~~~~ 멤버 삭제 ~~~~~~~~~~
+  const deleteMemberApi = async () => {
+    const result = await getMemberDelete(id);
+    if (typeof result === 'object') {
+      setAlert('apply');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '삭제가 완료되었습니다.'
+      );
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+
+  const phoneNumRegex = e => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setInputValue(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -242,15 +267,14 @@ const PersonnelMember = () => {
     getPersonDepartmentApi();
     if (id) {
       getPersonMemberInfo();
-      // changeState(setMemberInfo, 'section', memberInfo?.section);
-      setContactValue(memberInfo?.section);
       changeState(setMemberInfo, 'gender', memberInfo?.gender);
     }
   }, []);
+
   useEffect(() => {
-    // setContactValue(memberInfo.section);
     changeState(setMemberInfo, 'section', contactValue);
   }, [contactValue]);
+
   useEffect(() => {
     if (inputValue.length === 10) {
       setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
@@ -264,9 +288,6 @@ const PersonnelMember = () => {
     }
     changeState(setMemberInfo, 'phone', inputValue);
   }, [inputValue]);
-  // useEffect(() => {
-  //   changeState(setMemberInfo, 'section', contactValue);
-  // }, [contactValue]);
 
   // 주소 검색
   useEffect(() => {
@@ -275,13 +296,6 @@ const PersonnelMember = () => {
       changeState(setMemberInfo, 'zip_code', address);
     }
   }, [isPopupOpen]);
-
-  const phoneNumRegex = e => {
-    const regex = /^[0-9\b -]{0,13}$/;
-    if (regex.test(e.target.value)) {
-      setInputValue(e.target.value);
-    }
-  };
 
   return (
     <>
@@ -493,12 +507,19 @@ const PersonnelMember = () => {
                 className='commonBtn'
                 onClick={() => {
                   updateMemberApi(memberInfo);
-                  navigate('/personnel');
                 }}>
                 수정
               </button>
-              <button className='commonBtn delete'>삭제</button>
-              <button className='commonBtn list'>목록</button>
+              <button
+                className='commonBtn delete'
+                onClick={() => deleteMemberApi()}>
+                삭제
+              </button>
+              <button
+                className='commonBtn list'
+                onClick={() => navigate(`/personnel`)}>
+                목록
+              </button>
             </div>
           ) : (
             <div className='btn-wrap'>

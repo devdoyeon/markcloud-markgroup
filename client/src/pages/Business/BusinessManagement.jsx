@@ -62,6 +62,41 @@ const BusinessManagement = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  const renderTable = () => {
+    return list.reduce(
+      (
+        acc,
+        {
+          title,
+          project_name,
+          request_id,
+          manager_id,
+          work_status,
+          created_at,
+          work_end_date,
+        },
+        idx
+      ) => {
+        return (
+          <>
+            {acc}
+            <tr>
+              <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
+              <td>{title}</td>
+              <td>{project_name}</td>
+              <td>{request_id}</td>
+              <td>{manager_id}</td>
+              <td>{work_status}</td>
+              <td>{created_at}</td>
+              <td>{work_end_date}</td>
+            </tr>
+          </>
+        );
+      },
+      <></>
+    );
+  };
+
   useEffect(() => {
     changeTitle('그룹웨어 > 업무 관리');
   }, []);
@@ -233,34 +268,18 @@ const BusinessManagement = () => {
                 <div>
                   <table>
                     <thead>
-                      <th>번호</th>
-                      <th>제목</th>
-                      <th>프로젝트</th>
-                      <th>요청자</th>
-                      <th>담당자</th>
-                      <th>진행상태</th>
-                      <th>요청일자</th>
-                      <th>완료일자</th>
+                      <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>프로젝트</th>
+                        <th>요청자</th>
+                        <th>담당자</th>
+                        <th>진행상태</th>
+                        <th>요청일자</th>
+                        <th>완료일자</th>
+                      </tr>
                     </thead>
-                    <tbody>
-                      {list.reduce((acc, cur, idx) => {
-                        return (
-                          <>
-                            {acc}
-                            <tr>
-                              <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
-                              <td>{cur.title}</td>
-                              <td>{cur.project_name}</td>
-                              <td>{cur.request_id}</td>
-                              <td>{cur.manager_id}</td>
-                              <td>{cur.work_status}</td>
-                              <td>{cur.created_at}</td>
-                              <td>{cur.work_end_date}</td>
-                            </tr>
-                          </>
-                        );
-                      }, <></>)}
-                    </tbody>
+                    <tbody>{renderTable()}</tbody>
                   </table>
                 </div>
               </div>
