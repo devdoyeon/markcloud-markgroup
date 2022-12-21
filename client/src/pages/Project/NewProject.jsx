@@ -10,7 +10,7 @@ import {
   changeState,
   catchError,
 } from 'js/commonUtils';
-import { getProjectDetail, createProject } from 'js/groupwareApi';
+import { getProjectDetail, createProject, editProject } from 'js/groupwareApi';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -35,6 +35,14 @@ const NewProject = () => {
     project_status: selectVal,
   });
   const navigate = useNavigate();
+
+  const updateProject = async () => {
+    const result = await editProject(id, projectInfo);
+    if (typeof result === 'object') {
+      setAlert('completeEdit');
+      commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
+    }
+  };
 
   //= 수정일 때 기존 디테일 불러오기
   const getOrigin = async () => {
@@ -199,7 +207,9 @@ const NewProject = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button className='commonBtn applyBtn' onClick={postProject}>
+            <button
+              className='commonBtn applyBtn'
+              onClick={id?.length ? updateProject : postProject}>
               등록
             </button>
             {id?.length ? (
@@ -235,7 +245,8 @@ const NewProject = () => {
             if (
               alert === 'cancel' ||
               alert === 'completePost' ||
-              alert === 'completeDelete'
+              alert === 'completeDelete' ||
+              alert === 'completeEdit'
             )
               navigate('/project');
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')

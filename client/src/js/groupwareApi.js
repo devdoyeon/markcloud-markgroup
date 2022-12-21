@@ -602,3 +602,48 @@ export const createProject = async projectInfo => {
     return apiErrorHandling(error);
   }
 };
+
+//& 프로젝트 수정
+export const editProject = async (id, projectInfo) => {
+  try {
+    return await axios.post(
+      `/dy/project/update?project_id=${id}&user_id=mxxvii`,
+      projectInfo
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트에 추가 가능한 인원 불러오기
+export const getPeopleList = async () => {
+  try {
+    return await axios.get(`/dy/project/member?user_id=mxxvii`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트 인원 추가
+export const addProjectMember = async (id, memberId) => {
+  try {
+    return await axios.post(
+      `/dy/project/member_add?project_id=${id}&user_id=mxxvii`,
+      { new_member_id: memberId }
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트 인원 제거
+export const deleteProjectMember = async (id, memberId) => {
+  try {
+    return await axios.post(
+      `/dy/project/member_delete?project_id=${id}&user_id=mxxvii`,
+      { delete_member_id: memberId }
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};

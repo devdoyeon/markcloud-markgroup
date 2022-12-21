@@ -2,14 +2,11 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import { commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
+import { catchError, changeTitle } from 'js/commonUtils';
 import {
   getBoardDetail,
-  deleteBoard,
   getNoticeInfo,
-  deleteNotice,
   getReportDetail,
-  deleteReport,
 } from 'js/groupwareApi';
 
 const BoardRead = () => {
@@ -60,30 +57,6 @@ const BoardRead = () => {
       //에러핸들링
       return catchError(result, navigate, setAlertBox, setAlert);
     }
-  };
-
-  const deletePost = async () => {
-    let result;
-    switch (path.split('/')[1]) {
-      case 'notice':
-        setHeader('공지사항');
-        result = await deleteNotice(id);
-        break;
-      case 'board':
-        setHeader('게시판');
-        result = await deleteBoard(id);
-        break;
-      case 'report':
-        setHeader('주간 업무 보고');
-        result = await deleteReport(id);
-        break;
-      default:
-        result = '';
-    }
-    if (typeof result === 'object') {
-      setAlert('deleteAlert');
-      commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
-    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -138,9 +111,7 @@ const BoardRead = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'deleteConfirm') deletePost();
-            else if (alert === 'deleteAlert')
-              navigate(`/${path.split('/')[1]}`);
+            if (alert === 'deleteAlert') navigate(`/${path.split('/')[1]}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
             else return;

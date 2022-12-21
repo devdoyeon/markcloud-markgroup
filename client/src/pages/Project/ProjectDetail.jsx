@@ -4,19 +4,17 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { commonModalSetting, changeTitle, catchError } from 'js/commonUtils';
-import { getProjectDetail } from 'js/groupwareApi';
+import {
+  getProjectDetail,
+  getPeopleList,
+  addProjectMember,
+  editProject,
+} from 'js/groupwareApi';
 import deletePerson from 'image/deletePersonIcon.svg';
+import { changeState, getKeyByValue } from 'js/commonUtils';
 
 const ProjectDetail = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
-  const personArr = [
-    '권도연',
-    '안병욱',
-    '김남호',
-    '장지원',
-    '정다은',
-    '송지은',
-  ];
   const { id } = useParams();
   const navigate = useNavigate();
   const [alert, setAlert] = useState('');
@@ -25,11 +23,50 @@ const ProjectDetail = () => {
     content: '',
     bool: false,
   });
+  const [memberObj, setMemberObj] = useState({});
+  const [personArr, setPersonArr] = useState([]);
   const [projectInfo, setProjectInfo] = useState({});
   const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
   let prevent = false;
+
+  const deleteMember = async () => {};
+
+  const addMember = async () => {
+    if (participation.includes(memberObj[personValue]))
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이미 추가된 인원입니다.'
+      );
+    const result = await addProjectMember(id, memberObj[personValue]);
+    if (typeof result === 'object') {
+      setParticipation(prev => {
+        const clone = [...prev];
+        clone.push(memberObj[personValue]);
+        return clone;
+      });
+    } else catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const peopleList = async () => {
+    setPersonArr([]);
+    const result = await getPeopleList();
+    if (typeof result === 'object') {
+      let obj = {};
+      result?.data?.forEach(i => {
+        setPersonArr(prev => {
+          const clone = [...prev];
+          clone.push(`${i?.name} (${i?.section})`);
+          return clone;
+        });
+        obj[`${i?.name} (${i?.section})`] = i?.user_id;
+      });
+      setMemberObj(obj);
+    } else catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   //= 프로젝트 상세 내역
   const projectDetail = async () => {
@@ -42,18 +79,35 @@ const ProjectDetail = () => {
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
       setStatusValue(result?.data?.project_status);
+      setParticipation(result?.data?.project_members);
       document.querySelector('.content').innerHTML =
         new DOMParser().parseFromString(
           result?.data?.project_description,
           'text/html'
         ).body.innerHTML;
+      peopleList();
     } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const changeProjectStatus = async () => {
+    const result = await editProject(id, projectInfo);
+    if (typeof result === 'object') {
+      projectDetail();
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
     changeTitle('그룹웨어 > 프로젝트 상세 보기');
     projectDetail();
   }, []);
+
+  useEffect(() => {
+    changeState(setProjectInfo, 'project_status', statusValue);
+  }, [statusValue]);
+
+  useEffect(() => {
+    changeProjectStatus();
+  }, [projectInfo?.project_status]);
 
   return (
     <>
@@ -110,14 +164,19 @@ const ProjectDetail = () => {
                             <>
                               {acc}
                               <span className='personBtn'>
-                                {person}
+                                {getKeyByValue(memberObj, person)}
                                 <img
                                   src={deletePerson}
                                   alt={`${person} 삭제 버튼`}
                                   onClick={() => {
                                     setParticipation(prev => {
                                       const clone = [...prev];
-                                      clone.splice(clone.indexOf(person), 1);
+                                      clone.splice(
+                                        clone.indexOf(
+                                          getKeyByValue(memberObj, person)
+                                        ),
+                                        1
+                                      );
                                       return clone;
                                     });
                                   }}
@@ -137,23 +196,7 @@ const ProjectDetail = () => {
                       setSelectVal={setPersonValue}
                     />
                   </div>
-                  <button
-                    className='addPersonBtn'
-                    onClick={() =>
-                      setParticipation(prev => {
-                        const clone = [...prev];
-                        if (clone.includes(personValue)) {
-                          commonModalSetting(
-                            setAlertBox,
-                            true,
-                            'alert',
-                            '이미 추가된 인원입니다.'
-                          );
-                          return clone;
-                        } else clone.push(personValue);
-                        return clone;
-                      })
-                    }>
+                  <button className='addPersonBtn' onClick={addMember}>
                     추가
                   </button>
                 </div>

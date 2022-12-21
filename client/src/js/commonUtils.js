@@ -96,6 +96,10 @@ export const addComma = str => {
   return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+export const getKeyByValue = (obj, value) => {
+  return Object.keys(obj).find(key => obj[key] === value);
+};
+
 //================================== 병욱 ==================================
 
 export const numberWithCommas = x => {

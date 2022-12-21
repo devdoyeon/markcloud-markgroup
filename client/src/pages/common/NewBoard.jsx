@@ -13,12 +13,15 @@ import {
   getBoardDetail,
   createBoard,
   editBoard,
+  deleteBoard,
   getReportDetail,
   createReport,
   editReport,
+  deleteReport,
   editNotice,
   getNoticeInfo,
   createNotice,
+  deleteNotice,
 } from 'js/groupwareApi';
 
 const NewBoard = () => {
@@ -114,6 +117,27 @@ const NewBoard = () => {
         '등록이 완료되었습니다.'
       );
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+
+  const deletePost = async () => {
+    let result;
+    switch (path.split('/')[1]) {
+      case 'notice':
+        result = await deleteNotice(id);
+        break;
+      case 'board':
+        result = await deleteBoard(id);
+        break;
+      case 'report':
+        result = await deleteReport(id);
+        break;
+      default:
+        result = '';
+    }
+    if (typeof result === 'object') {
+      setAlert('deleteAlert');
+      commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const editPost = async () => {
@@ -249,8 +273,13 @@ const NewBoard = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'apply')
+            if (
+              alert === 'cancel' ||
+              alert === 'apply' ||
+              alert === 'deleteAlert'
+            )
               navigate(`/${path.split('/')[1]}`);
+            else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');

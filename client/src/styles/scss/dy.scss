@@ -1094,12 +1094,13 @@
       .personBtn {
         @include flex-style();
         background-color: $subBlue;
-        width: 95px;
+        width: auto;
         padding: 6px 16px;
         height: 32px;
         border-radius: 16px;
         color: black;
-        margin-right: 16px;
+        margin-right: 10px;
+        margin-bottom: 10px;
         &:last-child {
           margin-right: 0;
         }
