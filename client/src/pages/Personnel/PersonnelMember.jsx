@@ -11,6 +11,7 @@ import {
   getDepartmentList,
   getBusinessRead,
   getMemberCreate,
+  getMemberInfo,
 } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import {
@@ -42,20 +43,13 @@ const PersonnelMember = () => {
     address: '',
     section: '',
   });
-  const [list, setList] = useState([]);
-  const [meta, setMeta] = useState({});
   const [departmentName, setDepartmentName] = useState([]);
 
   const [departmentList, setDepartmentList] = useState([]);
   const [departmentMeta, setDepartmentMeta] = useState({});
 
-  const [inputVal, setInputVal] = useState('나의 업무현황');
   const [contactValue, setContactValue] = useState('===');
-  const [pageInfo, setPageInfo] = useState({
-    page: 1,
-    totalPage: 15,
-    limit: 5,
-  });
+
   const [departmentPageInfo, setDepartmentPageInfo] = useState({
     page: 1,
     totalPage: 9,
@@ -69,14 +63,11 @@ const PersonnelMember = () => {
   //주소 관련 state
   const [address, setAddress] = useState('');
   const [addressDetail, setAddressDetail] = useState(''); //상세주소
-  const [writeAddress, setWriteAddress] = useState(''); //사용자가 입력하는 상세주소
 
-  const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
 
   const cookie = getCookie('myToken');
-
   let prevent = false;
 
   const getPersonDepartmentApi = async () => {
@@ -101,27 +92,19 @@ const PersonnelMember = () => {
       });
     }
   };
-
-  // const getProjectApi = async () => {
-  //   if (prevent) return;
-  //   prevent = true;
-  //   setTimeout(() => {
-  //     prevent = false;
-  //   }, 200);
-  //   const result = await getBusinessRead(pageInfo);
-  //   if (typeof result === 'object') {
-  //     const { data, meta } = result?.data;
-  //     setList(data);
-  //     setMeta(meta);
-  //     setPageInfo(prev => {
-  //       const clone = { ...prev };
-  //       clone.page = meta?.page;
-  //       clone.totalPage = meta?.totalPage;
-  //       return clone;
-  //     });
-  //   } else return catchError(result, navigate, setAlertBox, setAlert);
-  // };
-
+  let prevent2 = false;
+  const getPersonMemberInfo = async () => {
+    if (prevent2) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent2 = false;
+    }, 200);
+    const result = await getMemberInfo(id);
+    console.log(result);
+    if (typeof result === 'object') {
+      setMemberInfo(result?.data);
+    }
+  };
   const createMember = async () => {
     //유효성 검사
 
@@ -141,11 +124,11 @@ const PersonnelMember = () => {
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
     getPersonDepartmentApi();
+    if (id) {
+      getPersonMemberInfo();
+      changeState(setMemberInfo, 'section', contactValue);
+    }
   }, []);
-
-  // useEffect(() => {
-  //   getProjectApi();
-  // }, [pageInfo.page]);
 
   useEffect(() => {
     if (inputValue.length === 10) {
@@ -171,6 +154,7 @@ const PersonnelMember = () => {
       changeState(setMemberInfo, 'zip_code', address);
     }
   }, [isPopupOpen]);
+
   const phoneNumRegex = e => {
     const regex = /^[0-9\b -]{0,13}$/;
     if (regex.test(e.target.value)) {
@@ -190,21 +174,32 @@ const PersonnelMember = () => {
             <div className='id-line'>
               <div>
                 <span>아이디</span>
-                <input
-                  type='text'
-                  value={memberInfo.user_id}
-                  autoComplete='off'
-                  placeholder='아이디를 입력해주세요.'
-                  onChange={e =>
-                    changeState(setMemberInfo, 'user_id', e.target.value)
-                  }
-                />
-                <button className='commonBtn'>중복체크</button>
+                {id ? (
+                  <input
+                    type='text'
+                    value={memberInfo.user_id}
+                    autoComplete='off'
+                    placeholder='아이디를 입력해주세요.'
+                    disabled='disabled'
+                  />
+                ) : (
+                  <input
+                    type='text'
+                    value={memberInfo.user_id}
+                    autoComplete='off'
+                    placeholder='아이디를 입력해주세요.'
+                    onChange={e =>
+                      changeState(setMemberInfo, 'user_id', e.target.value)
+                    }
+                  />
+                )}
+                {id ? <></> : <button className='commonBtn'>중복체크</button>}
               </div>
             </div>
             <div className='name-line'>
               <div className='name'>
                 <span>성명</span>
+
                 <input
                   type='text'
                   value={memberInfo.name}
@@ -258,6 +253,7 @@ const PersonnelMember = () => {
                 <input
                   type='date'
                   autoComplete='off'
+                  value={memberInfo.birthday}
                   onChange={e =>
                     changeState(setMemberInfo, 'birthday', e.target.value)
                   }
@@ -274,27 +270,42 @@ const PersonnelMember = () => {
                   setSelectVal={setContactValue}
                 />
               </div>
-              <div className='phone'>
+              <div className={id ? 'phone id' : 'phone'}>
                 <span>휴대전화</span>
-                <input
-                  type='text'
-                  autoComplete='off'
-                  placeholder='전화번호를 입력해주세요.'
-                  onChange={phoneNumRegex}
-                  value={inputValue}
-                />
+                {id ? (
+                  <input
+                    type='text'
+                    autoComplete='off'
+                    placeholder='전화번호를 입력해주세요.'
+                    onChange={phoneNumRegex}
+                    value={memberInfo.phone}
+                  />
+                ) : (
+                  <input
+                    type='text'
+                    autoComplete='off'
+                    placeholder='전화번호를 입력해주세요.'
+                    onChange={phoneNumRegex}
+                    value={inputValue}
+                  />
+                )}
               </div>
-              <div className='password'>
-                <span>비밀번호</span>
-                <input
-                  type='password'
-                  autoComplete='off'
-                  placeholder='비밀번호를 입력해주세요.'
-                  onChange={e =>
-                    changeState(setMemberInfo, 'password', e.target.value)
-                  }
-                />
-              </div>
+              {id ? (
+                <></>
+              ) : (
+                <div className='password'>
+                  <span>비밀번호</span>
+                  <input
+                    type='password'
+                    autoComplete='off'
+                    placeholder='비밀번호를 입력해주세요.'
+                    value={memberInfo.password}
+                    onChange={e =>
+                      changeState(setMemberInfo, 'password', e.target.value)
+                    }
+                  />
+                </div>
+              )}
             </div>
             <div className='email-line'>
               <div>
@@ -303,6 +314,7 @@ const PersonnelMember = () => {
                   type='text'
                   autoComplete='off'
                   placeholder='이메일을 입력해주세요.'
+                  value={memberInfo.email}
                   onChange={e =>
                     changeState(setMemberInfo, 'email', e.target.value)
                   }
@@ -316,7 +328,7 @@ const PersonnelMember = () => {
                 placeholder='주소 찾기 버튼을 클릭해주세요'
                 autoComplete='off'
                 disabled='disabled'
-                value={addressDetail}
+                value={memberInfo.address}
                 onChange={e => setAddressDetail(e.target.value)}
               />
               <button
@@ -326,21 +338,24 @@ const PersonnelMember = () => {
               </button>
             </div>
           </div>
-          <div className='btn-wrap'>
-            <button className='commonBtn' onClick={createMember}>
-              등록
-            </button>
-            <button
-              className='commonBtn list'
-              onClick={() => navigate('/personnel')}>
-              목록
-            </button>
-          </div>
-          {/* <div className='btn-wrap'>
-            <button className='commonBtn'>수정</button>
-            <button className='commonBtn delete'>삭제</button>
-            <button className='commonBtn list'>목록</button>
-          </div> */}
+          {id ? (
+            <div className='btn-wrap'>
+              <button className='commonBtn'>수정</button>
+              <button className='commonBtn delete'>삭제</button>
+              <button className='commonBtn list'>목록</button>
+            </div>
+          ) : (
+            <div className='btn-wrap'>
+              <button className='commonBtn' onClick={createMember}>
+                등록
+              </button>
+              <button
+                className='commonBtn list'
+                onClick={() => navigate('/personnel')}>
+                목록
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {alertBox.bool && (

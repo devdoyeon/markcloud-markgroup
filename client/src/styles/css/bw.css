@@ -640,7 +640,6 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-  border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;
   padding: 12px 0;
 }
@@ -790,6 +789,9 @@
   padding: 6px 6px 6px 6px;
   border-radius: 8px;
   height: 32px;
+}
+.container .content-wrap.member .member-wrap .affiliation-line > div.id::after {
+  display: none;
 }
 .container .content-wrap.member .member-wrap .affiliation-line > div.password::after {
   display: none;
