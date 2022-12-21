@@ -94,11 +94,16 @@ export const checkUserInfo = async () => {
   }
 };
 //# 인사관리 중복 아이디 체크
-export const duplicateIdCheck = async userId => {
-  const header = { 'Content-Type': 'application/json' };
+export const duplicateIdCheck = async (userId, cookie) => {
+  console.log(userId, cookie);
+  const headers = {
+    'Content-Type': 'application/json',
+    'access-token': cookie,
+  };
+  const param = { user_id: userId.trim() };
   try {
-    const result = await axios.post(`/api/auth/check/id-duplicate`, {
-      user_id: userId,
+    return await axios.post(`/api/auth/check/id-duplicate`, param, {
+      headers,
     });
   } catch (error) {
     return await apiErrorHandling(error);
@@ -279,12 +284,12 @@ export const getDepartmentCreate = async (name, cookie) => {
   }
 };
 
-export const getDepartmentUpdate = async ({ id, department_name }) => {
+export const getDepartmentUpdate = async ({ id, section }) => {
   try {
     return await axios.post(
       `/bw/personnel/department/update?department_id=${id}`,
       {
-        department_name: department_name,
+        department_name: section,
       }
     );
   } catch (error) {
@@ -365,33 +370,30 @@ export const getMemberCreate = async (
   }
 };
 
-export const getMemberUpdate = async (
-  {
-    name,
-    user_id,
-    hashed_password,
-    email,
-    birthday,
-    phone,
-    gender,
-    zip_code,
-    address,
-    section,
-  },
-  id
-) => {
+export const getMemberUpdate = async ({
+  id,
+  user_id,
+  name,
+  gender,
+  birthday,
+  section,
+  phone,
+  email,
+  address,
+  zip_code,
+}) => {
   try {
     return await axios.post(`/bw/personnel/member/update?member_id=${id}`, {
-      name,
+      id,
       user_id,
-      hashed_password,
-      email,
-      birthday,
-      phone,
+      name,
       gender,
-      zip_code,
-      address,
+      birthday,
       section,
+      phone,
+      email,
+      address,
+      zip_code,
     });
   } catch (error) {
     return apiErrorHandling(error);

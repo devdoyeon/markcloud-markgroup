@@ -1,4 +1,4 @@
-import { usecontent, useEffect, useState } from 'react';
+import { usecontent, useEffect, useState, useRef } from 'react';
 import SideMenu from 'common/SideMenu';
 import {
   useLoaderData,
@@ -12,6 +12,8 @@ import {
   getBusinessRead,
   getMemberCreate,
   getMemberInfo,
+  duplicateIdCheck,
+  getMemberUpdate,
 } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import {
@@ -19,9 +21,11 @@ import {
   changeState,
   changeTitle,
   commonModalSetting,
+  regularExpression,
 } from 'js/commonUtils';
 import PostCode from './PostCode';
 import { getCookie } from 'js/cookie';
+import axios from 'axios';
 
 const PersonnelMember = () => {
   const [alert, setAlert] = useState('');
@@ -64,10 +68,15 @@ const PersonnelMember = () => {
   const [address, setAddress] = useState('');
   const [addressDetail, setAddressDetail] = useState(''); //상세주소
 
+  // 아이디 중복체크 state
+  const [idCheck, setIdCheck] = useState();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   const cookie = getCookie('myToken');
+  const inputRef = useRef([]);
+
   let prevent = false;
 
   const getPersonDepartmentApi = async () => {
@@ -82,7 +91,7 @@ const PersonnelMember = () => {
       setDepartmentList(data);
       setDepartmentMeta(meta);
       for (let i = 0; i < data.length; i++) {
-        setDepartmentName(name => [...name, data[i].department_name]);
+        setDepartmentName(name => [...name, data[i].section]);
       }
       setDepartmentPageInfo(prev => {
         const clone = { ...prev };
@@ -100,14 +109,77 @@ const PersonnelMember = () => {
       prevent2 = false;
     }, 200);
     const result = await getMemberInfo(id);
-    console.log(result);
     if (typeof result === 'object') {
       setMemberInfo(result?.data);
     }
   };
   const createMember = async () => {
     //유효성 검사
-
+    if (inputRef.current[0].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디를 입력하지 않았습니다.'
+      );
+    } else if (inputRef.current[1].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성명을 입력하지 않았습니다.'
+      );
+    } else if (memberInfo.gender === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성별을 선택하지 않았습니다.'
+      );
+    } else if (inputRef.current[2].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '생년월일을 선택하지 않았습니다.'
+      );
+    } else if (memberInfo.section === '===') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '소속을 선택하지 않았습니다.'
+      );
+    } else if (inputRef.current[3].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '휴대전화번호를 입력하지 않았습니다.'
+      );
+    } else if (inputRef.current[4].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '비밀번호를 입력하지 않았습니다.'
+      );
+    } else if (inputRef.current[5].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일을 입력하지 않았습니다.'
+      );
+    } else if (!(await regularExpression('email', inputRef.current[5].value))) {
+      inputRef.current[5].focus();
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일의 형식이 맞지 않습니다.'
+      );
+    }
     // --
     const result = await getMemberCreate(memberInfo, cookie);
     if (typeof result === 'object') {
@@ -121,15 +193,57 @@ const PersonnelMember = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
+  // -- 아이디 중복체크
+  const duplicateId = async () => {
+    if (!(await regularExpression('id', memberInfo.user_id))) {
+      setAlert('incorrect_id');
+      return;
+    }
+    const param = { user_id: memberInfo.user_id.trim() };
+    const headers = {
+      'Content-Type': 'application/json',
+      'access-token': cookie,
+    };
+    try {
+      const res = await axios.post(`/api/auth/check/id-duplicate`, param, {
+        headers,
+      });
+      if (res.data.data) {
+        setIdCheck(true);
+        return;
+      }
+    } catch (error) {
+      const { data, status } = error.response;
+      if (status === 500) setAlert('error');
+      else if (status === 501 || data.detail === 'PendingRollbackError') {
+        duplicateId();
+      } else if (
+        data.detail === 'Duplicated ID' ||
+        data.detail === 'Retired User'
+      ) {
+        setIdCheck(false);
+        inputRef.current[0].focus();
+      }
+    }
+  };
+  //~~~~~~ 업데이트 ~~~~~~~
+  const updateMemberApi = async () => {
+    const result = await getMemberUpdate(memberInfo);
+    console.log(result);
+  };
+
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
     getPersonDepartmentApi();
     if (id) {
       getPersonMemberInfo();
-      changeState(setMemberInfo, 'section', contactValue);
+      changeState(setMemberInfo, 'section', memberInfo.section);
+      changeState(setMemberInfo, 'gender', memberInfo.gender);
     }
   }, []);
-
+  useEffect(() => {
+    setContactValue(memberInfo.section);
+  }, [memberInfo.section]);
   useEffect(() => {
     if (inputValue.length === 10) {
       setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
@@ -143,9 +257,9 @@ const PersonnelMember = () => {
     }
     changeState(setMemberInfo, 'phone', inputValue);
   }, [inputValue]);
-  useEffect(() => {
-    changeState(setMemberInfo, 'section', contactValue);
-  }, [contactValue]);
+  // useEffect(() => {
+  //   changeState(setMemberInfo, 'section', contactValue);
+  // }, [contactValue]);
 
   // 주소 검색
   useEffect(() => {
@@ -181,6 +295,7 @@ const PersonnelMember = () => {
                     autoComplete='off'
                     placeholder='아이디를 입력해주세요.'
                     disabled='disabled'
+                    ref={el => (inputRef.current[0] = el)}
                   />
                 ) : (
                   <input
@@ -188,12 +303,28 @@ const PersonnelMember = () => {
                     value={memberInfo.user_id}
                     autoComplete='off'
                     placeholder='아이디를 입력해주세요.'
+                    ref={el => (inputRef.current[0] = el)}
                     onChange={e =>
                       changeState(setMemberInfo, 'user_id', e.target.value)
                     }
                   />
                 )}
-                {id ? <></> : <button className='commonBtn'>중복체크</button>}
+                {id ? (
+                  <></>
+                ) : (
+                  <>
+                    <button className='commonBtn' onClick={() => duplicateId()}>
+                      중복체크
+                    </button>
+                    <span className={idCheck === false ? 'red' : 'blue'}>
+                      {idCheck === undefined
+                        ? ''
+                        : idCheck === false
+                        ? '중복된 아이디입니다.'
+                        : '사용가능한 아이디입니다.'}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
             <div className='name-line'>
@@ -205,6 +336,7 @@ const PersonnelMember = () => {
                   value={memberInfo.name}
                   placeholder='성명을 입력해주세요.'
                   autoComplete='off'
+                  ref={el => (inputRef.current[1] = el)}
                   onChange={e =>
                     changeState(setMemberInfo, 'name', e.target.value)
                   }
@@ -219,7 +351,9 @@ const PersonnelMember = () => {
                       name='gender'
                       autoComplete='off'
                       data-gender='male'
-                      onClick={e =>
+                      value='male'
+                      checked={memberInfo.gender === 'male'}
+                      onChange={e =>
                         changeState(
                           setMemberInfo,
                           'gender',
@@ -236,7 +370,9 @@ const PersonnelMember = () => {
                       name='gender'
                       autoComplete='off'
                       data-gender='female'
-                      onClick={e =>
+                      value='female'
+                      checked={memberInfo.gender === 'female'}
+                      onChange={e =>
                         changeState(
                           setMemberInfo,
                           'gender',
@@ -254,6 +390,7 @@ const PersonnelMember = () => {
                   type='date'
                   autoComplete='off'
                   value={memberInfo.birthday}
+                  ref={el => (inputRef.current[2] = el)}
                   onChange={e =>
                     changeState(setMemberInfo, 'birthday', e.target.value)
                   }
@@ -285,6 +422,7 @@ const PersonnelMember = () => {
                     type='text'
                     autoComplete='off'
                     placeholder='전화번호를 입력해주세요.'
+                    ref={el => (inputRef.current[3] = el)}
                     onChange={phoneNumRegex}
                     value={inputValue}
                   />
@@ -299,6 +437,7 @@ const PersonnelMember = () => {
                     type='password'
                     autoComplete='off'
                     placeholder='비밀번호를 입력해주세요.'
+                    ref={el => (inputRef.current[4] = el)}
                     value={memberInfo.password}
                     onChange={e =>
                       changeState(setMemberInfo, 'password', e.target.value)
@@ -314,6 +453,7 @@ const PersonnelMember = () => {
                   type='text'
                   autoComplete='off'
                   placeholder='이메일을 입력해주세요.'
+                  ref={el => (inputRef.current[5] = el)}
                   value={memberInfo.email}
                   onChange={e =>
                     changeState(setMemberInfo, 'email', e.target.value)
@@ -329,6 +469,7 @@ const PersonnelMember = () => {
                 autoComplete='off'
                 disabled='disabled'
                 value={memberInfo.address}
+                ref={el => (inputRef.current[6] = el)}
                 onChange={e => setAddressDetail(e.target.value)}
               />
               <button
@@ -340,7 +481,11 @@ const PersonnelMember = () => {
           </div>
           {id ? (
             <div className='btn-wrap'>
-              <button className='commonBtn'>수정</button>
+              <button
+                className='commonBtn'
+                onClick={() => updateMemberApi(memberInfo)}>
+                수정
+              </button>
               <button className='commonBtn delete'>삭제</button>
               <button className='commonBtn list'>목록</button>
             </div>

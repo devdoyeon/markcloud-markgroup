@@ -28,11 +28,8 @@ const PersonnelBusinessPopup = ({
   const cookie = getCookie('myToken');
 
   const createPersonnelDepartment = async () => {
-    const create = await getDepartmentCreate(
-      curDepartment?.department_name,
-      cookie
-    );
-    changeState(setCurDepartment, 'department_name', '');
+    const create = await getDepartmentCreate(curDepartment?.section, cookie);
+    changeState(setCurDepartment, 'section', '');
   };
 
   const updatePersonnelDepartment = async () => {
@@ -58,13 +55,9 @@ const PersonnelBusinessPopup = ({
               <input
                 type='text'
                 placeholder='부서명을 입력해주세요.'
-                value={curDepartment?.department_name}
+                value={curDepartment?.section}
                 onChange={e =>
-                  changeState(
-                    setCurDepartment,
-                    'department_name',
-                    e.target.value
-                  )
+                  changeState(setCurDepartment, 'section', e.target.value)
                 }
               />
             </label>
