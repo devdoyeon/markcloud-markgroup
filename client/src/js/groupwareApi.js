@@ -106,7 +106,7 @@ export const duplicateIdCheck = async userId => {
   }
 };
 
-//결제 관련 데이터 생성 api
+//# 결제 관련 데이터 생성 api
 export const createMID = async data => {
   const headers = {
     'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ export const createMID = async data => {
     return await apiErrorHandling(error);
   }
 };
-//결제 위변조 체크 api
+//# 결제 위변조 체크 api
 export const checkPay = async data => {
   const headers = {
     'Content-Type': 'application/json',
