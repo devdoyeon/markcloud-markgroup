@@ -6,9 +6,7 @@ const Cost = () => {
   return (
     <div className='container'>
       <CommonSiteMap color='black' />
-      <div className='cost'>
-
-      </div>
+      <div className='cost'></div>
       <CommonFooter />
     </div>
   );
