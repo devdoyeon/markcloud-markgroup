@@ -102,11 +102,9 @@ def get_member_info(db,member_id):
     
     try:
         department_info = db.query(member_table).filter(member_table.id == member_id).first()
-        print(department_info)
         return department_info
     
-    except Exception as e:
-        print(e)
+    except:
         raise HTTPException(status_code=500, detail='DBError')    
 
 
@@ -147,7 +145,6 @@ def change_member(db, inbound_data, member_id):
 
         values = {'name':inbound_data.name,
                 'user_id':inbound_data.user_id,
-                'hashed_password':inbound_data.password,
                 'email':inbound_data.email,
                 'section':inbound_data.section,
                 'birthday':inbound_data.birthday,
