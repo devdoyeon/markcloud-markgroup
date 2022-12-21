@@ -229,7 +229,12 @@ const PersonnelMember = () => {
   //~~~~~~ 업데이트 ~~~~~~~
   const updateMemberApi = async () => {
     const result = await getMemberUpdate(memberInfo);
-    console.log(result);
+    return commonModalSetting(
+      setAlertBox,
+      true,
+      'alert',
+      '수정이 완료되었습니다.'
+    );
   };
 
   useEffect(() => {
@@ -237,13 +242,15 @@ const PersonnelMember = () => {
     getPersonDepartmentApi();
     if (id) {
       getPersonMemberInfo();
-      changeState(setMemberInfo, 'section', memberInfo.section);
-      changeState(setMemberInfo, 'gender', memberInfo.gender);
+      // changeState(setMemberInfo, 'section', memberInfo?.section);
+      setContactValue(memberInfo?.section);
+      changeState(setMemberInfo, 'gender', memberInfo?.gender);
     }
   }, []);
   useEffect(() => {
-    setContactValue(memberInfo.section);
-  }, [memberInfo.section]);
+    // setContactValue(memberInfo.section);
+    changeState(setMemberInfo, 'section', contactValue);
+  }, [contactValue]);
   useEffect(() => {
     if (inputValue.length === 10) {
       setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
@@ -327,6 +334,7 @@ const PersonnelMember = () => {
                 )}
               </div>
             </div>
+
             <div className='name-line'>
               <div className='name'>
                 <span>성명</span>
@@ -483,7 +491,10 @@ const PersonnelMember = () => {
             <div className='btn-wrap'>
               <button
                 className='commonBtn'
-                onClick={() => updateMemberApi(memberInfo)}>
+                onClick={() => {
+                  updateMemberApi(memberInfo);
+                  navigate('/personnel');
+                }}>
                 수정
               </button>
               <button className='commonBtn delete'>삭제</button>
