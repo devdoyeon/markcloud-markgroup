@@ -589,8 +589,10 @@
 .payment-home .content-container .method-home > div label > input {
   margin-right: 10px;
 }
-.payment-home .content-container .method-home + .blue-btn {
+.payment-home .content-container .method-home + .commonBtn {
   margin-top: 20px;
+  padding: 18px 36px;
+  border-radius: 16px;
 }
 .payment-home .content-container .payment-success {
   text-align: center;

@@ -23,7 +23,7 @@ const CommonSiteMap = ({ color }) => {
             </li>
             <li>
               <a
-                href='https://markcloud.co.kr/mark-notice'
+                href='https://markcloud.co.kr/mark-notice/'
                 rel='noopener noreferrer'
                 target='_self'
                 className='main-nav'>
@@ -32,7 +32,7 @@ const CommonSiteMap = ({ color }) => {
               <ul className='sub-nav'>
                 <li>
                   <a
-                    href='https://markcloud.co.kr/mark-notice'
+                    href='https://markcloud.co.kr/mark-notice/'
                     rel='noopener noreferrer'
                     target='_self'>
                     공지사항
@@ -40,7 +40,7 @@ const CommonSiteMap = ({ color }) => {
                 </li>
                 <li>
                   <a
-                    href='https://markcloud.co.kr/mark-faq'
+                    href='https://markcloud.co.kr/mark-faq/'
                     rel='noopener noreferrer'
                     target='_self'>
                     FAQ
@@ -48,7 +48,7 @@ const CommonSiteMap = ({ color }) => {
                 </li>
                 <li>
                   <a
-                    href='https://markcloud.co.kr/mark-inquiry'
+                    href='https://markcloud.co.kr/mark-inquiry/'
                     rel='noopener noreferrer'
                     target='_self'>
                     1:1 문의
@@ -56,7 +56,7 @@ const CommonSiteMap = ({ color }) => {
                 </li>
                 <li>
                   <a
-                    href='https://markcloud.co.kr/mark-refund'
+                    href='https://markcloud.co.kr/mark-refund/'
                     rel='noopener noreferrer'
                     target='_self'>
                     환불 안내
