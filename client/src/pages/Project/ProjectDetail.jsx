@@ -8,6 +8,7 @@ import {
   getProjectDetail,
   getPeopleList,
   addProjectMember,
+  deleteProjectMember,
   editProject,
 } from 'js/groupwareApi';
 import deletePerson from 'image/deletePersonIcon.svg';
@@ -31,43 +32,6 @@ const ProjectDetail = () => {
   const [participation, setParticipation] = useState([]);
   let prevent = false;
 
-  const deleteMember = async () => {};
-
-  const addMember = async () => {
-    if (participation.includes(memberObj[personValue]))
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '이미 추가된 인원입니다.'
-      );
-    const result = await addProjectMember(id, memberObj[personValue]);
-    if (typeof result === 'object') {
-      setParticipation(prev => {
-        const clone = [...prev];
-        clone.push(memberObj[personValue]);
-        return clone;
-      });
-    } else catchError(result, navigate, setAlertBox, setAlert);
-  };
-
-  const peopleList = async () => {
-    setPersonArr([]);
-    const result = await getPeopleList();
-    if (typeof result === 'object') {
-      let obj = {};
-      result?.data?.forEach(i => {
-        setPersonArr(prev => {
-          const clone = [...prev];
-          clone.push(`${i?.name} (${i?.section})`);
-          return clone;
-        });
-        obj[`${i?.name} (${i?.section})`] = i?.user_id;
-      });
-      setMemberObj(obj);
-    } else catchError(result, navigate, setAlertBox, setAlert);
-  };
-
   //= 프로젝트 상세 내역
   const projectDetail = async () => {
     if (prevent) return;
@@ -89,6 +53,55 @@ const ProjectDetail = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 멤버 리스트
+  const peopleList = async () => {
+    setPersonArr([]);
+    const result = await getPeopleList();
+    if (typeof result === 'object') {
+      let obj = {};
+      result?.data?.forEach(i => {
+        setPersonArr(prev => {
+          const clone = [...prev];
+          clone.push(`${i?.name} (${i?.section})`);
+          return clone;
+        });
+        obj[`${i?.name} (${i?.section})`] = i?.user_id;
+      });
+      setMemberObj(obj);
+    } else catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  //= 프로젝트 멤버 추가
+  const addMember = async () => {
+    if (participation.includes(memberObj[personValue]))
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이미 추가된 인원입니다.'
+      );
+    const result = await addProjectMember(id, memberObj[personValue]);
+    if (typeof result === 'object') {
+      setParticipation(prev => {
+        const clone = [...prev];
+        clone.push(memberObj[personValue]);
+        return clone;
+      });
+    } else catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  //= 프로젝트 멤버 삭제
+  const deleteMember = async user => {
+    const result = await deleteProjectMember(id, user);
+    if (typeof result === 'object') 
+      setParticipation(prev => {
+        const clone = [...prev];
+        clone.splice(clone.indexOf(user), 1);
+        return clone;
+      });
+    else catchError(result, navigate, setAlertBox, setAlert)
+  };
+
   const changeProjectStatus = async () => {
     const result = await editProject(id, projectInfo);
     if (typeof result === 'object') {
@@ -105,9 +118,9 @@ const ProjectDetail = () => {
     changeState(setProjectInfo, 'project_status', statusValue);
   }, [statusValue]);
 
-  useEffect(() => {
-    changeProjectStatus();
-  }, [projectInfo?.project_status]);
+  // useEffect(() => {
+  //   changeProjectStatus();
+  // }, [projectInfo?.project_status]);
 
   return (
     <>
@@ -167,19 +180,11 @@ const ProjectDetail = () => {
                                 {getKeyByValue(memberObj, person)}
                                 <img
                                   src={deletePerson}
-                                  alt={`${person} 삭제 버튼`}
-                                  onClick={() => {
-                                    setParticipation(prev => {
-                                      const clone = [...prev];
-                                      clone.splice(
-                                        clone.indexOf(
-                                          getKeyByValue(memberObj, person)
-                                        ),
-                                        1
-                                      );
-                                      return clone;
-                                    });
-                                  }}
+                                  alt={`${getKeyByValue(
+                                    memberObj,
+                                    person
+                                  )} 삭제 버튼`}
+                                  onClick={() => deleteMember(person)}
                                 />
                               </span>
                             </>
