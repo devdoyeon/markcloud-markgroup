@@ -49,7 +49,6 @@ function App() {
         <Route path='/board/:id' element={<BoardRead />} />
         <Route path='/notice/:id' element={<BoardRead />} />
         <Route path='/business/:id' element={<BusinessBoardRead />} />
-        <Route path='/personnel/:id' element={<PersonnelMember />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route path='/project/write' element={<NewProject />} />
         <Route path='/report/write' element={<NewBoard />} />

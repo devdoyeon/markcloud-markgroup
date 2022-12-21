@@ -567,6 +567,14 @@
               font-size: 14px;
               color: $gray01;
               margin-right: 23px;
+              &.red {
+                color: #df0000;
+                margin-left: 16px;
+              }
+              &.blue {
+                color: #5b84e3;
+                margin-left: 16px;
+              }
             }
             > input {
               background-color: $subBlue;

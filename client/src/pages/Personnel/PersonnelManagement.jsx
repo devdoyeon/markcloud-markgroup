@@ -127,7 +127,7 @@ const PersonnelManagement = () => {
                         </span>
                         <span>{cur.created_at}</span>
                       </div>
-                      <div className='team'>{cur.department_name}</div>
+                      <div className='team'>{cur.section}</div>
                     </li>
                   </>
                 );
@@ -170,11 +170,14 @@ const PersonnelManagement = () => {
                       return (
                         <>
                           {acc}
-                          <tr>
+                          <tr
+                            onClick={() =>
+                              navigate(`/personnel/write/${cur.id}`)
+                            }>
                             <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
                             <td>{cur.user_id}</td>
                             <td>{cur.name}</td>
-                            <td>{cur.department}</td>
+                            <td>{cur.section}</td>
                             <td>{cur.phone}</td>
                             <td>{cur.email}</td>
                             <td>{cur.birthday}</td>

@@ -610,6 +610,14 @@
   color: #585858;
   margin-right: 23px;
 }
+.container .content-wrap.member .member-wrap > .id-line > div span.red {
+  color: #df0000;
+  margin-left: 16px;
+}
+.container .content-wrap.member .member-wrap > .id-line > div span.blue {
+  color: #5b84e3;
+  margin-left: 16px;
+}
 .container .content-wrap.member .member-wrap > .id-line > div > input {
   background-color: #eeeefa;
   border-radius: 8px;
