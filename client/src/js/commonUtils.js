@@ -12,7 +12,7 @@ const errorList = {
     '로그인 횟수가 초과되었습니다.<br/>잠시 후 다시 시도해 주세요.',
 };
 
-export const catchError = async (result, navigate, setModal, setAlert) => {
+export const catchError = async (result, navigate, setAlertBox, setAlert) => {
   if (
     result === 'serverError' ||
     result === 'accessDenied' ||
@@ -22,7 +22,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
     result === 'loginExceeded'
   ) {
     setAlert(result);
-    return commonModalSetting(setModal, true, 'alert', errorList[result]);
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   } else if (result === 'notFound') return navigate('/not-found');
 };
 
