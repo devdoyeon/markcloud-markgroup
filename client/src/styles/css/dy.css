@@ -252,9 +252,406 @@
 }
 
 .cost {
-  background-color: #dddddd;
+  position: relative;
+  background-color: white;
   width: 100%;
-  min-height: 100vh;
+  height: 1200px;
+}
+.cost > img {
+  transform: translateY(100px);
+  width: 100%;
+}
+.cost > .row {
+  width: 100%;
+  position: absolute;
+  bottom: 110px;
+}
+.cost > .row > div {
+  position: relative;
+  width: 220px;
+  height: 330px;
+  margin-right: 40px;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16), 4px 4px 4px rgba(0, 0, 0, 0.16);
+  transition: 0.5s;
+  cursor: pointer;
+}
+.cost > .row > div::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 8px;
+}
+.cost > .row > div:last-child {
+  margin-right: 0;
+}
+.cost > .row > div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+.cost > .row > div > div strong {
+  font-size: 28px;
+  color: #797979;
+  transition: 0.5s;
+}
+.cost > .row > div > div .v-cost-money {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 22px 0 27px;
+  transform: translateX(15px);
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 18px;
+  color: #cecece;
+  text-align: center;
+  transition: 0.5s;
+}
+.cost > .row > div > div .v-cost-money span {
+  position: absolute;
+  left: -48.85px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 44.85px;
+  height: 44.85px;
+  background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
+  border-radius: 50%;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 13px;
+  color: #ffffff;
+  transition: 0.3s;
+}
+.cost > .row > div > div .v-cost-money::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: calc(50% - 2.15px);
+  display: block;
+  width: 170%;
+  height: 4.3px;
+  background-color: #b993d6;
+}
+.cost > .row > div > div .v-cost-money:after {
+  content: "";
+  position: absolute;
+  left: calc(170% - 42px);
+  top: calc(50% - 2.15px);
+  width: 30px;
+  height: 43px;
+  background: url("image/discountArrow.svg") no-repeat right top;
+  background-size: contain;
+  transition: 0.5s;
+}
+.cost > .row > div > div .v-cost-discount {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 22px;
+  color: #15171a;
+  transition: 0.5s;
+}
+.cost > .row > div > div .v-cost-dashed {
+  width: 100%;
+  margin: 16px 0 25px;
+  border: 1px dashed #cecece;
+  transition: 0.3s;
+}
+.cost > .row > div > div .v-cost-desc {
+  color: #484848;
+  text-align: center;
+  line-height: 23px;
+  transition: 0.5s;
+}
+.cost > .row > div > div a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 142px;
+  height: 36px;
+  margin-top: 17px;
+  background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
+  border-radius: 8px;
+  color: #ffffff;
+  transition: all 0.5s;
+}
+.cost > .row > div:nth-last-child(-n+2) > div .v-cost-money::before {
+  width: 137.5%;
+}
+.cost > .row > div:nth-last-child(-n+2) > div .v-cost-money:after {
+  left: calc(137.5% - 42px);
+}
+.cost > .row > div:hover, .cost > .row > div:active {
+  width: 284px;
+  height: 380px;
+  height: var(--costContainer);
+  background: #5850cc;
+}
+.cost > .row > div:hover::after, .cost > .row > div:active::after {
+  display: none;
+}
+.cost > .row > div:hover > div, .cost > .row > div:active > div {
+  padding: 16px 0;
+}
+.cost > .row > div:hover > div strong, .cost > .row > div:active > div strong {
+  font-size: 32px;
+  color: #484848;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.cost > .row > div:hover > div .v-cost-money, .cost > .row > div:active > div .v-cost-money {
+  margin: 25px 0 35px;
+  font-size: 22px;
+}
+.cost > .row > div:hover > div .v-cost-money span, .cost > .row > div:active > div .v-cost-money span {
+  left: -66px;
+  width: 52px;
+  height: 52px;
+}
+.cost > .row > div:hover > div .v-cost-money::after, .cost > .row > div:active > div .v-cost-money::after {
+  left: calc(170% - 52px);
+  width: 40px;
+}
+.cost > .row > div:hover > div .v-cost-discount, .cost > .row > div:active > div .v-cost-discount {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 26px;
+  color: #15171a;
+}
+.cost > .row > div:hover > div .v-cost-dashed, .cost > .row > div:active > div .v-cost-dashed {
+  width: 210px;
+  margin: 26px 0 16px;
+}
+.cost > .row > div:hover > div .v-cost-desc, .cost > .row > div:active > div .v-cost-desc {
+  font-size: 20px;
+  line-height: 29px;
+}
+.cost > .row > div:hover > div a, .cost > .row > div:active > div a {
+  width: 142px;
+  height: 50px;
+  font-size: 19.35px;
+  transition: all 0.5s;
+}
+.cost > .row > div:hover:nth-child(3) > div .v-cost-money:after, .cost > .row > div:active:nth-child(3) > div .v-cost-money:after {
+  left: calc(160% - 52px);
+}
+.cost > .row > div:hover:nth-last-child(-n+2) > div .v-cost-money:after, .cost > .row > div:active:nth-last-child(-n+2) > div .v-cost-money:after {
+  left: calc(137.5% - 52px);
+}
+
+.v-payment-home .content-container {
+  width: 1024px;
+  margin: 200px auto;
+}
+.v-payment-home .content-container .v-payment-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 80px;
+}
+.v-payment-home .content-container .v-payment-content > div {
+  width: 100%;
+  margin-bottom: 50px;
+}
+.v-payment-home .content-container .v-payment-content > .blue-btn {
+  width: 150px;
+  font-size: 16px;
+}
+.v-payment-home .content-container .v-payment-title {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  color: #15171a;
+  margin-bottom: 10px;
+}
+.v-payment-home .content-container .cost-border-box {
+  padding: 20px;
+  border: 1px solid #cdcdcd;
+}
+.v-payment-home .content-container table {
+  width: 100%;
+  margin-bottom: 50px;
+  border-top: 1px solid #434343;
+  text-align: center;
+}
+.v-payment-home .content-container table th {
+  padding: 10px 0;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #cdcdcd;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.v-payment-home .content-container table td {
+  padding: 20px 0;
+  border-bottom: 1px solid #cdcdcd;
+  vertical-align: middle;
+}
+.v-payment-home .content-container > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.v-payment-home .content-container > ul > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex: 1;
+  padding: 20px 0;
+  background-color: #f5f5f5;
+  border: 1px solid #cdcdcd;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  color: #585858;
+  text-align: center;
+  cursor: pointer;
+}
+.v-payment-home .content-container > ul > li > svg {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #585858;
+}
+.v-payment-home .content-container > ul > li.active {
+  background-color: #ffffff;
+  color: #15171a;
+  border-color: #434343;
+}
+.v-payment-home .content-container > ul > li.active > svg {
+  color: #15171a;
+}
+.v-payment-home .content-container .v-order-home ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 80px;
+  background-color: #f5f5f5;
+}
+.v-payment-home .content-container .v-order-home ul > li > p {
+  margin-bottom: 5px;
+  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
+  font-size: 14px;
+  color: #585858;
+}
+.v-payment-home .content-container .v-order-home ul > li strong {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 24px;
+}
+.v-payment-home .content-container .v-order-home ul > li strong > span {
+  font-size: 16px;
+  color: #15171a;
+}
+.v-payment-home .content-container .v-order-home ul > li svg {
+  font-size: 24px;
+  color: #585858;
+}
+.v-payment-home .content-container .v-order-home ul > li svg.fa-pause-circle {
+  color: #15171a;
+  transform: rotate(90deg);
+}
+.v-payment-home .content-container .v-method-home > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+}
+.v-payment-home .content-container .v-method-home > div label {
+  width: 100%;
+  padding: 25px 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  cursor: pointer;
+}
+.v-payment-home .content-container .v-method-home > div label:first-child {
+  border-bottom: 1px solid #cdcdcd;
+}
+.v-payment-home .content-container .v-method-home > div label > input {
+  margin-right: 10px;
+}
+.v-payment-home .content-container .v-method-home + .blue-btn {
+  margin-top: 20px;
+}
+.v-payment-home .content-container .v-payment-success {
+  text-align: center;
+}
+.v-payment-home .content-container .v-payment-success > h2 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 30px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div {
+  margin: 40px 0;
+  padding: 50px;
+  background-color: rgba(60, 143, 239, 0.2);
+  text-align: center;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > h3 {
+  padding-bottom: 40px;
+  border-bottom: 2px dashed #434343;
+  font-size: 20px;
+  line-height: 30px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > h3 > span {
+  font-size: 34px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > h4 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 40px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > h4 > span {
+  margin-left: 20px;
+  font-size: 24px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > ul {
+  margin-top: 20px;
+  padding: 10px 40px 40px;
+  background-color: #ffffff;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > ul li {
+  font-size: 18px;
+  text-align: left;
+  line-height: 28px;
+}
+.v-payment-home .content-container .v-payment-success > h2 + div > ul li.title-li {
+  margin: 30px 0 10px;
+  color: #585858;
+  line-height: auto;
+}
+.v-payment-home .content-container .v-payment-success .btn-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.v-payment-home .content-container .v-payment-success .btn-wrap button {
+  width: 150px;
+  margin: 0 5px;
+  font-size: 16px;
 }
 
 .main-footer {

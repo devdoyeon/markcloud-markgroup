@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import 'App.css';
 import { Routes, Route } from 'react-router-dom';
 // =============== Pages ===============
@@ -11,6 +12,7 @@ import PersonnelManagement from 'pages/Personnel/PersonnelManagement';
 import BusinessManagement from 'pages/Business/BusinessManagement';
 // =============== CommonPages ===============
 import Cost from 'pages/Cost';
+import Payment from 'pages/Payment';
 import NewBoard from 'pages/common/NewBoard';
 import BoardRead from 'pages/common/BoardRead';
 import ProjectDetail from 'pages/Project/ProjectDetail';
@@ -21,12 +23,20 @@ import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
 import PersonnelMember from 'pages/Personnel/PersonnelMember';
 
 function App() {
+  
+  useEffect(() => {
+    //아임포트 IMP 객체 초기화
+    let IMP = window.IMP;
+    IMP.init('imp99495830');
+  }, []);
+
   return (
     <div className='App'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/cost' element={<Cost />} />
+        <Route path='/payment' element={<Payment />} />
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />

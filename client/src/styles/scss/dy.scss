@@ -229,9 +229,439 @@
 }
 
 .cost {
-  background-color: $gray04;
+  position: relative;
+  background-color: white;
   width: 100%;
-  min-height: 100vh;
+  height: 1200px;
+  > img {
+    transform: translateY(100px);
+    width: 100%;
+  }
+  > .row {
+    width: 100%;
+    @include position-style($bottom: 110px);
+    > div {
+      @include position-style(relative);
+      width: 220px;
+      height: 330px;
+      margin-right: 40px;
+      padding: 16px;
+      background-color: $white;
+      border-radius: 8px;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16),
+        4px 4px 4px rgba(0, 0, 0, 0.16);
+      transition: 0.5s;
+      cursor: pointer;
+
+      &::after {
+        content: '';
+        @include position-style($left: 0, $top: 0);
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+        border-radius: 8px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      > div {
+        @include flex-style(column, $alignVal: center, $justifyVal: center);
+        height: 100%;
+        background-color: $white;
+        border-radius: 8px;
+
+        strong {
+          @include txt-style(28px, #797979);
+          transition: 0.5s;
+        }
+
+        .v-cost-money {
+          @include position-style(relative);
+          @include flex-style($alignVal: center, $justifyVal: flex-start);
+          margin: 22px 0 27px;
+          transform: translateX(15px);
+          font-family: $middleFont;
+          @include txt-style(18px, #cecece);
+          text-align: center;
+          transition: 0.5s;
+
+          span {
+            @include position-style($left: -48.85px);
+            @include flex-style($alignVal: center, $justifyVal: center);
+            width: 44.85px;
+            height: 44.85px;
+            background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
+            border-radius: 50%;
+            font-family: $middleFont;
+            @include txt-style(13px, $white);
+            transition: 0.3s;
+          }
+
+          &::before {
+            content: '';
+            @include position-style(
+              absolute,
+              $left: -14px,
+              $top: calc(50% - 2.15px)
+            );
+            display: block;
+            width: calc(100% * 1.7);
+            height: 4.3px;
+            background-color: #b993d6;
+          }
+
+          &:after {
+            content: '';
+            @include position-style(
+              $left: calc(100% * 1.7 - 42px),
+              $top: calc(50% - 2.15px)
+            );
+            width: 30px;
+            height: 43px;
+            background: url('image/discountArrow.svg') no-repeat right top;
+            background-size: contain;
+            transition: 0.5s;
+          }
+        }
+
+        .v-cost-discount {
+          font-family: $boldFont;
+          @include txt-style(22px, $black);
+          transition: 0.5s;
+        }
+
+        .v-cost-dashed {
+          width: 100%;
+          margin: 16px 0 25px;
+          border: 1px dashed #cecece;
+          transition: 0.3s;
+        }
+
+        .v-cost-desc {
+          color: #484848;
+          text-align: center;
+          line-height: 23px;
+          transition: 0.5s;
+        }
+
+        a {
+          @include flex-style();
+          width: 142px;
+          height: 36px;
+          margin-top: 17px;
+          background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
+          border-radius: 8px;
+          color: $white;
+          transition: all 0.5s;
+        }
+      }
+
+      &:nth-last-child(-n + 2) {
+        > div {
+          .v-cost-money {
+            &::before {
+              width: calc(100% * 1.375);
+            }
+
+            &:after {
+              left: calc(100% * 1.375 - 42px);
+            }
+          }
+        }
+      }
+
+      &:hover,
+      &:active {
+        width: 284px;
+        height: 380px;
+        height: var(--costContainer);
+        background: $mainColor;
+
+        &::after {
+          display: none;
+        }
+
+        > div {
+          padding: 16px 0;
+          strong {
+            @include txt-style(32px, #484848);
+            font-family: $boldFont;
+          }
+
+          .v-cost-money {
+            margin: 25px 0 35px;
+            font-size: 22px;
+
+            span {
+              left: -66px;
+              width: 52px;
+              height: 52px;
+            }
+
+            &::after {
+              left: calc(100% * 1.7 - 52px);
+              width: 40px;
+            }
+          }
+
+          .v-cost-discount {
+            font-family: $boldFont;
+            @include txt-style(26px, $black);
+          }
+
+          .v-cost-dashed {
+            width: 210px;
+            margin: 26px 0 16px;
+          }
+
+          .v-cost-desc {
+            font-size: 20px;
+            line-height: 29px;
+          }
+
+          a {
+            width: 142px;
+            height: 50px;
+            font-size: 19.35px;
+            transition: all 0.5s;
+          }
+        }
+
+        &:nth-child(3) {
+          > div {
+            .v-cost-money {
+              &:after {
+                left: calc(100% * 1.6 - 52px);
+              }
+            }
+          }
+        }
+
+        &:nth-last-child(-n + 2) {
+          > div {
+            .v-cost-money {
+              &:after {
+                left: calc(100% * 1.375 - 52px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.v-payment-home {
+  .content-container {
+    width: 1024px;
+    margin: 200px auto;
+
+    .v-payment-content {
+      @include flex-style(column, $alignVal: center);
+      width: 100%;
+      margin-top: 80px;
+
+      > div {
+        width: 100%;
+        margin-bottom: 50px;
+      }
+
+      > .blue-btn {
+        width: 150px;
+        font-size: 16px;
+      }
+    }
+
+    .v-payment-title {
+      @include sub-title;
+      margin-bottom: 10px;
+    }
+
+    .cost-border-box {
+      padding: 20px;
+      border: 1px solid $gray03;
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 50px;
+      border-top: 1px solid $viewMainColor;
+      text-align: center;
+
+      th {
+        padding: 10px 0;
+        background-color: $gray05;
+        border-bottom: 1px solid $gray03;
+        font-family: $middleFont;
+      }
+
+      td {
+        padding: 20px 0;
+        border-bottom: 1px solid $gray03;
+        vertical-align: middle;
+      }
+    }
+
+    > ul {
+      @include flex-style(row);
+      width: 100%;
+
+      > li {
+        @include flex-style();
+        flex: 1;
+        padding: 20px 0;
+        background-color: $gray05;
+        border: 1px solid $gray03;
+        font-family: $middleFont;
+        @include txt-style(20px, $gray01);
+        text-align: center;
+        cursor: pointer;
+
+        > svg {
+          font-size: 20px;
+          margin-right: 10px;
+          color: $gray01;
+        }
+
+        &.active {
+          background-color: $white;
+          color: $black;
+          border-color: $viewMainColor;
+
+          > svg {
+            color: $black;
+          }
+        }
+      }
+    }
+
+    .v-order-home {
+      ul {
+        @include flex-style(row, $alignVal: center, $justifyVal: space-between);
+        padding: 20px 80px;
+        background-color: $gray05;
+
+        > li {
+          > p {
+            margin-bottom: 5px;
+            font-family: $regularFont;
+            @include txt-style(14px, $gray01);
+          }
+
+          strong {
+            font-family: $boldFont;
+            font-size: 24px;
+
+            > span {
+              @include txt-style(16px, $black);
+            }
+          }
+
+          svg {
+            font-size: 24px;
+            color: $gray01;
+
+            &.fa-pause-circle {
+              color: $black;
+              transform: rotate(90deg);
+            }
+          }
+        }
+      }
+    }
+
+    .v-method-home {
+      > div {
+        @include flex-style(column);
+        padding: 0;
+        
+        label {
+          width: 100%;
+          padding: 25px 20px;
+          font-family: $middleFont;
+          cursor: pointer;
+
+          &:first-child {
+            border-bottom: 1px solid $gray03;
+          }
+
+          > input {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      + .blue-btn {
+        margin-top: 20px;
+      }
+    }
+
+    .v-payment-success {
+      text-align: center;
+
+      > h2 {
+        @include main-title(30px);
+
+        + div {
+          margin: 40px 0;
+          padding: 50px;
+          background-color: rgba(60, 143, 239, 0.2);
+          text-align: center;
+
+          > h3 {
+            padding-bottom: 40px;
+            border-bottom: 2px dashed $viewMainColor;
+            font-size: 20px;
+            line-height: 30px;
+
+            > span {
+              font-size: 34px;
+            }
+          }
+
+          > h4 {
+            @include flex-style($alignVal: center, $justifyVal: center);
+            padding-top: 40px;
+
+            > span {
+              margin-left: 20px;
+              font-size: 24px;
+            }
+          }
+
+          > ul {
+            margin-top: 20px;
+            padding: 10px 40px 40px;
+            background-color: $white;
+
+            li {
+              font-size: 18px;
+              text-align: left;
+              line-height: 28px;
+
+              &.title-li {
+                margin: 30px 0 10px;
+                color: $gray01;
+                line-height: auto;
+              }
+            }
+          }
+        }
+      }
+
+      .btn-wrap {
+        @include flex-style($justifyVal: center);
+
+        button {
+          width: 150px;
+          margin: 0 5px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }
 
 .main-footer {

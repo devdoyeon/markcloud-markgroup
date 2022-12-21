@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
 
 //# API 통신 중 발생하는 에러 핸들링 함수
-const apiErrorHandling = async error => {
+export const apiErrorHandling = async error => {
   const { status } = error?.response;
   const { detail } = error?.response?.data;
   const failCount = detail?.split(',')[1];
@@ -93,6 +93,7 @@ export const checkUserInfo = async () => {
     return apiErrorHandling(error);
   }
 };
+
 //# 인사관리 중복 아이디 체크
 export const duplicateIdCheck = async userId => {
   const header = { 'Content-Type': 'application/json' };
@@ -100,6 +101,43 @@ export const duplicateIdCheck = async userId => {
     const result = await axios.post(`/api/auth/check/id-duplicate`, {
       user_id: userId,
     });
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+
+//결제 관련 데이터 생성 api
+export const createMID = async data => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+  };
+  try {
+    return await axios.post(
+      `/api/order/create?current_ip=${await getIp()}`,
+      data,
+      {
+        headers,
+      }
+    );
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+//결제 위변조 체크 api
+export const checkPay = async data => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+  };
+  try {
+    return await axios.post(
+      `/api/order/verify?current_ip=${await getIp()}`,
+      data,
+      {
+        headers,
+      }
+    );
   } catch (error) {
     return await apiErrorHandling(error);
   }
