@@ -4,8 +4,8 @@ from datetime import datetime
 import enum
 
 class genderEnum(str, enum.Enum):
-    male = "M"
-    female = "F"
+    male = "male"
+    female = "female"
 
 class roleEnum(str, enum.Enum):
     root = "root"

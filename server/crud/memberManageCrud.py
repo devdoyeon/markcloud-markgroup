@@ -15,10 +15,14 @@ def get_department_list(db, offset, limit, user_pk):
     
     try:
         user_organ_code = author_chk.get_user_info(db,user_pk).department_code
-        query = db.query(department_table).filter(department_table.organ_code == user_organ_code).order_by(department_table.id)
-                
+        
+        query = db.query(department_table.id,
+                         department_table.department_name.label('section'),
+                         department_table.created_at).filter(department_table.organ_code == user_organ_code).order_by(department_table.id)
+        
         total_count = query.count()
         department_list = query.offset(offset).limit(limit).all()
+        
         return total_count, department_list
     except:
         raise HTTPException(status_code=500, detail='DBError')
@@ -29,7 +33,9 @@ def get_department_info(db,department_id):
     department_table = memberManageModel.DepartmentTable
     
     try:
-        return db.query(department_table).filter(department_table.id == department_id).first()
+        return db.query(department_table.id,
+                        department_table.department_name.label('section'),
+                        department_table.created_at).filter(department_table.id == department_id).first()
     except:
         raise HTTPException(status_code=500, detail='DBError')
 
@@ -96,9 +102,11 @@ def get_member_info(db,member_id):
     
     try:
         department_info = db.query(member_table).filter(member_table.id == member_id).first()
+        print(department_info)
         return department_info
     
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail='DBError')    
 
 
@@ -109,9 +117,7 @@ def insert_member(db,inbound_data,user_pk):
     try:
         # admin 정보
         user_info = author_chk.get_user_info(db, user_pk)
-        
-
-        hashed_password = author_chk.get_hashed_password(inbound_data.hashed_password)
+        hashed_password = author_chk.get_hashed_password(inbound_data.password)
         
         db_query = member_table(
             name = inbound_data.name,
@@ -130,7 +136,7 @@ def insert_member(db,inbound_data,user_pk):
 
         db.add(db_query)
 
-    except:
+    except Exception:
         raise HTTPException(status_code=500, detail='DBError')
 
 def change_member(db, inbound_data, member_id):

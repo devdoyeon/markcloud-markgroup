@@ -7,7 +7,7 @@ from model import memberManageModel
 class DepartmentOut(BaseModel):
     
     id:int # 번호
-    department_name:str # 부서명
+    section:str # 부서명
     created_at:date # 등록일시
 
     class Config:
@@ -17,17 +17,35 @@ class DepartmentIn(BaseModel):
     
     department_name:str
     
+    
+###############################################################
+    
 class MemberOut(BaseModel):
 
     id:int
     user_id:str
     name:str
-    department:str
+    section:str
     phone:str
     email:str
-    created_at:date
     birthday:date
 
+    class Config:
+        orm_mode = True
+
+class Memberinfo(BaseModel):
+    
+    id:int
+    user_id:str
+    name:str
+    gender:str
+    birthday:date
+    section:str
+    phone:str
+    email:str
+    address:str
+    zip_code:str
+    
     class Config:
         orm_mode = True
 
@@ -46,4 +64,3 @@ class MemberIn(BaseModel):
     
     class Config:
         orm_mode = True
-

@@ -2,7 +2,6 @@
 from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from typing import List
-from fastapi.security import OAuth2PasswordBearer
 
 
 from database import *
@@ -29,7 +28,6 @@ def read_department_list(
     limit:int = 5,
     db: Session = Depends(get_db)
 ):
-
     offset = (page - 1) * limit
     
     total_count, department_list = get_department_list(db, offset, limit, user_pk)
@@ -96,8 +94,8 @@ def read_member_list(
     offset = (page -1) * limit
     
     total_count, member_list = get_member_list(db,offset,limit,user_pk)
+
     total_page = total_count // limit
-    
     if total_count % limit != 0:
         total_page += 1    
 
@@ -109,7 +107,7 @@ def read_member_list(
     ).success_response(member_list)
 
 # 직원 상세페이지
-@router_member.get('/member/info',response_model= MemberOut)
+@router_member.get('/member/info',response_model= Memberinfo)
 def read_member_info(
     member_id:int,
     db: Session = Depends(get_db)
@@ -131,7 +129,7 @@ def create_member(
 # 직원 수정
 @router_member.post('/member/update')
 def update_member(
-    inboud_data: MemberIn,
+    inboud_data: Memberinfo,
     member_id:int,
     db: Session = Depends(get_db)
 ):
