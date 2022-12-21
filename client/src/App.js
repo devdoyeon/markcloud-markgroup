@@ -13,6 +13,7 @@ import BusinessManagement from 'pages/Business/BusinessManagement';
 // =============== CommonPages ===============
 import Cost from 'pages/Cost';
 import Payment from 'pages/Payment';
+import PaymentSuccess from 'pages/PaymentSuccess';
 import NewBoard from 'pages/common/NewBoard';
 import BoardRead from 'pages/common/BoardRead';
 import ProjectDetail from 'pages/Project/ProjectDetail';
@@ -23,7 +24,6 @@ import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
 import PersonnelMember from 'pages/Personnel/PersonnelMember';
 
 function App() {
-  
   useEffect(() => {
     //아임포트 IMP 객체 초기화
     let IMP = window.IMP;
@@ -37,6 +37,7 @@ function App() {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/cost' element={<Cost />} />
         <Route path='/payment' element={<Payment />} />
+        <Route path='/payment-success' element={<PaymentSuccess />} />
         <Route path='/project' element={<ProjectStatus />} />
         <Route path='/report' element={<Report />} />
         <Route path='/board' element={<Board />} />

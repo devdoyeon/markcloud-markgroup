@@ -50,10 +50,10 @@ const Payment = memo(() => {
   return (
     <>
       <CommonSiteMap color='black' />
-      <section className='v-payment-home'>
+      <section className='payment-home'>
         <div className='content-container'>
           <PaymentStepNav step={1} />
-          <main className='v-payment-content'>
+          <main className='payment-content'>
             <PaymentInfo curData={curData} />
           </main>
         </div>

@@ -277,7 +277,7 @@
           transition: 0.5s;
         }
 
-        .v-cost-money {
+        .cost-money {
           @include position-style(relative);
           @include flex-style($alignVal: center, $justifyVal: flex-start);
           margin: 22px 0 27px;
@@ -326,20 +326,20 @@
           }
         }
 
-        .v-cost-discount {
+        .cost-discount {
           font-family: $boldFont;
           @include txt-style(22px, $black);
           transition: 0.5s;
         }
 
-        .v-cost-dashed {
+        .cost-dashed {
           width: 100%;
           margin: 16px 0 25px;
           border: 1px dashed #cecece;
           transition: 0.3s;
         }
 
-        .v-cost-desc {
+        .cost-desc {
           color: #484848;
           text-align: center;
           line-height: 23px;
@@ -360,7 +360,7 @@
 
       &:nth-last-child(-n + 2) {
         > div {
-          .v-cost-money {
+          .cost-money {
             &::before {
               width: calc(100% * 1.375);
             }
@@ -390,7 +390,7 @@
             font-family: $boldFont;
           }
 
-          .v-cost-money {
+          .cost-money {
             margin: 25px 0 35px;
             font-size: 22px;
 
@@ -406,17 +406,17 @@
             }
           }
 
-          .v-cost-discount {
+          .cost-discount {
             font-family: $boldFont;
             @include txt-style(26px, $black);
           }
 
-          .v-cost-dashed {
+          .cost-dashed {
             width: 210px;
             margin: 26px 0 16px;
           }
 
-          .v-cost-desc {
+          .cost-desc {
             font-size: 20px;
             line-height: 29px;
           }
@@ -431,7 +431,7 @@
 
         &:nth-child(3) {
           > div {
-            .v-cost-money {
+            .cost-money {
               &:after {
                 left: calc(100% * 1.6 - 52px);
               }
@@ -441,7 +441,7 @@
 
         &:nth-last-child(-n + 2) {
           > div {
-            .v-cost-money {
+            .cost-money {
               &:after {
                 left: calc(100% * 1.375 - 52px);
               }
@@ -453,12 +453,12 @@
   }
 }
 
-.v-payment-home {
+.payment-home {
   .content-container {
     width: 1024px;
     margin: 200px auto;
 
-    .v-payment-content {
+    .payment-content {
       @include flex-style(column, $alignVal: center);
       width: 100%;
       margin-top: 80px;
@@ -474,7 +474,7 @@
       }
     }
 
-    .v-payment-title {
+    .payment-title {
       @include sub-title;
       margin-bottom: 10px;
     }
@@ -537,7 +537,7 @@
       }
     }
 
-    .v-order-home {
+    .order-home {
       ul {
         @include flex-style(row, $alignVal: center, $justifyVal: space-between);
         padding: 20px 80px;
@@ -572,11 +572,11 @@
       }
     }
 
-    .v-method-home {
+    .method-home {
       > div {
         @include flex-style(column);
         padding: 0;
-        
+
         label {
           width: 100%;
           padding: 25px 20px;
@@ -598,7 +598,7 @@
       }
     }
 
-    .v-payment-success {
+    .payment-success {
       text-align: center;
 
       > h2 {

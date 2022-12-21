@@ -29,9 +29,15 @@ const ProjectDetail = () => {
   const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
+  let prevent = false;
 
   //= 프로젝트 상세 내역
   const projectDetail = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, []);
     const result = await getProjectDetail(id);
     if (typeof result === 'object') {
       setProjectInfo(result?.data);

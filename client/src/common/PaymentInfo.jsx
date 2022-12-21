@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaMinusCircle, FaPauseCircle } from 'react-icons/fa';
 import CommonModal from './CommonModal';
-import { catchError, commonModalSetting } from 'js/commonUtils';
+import { catchError, commonModalSetting, addComma } from 'js/commonUtils';
 import { createMID, checkPay } from 'js/groupwareApi';
 
 const PaymentInfo = memo(({ curData }) => {
@@ -13,10 +13,6 @@ const PaymentInfo = memo(({ curData }) => {
     bool: false,
   });
   const navigate = useNavigate();
-  const addComma = str => {
-    if (!str) return '';
-    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
 
   const {
     merchant_code,
@@ -27,8 +23,6 @@ const PaymentInfo = memo(({ curData }) => {
     payMethod,
     setPayMethod,
   } = curData;
-
-  const [alertMsg, setAlertMsg] = useState('');
 
   //월, 일이 한자리일 경우 '0'추가하는 함수
   const addZero = val => {
@@ -121,7 +115,7 @@ const PaymentInfo = memo(({ curData }) => {
       async function (rsp) {
         //callback
         if (rsp.success) {
-          // 결제 성공 시 로직,
+          // 결제 성공 시 로직
           const data = {
             merchant_uid: rsp.merchant_uid,
             imp_uid: rsp.imp_uid,
@@ -137,8 +131,14 @@ const PaymentInfo = memo(({ curData }) => {
             });
           } else catchError(result, navigate, setAlertBox, setAlert);
         } else {
-          // 결제 실패 시 로직,
-          setAlertMsg('error_payment');
+          // 결제 실패 시 로직
+          setAlert('failedPayment');
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'alert',
+            '결제에 실패했습니다.<br/>다시 시도해 주세요.'
+          );
         }
       }
     );
@@ -146,8 +146,8 @@ const PaymentInfo = memo(({ curData }) => {
 
   return (
     <>
-      <div className='v-order-home'>
-        <p className='v-payment-title'>주문내역</p>
+      <div className='order-home'>
+        <p className='payment-title'>주문내역</p>
         <div className='cost-border-box'>
           <table>
             <thead>
@@ -160,8 +160,7 @@ const PaymentInfo = memo(({ curData }) => {
             <tbody>
               <tr>
                 <td>
-                  마크그룹웨어 <br className='mobile-only' />
-                  {useDay}일권
+                  마크그룹웨어 {useDay}일권
                 </td>
                 <td>{culDate(0, useDay)}</td>
                 <td className='mobile-none'>{addComma(money)}원</td>
@@ -199,8 +198,8 @@ const PaymentInfo = memo(({ curData }) => {
           </ul>
         </div>
       </div>
-      <div className='v-method-home'>
-        <p className='v-payment-title'>결제방법</p>
+      <div className='method-home'>
+        <p className='payment-title'>결제방법</p>
         <div className='cost-border-box'>
           <label>
             <input
@@ -232,7 +231,7 @@ const PaymentInfo = memo(({ curData }) => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'deleteConfirm');
+            if (alert === 'failedPayment') return;
             else return;
           }}
         />

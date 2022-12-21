@@ -91,6 +91,11 @@ export const headerHoverEvent = () => {
   });
 };
 
+export const addComma = str => {
+  if (!str) return '';
+  return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 //================================== 병욱 ==================================
 
 export const numberWithCommas = x => {

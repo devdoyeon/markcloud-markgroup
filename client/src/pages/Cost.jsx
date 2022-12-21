@@ -13,19 +13,19 @@ const Cost = () => {
           <div>
             <div>
               <strong className='bold'>180일권</strong>
-              <p className='v-cost-money bold'>
+              <p className='cost-money bold'>
                 <span>20%</span>1,500,000원
               </p>
-              <span className='v-cost-discount bold'>1,200,000원</span>
-              <div className='v-cost-dashed'></div>
-              <p className='v-cost-desc'>
+              <span className='cost-discount bold'>1,200,000원</span>
+              <div className='cost-dashed'></div>
+              <p className='cost-desc'>
                 마크그룹웨어 서비스
                 <br />
                 180일 이용권
               </p>
               <Link
                 to='/payment'
-                state={{ merchant_code: 'GW180', money: 1500000, day: 180 }}>
+                state={{ merchant_code: 'MV180', money: 1500000, day: 180 }}>
                 구매하기
               </Link>
             </div>
@@ -33,19 +33,19 @@ const Cost = () => {
           <div>
             <div>
               <strong className='bold'>365일권</strong>
-              <p className='v-cost-money bold'>
+              <p className='cost-money bold'>
                 <span>20%</span>2,500,000원
               </p>
-              <span className='v-cost-discount bold'>2,000,000원</span>
-              <div className='v-cost-dashed'></div>
-              <p className='v-cost-desc'>
+              <span className='cost-discount bold'>2,000,000원</span>
+              <div className='cost-dashed'></div>
+              <p className='cost-desc'>
                 마크그룹웨어 서비스
                 <br />
                 365일 이용권
               </p>
               <Link
                 to='/payment'
-                state={{ merchant_code: 'GW365', money: 2500000, day: 365 }}>
+                state={{ merchant_code: 'MV365', money: 2500000, day: 365 }}>
                 구매하기
               </Link>
             </div>
