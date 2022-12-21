@@ -40,8 +40,8 @@ const Home = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        'alert',
-        '로그인이 필요한 서비스입니다.'
+        'confirm',
+        '로그인이 필요한 서비스입니다.<br/>로그인 하시겠습니까?'
       );
       setAlert('needLogin');
     } else {
