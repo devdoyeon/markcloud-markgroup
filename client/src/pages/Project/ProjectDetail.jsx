@@ -36,6 +36,11 @@ const ProjectDetail = () => {
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
       setStatusValue(result?.data?.project_status);
+      document.querySelector('.content').innerHTML =
+        new DOMParser().parseFromString(
+          result?.data?.project_description,
+          'text/html'
+        ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -76,7 +81,7 @@ const ProjectDetail = () => {
                 </div>
               </div>
               <hr />
-              <div className='content'>{projectInfo?.project_description}</div>
+              <div className='content'></div>
               <hr />
               <div className='projectSetting column'>
                 <hr />
