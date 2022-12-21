@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CommonMenu from 'common/CommonMenu';
 import CommonFooter from 'common/CommonFooter';
 import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import mainLogo from 'image/groupware-logo.png';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';

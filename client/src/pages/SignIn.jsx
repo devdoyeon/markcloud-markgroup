@@ -6,7 +6,6 @@ import CommonSiteMap from 'common/CommonSiteMap';
 import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
-import logo from 'image/groupware-logo.png';
 
 const SignIn = () => {
   const [alert, setAlert] = useState('');
