@@ -8,6 +8,7 @@ import {
   getNoticeInfo,
   getReportDetail,
 } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -22,6 +23,8 @@ const BoardRead = () => {
   const { id } = useParams();
   const [header, setHeader] = useState('');
   const [info, setInfo] = useState({});
+
+  const cookie = getCookie('myToken');
 
   const getDetail = async () => {
     if (prevent) return;
