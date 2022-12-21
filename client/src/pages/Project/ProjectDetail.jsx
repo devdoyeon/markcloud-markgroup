@@ -9,13 +9,11 @@ import {
   getPeopleList,
   addProjectMember,
   deleteProjectMember,
-  editProject,
 } from 'js/groupwareApi';
 import deletePerson from 'image/deletePersonIcon.svg';
 import { changeState, getKeyByValue } from 'js/commonUtils';
 
 const ProjectDetail = () => {
-  const statusArr = ['시작 전', '진행 중', '종료'];
   const { id } = useParams();
   const navigate = useNavigate();
   const [alert, setAlert] = useState('');
@@ -93,20 +91,13 @@ const ProjectDetail = () => {
   //= 프로젝트 멤버 삭제
   const deleteMember = async user => {
     const result = await deleteProjectMember(id, user);
-    if (typeof result === 'object') 
+    if (typeof result === 'object')
       setParticipation(prev => {
         const clone = [...prev];
         clone.splice(clone.indexOf(user), 1);
         return clone;
       });
-    else catchError(result, navigate, setAlertBox, setAlert)
-  };
-
-  const changeProjectStatus = async () => {
-    const result = await editProject(id, projectInfo);
-    if (typeof result === 'object') {
-      projectDetail();
-    } else catchError(result, navigate, setAlertBox, setAlert);
+    else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -117,10 +108,6 @@ const ProjectDetail = () => {
   useEffect(() => {
     changeState(setProjectInfo, 'project_status', statusValue);
   }, [statusValue]);
-
-  // useEffect(() => {
-  //   changeProjectStatus();
-  // }, [projectInfo?.project_status]);
 
   return (
     <>
@@ -160,11 +147,9 @@ const ProjectDetail = () => {
                 <hr />
                 <div className='row statusSelect'>
                   <span>프로젝트 상태</span>
-                  <CommonSelect
-                    opt={statusArr}
-                    selectVal={statusValue}
-                    setSelectVal={setStatusValue}
-                  />
+                  <div className='fixedStatus'>
+                    {projectInfo?.project_status}
+                  </div>
                 </div>
                 <hr />
                 <div className='row peopleWrap'>

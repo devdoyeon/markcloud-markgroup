@@ -10,7 +10,12 @@ import {
   changeState,
   catchError,
 } from 'js/commonUtils';
-import { getProjectDetail, createProject, editProject } from 'js/groupwareApi';
+import {
+  getProjectDetail,
+  createProject,
+  editProject,
+  deleteProject,
+} from 'js/groupwareApi';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -106,9 +111,12 @@ const NewProject = () => {
   };
 
   //= 프로젝트 삭제
-  const deleteProject = async () => {
-    setAlert('completeDelete');
-    commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
+  const deleteCurProject = async () => {
+    const result = await deleteProject(id);
+    if (typeof result === 'object') {
+      setAlert('completeDelete');
+      commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
+    }
   };
 
   useEffect(() => {
@@ -213,7 +221,17 @@ const NewProject = () => {
               등록
             </button>
             {id?.length ? (
-              <button className='commonBtn delete' onClick={deleteProject}>
+              <button
+                className='commonBtn delete'
+                onClick={() => {
+                  setAlert('confirmDelete');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    `삭제된 프로젝트는 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?`
+                  );
+                }}>
                 삭제
               </button>
             ) : (
@@ -249,6 +267,7 @@ const NewProject = () => {
               alert === 'completeEdit'
             )
               navigate('/project');
+            else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
             else return;

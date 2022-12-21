@@ -647,6 +647,15 @@ export const editProject = async (id, projectInfo) => {
   }
 };
 
+//& 프로젝트 삭제
+export const deleteProject = async id => {
+  try {
+    return await axios.post(`/dy/project/delete?project_id=${id}`);
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
