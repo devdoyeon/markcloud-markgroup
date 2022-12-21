@@ -149,13 +149,24 @@ export const checkPay = async data => {
 };
 
 // ==============================공지사항==============================
-export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
+export const getNoticeList = async (
+  { page, limit = 9 },
+  type,
+  value,
+  cookie
+) => {
+  const headers = {
+    'access-token': cookie,
+  };
   try {
     if (type === '' || value === '') {
-      return await axios.get(`/bw/notice/list?page=${page}&limit=${limit}`);
+      return await axios.get(`/bw/notice/list?page=${page}&limit=${limit}`, {
+        headers,
+      });
     } else {
       return await axios.get(
-        `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`
+        `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
+        { headers }
       );
     }
   } catch (error) {
@@ -170,34 +181,55 @@ export const getNoticeInfo = async id => {
   }
 };
 
-export const createNotice = async ({ title, content }) => {
+export const createNotice = async ({ title, content, created_id }, cookie) => {
+  const headers = {
+    'access-token': cookie,
+  };
   try {
-    return await axios.post(`/bw/notice/create`, {
-      title: title,
-      content: content,
-      created_id: 'songmoana',
-    });
+    return await axios.post(
+      `/bw/notice/create`,
+      {
+        title: title,
+        content: content,
+        created_id: created_id,
+      },
+      { headers }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
-export const editNotice = async ({ title, content, created_id }, id) => {
+export const editNotice = async (
+  { title, content, created_id },
+  id,
+  cookie
+) => {
+  const headers = {
+    'access-token': cookie,
+  };
   try {
-    return await axios.post(`/bw/notice/update?notice_id=${id}`, {
-      title: title,
-      content: content,
-      created_id: 'songmoana',
-    });
+    return await axios.post(
+      `/bw/notice/update?notice_id=${id}`,
+      {
+        title: title,
+        content: content,
+        created_id: created_id,
+      },
+      { headers }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
-export const deleteNotice = async id => {
+export const deleteNotice = async (id, cookie) => {
+  const headers = {
+    'access-token': cookie,
+  };
+  console.log('ddd');
   try {
-    const typeChange = parseInt(id);
-    return await axios.post(`/bw/notice/delete?notice_id=${id}`);
+    return await axios.post(`/bw/notice/delete?notice_id=${id}`, { headers });
   } catch (error) {
     return apiErrorHandling(error);
   }

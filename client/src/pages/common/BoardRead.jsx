@@ -11,6 +11,7 @@ import {
   getReportDetail,
   deleteReport,
 } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -25,6 +26,8 @@ const BoardRead = () => {
   const { id } = useParams();
   const [header, setHeader] = useState('');
   const [info, setInfo] = useState({});
+
+  const cookie = getCookie('myToken');
 
   const getDetail = async () => {
     if (prevent) return;
@@ -67,7 +70,7 @@ const BoardRead = () => {
     switch (path.split('/')[1]) {
       case 'notice':
         setHeader('공지사항');
-        result = await deleteNotice(id);
+        result = await deleteNotice(id, cookie);
         break;
       case 'board':
         setHeader('게시판');

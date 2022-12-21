@@ -11,14 +11,6 @@ import {
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { createBusiness, getBusinessRead } from 'js/groupwareApi';
-import {
-  getBoardDetail,
-  createBoard,
-  editBoard,
-  editNotice,
-  getNoticeInfo,
-  createNotice,
-} from 'js/groupwareApi';
 
 const BusinessNewBoard = () => {
   const [alert, setAlert] = useState('');

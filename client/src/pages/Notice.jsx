@@ -7,6 +7,7 @@ import ListWrap from 'common/ListWrap';
 import CommonModal from 'common/CommonModal';
 import { getNoticeList } from 'js/groupwareApi';
 import { catchError, changeTitle } from 'js/commonUtils';
+import { getCookie } from 'js/cookie';
 
 const Notice = () => {
   const [alert, setAlert] = useState('');
@@ -26,13 +27,15 @@ const Notice = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  const cookie = getCookie('myToken');
+
   const getNoticeApi = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getNoticeList(pageInfo, filter, searchText);
+    const result = await getNoticeList(pageInfo, filter, searchText, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);

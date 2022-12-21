@@ -20,6 +20,7 @@ import {
   getNoticeInfo,
   createNotice,
 } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const NewBoard = () => {
   const [alert, setAlert] = useState('');
@@ -36,6 +37,7 @@ const NewBoard = () => {
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
+  const cookie = getCookie('myToken');
 
   const returnHeader = () => {
     switch (path.split('/')[1]) {
@@ -95,7 +97,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await createNotice(postInfo);
+        result = await createNotice(postInfo, cookie);
         break;
       case 'board':
         result = await createBoard(postInfo);
@@ -134,7 +136,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await editNotice(postInfo, id);
+        result = await editNotice(postInfo, id, cookie);
         break;
       case 'board':
         result = await editBoard(postInfo, id);
@@ -158,6 +160,7 @@ const NewBoard = () => {
 
   useEffect(() => {
     changeTitle('그룹웨어 > 작성');
+    changeState(setPostInfo, 'created_id', localStorage.getItem('userName'));
   }, []);
 
   useEffect(() => {
