@@ -11,6 +11,8 @@ const errorList = {
   tokenExpired: '토큰이 만료되었습니다.<br/>다시 로그인해 주세요.',
   loginExceeded:
     '로그인 횟수가 초과되었습니다.<br/>잠시 후 다시 시도해 주세요.',
+  paymentRequired:
+    '유료 결제가 필요한 서비스입니다.<br/>요금제 안내 페이지로 이동하시겠습니까?',
 };
 
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
@@ -24,11 +26,13 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   } else if (result === 'duplicateLogin') {
-    setAlert(result)
-    removeCookie('myToken')
+    setAlert(result);
+    removeCookie('myToken');
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-    
-  }else if (result === 'notFound') return navigate('/not-found');
+  } else if (result === 'paymentRequired') {
+    setAlert(result);
+    return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
+  } else if (result === 'notFound') return navigate('/not-found');
 };
 
 export const emptyCheck = value => {

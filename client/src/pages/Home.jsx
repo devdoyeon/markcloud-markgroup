@@ -4,7 +4,7 @@ import CommonFooter from 'common/CommonFooter';
 import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
-import { checkUserInfo } from 'js/groupwareApi';
+import { checkUserInfo, checkPoint } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
@@ -43,13 +43,16 @@ const Home = () => {
       );
       setAlert('needLogin');
     } else {
-      const result = await checkUserInfo();
-      if (typeof result === 'object') {
-        const { name, user_id } = result?.data?.data;
-        localStorage.setItem('userName', name);
-        localStorage.setItem('userId', user_id);
-        navigate('/business');
-      } else return catchError(result, navigate, setAlertBox, setAlert);
+      const checkResult = await checkPoint();
+      if (typeof checkResult === 'object') {
+        const userResult = await checkUserInfo();
+        if (typeof userResult === 'object') {
+          const { name, user_id } = userResult?.data?.data;
+          localStorage.setItem('userName', name);
+          localStorage.setItem('userId', user_id);
+          navigate('/business');
+        } else return catchError(userResult, navigate, setAlertBox, setAlert);
+      } else catchError(checkResult, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -227,6 +230,7 @@ const Home = () => {
             if (alert === 'needLogin') return navigate('/sign-in');
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
+            else if (alert === 'paymentRequired') return navigate('/cost');
             else return;
           }}
         />

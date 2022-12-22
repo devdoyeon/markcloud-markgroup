@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
 
+const headers = {
+  'access-token': getCookie('myToken'),
+};
+
 //# API 통신 중 발생하는 에러 핸들링 함수
 export const apiErrorHandling = async error => {
   const { status } = error?.response;
@@ -18,6 +22,7 @@ export const apiErrorHandling = async error => {
       else if (detail === `Invaild Password,${failCount}`)
         return `wrongPw,${failCount}`;
       else if (detail === 'Logins Exceeded') return 'loginExceeded';
+      else if (detail === 'Payment Required') return 'paymentRequired';
       break;
     case 404:
       return 'notFound';
@@ -141,6 +146,18 @@ export const checkPay = async data => {
       {
         headers,
       }
+    );
+  } catch (error) {
+    return await apiErrorHandling(error);
+  }
+};
+
+//# 체크포인트
+export const checkPoint = async () => {
+  try {
+    return await axios.get(
+      `/api/checkpoint/groupware?current_ip=${await getIp()}`,
+      { headers }
     );
   } catch (error) {
     return await apiErrorHandling(error);
