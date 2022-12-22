@@ -193,7 +193,7 @@ export const createNotice = async ({ title, content, created_id }, cookie) => {
         content: content,
         created_id: created_id,
       },
-      { headers }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -216,7 +216,7 @@ export const editNotice = async (
         content: content,
         created_id: created_id,
       },
-      { headers }
+      { headers: headers }
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -227,18 +227,37 @@ export const deleteNotice = async (id, cookie) => {
   const headers = {
     'access-token': cookie,
   };
-  console.log('ddd');
   try {
-    return await axios.post(`/bw/notice/delete?notice_id=${id}`, { headers });
+    return await axios.post(`/bw/notice/delete?notice_id=${id}`, null, {
+      headers: headers,
+    });
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 // ================================ 업무 관리 ================================
 
-export const getBusinessRead = async ({ page, limit }) => {
+export const getBusinessRead = async (
+  { project_name, status_filter = 'MyProject' },
+  { page, limit },
+  cookie
+) => {
+  const headers = {
+    'access-token': cookie,
+  };
   try {
-    return await axios.get(`/bw/projects/read?limit=${limit}&page=${page}`);
+    if (project_name === '') {
+      return await axios.get(
+        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        { headers: headers }
+      );
+    } else {
+      console.log('else문');
+      return await axios.get(
+        `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
+        { headers: headers }
+      );
+    }
   } catch (error) {
     return apiErrorHandling(error);
   }
