@@ -102,20 +102,22 @@ const BusinessManagement = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 업무 관리');
+    if (getCookie('myToken')) changeTitle('그룹웨어 > 업무 관리');
   }, []);
 
   useEffect(() => {
-    getBusinessReadApi();
+    if (getCookie('myToken')) getBusinessReadApi();
   }, [pageInfo.page]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'project_name', projectValue);
-    getBusinessReadApi();
+    if (getCookie('myToken')) {
+      changeState(setPostInfo, 'project_name', projectValue);
+      getBusinessReadApi();
+    }
   }, [projectValue]);
 
   useEffect(() => {
-    getBusinessReadApi();
+    if (getCookie('myToken')) getBusinessReadApi();
   }, [postInfo.status_filter]);
 
   const handleChangeRadioButton = e => {

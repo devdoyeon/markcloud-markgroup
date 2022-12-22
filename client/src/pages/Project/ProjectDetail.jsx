@@ -10,8 +10,9 @@ import {
   addProjectMember,
   deleteProjectMember,
 } from 'js/groupwareApi';
-import deletePerson from 'image/deletePersonIcon.svg';
 import { changeState, getKeyByValue } from 'js/commonUtils';
+import { getCookie } from 'js/cookie';
+import deletePerson from 'image/deletePersonIcon.svg';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -91,12 +92,15 @@ const ProjectDetail = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 프로젝트 상세 보기');
-    projectDetail();
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 프로젝트 상세 보기');
+      projectDetail();
+    }
   }, []);
 
   useEffect(() => {
-    changeState(setProjectInfo, 'project_status', statusValue);
+    if (getCookie('myToken'))
+      changeState(setProjectInfo, 'project_status', statusValue);
   }, [statusValue]);
 
   return (

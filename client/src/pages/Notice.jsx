@@ -56,11 +56,11 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 공지사항');
+    if (getCookie('myToken')) changeTitle('그룹웨어 > 공지사항');
   }, []);
 
   useEffect(() => {
-    getNoticeApi();
+    if (getCookie('myToken')) getNoticeApi();
   }, [pageInfo.page]);
 
   return (

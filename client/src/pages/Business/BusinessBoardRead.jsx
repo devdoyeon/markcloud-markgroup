@@ -11,6 +11,7 @@ import {
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { getBusinessInfo } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 import {
   getBoardDetail,
   createBoard,
@@ -159,28 +160,34 @@ const BusinessBoardRead = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 상세 보기');
-    if (id?.length) getProjectDetail();
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 상세 보기');
+      if (id?.length) getProjectDetail();
+    }
   }, []);
 
   useEffect(() => {
-    changeState(setPostInfo, 'project_name', projectValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'project_name', projectValue);
   }, [projectValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'request_id', requesterValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'request_id', requesterValue);
   }, [requesterValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'manager_id', contactValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'manager_id', contactValue);
   }, [contactValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'work_status', progressValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'work_status', progressValue);
   }, [progressValue]);
 
   useEffect(() => {
-    if (id?.length) getProjectDetail();
+    if (getCookie('myToken')) if (id?.length) getProjectDetail();
   }, []);
 
   const {

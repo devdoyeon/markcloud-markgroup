@@ -7,6 +7,7 @@ import CommonModal from 'common/CommonModal';
 import ListWrap from 'common/ListWrap';
 import { getReportList } from 'js/groupwareApi';
 import { catchError, changeTitle } from 'js/commonUtils';
+import { getCookie } from 'js/cookie';
 
 const Report = () => {
   const [alert, setAlert] = useState('');
@@ -53,11 +54,11 @@ const Report = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 주간 업무 보고');
+    if (getCookie('myToken')) changeTitle('그룹웨어 > 주간 업무 보고');
   }, []);
 
   useEffect(() => {
-    getReport();
+    if (getCookie('myToken')) getReport();
   }, [pageInfo.page]);
 
   return (

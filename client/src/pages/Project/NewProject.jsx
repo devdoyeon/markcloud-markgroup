@@ -16,6 +16,7 @@ import {
   editProject,
   deleteProject,
 } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -120,13 +121,15 @@ const NewProject = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 프로젝트 작성');
-    if (id?.length) getOrigin();
-    else return;
+    if (id?.length && getCookie('myToken')) {
+      changeTitle('그룹웨어 > 프로젝트 작성');
+      getOrigin();
+    } else return;
   }, []);
 
   useEffect(() => {
-    changeState(setProjectInfo, 'project_status', selectVal);
+    if (getCookie('myToken'))
+      changeState(setProjectInfo, 'project_status', selectVal);
   }, [selectVal]);
 
   return (

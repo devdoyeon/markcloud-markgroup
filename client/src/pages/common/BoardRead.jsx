@@ -63,11 +63,11 @@ const BoardRead = () => {
   };
 
   useEffect(() => {
-    changeTitle(`그룹웨어 > 상세 보기`);
+    if (getCookie('myToken')) changeTitle(`그룹웨어 > 상세 보기`);
   }, []);
 
   useEffect(() => {
-    getDetail();
+    if (getCookie('myToken')) getDetail();
   }, [id]);
 
   return (

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+import { changeState } from 'js/commonUtils';
 import activeNextPage from 'image/nextPageActive.svg';
 import activePrevPage from 'image/prevPageActive.svg';
 import nextPage from 'image/nextPage.svg';
 import prevPage from 'image/prevPage.svg';
-import { changeState } from 'js/commonUtils';
 
 //= 페이지네이션 적용 시 스타일 수정 필요
 

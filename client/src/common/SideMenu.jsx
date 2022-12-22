@@ -24,6 +24,7 @@ const SideMenu = () => {
         'alert',
         '로그인이 필요한 서비스입니다.'
       );
+      return;
     } else return;
   }, []);
 
@@ -109,7 +110,7 @@ const SideMenu = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') return navigate('/');
+            if (alert === 'needLogin') return navigate('/sign-in');
             else return;
           }}
         />

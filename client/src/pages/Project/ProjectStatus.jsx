@@ -6,6 +6,7 @@ import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
 import { changeTitle, changeState } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const ProjectStatus = () => {
   const date = new Date();
@@ -85,8 +86,10 @@ const ProjectStatus = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 프로젝트 현황');
-    projectList();
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 프로젝트 현황');
+      projectList();
+    }
   }, []);
 
   return (

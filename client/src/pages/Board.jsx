@@ -7,6 +7,7 @@ import ListWrap from 'common/ListWrap';
 import CommonModal from 'common/CommonModal';
 import { getBoardList } from 'js/groupwareApi';
 import { catchError, changeTitle } from 'js/commonUtils';
+import { getCookie } from 'js/cookie';
 
 const Board = () => {
   const [alert, setAlert] = useState('');
@@ -53,11 +54,11 @@ const Board = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 게시판');
+    if (getCookie('myToken')) changeTitle('그룹웨어 > 게시판');
   }, []);
 
   useEffect(() => {
-    getBoard();
+    if (getCookie('myToken')) getBoard();
   }, [pageInfo.page]);
 
   return (

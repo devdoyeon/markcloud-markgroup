@@ -183,12 +183,14 @@ const NewBoard = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 작성');
-    changeState(setPostInfo, 'created_id', localStorage.getItem('userName'));
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 작성');
+      changeState(setPostInfo, 'created_id', localStorage.getItem('userName'));
+    }
   }, []);
 
   useEffect(() => {
-    if (id?.length) getOriginDetail();
+    if (getCookie('myToken')) if (id?.length) getOriginDetail();
   }, []);
 
   return (

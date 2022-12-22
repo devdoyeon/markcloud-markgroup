@@ -11,6 +11,7 @@ import {
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import { createBusiness, getBusinessRead } from 'js/groupwareApi';
+import { getCookie } from 'js/cookie';
 
 const BusinessNewBoard = () => {
   const [alert, setAlert] = useState('');
@@ -144,25 +145,31 @@ const BusinessNewBoard = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 업무 작성');
-    // if (id?.length) getOriginDetail();
-    getProjectApi();
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 업무 작성');
+      // if (id?.length) getOriginDetail();
+      getProjectApi();
+    }
   }, []);
 
   useEffect(() => {
-    changeState(setPostInfo, 'project_name', projectValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'project_name', projectValue);
   }, [projectValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'request_id', requesterValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'request_id', requesterValue);
   }, [requesterValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'manager_id', contactValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'manager_id', contactValue);
   }, [contactValue]);
 
   useEffect(() => {
-    changeState(setPostInfo, 'work_status', progressValue);
+    if (getCookie('myToken'))
+      changeState(setPostInfo, 'work_status', progressValue);
   }, [progressValue]);
 
   // useEffect(()=> {

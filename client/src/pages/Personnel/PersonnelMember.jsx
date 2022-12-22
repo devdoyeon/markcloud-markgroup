@@ -263,35 +263,40 @@ const PersonnelMember = () => {
   };
 
   useEffect(() => {
-    changeTitle('그룹웨어 > 인사 관리');
-    getPersonDepartmentApi();
-    if (id) {
-      getPersonMemberInfo();
-      changeState(setMemberInfo, 'gender', memberInfo?.gender);
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 인사 관리');
+      getPersonDepartmentApi();
+      if (id) {
+        getPersonMemberInfo();
+        changeState(setMemberInfo, 'gender', memberInfo?.gender);
+      }
     }
   }, []);
 
   useEffect(() => {
-    changeState(setMemberInfo, 'section', contactValue);
+    if (getCookie('myToken'))
+      changeState(setMemberInfo, 'section', contactValue);
   }, [contactValue]);
 
   useEffect(() => {
-    if (inputValue.length === 10) {
-      setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    if (getCookie('myToken')) {
+      if (inputValue.length === 10) {
+        setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+      }
+      if (inputValue.length === 13) {
+        setInputValue(
+          inputValue
+            .replace(/-/g, '')
+            .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+        );
+      }
+      changeState(setMemberInfo, 'phone', inputValue);
     }
-    if (inputValue.length === 13) {
-      setInputValue(
-        inputValue
-          .replace(/-/g, '')
-          .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
-      );
-    }
-    changeState(setMemberInfo, 'phone', inputValue);
   }, [inputValue]);
 
   // 주소 검색
   useEffect(() => {
-    if (!isPopupOpen) {
+    if (!isPopupOpen && getCookie('myToken')) {
       changeState(setMemberInfo, 'address', addressDetail);
       changeState(setMemberInfo, 'zip_code', address);
     }

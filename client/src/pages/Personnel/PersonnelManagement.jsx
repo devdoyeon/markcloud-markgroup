@@ -111,11 +111,11 @@ const PersonnelManagement = () => {
   };
 
   useEffect(() => {
-    if (!popup) getPersonDepartmentApi();
+    if (!popup && getCookie('myToken')) getPersonDepartmentApi();
   }, [departmentPageInfo.page, popup]);
 
   useEffect(() => {
-    getPersonMemberApi();
+    if (getCookie('myToken')) getPersonMemberApi();
   }, [managePageInfo.page]);
 
   return (
