@@ -10,7 +10,6 @@ from schema.base_schema import Response
 from schema.project_schema import *
 from crud import project_crud
 import utils
-# from server.schema.project_schema import Project, ProjectListOut, ProjectOut, ProjectCreate, ProjectUpdate, ProjectMemberAdd, ProjectMemberDelete
 
 router = APIRouter(prefix="/project")
 
