@@ -19,7 +19,7 @@ const Notice = () => {
   const [list, setList] = useState([]);
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 9,
+    totalPage: 0,
     limit: 9,
   });
   const [filter, setFilter] = useState('created_id');

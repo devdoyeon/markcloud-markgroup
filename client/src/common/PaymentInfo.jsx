@@ -75,7 +75,7 @@ const PaymentInfo = memo(({ curData }) => {
       paymentParams = result?.data?.data;
       bool = true;
       if (bool) requestPay();
-    } else catchError(result, navigate, setAlertBox, setAlert);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   let payResult = [];
@@ -119,7 +119,7 @@ const PaymentInfo = memo(({ curData }) => {
                 merchant_uid: rsp.merchant_uid,
               },
             });
-          } else catchError(result, navigate, setAlertBox, setAlert);
+          } else return catchError(result, navigate, setAlertBox, setAlert);
         } else {
           // 결제 실패 시 로직
           setAlert('failedPayment');

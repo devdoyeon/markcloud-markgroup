@@ -71,7 +71,7 @@ const NewProject = () => {
         return clone;
       });
       setSelectVal(project_status);
-    } else catchError(result, navigate, setAlertBox, setAlert);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 작성일 때 입력값 확인 후 새 프로젝트 생성
@@ -107,7 +107,7 @@ const NewProject = () => {
           'alert',
           '등록이 완료되었습니다.'
         );
-      } else catchError(result, navigate, setAlertBox, setAlert);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 

@@ -49,7 +49,7 @@ const Home = () => {
         localStorage.setItem('userName', name);
         localStorage.setItem('userId', user_id);
         navigate('/business');
-      } else catchError(result, navigate, setAlertBox, setAlert);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 

@@ -17,14 +17,14 @@ const PersonnelManagement = () => {
   const [curDepartment, setCurDepartment] = useState({});
   const [departmentPageInfo, setDepartmentPageInfo] = useState({
     page: 1,
-    totalPage: 9,
+    totalPage: 0,
     limit: 6,
   });
   const [manageList, setManageList] = useState([]);
   const [manageMeta, setManageMeta] = useState({});
   const [managePageInfo, setManagePageInfo] = useState({
     page: 1,
-    totalPage: 9,
+    totalPage: 0,
     limit: 10,
   });
   const [popup, setPopup] = useState(false);

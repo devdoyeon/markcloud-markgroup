@@ -32,7 +32,7 @@ const BusinessNewBoard = () => {
   });
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 15,
+    totalPage: 0,
     limit: 5,
   });
 

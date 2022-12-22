@@ -57,7 +57,7 @@ const PersonnelMember = () => {
 
   const [departmentPageInfo, setDepartmentPageInfo] = useState({
     page: 1,
-    totalPage: 9,
+    totalPage: 0,
     limit: 6,
   });
   const [inputValue, setInputValue] = useState('');

@@ -67,7 +67,7 @@ const ProjectDetail = () => {
         obj[`${i?.name} (${i?.section})`] = i?.user_id;
       });
       setMemberObj(obj);
-    } else catchError(result, navigate, setAlertBox, setAlert);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 프로젝트 멤버 추가
@@ -81,14 +81,14 @@ const ProjectDetail = () => {
       );
     const result = await addProjectMember(id, memberObj[personValue]);
     if (typeof result === 'object') projectDetail();
-    else catchError(result, navigate, setAlertBox, setAlert);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 프로젝트 멤버 삭제
   const deleteMember = async user => {
     const result = await deleteProjectMember(id, user);
     if (typeof result === 'object') projectDetail();
-    else catchError(result, navigate, setAlertBox, setAlert);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {

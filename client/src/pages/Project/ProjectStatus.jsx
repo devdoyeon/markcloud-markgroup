@@ -4,13 +4,14 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
-import { changeTitle, changeState } from 'js/commonUtils';
+import { changeTitle, changeState, catchError } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
 
 const ProjectStatus = () => {
   const date = new Date();
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     content: '',
@@ -18,7 +19,7 @@ const ProjectStatus = () => {
   });
   const [pageInfo, setPageInfo] = useState({
     page: 1,
-    totalPage: 1,
+    totalPage: 0,
     limit: 10,
   });
   const [selectVal, setSelectVal] = useState('전체');
@@ -49,7 +50,7 @@ const ProjectStatus = () => {
         clone.page = result?.data?.meta?.page;
         return clone;
       });
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderTable = () => {
