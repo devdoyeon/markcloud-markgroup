@@ -91,7 +91,9 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   };
   return (
     <>
-      <ul className='pagination row'>{renderPagination()}</ul>
+      {totalPage > 0 && (
+        <ul className='pagination row'>{renderPagination()}</ul>
+      )}
     </>
   );
 };

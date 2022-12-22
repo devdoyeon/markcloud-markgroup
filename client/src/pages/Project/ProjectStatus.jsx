@@ -7,6 +7,7 @@ import Pagination from 'common/Pagination';
 import { changeTitle, changeState } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
+import noneList from 'image/noneList.svg';
 
 const ProjectStatus = () => {
   const date = new Date();
@@ -156,21 +157,28 @@ const ProjectStatus = () => {
             </div>
           </div>
           <div className='table-wrap'>
-            <div className='table'>
-              <table>
-                <thead>
-                  <tr>
-                    <th>NO</th>
-                    <th>프로젝트 상태</th>
-                    <th>프로젝트 명</th>
-                    <th>시작일</th>
-                    <th>종료일</th>
-                    <th>참여 인원</th>
-                  </tr>
-                </thead>
-                <tbody>{renderTable()}</tbody>
-              </table>
-            </div>
+            {list?.length <= 0 ? (
+              <div className='noneList column'>
+                <img src={noneList} alt='' />
+                <span>프로젝트가 없습니다.</span>
+              </div>
+            ) : (
+              <div className='table'>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>프로젝트 상태</th>
+                      <th>프로젝트 명</th>
+                      <th>시작일</th>
+                      <th>종료일</th>
+                      <th>참여 인원</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderTable()}</tbody>
+                </table>
+              </div>
+            )}
           </div>
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>

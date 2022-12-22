@@ -221,7 +221,7 @@ const NewProject = () => {
             <button
               className='commonBtn applyBtn'
               onClick={id?.length ? updateProject : postProject}>
-              등록
+              {id?.length ? '수정' : '등록'}
             </button>
             {id?.length ? (
               <button

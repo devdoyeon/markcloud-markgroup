@@ -613,7 +613,7 @@ export const editReport = async ({ title, content }, id) => {
 //& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
-    return await axios.post(`/dy/report/delete?report_id=${id}&user_id=d`);
+    return await axios.post(`/dy/report/delete?report_id=${id}&user_id=mxxvii`);
   } catch (error) {
     return apiErrorHandling(error);
   }

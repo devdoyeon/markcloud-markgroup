@@ -955,6 +955,9 @@
   padding: 20px 16px;
   text-align: center;
 }
+.table-wrap > .noneList span {
+  color: #cdcdcd;
+}
 .table-wrap > .table {
   width: 948px;
   border-radius: 8px;
