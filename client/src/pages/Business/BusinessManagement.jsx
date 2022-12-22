@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
 import { getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
-import { catchError, changeTitle } from 'js/commonUtils';
+import { catchError, changeState, changeTitle } from 'js/commonUtils';
+import { getCookie } from 'js/cookie';
 
 const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
@@ -18,7 +19,7 @@ const BusinessManagement = () => {
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
   const [inputVal, setInputVal] = useState('나의 업무현황');
-  const [projectValue, setProjectValue] = useState('===');
+  const [projectValue, setProjectValue] = useState('선택');
   const [contactValue, setContactValue] = useState('===');
   const [requesterValue, setRequesterValue] = useState('===');
   const [pageInfo, setPageInfo] = useState({
@@ -26,8 +27,13 @@ const BusinessManagement = () => {
     totalPage: 15,
     limit: 5,
   });
+  const [postInfo, setPostInfo] = useState({
+    status_filter: 'MyProject',
+    project_name: '',
+  });
 
   const navigate = useNavigate();
+  const cookie = getCookie('myToken');
 
   const projectNameArr = [
     '마크클라우드',
@@ -38,17 +44,15 @@ const BusinessManagement = () => {
     '그린터치',
   ];
 
-  const contactNameArr = ['안병욱', '송지은', '권정인', '강은수', '권도연'];
-
   let prevent = false;
 
-  const getProjectApi = async () => {
+  const getBusinessReadApi = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getBusinessRead(pageInfo);
+    const result = await getBusinessRead(postInfo, pageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -102,13 +106,22 @@ const BusinessManagement = () => {
   }, []);
 
   useEffect(() => {
-    getProjectApi();
+    getBusinessReadApi();
   }, [pageInfo.page]);
 
-  const handleChangeRadioButton = e => {
-    setInputVal(e.target.value);
-  };
+  useEffect(() => {
+    changeState(setPostInfo, 'project_name', projectValue);
+    getBusinessReadApi();
+  }, [projectValue]);
 
+  useEffect(() => {
+    getBusinessReadApi();
+  }, [postInfo.status_filter]);
+
+  const handleChangeRadioButton = e => {
+    changeState(setPostInfo, 'status_filter', e.target.value);
+  };
+  console.log(list);
   const handleChangeClear = () => {};
 
   const { project_member, project_name } = meta;
@@ -128,8 +141,8 @@ const BusinessManagement = () => {
                 <input
                   type='radio'
                   name='work'
-                  value='나의 업무현황'
-                  checked={inputVal === '나의 업무현황'}
+                  value='MyProject'
+                  checked={postInfo.status_filter === 'MyProject'}
                   onChange={handleChangeRadioButton}
                 />
                 <span>나의 업무현황</span>
@@ -138,8 +151,8 @@ const BusinessManagement = () => {
                 <input
                   type='radio'
                   name='work'
-                  value='내가 요청한 업무'
-                  checked={inputVal === '내가 요청한 업무'}
+                  value='MyRequest'
+                  checked={postInfo.status_filter === 'MyRequest'}
                   onChange={handleChangeRadioButton}
                 />
                 <span>내가 요청한 업무</span>
@@ -148,8 +161,8 @@ const BusinessManagement = () => {
                 <input
                   type='radio'
                   name='work'
-                  value='전체 업무현황'
-                  checked={inputVal === '전체 업무현황'}
+                  value='All'
+                  checked={postInfo.status_filter === 'All'}
                   onChange={handleChangeRadioButton}
                 />
                 <span>전체 업무현황</span>
@@ -234,7 +247,15 @@ const BusinessManagement = () => {
           <div className='work-table-wrap'>
             <div className='check-work-head-wrap'>
               <div className='check-work-title'>
-                <h4>내가 요청한 업무</h4>
+                <h4>
+                  {postInfo.status_filter === 'MyProject'
+                    ? '나의 업무현황'
+                    : postInfo.status_filter === 'MyRequest'
+                    ? '내가 요청한 업무'
+                    : postInfo.status_filter === 'All'
+                    ? '전체 업무현황'
+                    : ''}
+                </h4>
                 <div className='rect-num'>{list.length}</div>
               </div>
               <div className='line'></div>

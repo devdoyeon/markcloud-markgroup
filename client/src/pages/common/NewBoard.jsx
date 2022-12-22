@@ -125,7 +125,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await deleteNotice(id);
+        result = await deleteNotice(id, cookie);
         break;
       case 'board':
         result = await deleteBoard(id);
