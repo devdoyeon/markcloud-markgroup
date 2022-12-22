@@ -79,24 +79,14 @@ const ProjectDetail = () => {
         '이미 추가된 인원입니다.'
       );
     const result = await addProjectMember(id, memberObj[personValue]);
-    if (typeof result === 'object') {
-      setParticipation(prev => {
-        const clone = [...prev];
-        clone.push(memberObj[personValue]);
-        return clone;
-      });
-    } else catchError(result, navigate, setAlertBox, setAlert);
+    if (typeof result === 'object') projectDetail();
+    else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 프로젝트 멤버 삭제
   const deleteMember = async user => {
     const result = await deleteProjectMember(id, user);
-    if (typeof result === 'object')
-      setParticipation(prev => {
-        const clone = [...prev];
-        clone.splice(clone.indexOf(user), 1);
-        return clone;
-      });
+    if (typeof result === 'object') projectDetail();
     else catchError(result, navigate, setAlertBox, setAlert);
   };
 
