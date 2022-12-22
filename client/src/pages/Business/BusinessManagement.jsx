@@ -136,8 +136,28 @@ const BusinessManagement = () => {
     }
   }, [projectValue]);
   useEffect(() => {
-    if (getCookie('myToken')) getBusinessReadApi();
+    if (getCookie('myToken')) {
+      if (postInfo.status_filter === 'MyProject') {
+        setRequesterValue('선택');
+        setContactValue(localStorage.getItem('userName'));
+        changeState(
+          setPostInfo,
+          'manager_id',
+          localStorage.getItem('userName')
+        );
+      } else if (postInfo.status_filter === 'MyRequest') {
+        setContactValue('선택');
+        setRequesterValue(localStorage.getItem('userName'));
+        changeState(
+          setPostInfo,
+          'request_id',
+          localStorage.getItem('userName')
+        );
+      }
+      getBusinessReadApi();
+    }
   }, [postInfo.status_filter]);
+  console.log(requesterValue);
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
@@ -287,6 +307,7 @@ const BusinessManagement = () => {
                   />
                 </label>
               </div>
+              {console.log(postInfo)}
               <div className='content-text'>
                 <label>
                   <span>내용</span>
