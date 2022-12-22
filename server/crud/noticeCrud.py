@@ -15,13 +15,7 @@ def get_notice_list(db, offset, limit, user_pk,filter_type, filter_val):
         
         # 유저 정보 확인
         user_info = author_chk.get_user_info(db, user_pk)
-        
-        # sql = f'''
-        # SELECT a.id, a.created_at, b.name as created_id, a.title
-        # FROM groupware_notice as a
-        # INNER JOIN members as b 
-        # ON a.created_id = b.id
-        # WHERE a.organ_code = "{user_info.department_code}"'''     
+    
               
         query = db.query(notice_table.id, notice_table.created_at, member_table.name.label('created_id'), notice_table.title).filter(
             notice_table.organ_code == user_info.department_code).join(
@@ -31,24 +25,17 @@ def get_notice_list(db, offset, limit, user_pk,filter_type, filter_val):
         if filter_type:    
             if filter_type == 'title':
                 query = query.filter(notice_table.title.ilike(f'%{filter_val}%'))
-                # sql = sql + f'AND a.title LIKE "%{filter_val}%"'
+
             elif filter_type == 'created_id':
-                # sql = sql + f'AND b.name LIKE "%{filter_val}%"'
+
                 query = query.filter(member_table.name.ilike(f'%{filter_val}%'))
-        
-        # notice_count = len(db.execute(sql).fetchall())
-        # sql = sql + f' ORDER BY a.id DESC LIMIT {limit} OFFSET {offset} '
         
         notice_count = query.count()
         notice_list = query.offset(offset).limit(limit).all()
-
-        # 필터 X
-        # notice_list = db.execute(sql).fetchall()
-  
         return notice_count, notice_list
     
     except:
-        raise HTTPException(status_code=500, detail='DBError')    
+        raise HTTPException(status_code=500, detail='GetNtError')    
 
 
 def get_notice_info(db, notice_id):
@@ -63,7 +50,7 @@ def get_notice_info(db, notice_id):
 
         return notice_info
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='GetNtInfoError')
 
 def insert_notice(db,inbound_data, user_pk):
     
@@ -80,7 +67,7 @@ def insert_notice(db,inbound_data, user_pk):
         db.add(db_query)
 
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='InsertNtError')
 
 
 def change_notice(db,inbound_data,notice_id, user_pk):
@@ -102,7 +89,7 @@ def change_notice(db,inbound_data,notice_id, user_pk):
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='ChangeNtError')
     
 
 def remove_notice(db,notice_id, user_pk):
@@ -118,8 +105,7 @@ def remove_notice(db,notice_id, user_pk):
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail='dbDeleteError')
+    except:
+        raise HTTPException(status_code=500, detail='DeleteNtError')
     
 

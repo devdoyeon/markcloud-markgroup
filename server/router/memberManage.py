@@ -1,5 +1,5 @@
 # 인사관리
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -28,19 +28,24 @@ def read_department_list(
     limit:int = 5,
     db: Session = Depends(get_db)
 ):
-    offset = (page - 1) * limit
-    
-    total_count, department_list = get_department_list(db, offset, limit, user_pk)
-    total_page = total_count // limit
-    
-    if total_count % limit != 0:
-        total_page += 1
-    
-    return Response().metadata(
-    page=page,
-    totalPage=total_page,
-    offset=offset,
-    limit=limit).success_response(department_list)
+    try:
+        offset = (page - 1) * limit
+        
+        total_count, department_list = get_department_list(db, offset, limit, user_pk)
+        total_page = total_count // limit
+        
+        if total_count % limit != 0:
+            total_page += 1
+        
+        return Response().metadata(
+        page=page,
+        totalPage=total_page,
+        offset=offset,
+        limit=limit).success_response(department_list)
+        
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadDpError')
+        
 
 # 부서 상세페이지
 @router_member.get('/department/info', response_model = DepartmentOut)    
@@ -48,7 +53,10 @@ def read_department_info(
     department_id:int,
     db: Session = Depends(get_db)
 ):
-    return get_department_info(db, department_id)
+    try:
+        return get_department_info(db, department_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadDpInfoError')
 
 # 부서 등록
 @router_member.post('/department/create')
@@ -59,8 +67,10 @@ def create_department(
     user_pk:int = None,
     db :Session = Depends(get_db)
 ):
-    insert_department(db, inbound_data, user_pk)
-
+    try:
+        insert_department(db, inbound_data, user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='CreateDpError')
 # 부서 수정
 @router_member.post('/department/update')
 def update_department(
@@ -68,8 +78,10 @@ def update_department(
     department_id:int,
     db: Session = Depends(get_db)
 ):
-    change_department(db, inbound_data, department_id)
-
+    try:
+        change_department(db, inbound_data, department_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='UpdateDpError')
 
 # 부서 삭제
 @router_member.post('/department/delete')
@@ -77,8 +89,10 @@ def delete_department(
     department_id:int,
     db: Session = Depends(get_db)
 ):
-    remove_department(db, department_id)
-
+    try:
+        remove_department(db, department_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='DeleteDpError')
 ##################################직원 관리##################################
 
 # 직원 리스트
@@ -91,20 +105,23 @@ def read_member_list(
     user_pk:int = None,
     db: Session = Depends(get_db)
 ):
-    offset = (page -1) * limit
-    
-    total_count, member_list = get_member_list(db,offset,limit,user_pk)
+    try:
+        offset = (page -1) * limit
+        
+        total_count, member_list = get_member_list(db,offset,limit,user_pk)
 
-    total_page = total_count // limit
-    if total_count % limit != 0:
-        total_page += 1    
+        total_page = total_count // limit
+        if total_count % limit != 0:
+            total_page += 1    
 
-    return Response().metadata(
-        page=page,
-        totalPage=total_page,
-        offset=offset,
-        limit=limit
-    ).success_response(member_list)
+        return Response().metadata(
+            page=page,
+            totalPage=total_page,
+            offset=offset,
+            limit=limit
+        ).success_response(member_list)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadMbError')
 
 # 직원 상세페이지
 @router_member.get('/member/info',response_model= Memberinfo)
@@ -112,7 +129,10 @@ def read_member_info(
     member_id:int,
     db: Session = Depends(get_db)
 ):
-    return get_member_info(db, member_id)
+    try:
+        return get_member_info(db, member_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadMbInfoError')
 
 
 # 직원 등록
@@ -124,7 +144,10 @@ def create_member(
     user_pk:int = None,
     db: Session = Depends(get_db)
 ):
-    insert_member(db,inbound_data,user_pk)
+    try:
+        insert_member(db,inbound_data,user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='CreateMbError')
 
 # 직원 수정
 @router_member.post('/member/update')
@@ -133,7 +156,10 @@ def update_member(
     member_id:int,
     db: Session = Depends(get_db)
 ):
-    change_member(db, inboud_data ,member_id)
+    try:
+        change_member(db, inboud_data ,member_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='UpdateMbError')
 
 # 직원 삭제
 @router_member.post('/member/delete')
@@ -141,4 +167,7 @@ def delete_member(
     member_id:str,
     db: Session = Depends(get_db)
 ):
-    remove_member(db,member_id)
+    try:
+        remove_member(db,member_id)
+    except:
+        raise HTTPException(status_cdoe=500, detail='DeleteMbError')
