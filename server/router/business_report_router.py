@@ -3,11 +3,11 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from starlette import status
 
-from server.database import get_db
-from server.schema.base_schema import Response, filterType
-from server.schema.report_schema import BusinessReport, ReportListOut, ReportOut, ReportCreate, ReportUpdate
-from server.crud import report_crud
-from server import utils
+from database import get_db
+from schema.base_schema import Response, filterType
+from schema.report_schema import BusinessReport, ReportListOut, ReportOut, ReportCreate, ReportUpdate
+from crud import report_crud
+import utils
 
 
 router = APIRouter(prefix="/report")

@@ -4,10 +4,12 @@ from starlette import status
 
 from datetime import datetime
 
-from server.models import BoardTable, MemberTable, OrganizationTable
-from server.schema.board_schema import PostCreate, PostUpdate
+from models import BoardTable, OrganizationTable
+from model import memberManageModel
 
-member_table = MemberTable
+from schema.board_schema import PostCreate, PostUpdate
+
+member_table = memberManageModel.MemberTable
 organization_table = OrganizationTable
 
 
@@ -39,7 +41,7 @@ def get_post_list(db: Session,
         # ### join 쓰는 코드로 변경하기 (추후에)
         # post_list_2 = db.query(BoardTable).join(MemberTable).filter(MemberTable.user_id == user_id)
         query = db.query(BoardTable)
-        post_list = query.join(MemberTable, BoardTable.organ_code == MemberTable.department_code).filter(MemberTable.user_id == user_id)
+        post_list = query.join(memberManageModel.MemberTable, BoardTable.organ_code == memberManageModel.MemberTable.department_code).filter(memberManageModel.MemberTable.user_id == user_id)
         
         
         search = f'%%{filter_val}%%'

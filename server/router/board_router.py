@@ -4,11 +4,11 @@ from typing import List, Optional
 from enum import Enum
 from starlette import status
 
-from server.database import get_db
-from server.schema.base_schema import Response, filterType
-from server.schema.board_schema import Board, PostOut, BoardOut, PostCreate, PostUpdate
-from server.crud import board_crud
-from server import utils
+from database import get_db
+from schema.base_schema import Response, filterType
+from schema.board_schema import Board, PostOut, BoardOut, PostCreate, PostUpdate
+from crud import board_crud
+import utils
 
 import time
 
