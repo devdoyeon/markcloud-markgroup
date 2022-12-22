@@ -58,8 +58,8 @@ const BusinessBoardRead = () => {
     setTimeout(() => {
       prevent = true;
     }, 200);
-    let result;
-
+    const result = await getBusinessInfo(id);
+    console.log(result);
     if (typeof result === 'object') {
       setInfo(result?.data);
       document.querySelector('.content').innerHTML =

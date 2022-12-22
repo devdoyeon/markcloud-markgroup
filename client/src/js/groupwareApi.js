@@ -167,9 +167,12 @@ export const getNoticeList = async (
   };
   try {
     if (type === '' || value === '') {
-      return await axios.get(`/groupware/notice/list?page=${page}&limit=${limit}`, {
-        headers,
-      });
+      return await axios.get(
+        `/groupware/notice/list?page=${page}&limit=${limit}`,
+        {
+          headers,
+        }
+      );
     } else {
       return await axios.get(
         `/groupware/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
@@ -308,14 +311,18 @@ export const createBusiness = async ({
   manager_id,
 }) => {
   try {
-    return await axios.post(`/groupware/projects/create`, {
-      project_name,
-      title,
-      content,
-      work_status,
-      request_id,
-      manager_id,
-    });
+    return await axios.post(
+      `/groupware/projects/create`,
+      {
+        project_name: project_name,
+        title: title,
+        content: content,
+        work_status: work_status,
+        request_id: request_id,
+        manager_id: manager_id,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -356,7 +363,9 @@ export const getDepartmentList = async ({ page, limit }, cookie) => {
 
 export const getDepartmentInfo = async id => {
   try {
-    return await axios.get(`/groupware/personnel/department/info?department_id=${id}`);
+    return await axios.get(
+      `/groupware/personnel/department/info?department_id=${id}`
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -478,18 +487,21 @@ export const getMemberUpdate = async ({
   zip_code,
 }) => {
   try {
-    return await axios.post(`/groupware/personnel/member/update?member_id=${id}`, {
-      id,
-      user_id,
-      name,
-      gender,
-      birthday,
-      section,
-      phone,
-      email,
-      address,
-      zip_code,
-    });
+    return await axios.post(
+      `/groupware/personnel/member/update?member_id=${id}`,
+      {
+        id,
+        user_id,
+        name,
+        gender,
+        birthday,
+        section,
+        phone,
+        email,
+        address,
+        zip_code,
+      }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -497,7 +509,9 @@ export const getMemberUpdate = async ({
 
 export const getMemberDelete = async id => {
   try {
-    return await axios.post(`/groupware/personnel/member/delete?member_id=${id}`);
+    return await axios.post(
+      `/groupware/personnel/member/delete?member_id=${id}`
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -588,7 +602,10 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
 //& 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
-    return await axios.get(`/groupware/report/detail?report_id=${id}`, header());
+    return await axios.get(
+      `/groupware/report/detail?report_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -629,7 +646,10 @@ export const editReport = async ({ title, content }, id) => {
 //& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
-    return await axios.post(`/groupware/report/delete?report_id=${id}`, header());
+    return await axios.post(
+      `/groupware/report/delete?report_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -656,7 +676,10 @@ export const getProjectList = async (name, status, start, end) => {
 //& 프로젝트 상세 보기
 export const getProjectDetail = async id => {
   try {
-    return await axios.get(`/groupware/project/detail?project_id=${id}`, header());
+    return await axios.get(
+      `/groupware/project/detail?project_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -687,7 +710,10 @@ export const editProject = async (id, projectInfo) => {
 //& 프로젝트 삭제
 export const deleteProject = async id => {
   try {
-    return await axios.post(`/groupware/project/delete?project_id=${id}`, header());
+    return await axios.post(
+      `/groupware/project/delete?project_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
