@@ -34,15 +34,16 @@ const CommonSelect = ({
       <div
         className={`selectVal`}
         onClick={() => {
-          console.log(postInfo);
-          if (pathname === 'business' && person === 'person') {
-            if (filter === 'MyProject') {
-              return setSelect('off');
-            } else if (filter === 'MyRequest') {
-              return setSelect('off');
+          if (pathname === 'business') {
+            if (person === 'person') {
+              if (filter === 'MyProject') {
+                return setSelect('off');
+              }
+            } else if (person === 'request') {
+              if (filter === 'MyRequest') {
+                return setSelect('off');
+              }
             }
-          }else if(pathname === "business" && person === 'request') {
-            
           }
           select === 'on' ? setSelect('off') : setSelect('on');
         }}>

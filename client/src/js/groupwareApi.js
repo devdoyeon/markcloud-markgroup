@@ -96,7 +96,6 @@ export const checkUserInfo = async () => {
 
 //# 인사관리 중복 아이디 체크
 export const duplicateIdCheck = async (userId, cookie) => {
-  console.log(userId, cookie);
   const headers = {
     'Content-Type': 'application/json',
     'access-token': cookie,
@@ -252,7 +251,6 @@ export const getBusinessRead = async (
         { headers: headers }
       );
     } else {
-      console.log('else문');
       return await axios.get(
         `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
         { headers: headers }

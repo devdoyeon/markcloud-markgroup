@@ -20,22 +20,34 @@ const BusinessManagement = () => {
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
   const [inputVal, setInputVal] = useState('나의 업무현황');
-  const [projectValue, setProjectValue] = useState('선택');
-  const [contactValue, setContactValue] = useState(
-    localStorage.getItem('userName')
-  );
-  const [requesterValue, setRequesterValue] = useState(
-    localStorage.getItem('userName')
-  );
+
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
     limit: 5,
   });
   const [postInfo, setPostInfo] = useState({
-    status_filter: 'MyProject',
     project_name: '',
+    status_filter: 'MyProject',
+    manager_id: '',
+    request_id: '',
+    title: '',
+    content: '',
+    progress_status: [],
   });
+
+  const [projectValue, setProjectValue] = useState('선택');
+  // const [contactValue, setContactValue] = useState(
+  //   postInfo.status_filter === 'MyProject'
+  //     ? localStorage.getItem('userName')
+  //     : '선택'
+  // );
+  const [contactValue, setContactValue] = useState(
+    localStorage.getItem('userName')
+  );
+  const [requesterValue, setRequesterValue] = useState(
+    localStorage.getItem('userName')
+  );
 
   const navigate = useNavigate();
   const cookie = getCookie('myToken');
@@ -126,7 +138,6 @@ const BusinessManagement = () => {
   useEffect(() => {
     if (getCookie('myToken')) getBusinessReadApi();
   }, [postInfo.status_filter]);
-  console.log(postInfo.project_name);
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
@@ -134,7 +145,6 @@ const BusinessManagement = () => {
 
   const { project_member, project_name } = meta;
 
-  console.log(project_name);
   return (
     <>
       <div className='container'>
@@ -268,13 +278,25 @@ const BusinessManagement = () => {
               <div className='title'>
                 <label>
                   <span>제목</span>
-                  <input type='text' placeholder='제목을 입력해 주세요.' />
+                  <input
+                    type='text'
+                    placeholder='제목을 입력해 주세요.'
+                    onChange={e =>
+                      changeState(setPostInfo, 'title', e.target.value)
+                    }
+                  />
                 </label>
               </div>
               <div className='content-text'>
                 <label>
                   <span>내용</span>
-                  <input type='text' placeholder='내용을 입력해주세요.' />
+                  <input
+                    type='text'
+                    placeholder='내용을 입력해주세요.'
+                    onChange={e =>
+                      changeState(setPostInfo, 'content', e.target.value)
+                    }
+                  />
                 </label>
               </div>
             </div>
