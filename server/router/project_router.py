@@ -5,13 +5,12 @@ from enum import Enum
 from starlette import status
 from datetime import date
 
-from server.database import get_db
-from server.schemas.base_schema import Response
-# from server.schemas.project_schema import Project, ProjectListOut, ProjectOut, ProjectCreate, ProjectUpdate, ProjectMemberAdd, ProjectMemberDelete
-from server.schemas.project_schema import *
-from server.crud import project_crud
-from server import utils
-
+from database import get_db
+from schema.base_schema import Response
+from schema.project_schema import *
+from crud import project_crud
+import utils
+# from server.schema.project_schema import Project, ProjectListOut, ProjectOut, ProjectCreate, ProjectUpdate, ProjectMemberAdd, ProjectMemberDelete
 
 router = APIRouter(prefix="/project")
 

@@ -6,9 +6,11 @@ from starlette import status
 from datetime import datetime, date
 import random
 
-from server.models import ProjectTable, ProjectMembersTable, MemberTable, OrganizationTable, ProjectMembersTable
-from server.schemas.project_schema import ProjectCreate, ProjectUpdate, ProjectMemberAdd
-from server import utils
+
+from models import OrganizationTable
+from model import projectManageModel,memberManageModel
+from schema.project_schema import ProjectCreate, ProjectUpdate, ProjectMemberAdd
+import utils
 
 
 def get_project_list(db: Session, 
@@ -119,7 +121,7 @@ def get_project_list(db: Session,
 
 def get_project(db: Session, project_id: int):
     try:
-        project = db.query(ProjectTable).get(project_id)
+        project = db.query(projectManageModel.ProjectTable).get(project_id)
         return project
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
@@ -127,7 +129,7 @@ def get_project(db: Session, project_id: int):
     
 def get_project_members(db: Session, project_code: str):
     try:
-        project_members = db.query(ProjectMembersTable).filter(ProjectMembersTable.project_code == project_code).all()
+        project_members = db.query(projectManageModel.ProjectMemberTable).filter(projectManageModel.ProjectMemberTable.project_code == project_code).all()
         return project_members
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
@@ -146,7 +148,7 @@ def create_project(db: Session, user_id: str, project_create: ProjectCreate):
         project_code = "PRJ" + yymmdd + random_number
         print(project_code)
 
-        db_project = ProjectTable(organ_code=organ_code,
+        db_project = projectManageModel.ProjectTable(organ_code=organ_code,
                                 project_code=project_code,
                                 project_name=project_create.project_name,
                                 project_description=project_create.project_description,
@@ -162,7 +164,7 @@ def create_project(db: Session, user_id: str, project_create: ProjectCreate):
         db.commit() # 이 커밋 지우니까 안되는데.?
         # 처음 생성할 때는 해당 유저를 groupware_project_members에 넣어야 함.
         # 이렇게 해도 되는 ㅈㅣ .. . ?
-        db_project_member = ProjectMembersTable(
+        db_project_member = projectManageModel.ProjectMemberTable(
                     project_code=project_code,
                     user_id=user_id,
                     created_at=datetime.now(),
@@ -176,7 +178,7 @@ def create_project(db: Session, user_id: str, project_create: ProjectCreate):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
 
-def update_project(db: Session, db_project: ProjectTable, project_update: ProjectUpdate, user_id: str):     # current_user로 고치기
+def update_project(db: Session, db_project: projectManageModel.ProjectTable, project_update: ProjectUpdate, user_id: str):     # current_user로 고치기
     try:
         db_project.project_name = project_update.project_name
         db_project.project_description = project_update.project_description
@@ -197,7 +199,7 @@ def get_organ_member(db: Session, user_id: str):
     organ_code = utils.get_organ_code(db, user_id)
     
     try:
-        member_list = db.query(MemberTable.user_id, MemberTable.name, MemberTable.section).filter(MemberTable.department_code == organ_code).all()
+        member_list = db.query(memberManageModel.MemberTable.user_id, memberManageModel.MemberTable.name, memberManageModel.MemberTable.section).filter(memberManageModel.MemberTable.department_code == organ_code).all()
         return member_list
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
@@ -208,7 +210,7 @@ def add_project_member(db: Session,
                        new_member_id: str, 
                        user_id: str):   # user_id: 로그인한 아이디, 프로젝트 참여 멤버들 추가하는 아이디.
     try:
-        db_project_member = ProjectMembersTable(
+        db_project_member = projectManageModel.ProjectMemberTable(
                     project_code=project_code,
                     user_id=new_member_id,
                     created_at=datetime.now(),
@@ -225,15 +227,15 @@ def add_project_member(db: Session,
 
 def get_project_member(db: Session, project_code: str, member_id: str):
     try:
-        project_member = db.query(ProjectMembersTable).filter(ProjectMembersTable.user_id == member_id, 
-                                                              ProjectMembersTable.project_code == project_code).first()
+        project_member = db.query(projectManageModel.ProjectMemberTable).filter(projectManageModel.ProjectMemberTable.user_id == member_id, 
+                                                              projectManageModel.ProjectMemberTable.project_code == project_code).first()
         return project_member
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
 
 # 프로젝트 수정에서 인원 한 명씩 삭제
-def delete_project_member(db: Session, db_project_member: ProjectMembersTable):
+def delete_project_member(db: Session, db_project_member: projectManageModel.ProjectMemberTable):
     try:
         db.delete(db_project_member)
         db.commit()
@@ -245,14 +247,14 @@ def delete_project_member(db: Session, db_project_member: ProjectMembersTable):
 # 프로젝트 삭제에서 해당 프로젝트 참여 인원 전체 삭제
 def delete_project_members_all(db: Session, project_code: str):
     try:
-        db.query(ProjectMembersTable).filter(ProjectMembersTable.project_code == project_code).delete()
+        db.query(projectManageModel.ProjectMemberTable).filter(projectManageModel.ProjectMemberTable.project_code == project_code).delete()
         db.commit()
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
 
 # 프로젝트 삭제
-def delete_project(db: Session, db_project: ProjectTable):
+def delete_project(db: Session, db_project: projectManageModel.ProjectTable):
     try:
         db.delete(db_project)
         db.commit()

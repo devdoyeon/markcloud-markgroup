@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 server/venv/
 server/__pycache__/
 server/*/__pycache__/
 server/*/*/__pycache__/
 .env
-=======
-__init__.py
-venv/
-*/__pycache__
-*/*/__pycache__
->>>>>>> project-groupware/master

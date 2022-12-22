@@ -1,25 +1,36 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+import os
+from fastapi import HTTPException
 
-MYSQL_USER = "root"
-MYSQL_PASSWORD = "tandy"
-MYSQL_HOST = "192.168.0.47"
-MYSQL_PORT = "3306"
-MYSQL_DATABASE = "markcloud-service"
+from dotenv import load_dotenv
 
+load_dotenv()
 
-DB_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}?charset=utf8"
-engine = create_engine(DB_URL, encoding='utf-8')
+# db 추가
+db = {
+    "user":os.environ['MYSQL_USER'],
+    "password":os.environ['MYSQL_PASSWORD'],
+    "host":os.environ['DB_HOST'],
+    "port":os.environ['DB_PORT'],
+    "database":os.environ['MYSQL_DATABASE']
+}
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+DB_URL = f"mysql+pymysql://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['database']}?charset=utf8"
+engine = create_engine(DB_URL, max_overflow=0, pool_recycle=1000, pool_pre_ping=True) 
 Base = declarative_base()
 
-
 def get_db():
-    db = SessionLocal()
+    SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
+    session = SessionLocal()
     try:
-        yield db
+        yield session
+        session.commit()
+        print(' - db commit - ')
+    except:
+        session.rollback()
+        print(' - db rollback - ')
     finally:
-        db.close()
+        session.close()
+

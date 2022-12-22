@@ -4,11 +4,12 @@ from starlette import status
 
 from datetime import datetime
 
-from server.models import BusinessReportTable, MemberTable, OrganizationTable
-from server.schemas.report_schema import ReportCreate, ReportUpdate
-from server import utils
+from models import BusinessReportTable, OrganizationTable
+from model import memberManageModel
+from schema.report_schema import ReportCreate, ReportUpdate
+import utils
 
-member_table = MemberTable
+member_table = memberManageModel.MemberTable
 organization_table = OrganizationTable
 
 # 사용자계정으로 로그인 시, 본인이 작성한 주간업무보고만 리스트에 보여져야 함.
@@ -17,10 +18,10 @@ def get_report_list(db: Session, filter_type: str, filter_val: str, offset: int,
     
     try:
         query = db.query(BusinessReportTable)
-        report_list = query.join(MemberTable, BusinessReportTable.organ_code == MemberTable.department_code).filter(MemberTable.user_id == user_id)
+        report_list = query.join(memberManageModel.MemberTable, BusinessReportTable.organ_code == memberManageModel.MemberTable.department_code).filter(memberManageModel.MemberTable.user_id == user_id)
         
         # user_id의 회사 대표계정 id 가져오기
-        owner_id = db.query(OrganizationTable.owner_user_id).filter(MemberTable.user_id == user_id).first()
+        owner_id = db.query(OrganizationTable.owner_user_id).filter(memberManageModel.MemberTable.user_id == user_id).first()
         print(owner_id)
         print("===")
         owner_id = owner_id[0]
