@@ -86,7 +86,7 @@ const PersonnelMember = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getDepartmentList(departmentPageInfo, cookie);
+    const result = await getDepartmentList(departmentPageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(data);
@@ -183,7 +183,7 @@ const PersonnelMember = () => {
       );
     }
     // --
-    const result = await getMemberCreate(memberInfo, cookie);
+    const result = await getMemberCreate(memberInfo);
     if (typeof result === 'object') {
       setAlert('apply');
       return commonModalSetting(

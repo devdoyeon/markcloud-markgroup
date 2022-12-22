@@ -40,10 +40,6 @@ const BusinessBoardRead = () => {
   });
   const [info, setInfo] = useState({});
 
-  const [projectValue, setProjectValue] = useState('===');
-  const [requesterValue, setRequesterValue] = useState('===');
-  const [contactValue, setContactValue] = useState('===');
-  const [progressValue, setProgressValue] = useState('===');
   const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
@@ -73,65 +69,6 @@ const BusinessBoardRead = () => {
     }
   };
 
-  // const getProjectApi = async () => {
-  //   if (prevent) return;
-  //   prevent = true;
-  //   setTimeout(() => {
-  //     prevent = false;
-  //   }, 200);
-  //   const result = await getProjectRead(pageInfo);
-  //   if (typeof result === 'object') {
-  //     const { data, meta } = result?.data;
-  //     setList(data);
-  //     setMeta(meta);
-  //     setPageInfo(prev => {
-  //       const clone = { ...prev };
-  //       clone.page = meta?.page;
-  //       clone.totalPage = meta?.totalPage;
-  //       return clone;
-  //     });
-  //   } else return catchError(result, navigate, setAlertBox, setAlert)
-  // };
-
-  // const handleChangeRadioButton = (e, type) => {
-  //   if (type === 'title') {
-  //     changeState(setPostInfo, 'title', e.target.value);
-  //   } else if (type === 'content') {
-  //     changeState(setPostInfo, 'title', e.target.value);
-  //   }
-  // };
-
-  // const returnHeader = () => {
-  //   switch (path.split('/')[1]) {
-  //     case 'weekly':
-  //       return '주간 업무 보고';
-  //     case 'board':
-  //       return '게시판';
-  //     case 'notice':
-  //       return '공지사항';
-  //     default:
-  //       break;
-  //   }
-  // };
-
-  // const getProjectInfo = async () => {
-  //   let result;
-  //   switch (path.split('/')[1]) {
-  //     case 'notice':
-  //       result = await getNoticeInfo(id);
-  //       break;
-  //     case 'board':
-  //       result = await getBoardDetail(id);
-  //       break;
-  //     case 'weekly':
-  //       return;
-  //     default:
-  //   }
-  //   if (typeof result === 'object') {
-  //     setPostInfo(result?.data);
-  //   } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
-  // };
-
   const getProjectDetail = async () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
@@ -146,18 +83,6 @@ const BusinessBoardRead = () => {
         ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-  const editProject = async () => {
-    let result;
-    if (typeof result === 'object') {
-      setAlert('edit');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '수정이 완료되었습니다.'
-      );
-    } else return catchError(result, navigate, setAlertBox, setAlert);
-  };
 
   useEffect(() => {
     if (getCookie('myToken')) {
@@ -165,26 +90,6 @@ const BusinessBoardRead = () => {
       if (id?.length) getProjectDetail();
     }
   }, []);
-
-  useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setPostInfo, 'project_name', projectValue);
-  }, [projectValue]);
-
-  useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setPostInfo, 'request_id', requesterValue);
-  }, [requesterValue]);
-
-  useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setPostInfo, 'manager_id', contactValue);
-  }, [contactValue]);
-
-  useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setPostInfo, 'work_status', progressValue);
-  }, [progressValue]);
 
   useEffect(() => {
     if (getCookie('myToken')) if (id?.length) getProjectDetail();
@@ -213,7 +118,7 @@ const BusinessBoardRead = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <div>{project_name}</div>
+                <div>ㅇㅇㅇ</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
@@ -248,9 +153,7 @@ const BusinessBoardRead = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button className='commonBtn applyBtn' onClick={editProject}>
-              수정
-            </button>
+            <button className='commonBtn applyBtn'>수정</button>
             <button
               className='commonBtn list'
               onClick={() => {

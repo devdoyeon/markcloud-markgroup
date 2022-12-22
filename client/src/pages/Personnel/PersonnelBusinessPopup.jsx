@@ -28,7 +28,7 @@ const PersonnelBusinessPopup = ({
   const cookie = getCookie('myToken');
 
   const createPersonnelDepartment = async () => {
-    const create = await getDepartmentCreate(curDepartment?.section, cookie);
+    const create = await getDepartmentCreate(curDepartment?.section);
     changeState(setCurDepartment, 'section', '');
   };
 

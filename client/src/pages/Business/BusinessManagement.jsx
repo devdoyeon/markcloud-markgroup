@@ -71,7 +71,7 @@ const BusinessManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getBusinessRead(postInfo, pageInfo, cookie);
+    const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -98,13 +98,14 @@ const BusinessManagement = () => {
           work_status,
           created_at,
           work_end_date,
+          id,
         },
         idx
       ) => {
         return (
           <>
             {acc}
-            <tr>
+            <tr onClick={() => navigate(`/business/${id}`)}>
               <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
               <td>{title}</td>
               <td>{project_name}</td>

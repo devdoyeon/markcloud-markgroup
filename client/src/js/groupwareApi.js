@@ -103,16 +103,10 @@ export const checkUserInfo = async () => {
 };
 
 //# 인사관리 중복 아이디 체크
-export const duplicateIdCheck = async (userId, cookie) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'access-token': cookie,
-  };
+export const duplicateIdCheck = async userId => {
   const param = { user_id: userId.trim() };
   try {
-    return await axios.post(`/api/auth/check/id-duplicate`, param, {
-      headers,
-    });
+    return await axios.post(`/api/auth/check/id-duplicate`, param, header());
   } catch (error) {
     return await apiErrorHandling(error);
   }
@@ -156,22 +150,12 @@ export const checkPoint = async () => {
 };
 
 // ==============================공지사항==============================
-export const getNoticeList = async (
-  { page, limit = 9 },
-  type,
-  value,
-  cookie
-) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
     if (type === '' || value === '') {
       return await axios.get(
         `/groupware/notice/list?page=${page}&limit=${limit}`,
-        {
-          headers,
-        }
+        header()
       );
     } else {
       return await axios.get(
@@ -191,10 +175,7 @@ export const getNoticeInfo = async id => {
   }
 };
 
-export const createNotice = async ({ title, content, created_id }, cookie) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const createNotice = async ({ title, content, created_id }) => {
   try {
     return await axios.post(
       `/groupware/notice/create`,
@@ -203,21 +184,14 @@ export const createNotice = async ({ title, content, created_id }, cookie) => {
         content: content,
         created_id: created_id,
       },
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
-export const editNotice = async (
-  { title, content, created_id },
-  id,
-  cookie
-) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const editNotice = async ({ title, content, created_id }, id) => {
   try {
     return await axios.post(
       `/groupware/notice/update?notice_id=${id}`,
@@ -226,21 +200,20 @@ export const editNotice = async (
         content: content,
         created_id: created_id,
       },
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
-export const deleteNotice = async (id, cookie) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const deleteNotice = async id => {
   try {
-    return await axios.post(`/groupware/notice/delete?notice_id=${id}`, null, {
-      headers: headers,
-    });
+    return await axios.post(
+      `/groupware/notice/delete?notice_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -249,22 +222,18 @@ export const deleteNotice = async (id, cookie) => {
 
 export const getBusinessRead = async (
   { project_name, status_filter },
-  { page, limit },
-  cookie
+  { page, limit }
 ) => {
-  const headers = {
-    'access-token': cookie,
-  };
   try {
     if (project_name === '') {
       return await axios.get(
         `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
-        { headers: headers }
+        header()
       );
     } else {
       return await axios.get(
         `/groupware/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
-        { headers: headers }
+        header()
       );
     }
   } catch (error) {
@@ -347,14 +316,11 @@ export const updateBusiness = async (
 
 // ================================인사 관리 ================================
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-export const getDepartmentList = async ({ page, limit }, cookie) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const getDepartmentList = async ({ page, limit }) => {
   try {
     return await axios.get(
       `/groupware/personnel/department/list?page=${page}&limit=${limit}`,
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -371,17 +337,14 @@ export const getDepartmentInfo = async id => {
   }
 };
 
-export const getDepartmentCreate = async (name, cookie) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const getDepartmentCreate = async name => {
   try {
     return await axios.post(
       `/groupware/personnel/department/create`,
       {
         department_name: name,
       },
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -412,14 +375,11 @@ export const getDepartmentDelete = async id => {
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~member~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-export const getMemberList = async ({ page, limit }, cookie) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const getMemberList = async ({ page, limit }) => {
   try {
     return await axios.get(
       `/groupware/personnel/member/list?page=${page}&limit=${limit}`,
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -434,24 +394,18 @@ export const getMemberInfo = async id => {
   }
 };
 
-export const getMemberCreate = async (
-  {
-    name,
-    user_id,
-    password,
-    email,
-    birthday,
-    phone,
-    gender,
-    zip_code,
-    address,
-    section,
-  },
-  cookie
-) => {
-  const headers = {
-    'access-token': cookie,
-  };
+export const getMemberCreate = async ({
+  name,
+  user_id,
+  password,
+  email,
+  birthday,
+  phone,
+  gender,
+  zip_code,
+  address,
+  section,
+}) => {
   try {
     return await axios.post(
       `/groupware/personnel/member/create`,
@@ -467,7 +421,7 @@ export const getMemberCreate = async (
         address,
         section,
       },
-      { headers: headers }
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
