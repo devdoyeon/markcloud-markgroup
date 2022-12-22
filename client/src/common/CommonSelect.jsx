@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
 
-const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
+const CommonSelect = ({
+  opt,
+  selectVal,
+  setSelectVal,
+  postInfo,
+  pathname,
+  filter,
+  person,
+}) => {
   const [select, setSelect] = useState('off');
 
   /*
@@ -25,7 +33,19 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
     <div className={`selectBox ${select}`}>
       <div
         className={`selectVal`}
-        onClick={() => (select === 'on' ? setSelect('off') : setSelect('on'))}>
+        onClick={() => {
+          console.log(postInfo);
+          if (pathname === 'business' && person === 'person') {
+            if (filter === 'MyProject') {
+              return setSelect('off');
+            } else if (filter === 'MyRequest') {
+              return setSelect('off');
+            }
+          }else if(pathname === "business" && person === 'request') {
+            
+          }
+          select === 'on' ? setSelect('off') : setSelect('on');
+        }}>
         {changeSelectVal()}
         <img src={selectArrow} alt='선택 아이콘' />
       </div>

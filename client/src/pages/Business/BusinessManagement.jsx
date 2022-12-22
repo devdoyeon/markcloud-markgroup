@@ -7,6 +7,7 @@ import { getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeState, changeTitle } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
+import { useLocation } from 'react-router-dom';
 
 const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
@@ -20,8 +21,12 @@ const BusinessManagement = () => {
   const [meta, setMeta] = useState({});
   const [inputVal, setInputVal] = useState('나의 업무현황');
   const [projectValue, setProjectValue] = useState('선택');
-  const [contactValue, setContactValue] = useState('===');
-  const [requesterValue, setRequesterValue] = useState('===');
+  const [contactValue, setContactValue] = useState(
+    localStorage.getItem('userName')
+  );
+  const [requesterValue, setRequesterValue] = useState(
+    localStorage.getItem('userName')
+  );
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 15,
@@ -34,6 +39,8 @@ const BusinessManagement = () => {
 
   const navigate = useNavigate();
   const cookie = getCookie('myToken');
+  const path = useLocation().pathname;
+  const pathname = path.split('/')[1];
 
   const projectNameArr = [
     '마크클라우드',
@@ -57,6 +64,7 @@ const BusinessManagement = () => {
       const { data, meta } = result?.data;
       setList(data);
       setMeta(meta);
+      changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -115,19 +123,18 @@ const BusinessManagement = () => {
       getBusinessReadApi();
     }
   }, [projectValue]);
-
   useEffect(() => {
     if (getCookie('myToken')) getBusinessReadApi();
   }, [postInfo.status_filter]);
-
+  console.log(postInfo.project_name);
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
-  console.log(list);
   const handleChangeClear = () => {};
 
   const { project_member, project_name } = meta;
 
+  console.log(project_name);
   return (
     <>
       <div className='container'>
@@ -184,20 +191,77 @@ const BusinessManagement = () => {
               {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
-                <CommonSelect
-                  opt={project_member}
-                  selectVal={contactValue}
-                  setSelectVal={setContactValue}
-                />
+
+                {postInfo.status_filter === 'MyProject' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={contactValue}
+                    setSelectVal={setContactValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='MyProject'
+                    person='person'
+                  />
+                ) : postInfo.status_filter === 'MyRequest' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={contactValue}
+                    setSelectVal={setContactValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='MyRequest'
+                    person='person'
+                  />
+                ) : postInfo.status_filter === 'All' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={contactValue}
+                    setSelectVal={setContactValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='All'
+                    person='person'
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
-                <CommonSelect
-                  opt={project_member}
-                  selectVal={requesterValue}
-                  setSelectVal={setRequesterValue}
-                />
+                {postInfo.status_filter === 'MyProject' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={requesterValue}
+                    setSelectVal={setRequesterValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='MyProject'
+                    person='request'
+                  />
+                ) : postInfo.status_filter === 'MyRequest' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={requesterValue}
+                    setSelectVal={setRequesterValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='MyRequest'
+                    person='request'
+                  />
+                ) : postInfo.status_filter === 'All' ? (
+                  <CommonSelect
+                    opt={project_member}
+                    selectVal={requesterValue}
+                    setSelectVal={setRequesterValue}
+                    postInfo={postInfo}
+                    pathname={pathname}
+                    filter='All'
+                    person='request'
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <div className='content'>

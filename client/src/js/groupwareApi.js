@@ -238,7 +238,7 @@ export const deleteNotice = async (id, cookie) => {
 // ================================ 업무 관리 ================================
 
 export const getBusinessRead = async (
-  { project_name, status_filter = 'MyProject' },
+  { project_name, status_filter },
   { page, limit },
   cookie
 ) => {
