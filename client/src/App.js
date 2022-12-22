@@ -1,6 +1,6 @@
 import 'App.css';
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 // =============== Pages ===============
 import Home from 'pages/Home';
 import SignIn from 'pages/SignIn';
@@ -24,11 +24,17 @@ import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
 import PersonnelMember from 'pages/Personnel/PersonnelMember';
 
 function App() {
+  const { pathname } = useLocation();
+
   useEffect(() => {
     //아임포트 IMP 객체 초기화
     let IMP = window.IMP;
     IMP.init('imp99495830');
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className='App'>
