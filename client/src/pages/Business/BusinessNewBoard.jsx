@@ -18,12 +18,13 @@ const BusinessNewBoard = () => {
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
   const [postInfo, setPostInfo] = useState({
-    project_name: '==',
+    project_name: '',
+    status_filter: 'MyProject',
+    manager_id: '',
+    request_id: '',
     title: '',
     content: '',
-    work_status: '==',
-    request_id: '==',
-    manager_id: '==',
+    progress_status: [],
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -36,25 +37,26 @@ const BusinessNewBoard = () => {
     limit: 5,
   });
 
-  const [projectValue, setProjectValue] = useState('===');
-  const [requesterValue, setRequesterValue] = useState('===');
-  const [contactValue, setContactValue] = useState('===');
-  const [progressValue, setProgressValue] = useState('===');
+  const [projectValue, setProjectValue] = useState('선택');
+  const [requesterValue, setRequesterValue] = useState('선택');
+  const [contactValue, setContactValue] = useState('선택');
+  const [progressValue, setProgressValue] = useState('선택');
   const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
+  const cookie = getCookie('myToken');
 
   let prevent = false;
 
-  const getProjectApi = async () => {
+  const getBusinessProjectNameApi = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getBusinessRead(pageInfo);
+    const result = await getBusinessRead(postInfo, pageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
@@ -107,16 +109,6 @@ const BusinessNewBoard = () => {
   //   } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   // };
 
-  const getProjectInfo = async () => {
-    const pathName = path.split(`/`)[1];
-    if (pathName !== 'business') return;
-    // const result = await
-
-    // if (typeof result === 'object') {
-    //   setPostInfo(result?.data);
-    // } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
-  };
-
   const createNew = async () => {
     const result = await createBusiness(postInfo);
 
@@ -148,7 +140,7 @@ const BusinessNewBoard = () => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
       // if (id?.length) getOriginDetail();
-      getProjectApi();
+      getBusinessProjectNameApi();
     }
   }, []);
 
