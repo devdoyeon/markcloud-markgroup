@@ -30,7 +30,6 @@ def get_db():
         print(' - db commit - ')
     except:
         session.rollback()
-        raise HTTPException(status_code=500, detail='DBError')
         print(' - db rollback - ')
     finally:
         session.close()
