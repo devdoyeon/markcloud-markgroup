@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
 
-const headers = {
-  'access-token': getCookie('myToken'),
-};
+const header = () => ({
+  headers: {
+    'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+  },
+});
 
 //# API 통신 중 발생하는 에러 핸들링 함수
 export const apiErrorHandling = async error => {
@@ -23,6 +26,8 @@ export const apiErrorHandling = async error => {
         return `wrongPw,${failCount}`;
       else if (detail === 'Logins Exceeded') return 'loginExceeded';
       else if (detail === 'Payment Required') return 'paymentRequired';
+      else if (detail === 'Service Expired, please contact to your manager')
+        return 'serviceExpired';
       break;
     case 404:
       return 'notFound';
@@ -87,13 +92,11 @@ export const signIn = async (userId, userPw) => {
 
 //# 유저 정보
 export const checkUserInfo = async () => {
-  const headers = {
-    'access-token': getCookie('myToken'),
-  };
   try {
-    return await axios.get(`/api/users/self?current_ip=${await getIp()}`, {
-      headers,
-    });
+    return await axios.get(
+      `/api/users/self?current_ip=${await getIp()}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -117,17 +120,11 @@ export const duplicateIdCheck = async (userId, cookie) => {
 
 //# 결제 관련 데이터 생성 api
 export const createMID = async data => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
-  };
   try {
     return await axios.post(
       `/api/order/create?current_ip=${await getIp()}`,
       data,
-      {
-        headers,
-      }
+      header()
     );
   } catch (error) {
     return await apiErrorHandling(error);
@@ -135,17 +132,11 @@ export const createMID = async data => {
 };
 //# 결제 위변조 체크 api
 export const checkPay = async data => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
-  };
   try {
     return await axios.post(
       `/api/order/verify?current_ip=${await getIp()}`,
       data,
-      {
-        headers,
-      }
+      header()
     );
   } catch (error) {
     return await apiErrorHandling(error);
@@ -157,7 +148,7 @@ export const checkPoint = async () => {
   try {
     return await axios.get(
       `/api/checkpoint/groupware?current_ip=${await getIp()}`,
-      { headers }
+      header()
     );
   } catch (error) {
     return await apiErrorHandling(error);
@@ -182,7 +173,7 @@ export const getNoticeList = async (
     } else {
       return await axios.get(
         `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
-        { headers }
+        header()
       );
     }
   } catch (error) {
@@ -520,7 +511,8 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
     return await axios.get(
       `/dy/board/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
-      }${value?.length ? `&filter_val=${value}` : ''}`
+      }${value?.length ? `&filter_val=${value}` : ''}`,
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -530,7 +522,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 //& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
-    return await axios.get(`/dy/board/detail?post_id=${id}`);
+    return await axios.get(`/dy/board/detail?post_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -539,12 +531,14 @@ export const getBoardDetail = async id => {
 //& 게시글 작성
 export const createBoard = async ({ title, content }) => {
   try {
-    return await axios.post(`/dy/board/create`, {
-      title: title,
-      content: content,
-      created_id: 'mxxvii',
-      organ_code: 'markcloud',
-    });
+    return await axios.post(
+      `/dy/board/create`,
+      {
+        title: title,
+        content: content,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -553,12 +547,14 @@ export const createBoard = async ({ title, content }) => {
 //& 게시글 수정
 export const editBoard = async ({ title, content }, id) => {
   try {
-    return await axios.post(`/dy/board/update?post_id=${id}`, {
-      title: title,
-      content: content,
-      created_id: 'mxxvii',
-      organ_code: 'markcloud',
-    });
+    return await axios.post(
+      `/dy/board/update?post_id=${id}`,
+      {
+        title: title,
+        content: content,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -567,7 +563,7 @@ export const editBoard = async ({ title, content }, id) => {
 //& 게시글 삭제
 export const deleteBoard = async id => {
   try {
-    return await axios.post(`/dy/board/delete?post_id=${id}&user_id=mxxvii`);
+    return await axios.post(`/dy/board/delete?post_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -581,7 +577,8 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
     return await axios.get(
       `/dy/report/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
-      }${value?.length ? `&filter_val=${value}` : ''}`
+      }${value?.length ? `&filter_val=${value}` : ''}`,
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -591,7 +588,7 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
 //& 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
-    return await axios.get(`/dy/report/detail?report_id=${id}`);
+    return await axios.get(`/dy/report/detail?report_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -600,11 +597,14 @@ export const getReportDetail = async id => {
 //& 주간 업무 보고 등록
 export const createReport = async ({ title, content }) => {
   try {
-    return await axios.post(`/dy/report/create`, {
-      title: title,
-      content: content,
-      created_id: 'mxxvii',
-    });
+    return await axios.post(
+      `/dy/report/create`,
+      {
+        title: title,
+        content: content,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -614,11 +614,12 @@ export const createReport = async ({ title, content }) => {
 export const editReport = async ({ title, content }, id) => {
   try {
     return await axios.post(
-      `/dy/report/update?report_id=${id}&user_id=mxxvii`,
+      `/dy/report/update?report_id=${id}`,
       {
         title: title,
         content: content,
-      }
+      },
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -628,7 +629,7 @@ export const editReport = async ({ title, content }, id) => {
 //& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
-    return await axios.post(`/dy/report/delete?report_id=${id}&user_id=mxxvii`);
+    return await axios.post(`/dy/report/delete?report_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -644,7 +645,8 @@ export const getProjectList = async (name, status, start, end) => {
         status?.length ? `&project_status=${status}` : ''
       }${start?.length ? `&start_date=${start}` : ''}${
         end?.length ? `end_date=${end}` : ''
-      }`
+      }`,
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -654,7 +656,7 @@ export const getProjectList = async (name, status, start, end) => {
 //& 프로젝트 상세 보기
 export const getProjectDetail = async id => {
   try {
-    return await axios.get(`/dy/project/detail?project_id=${id}`);
+    return await axios.get(`/dy/project/detail?project_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -663,7 +665,7 @@ export const getProjectDetail = async id => {
 //& 프로젝트 생성
 export const createProject = async projectInfo => {
   try {
-    return await axios.post(`/dy/project/create?user_id=mxxvii`, projectInfo);
+    return await axios.post(`/dy/project/create`, projectInfo, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -673,8 +675,9 @@ export const createProject = async projectInfo => {
 export const editProject = async (id, projectInfo) => {
   try {
     return await axios.post(
-      `/dy/project/update?project_id=${id}&user_id=mxxvii`,
-      projectInfo
+      `/dy/project/update?project_id=${id}`,
+      projectInfo,
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -684,7 +687,7 @@ export const editProject = async (id, projectInfo) => {
 //& 프로젝트 삭제
 export const deleteProject = async id => {
   try {
-    return await axios.post(`/dy/project/delete?project_id=${id}`);
+    return await axios.post(`/dy/project/delete?project_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -693,7 +696,7 @@ export const deleteProject = async id => {
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
-    return await axios.get(`/dy/project/member?user_id=mxxvii`);
+    return await axios.get(`/dy/project/member`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -703,8 +706,9 @@ export const getPeopleList = async () => {
 export const addProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/dy/project/member_add?project_id=${id}&user_id=mxxvii`,
-      { new_member_id: memberId }
+      `/dy/project/member_add?project_id=${id}`,
+      { new_member_id: memberId },
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -715,8 +719,9 @@ export const addProjectMember = async (id, memberId) => {
 export const deleteProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/dy/project/member_delete?project_id=${id}&user_id=mxxvii`,
-      { delete_member_id: memberId }
+      `/dy/project/member_delete?project_id=${id}`,
+      { delete_member_id: memberId },
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);

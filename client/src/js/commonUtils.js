@@ -13,6 +13,7 @@ const errorList = {
     '로그인 횟수가 초과되었습니다.<br/>잠시 후 다시 시도해 주세요.',
   paymentRequired:
     '유료 결제가 필요한 서비스입니다.<br/>요금제 안내 페이지로 이동하시겠습니까?',
+  serviceExpired: '서비스 사용 기간이 만료되었습니다.',
 };
 
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
@@ -21,7 +22,8 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     result === 'accessDenied' ||
     result === 'NotAuthority' ||
     result === 'tokenExpired' ||
-    result === 'loginExceeded'
+    result === 'loginExceeded' ||
+    result === 'serviceExpired'
   ) {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
