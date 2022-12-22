@@ -132,7 +132,6 @@ const BusinessManagement = () => {
   useEffect(() => {
     if (getCookie('myToken')) {
       changeState(setPostInfo, 'project_name', projectValue);
-      getBusinessReadApi();
     }
   }, [projectValue]);
   useEffect(() => {
@@ -156,14 +155,15 @@ const BusinessManagement = () => {
       }
       getBusinessReadApi();
     }
-  }, [postInfo.status_filter]);
-  console.log(requesterValue);
+  }, [postInfo.status_filter, postInfo.project_name]);
+
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
   const handleChangeClear = () => {};
 
   const { project_member, project_name } = meta;
+  console.log(meta);
 
   return (
     <>

@@ -24,7 +24,6 @@ const BusinessNewBoard = () => {
     request_id: '',
     title: '',
     content: '',
-    progress_status: [],
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -56,11 +55,13 @@ const BusinessNewBoard = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
+
     const result = await getBusinessRead(postInfo, pageInfo, cookie);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
       setMeta(meta);
+      changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -69,7 +70,6 @@ const BusinessNewBoard = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-
   const handleChangeRadioButton = (e, type) => {
     if (type === 'title') {
       changeState(setPostInfo, 'title', e.target.value);
@@ -78,40 +78,8 @@ const BusinessNewBoard = () => {
     }
   };
 
-  // const returnHeader = () => {
-  //   switch (path.split('/')[1]) {
-  //     case 'report':
-  //       return '주간 업무 보고';
-  //     case 'board':
-  //       return '게시판';
-  //     case 'notice':
-  //       return '공지사항';
-  //     default:
-  //       break;
-  //   }
-  // };
-
-  // const getProjectInfo = async () => {
-  //   let result;
-  //   switch (path.split('/')[1]) {
-  //     case 'notice':
-  //       result = await getNoticeInfo(id);
-  //       break;
-  //     case 'board':
-  //       result = await getBoardDetail(id);
-  //       break;
-  //     case 'report':
-  //       return;
-  //     default:
-  //   }
-  //   if (typeof result === 'object') {
-  //     setPostInfo(result?.data);
-  //   } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
-  // };
-
-  const createNew = async () => {
+  const createWorkBusiness = async () => {
     const result = await createBusiness(postInfo);
-
     if (typeof result === 'object') {
       setAlert('apply');
       return commonModalSetting(
@@ -145,10 +113,10 @@ const BusinessNewBoard = () => {
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setPostInfo, 'project_name', projectValue);
-  }, [projectValue]);
-
+    if (getCookie('myToken')) {
+      getBusinessProjectNameApi();
+    }
+  }, [postInfo.status_filter, postInfo.project_name]);
   useEffect(() => {
     if (getCookie('myToken'))
       changeState(setPostInfo, 'request_id', requesterValue);
@@ -164,12 +132,23 @@ const BusinessNewBoard = () => {
       changeState(setPostInfo, 'work_status', progressValue);
   }, [progressValue]);
 
+  useEffect(() => {
+    if (getCookie('myToken')) {
+      changeState(setPostInfo, 'project_name', projectValue);
+    }
+  }, [projectValue]);
+
+  // useEffect(() => {
+  //   if (getCookie('myToken')) {
+  //     getBusinessProjectNameApi();
+  //   }
+  // }, [postInfo.status_filter]);
+
   // useEffect(()=> {
   //   if(id?.length) getProjectInfo();
   // },[])
-
-  const { member_id, project_name } = meta;
-
+  console.log(postInfo);
+  const { project_name, project_member } = meta;
   return (
     <>
       <div className='container'>
@@ -195,7 +174,7 @@ const BusinessNewBoard = () => {
               <div className='project-list'>
                 <span>요청자</span>
                 <CommonSelect
-                  opt={member_id}
+                  opt={project_member}
                   selectVal={requesterValue}
                   setSelectVal={setRequesterValue}
                 />
@@ -204,7 +183,7 @@ const BusinessNewBoard = () => {
               <div className='project-list'>
                 <span>담당자</span>
                 <CommonSelect
-                  opt={member_id}
+                  opt={project_member}
                   selectVal={contactValue}
                   setSelectVal={setContactValue}
                 />
@@ -242,7 +221,7 @@ const BusinessNewBoard = () => {
           <div className='btn-wrap'>
             <button
               className='commonBtn applyBtn'
-              onClick={id?.length ? editPost : createNew}>
+              onClick={id?.length ? editPost : createWorkBusiness}>
               등록
             </button>
             <button

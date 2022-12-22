@@ -299,15 +299,22 @@ export const createBusiness = async ({
   request_id,
   manager_id,
 }) => {
+  const headers = {
+    'access-token': getCookie('myToken'),
+  };
   try {
-    return await axios.post(`/bw/projects/create`, {
-      project_name,
-      title,
-      content,
-      work_status,
-      request_id,
-      manager_id,
-    });
+    return await axios.post(
+      `/bw/projects/create`,
+      {
+        project_name: project_name,
+        title: title,
+        content: content,
+        work_status: work_status,
+        request_id: request_id,
+        manager_id: manager_id,
+      },
+      { headers: headers }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
