@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { removeCookie } from './cookie';
 
 // ================================== 도연 ==================================
 
@@ -17,13 +18,17 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     result === 'serverError' ||
     result === 'accessDenied' ||
     result === 'NotAuthority' ||
-    result === 'duplicateLogin' ||
     result === 'tokenExpired' ||
     result === 'loginExceeded'
   ) {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'notFound') return navigate('/not-found');
+  } else if (result === 'duplicateLogin') {
+    setAlert(result)
+    removeCookie('myToken')
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+    
+  }else if (result === 'notFound') return navigate('/not-found');
 };
 
 export const emptyCheck = value => {

@@ -601,10 +601,15 @@
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   font-size: 30px;
 }
+.payment-home .content-container .payment-success > h2 .highlight {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 30px;
+  color: #5850cc;
+}
 .payment-home .content-container .payment-success > h2 + div {
   margin: 40px 0;
   padding: 50px;
-  background-color: rgba(60, 143, 239, 0.2);
+  background-color: rgba(88, 80, 204, 0.2);
   text-align: center;
 }
 .payment-home .content-container .payment-success > h2 + div > h3 {
@@ -654,6 +659,16 @@
   width: 150px;
   margin: 0 5px;
   font-size: 16px;
+}
+.payment-home .content-container .payment-success .btn-wrap button.commonBtn {
+  border: 2px solid #5850cc;
+}
+.payment-home .content-container .payment-success .btn-wrap button.go-list {
+  width: auto;
+}
+.payment-home .content-container .payment-success .btn-wrap button.okBtn {
+  background-color: white;
+  color: #5850cc;
 }
 
 .main-footer {

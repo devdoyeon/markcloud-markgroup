@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PaymentStepNav from 'common/PaymentStepNav';
+import CommonSiteMap from 'common/CommonSiteMap';
+import CommonFooter from 'common/CommonFooter';
 import { changeTitle, addComma } from 'js/commonUtils';
 
 const PaymentSuccess = () => {
@@ -50,6 +52,7 @@ const PaymentSuccess = () => {
 
   return (
     <section className='payment-home'>
+      <CommonSiteMap color='black' />
       <div className='content-container'>
         <PaymentStepNav step={2} />
         <main className='payment-content'>
@@ -97,16 +100,20 @@ const PaymentSuccess = () => {
               </>
             )}
             <div className='btn-wrap'>
-              <a href='/mark-mypage' rel='noopener noreferrer' target='_self'>
-                <button className='gray-btn'>구매내역 보기</button>
+              <a
+                href='http://localhost:3000/mark-mypage'
+                rel='noopener noreferrer'
+                target='_self'>
+                <button className='commonBtn go-list'>구매내역 보기</button>
               </a>
-              <a href='/mark-view' rel='noopener noreferrer' target='_self'>
-                <button className='blue-btn'>확인</button>
+              <a href='/' rel='noopener noreferrer' target='_self'>
+                <button className='commonBtn okBtn'>확인</button>
               </a>
             </div>
           </div>
         </main>
       </div>
+      <CommonFooter />
     </section>
   );
 };

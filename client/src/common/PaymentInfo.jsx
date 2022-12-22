@@ -26,7 +26,7 @@ const PaymentInfo = memo(({ curData }) => {
 
   //월, 일이 한자리일 경우 '0'추가하는 함수
   const addZero = val => {
-    return val < 10 ? '0' + val : val;
+    return val < 10 ? `0${val}` : val;
   };
 
   //가상계좌 입금기한 설정
@@ -45,7 +45,7 @@ const PaymentInfo = memo(({ curData }) => {
   const culDate = (n, m) => {
     let date = new Date();
     let start = new Date(Date.parse(date) + n * 1000 * 60 * 60 * 24);
-    let today = new Date(Date.parse(date) + m * 1000 * 60 * 60 * 24);
+    let end = new Date(Date.parse(date) + m * 1000 * 60 * 60 * 24);
 
     if (n < 10) {
       start.setMonth(start.getMonth() - n);
@@ -56,32 +56,22 @@ const PaymentInfo = memo(({ curData }) => {
     let dd = start.getDate();
 
     //바뀔 날짜 정보 변수
-    let c_yyyy = today.getFullYear();
-    let c_mm = today.getMonth() + 1;
-    let c_dd = today.getDate();
-    return (
-      yyyy +
-      '.' +
-      addZero(mm) +
-      '.' +
-      addZero(dd) +
-      ' ~ ' +
-      c_yyyy +
-      '.' +
-      addZero(c_mm) +
-      '.' +
-      addZero(c_dd)
-    );
+    let c_yyyy = end.getFullYear();
+    let c_mm = end.getMonth() + 1;
+    let c_dd = end.getDate();
+    return `${yyyy}.${addZero(mm)}.${addZero(dd)} ~ ${c_yyyy}.${addZero(
+      c_mm
+    )}.${addZero(c_dd)}`;
   };
 
   let bool = false;
-  let paymentParams = [];
+  let paymentParams = {};
 
   //주문번호 및 구매자 정보 조회
   const paymentProcess = async () => {
     const data = { merchant_code: merchant_code };
     const result = await createMID(data);
-    if (typeof resultData === 'object') {
+    if (typeof result === 'object') {
       paymentParams = result?.data?.data;
       bool = true;
       if (bool) requestPay();
@@ -159,9 +149,7 @@ const PaymentInfo = memo(({ curData }) => {
             </thead>
             <tbody>
               <tr>
-                <td>
-                  마크그룹웨어 {useDay}일권
-                </td>
+                <td>마크그룹웨어 {useDay}일권</td>
                 <td>{culDate(0, useDay)}</td>
                 <td className='mobile-none'>{addComma(money)}원</td>
               </tr>
