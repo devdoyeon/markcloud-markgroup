@@ -84,4 +84,5 @@ def delete_notice(
     access_token:str = Header(None),
     db: Session = Depends(get_db)
 ):
-    return remove_notice(db,notice_id,user_pk)
+    result = remove_notice(db,notice_id,user_pk)
+    return result

@@ -168,6 +168,7 @@ def remove_member(db,member_id):
 
     try:
         db.query(member_table).filter(member_table.id == member_id).delete()
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail='DBError')            
     

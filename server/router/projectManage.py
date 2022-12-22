@@ -21,11 +21,13 @@ def read_projects(
     access_token: str = Header(None),
     user_pk: int = None,
     project_name: Optional[str] = None,
-    status_filter='MyProject',
+    status_filter:str = "MyProject",
     page: int = 1,
     limit: int = 10,
     db:Session = Depends(get_db)
 ):
+
+    
     offset = (page - 1) * limit
     total_count, project_list = get_project_list(db, offset, limit, user_pk, status_filter) # 나의 업무현황 데이터
     total_page = total_count // limit
@@ -49,7 +51,7 @@ def read_projects(
     ).success_response(project_list)
 
 
-# 프로젝트 리스트 
+# 프로젝트 필터 
 @router_project.post('/filter_read', response_model = Response[List[ProjectManageOut]])
 @author_chk.varify_access_token
 def read_project_list(

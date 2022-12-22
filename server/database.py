@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
+from fastapi import HTTPException
 
 from dotenv import load_dotenv
 
@@ -29,6 +30,7 @@ def get_db():
         print(' - db commit - ')
     except:
         session.rollback()
+        raise HTTPException(status_code=500, detail='DBError')
         print(' - db rollback - ')
     finally:
         session.close()

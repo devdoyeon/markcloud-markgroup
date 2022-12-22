@@ -49,6 +49,7 @@ def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 �
             all_pjt_name = db.execute(p_name_query).fetchall()
 
         all_pjt_name = [name for name, in all_pjt_name] 
+        print(all_pjt_name)
         return all_pjt_name
     except:
         raise HTTPException(status_code=500, detail='DBError')        
@@ -60,8 +61,8 @@ def get_project_list(db, offset, limit, user_pk, *filter):
     member_table = memberManageModel.MemberTable
 
     try:    
-        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
-        
+        user_info = author_chk.get_user_info(db,user_pk)
+
         query = db.query(project_manage_table.id,
                         project_manage_table.title,
                         project_table.project_name,
@@ -71,9 +72,9 @@ def get_project_list(db, offset, limit, user_pk, *filter):
                         project_manage_table.work_status,
                         project_manage_table.created_at,
                         project_manage_table.work_end_date
-                        ).filter(project_table.organ_code==user_organ_code
+                        ).filter(project_table.organ_code==user_info.department_code
                         ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id))
-                        
+                            
         if filter:
             if len(filter) != 1: # filter-read
                 status_filter = filter[0].value                
