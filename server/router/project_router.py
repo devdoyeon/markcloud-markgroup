@@ -51,8 +51,11 @@ def project_list(project_name: Optional[str] = None,
 
 @router.get("/detail", response_model=Project)
 def project_detail(project_id: int, db: Session = Depends(get_db)):
-    project = project_crud.get_project(db, project_id)
-    return project
+    db_project = project_crud.get_project(db, project_id)
+    project_code = db_project.project_code
+    project_members = project_crud.get_project_members(db, project_code)
+    db_project.project_members = [members.user_id for members in project_members]
+    return db_project
 
 
 @router.get("/project_members", response_model=List[ProjectMemberListOut])
@@ -60,6 +63,7 @@ def project_member_list(project_id: int, db: Session = Depends(get_db)):
     db_project = project_crud.get_project(db, project_id)
     project_code = db_project.project_code
     members = project_crud.get_project_members(db, project_code)
+    print(members)
     return members
 
 

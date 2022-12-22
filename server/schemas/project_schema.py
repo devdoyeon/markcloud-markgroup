@@ -17,6 +17,7 @@ class Project(BaseModel):
     created_id: str
     updated_at: Optional[date] = None
     updated_id: Optional[str] = None
+    project_members: list
     
     class Config:
         orm_mode = True
