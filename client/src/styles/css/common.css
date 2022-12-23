@@ -678,7 +678,6 @@ input {
 }
 .sidebar > img {
   cursor: pointer;
-  margin-bottom: 60px;
 }
 .sidebar > ul > li {
   font-size: 18px;
@@ -694,6 +693,12 @@ input {
 .sidebar > ul > li.active {
   color: #15171a;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.sidebar > ul > li.departmentName {
+  color: #585858;
+  margin-bottom: 60px;
+  font-size: 15px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
 }
 .sidebar .tools {
   position: absolute;

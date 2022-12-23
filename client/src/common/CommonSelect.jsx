@@ -24,6 +24,14 @@ const CommonSelect = ({
         return '작성자';
       case 'title':
         return '제목';
+      case 'all':
+        return '전체'
+      case 'before':
+        return '시작 전'
+      case 'progress':
+        return '진행 중'
+      case 'complete':
+        return '종료'
       default:
         return selectVal;
     }

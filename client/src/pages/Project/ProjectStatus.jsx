@@ -22,7 +22,7 @@ const ProjectStatus = () => {
     totalPage: 0,
     limit: 10,
   });
-  const [selectVal, setSelectVal] = useState('전체');
+  const [selectVal, setSelectVal] = useState('all');
   const [list, setList] = useState([]);
   const [search, setSearch] = useState({
     name: '',
@@ -41,7 +41,7 @@ const ProjectStatus = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectList();
+    const result = await getProjectList(search, selectVal);
     if (typeof result === 'object') {
       setList(result?.data?.data);
       setPageInfo(prev => {
@@ -51,6 +51,19 @@ const ProjectStatus = () => {
         return clone;
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const resetSearch = () => {
+    setSearch({
+      name: '',
+      start_date: `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`,
+      end_date: `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`,
+    });
+    setSelectVal('전체');
   };
 
   const renderTable = () => {
@@ -67,6 +80,20 @@ const ProjectStatus = () => {
         },
         idx
       ) => {
+        const eng2kor = eng => {
+          switch (eng) {
+            case 'all':
+              return '전체';
+            case 'before':
+              return '시작 전';
+            case 'progress':
+              return '진행 중';
+            case 'complete':
+              return '종료';
+            default:
+              return;
+          }
+        };
         return (
           <>
             {acc}
@@ -74,7 +101,7 @@ const ProjectStatus = () => {
               className={idx % 2 === 1 ? 'odd' : 'even'}
               onClick={() => navigate(`/project/${id}`)}>
               <td>{idx + 1}</td>
-              <td>{project_status}</td>
+              <td>{eng2kor(project_status)}</td>
               <td>{project_name}</td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>
@@ -86,6 +113,26 @@ const ProjectStatus = () => {
       <></>
     );
   };
+
+  useEffect(() => {
+    let kor = selectVal;
+    switch (kor) {
+      case '전체':
+        setSelectVal('all');
+        break;
+      case '시작 전':
+        setSelectVal('before');
+        break;
+      case '진행 중':
+        setSelectVal('progress');
+        break;
+      case '종료':
+        setSelectVal('complete');
+        break;
+      default:
+        return;
+    }
+  }, [selectVal]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
@@ -148,8 +195,12 @@ const ProjectStatus = () => {
             </div>
             <hr />
             <div className='row btnWrap'>
-              <button className='commonBtn searchBtn'>검색</button>
-              <button className='commonBtn resetBtn'>초기화</button>
+              <button className='commonBtn searchBtn' onClick={projectList}>
+                검색
+              </button>
+              <button className='commonBtn resetBtn' onClick={resetSearch}>
+                초기화
+              </button>
               <button
                 className='commonBtn applyBtn'
                 onClick={() => navigate('/project/write')}>

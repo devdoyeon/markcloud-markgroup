@@ -167,7 +167,7 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
 };
 export const getNoticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/info?notice_id=${id}`, header());
+    return await axios.get(`/bw/notice/info?notice_id=${id}`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -497,7 +497,11 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 //& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
-    return await axios.get(`/groupware/board/detail?post_id=${id}`, header());
+    return await axios.get(
+      `/groupware/board/detail?post_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -538,7 +542,11 @@ export const editBoard = async ({ title, content }, id) => {
 //& 게시글 삭제
 export const deleteBoard = async id => {
   try {
-    return await axios.post(`/groupware/board/delete?post_id=${id}`, header());
+    return await axios.post(
+      `/groupware/board/delete?post_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -609,6 +617,7 @@ export const deleteReport = async id => {
   try {
     return await axios.post(
       `/groupware/report/delete?report_id=${id}`,
+      null,
       header()
     );
   } catch (error) {
@@ -619,13 +628,16 @@ export const deleteReport = async id => {
 // ================================ 프로젝트 현황 ================================
 
 //& 프로젝트 현황 불러오기
-export const getProjectList = async (name, status, start, end) => {
+export const getProjectList = async (
+  { name, start_date, end_date },
+  status
+) => {
   try {
     return await axios.get(
       `/groupware/project/list?${name?.length ? `project_name=${name}` : ''}${
         status?.length ? `&project_status=${status}` : ''
-      }${start?.length ? `&start_date=${start}` : ''}${
-        end?.length ? `end_date=${end}` : ''
+      }${start_date?.length ? `&start_date=${start_date}` : ''}${
+        end_date?.length ? `&end_date=${end_date}` : ''
       }`,
       header()
     );
@@ -683,7 +695,7 @@ export const deleteProject = async id => {
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
-    return await axios.get(`/groupware/project/member`, header());
+    return await axios.get(`/groupware/project/member`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
