@@ -100,7 +100,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await createNotice(postInfo, cookie);
+        result = await createNotice(postInfo);
         break;
       case 'board':
         result = await createBoard(postInfo);
@@ -160,7 +160,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[1]) {
       case 'notice':
-        result = await editNotice(postInfo, id, cookie);
+        result = await editNotice(postInfo, id);
         break;
       case 'board':
         result = await editBoard(postInfo, id);

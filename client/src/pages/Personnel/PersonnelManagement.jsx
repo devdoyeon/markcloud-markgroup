@@ -48,7 +48,7 @@ const PersonnelManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getDepartmentList(departmentPageInfo, cookie);
+    const result = await getDepartmentList(departmentPageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(data);

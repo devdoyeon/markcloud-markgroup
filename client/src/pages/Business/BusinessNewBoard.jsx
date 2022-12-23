@@ -56,7 +56,7 @@ const BusinessNewBoard = () => {
       prevent = false;
     }, 200);
 
-    const result = await getBusinessRead(postInfo, pageInfo, cookie);
+    const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);

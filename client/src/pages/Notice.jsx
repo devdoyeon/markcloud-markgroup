@@ -35,7 +35,7 @@ const Notice = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getNoticeList(pageInfo, filter, searchText, cookie);
+    const result = await getNoticeList(pageInfo, filter, searchText);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setList(data);
