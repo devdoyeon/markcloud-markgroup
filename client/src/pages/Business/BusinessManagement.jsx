@@ -165,23 +165,17 @@ const BusinessManagement = () => {
       if (postInfo.status_filter === 'MyProject') {
         setRequesterValue('선택');
         setContactValue(localStorage.getItem('userName'));
-        // changeState(
-        //   setPostInfo,
-        //   'manager_id',
-        //   localStorage.getItem('userName')
-        // );
+        changeState(setPostInfo, 'manager_id', '');
       } else if (postInfo.status_filter === 'MyRequest') {
         setContactValue('선택');
         setRequesterValue(localStorage.getItem('userName'));
-        // changeState(
-        //   setPostInfo,
-        //   'request_id',
-        //   localStorage.getItem('userName')
-        // );
+        changeState(setPostInfo, 'request_id', '');
       }
       getBusinessReadApi();
     }
   }, [postInfo.status_filter, postInfo.project_name]);
+
+  console.log(postInfo);
 
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
