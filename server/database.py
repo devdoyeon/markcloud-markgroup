@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import scoped_session, sessionmaker
 import os
 
 from dotenv import load_dotenv
@@ -21,7 +21,7 @@ engine = create_engine(DB_URL, max_overflow=0, pool_recycle=1000, pool_pre_ping=
 Base = declarative_base()
 
 def get_db():
-    SessionLocal = scoped_session(autocommit=False, autoflush=True, bind=engine)
+    SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=True, bind=engine))
     session = SessionLocal()
     try:
         yield session
