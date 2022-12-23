@@ -34,14 +34,13 @@ def read_projects(
 
         if total_count % limit != 0:
             total_page += 1
-
-        if project_name == None:
-            project_name = get_project_name(db,user_pk) # 프로젝트명
-
+            
+        all_project_name = get_project_name(db,user_pk) # 전체 프로젝트명
         project_member = get_project_member(db,project_name) # 요청자 & 담당자
+    
         
         return Response().metadata(
-            project_name = project_name,
+            project_name = all_project_name,
             project_member = project_member,
             page=page,
             totalPage=total_page,
