@@ -9,6 +9,8 @@ const BusinessCommonSelect = ({
   pathname,
   filter,
   person,
+  nameKey,
+  setMemberCurKey,
 }) => {
   const [select, setSelect] = useState('off');
 
@@ -53,15 +55,17 @@ const BusinessCommonSelect = ({
       {select === 'on' && (
         <div className='selectOptGroup'>
           {opt?.length > 0 ? (
-            opt?.reduce((acc, option) => {
+            opt?.reduce((acc, option, idx) => {
               return (
                 <>
                   {acc}
                   <div
                     className={`selectOpt ${selectVal === option && 'active'}`}
+                    data-key={nameKey[idx]}
                     onClick={() => {
                       setSelectVal(option);
                       setSelect('off');
+                      setMemberCurKey(nameKey[idx]);
                     }}>
                     {option}
                   </div>
