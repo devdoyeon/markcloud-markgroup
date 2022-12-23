@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaMinusCircle, FaPauseCircle } from 'react-icons/fa';
 import CommonModal from './CommonModal';
@@ -38,7 +38,7 @@ const PaymentInfo = memo(({ curData }) => {
     month = addZero(month);
     day = addZero(day);
 
-    return date.getFullYear() + month + day;
+    return `${date.getFullYear()}${month}${day}`;
   };
 
   //사용기간 계산
