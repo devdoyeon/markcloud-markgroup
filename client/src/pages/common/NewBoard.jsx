@@ -55,6 +55,7 @@ const NewBoard = () => {
     }
   };
 
+  //= 빈 input 찾기
   const findEmptyValue = () => {
     const tagRegExp = /<[^>]*>?/g;
     if (postInfo.title.trim() === '') return 'emptyTitle';
@@ -62,6 +63,7 @@ const NewBoard = () => {
       return 'emptyContent';
   };
 
+  //= 수정일 때 기존 상세내역 불러오기
   const getOriginDetail = async () => {
     let result;
     switch (path.split('/')[1]) {
@@ -84,7 +86,6 @@ const NewBoard = () => {
           (localStorage.getItem('yn') === 'n' &&
             path.split('/')[1] === 'report'))
       ) {
-        //= 내가 쓴 게 아님 && 사용자임 || 대표인데 주간 업무 보고임
         setAlert('notAuthority');
         commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
       }
@@ -92,6 +93,7 @@ const NewBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
+  //= new post upload
   const createNew = async () => {
     if (findEmptyValue() === 'emptyTitle')
       return commonModalSetting(
@@ -131,6 +133,7 @@ const NewBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
+  //= delete post
   const deletePost = async () => {
     let result;
     switch (path.split('/')[1]) {
@@ -152,6 +155,7 @@ const NewBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= edit post
   const editPost = async () => {
     if (findEmptyValue() === 'emptyTitle')
       return commonModalSetting(

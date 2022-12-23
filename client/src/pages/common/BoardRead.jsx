@@ -24,6 +24,7 @@ const BoardRead = () => {
   const [header, setHeader] = useState('');
   const [info, setInfo] = useState({});
 
+  //= 상세내역 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = false;
