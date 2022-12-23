@@ -45,7 +45,10 @@ const Home = () => {
     } else {
       const checkResult = await checkPoint();
       if (typeof checkResult === 'object') {
-        if (checkResult?.data?.status?.code === 301)
+        if (
+          checkResult?.data?.status?.code === 301 ||
+          checkResult?.data?.status?.code === 201
+        )
           localStorage.setItem('yn', 'n');
         else if (checkResult?.data?.status?.code === 302)
           localStorage.setItem('yn', 'y');

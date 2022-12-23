@@ -20,7 +20,7 @@ const Board = () => {
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 0,
-    limit: 0,
+    limit: 9,
   });
   const [filter, setFilter] = useState('created_id');
   const [searchText, setSearchText] = useState('');

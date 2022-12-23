@@ -21,7 +21,6 @@ const SideMenu = () => {
 
   const checkUser = async () => {
     const result = await checkPoint();
-    console.log(result);
     if (typeof result === 'object') {
       setRender('active');
     } else if (result === 'paymentRequired') {
@@ -135,13 +134,13 @@ const SideMenu = () => {
               }}>
               로그아웃
             </div>
-            <div className='row'>
+            <a className='row go-myPage' href='http://localhost:3000/mark-mypage'>
               <span>
                 {localStorage.getItem('userName')}(
                 {localStorage.getItem('userId')})
               </span>
               <img src={rightArrow} alt='더보기 아이콘' />
-            </div>
+            </a>
           </div>
         </div>
       ) : (

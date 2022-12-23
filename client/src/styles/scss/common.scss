@@ -556,8 +556,7 @@ input {
     }
 
     .main-move {
-      background: url('image/groupware-logo.png') no-repeat left top /
-        contain;
+      background: url('image/groupware-logo.png') no-repeat left top / contain;
     }
 
     + .sub-nav-bg {
@@ -648,18 +647,22 @@ input {
       &.logoutBtn {
         color: #df0000;
       }
-      &.row {
-        justify-content: space-between;
-        span {
-          color: $gray01;
-        }
-        img {
-          border-radius: 50%;
-          width: 24px;
-          height: 24px;
-          overflow: hidden;
-          margin-right: 8px;
-        }
+    }
+    > .go-myPage {
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      padding: 12px 16px;
+      justify-content: space-between;
+      span {
+        color: $gray01;
+      }
+      img {
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        overflow: hidden;
+        margin-right: 8px;
       }
     }
   }

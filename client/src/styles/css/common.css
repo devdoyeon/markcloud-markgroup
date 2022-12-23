@@ -715,13 +715,17 @@ input {
 .sidebar .tools > div.logoutBtn {
   color: #df0000;
 }
-.sidebar .tools > div.row {
+.sidebar .tools > .go-myPage {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 12px 16px;
   justify-content: space-between;
 }
-.sidebar .tools > div.row span {
+.sidebar .tools > .go-myPage span {
   color: #585858;
 }
-.sidebar .tools > div.row img {
+.sidebar .tools > .go-myPage img {
   border-radius: 50%;
   width: 24px;
   height: 24px;
