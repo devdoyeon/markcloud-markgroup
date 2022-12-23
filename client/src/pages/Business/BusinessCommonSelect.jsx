@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
 
-const CommonSelect = ({
+const BusinessCommonSelect = ({
   opt,
   selectVal,
   setSelectVal,
@@ -34,6 +34,17 @@ const CommonSelect = ({
       <div
         className={`selectVal`}
         onClick={() => {
+          if (pathname === 'business') {
+            if (person === 'person') {
+              if (filter === 'MyProject') {
+                return setSelect('off');
+              }
+            } else if (person === 'request') {
+              if (filter === 'MyRequest') {
+                return setSelect('off');
+              }
+            }
+          }
           select === 'on' ? setSelect('off') : setSelect('on');
         }}>
         {changeSelectVal()}
@@ -47,7 +58,7 @@ const CommonSelect = ({
                 <>
                   {acc}
                   <div
-                    className={`selectOpt ${selectVal === option ? 'active' : ''}`}
+                    className={`selectOpt ${selectVal === option && 'active'}`}
                     onClick={() => {
                       setSelectVal(option);
                       setSelect('off');
@@ -68,4 +79,4 @@ const CommonSelect = ({
   );
 };
 
-export default CommonSelect;
+export default BusinessCommonSelect;
