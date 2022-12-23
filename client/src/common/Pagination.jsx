@@ -46,7 +46,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
     if (!direction) return;
     changePage(
       direction === 'prev'
-        ? page - 10 
+        ? page - 10
         : page + 10 > totalPage
         ? totalPage
         : page + 10

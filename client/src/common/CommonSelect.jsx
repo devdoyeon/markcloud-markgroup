@@ -47,7 +47,9 @@ const CommonSelect = ({
                 <>
                   {acc}
                   <div
-                    className={`selectOpt ${selectVal === option ? 'active' : ''}`}
+                    className={`selectOpt ${
+                      selectVal === option ? 'active' : ''
+                    }`}
                     onClick={() => {
                       setSelectVal(option);
                       setSelect('off');

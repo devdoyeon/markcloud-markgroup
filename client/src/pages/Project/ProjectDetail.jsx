@@ -157,33 +157,44 @@ const ProjectDetail = () => {
                               {acc}
                               <span className='personBtn'>
                                 {getKeyByValue(memberObj, person)}
-                                <img
-                                  src={deletePerson}
-                                  alt={`${getKeyByValue(
-                                    memberObj,
-                                    person
-                                  )} 삭제 버튼`}
-                                  onClick={() => deleteMember(person)}
-                                />
+                                {localStorage.getItem('yn') === 'n' ||
+                                projectInfo?.created_id ===
+                                  localStorage.getItem('userName') ? (
+                                  <img
+                                    src={deletePerson}
+                                    alt={`${getKeyByValue(
+                                      memberObj,
+                                      person
+                                    )} 삭제 버튼`}
+                                    onClick={() => deleteMember(person)}
+                                  />
+                                ) : (
+                                  <></>
+                                )}
                               </span>
                             </>
                           );
                         }, <></>)}
                   </div>
                 </div>
-                <div className='row'>
-                  <span>참여 인원 추가</span>
-                  <div className='people column'>
-                    <CommonSelect
-                      opt={personArr}
-                      selectVal={personValue}
-                      setSelectVal={setPersonValue}
-                    />
+                {localStorage.getItem('yn') === 'n' ||
+                projectInfo?.created_id === localStorage.getItem('userName') ? (
+                  <div className='row'>
+                    <span>참여 인원 추가</span>
+                    <div className='people column'>
+                      <CommonSelect
+                        opt={personArr}
+                        selectVal={personValue}
+                        setSelectVal={setPersonValue}
+                      />
+                    </div>
+                    <button className='addPersonBtn' onClick={addMember}>
+                      추가
+                    </button>
                   </div>
-                  <button className='addPersonBtn' onClick={addMember}>
-                    추가
-                  </button>
-                </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

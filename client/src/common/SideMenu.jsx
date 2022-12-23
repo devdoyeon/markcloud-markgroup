@@ -134,7 +134,9 @@ const SideMenu = () => {
               }}>
               로그아웃
             </div>
-            <a className='row go-myPage' href='http://localhost:3000/mark-mypage'>
+            <a
+              className='row go-myPage'
+              href='http://localhost:3000/mark-mypage'>
               <span>
                 {localStorage.getItem('userName')}(
                 {localStorage.getItem('userId')})

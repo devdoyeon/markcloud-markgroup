@@ -337,7 +337,9 @@ export const getDepartmentList = async ({ page, limit }) => {
 
 export const getDepartmentInfo = async id => {
   try {
-    return await axios.get(`/groupware/personnel/department/info?department_id=${id}`);
+    return await axios.get(
+      `/groupware/personnel/department/info?department_id=${id}`
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -447,18 +449,21 @@ export const getMemberUpdate = async ({
   zip_code,
 }) => {
   try {
-    return await axios.post(`/groupware/personnel/member/update?member_id=${id}`, {
-      id,
-      user_id,
-      name,
-      gender,
-      birthday,
-      section,
-      phone,
-      email,
-      address,
-      zip_code,
-    });
+    return await axios.post(
+      `/groupware/personnel/member/update?member_id=${id}`,
+      {
+        id,
+        user_id,
+        name,
+        gender,
+        birthday,
+        section,
+        phone,
+        email,
+        address,
+        zip_code,
+      }
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -466,7 +471,9 @@ export const getMemberUpdate = async ({
 
 export const getMemberDelete = async id => {
   try {
-    return await axios.post(`/groupware/personnel/member/delete?member_id=${id}`);
+    return await axios.post(
+      `/groupware/personnel/member/delete?member_id=${id}`
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
