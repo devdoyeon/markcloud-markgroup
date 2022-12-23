@@ -24,7 +24,6 @@ const BusinessManagement = () => {
   const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
-  const [inputVal, setInputVal] = useState('나의 업무현황');
 
   const [pageInfo, setPageInfo] = useState({
     page: 1,
@@ -50,6 +49,7 @@ const BusinessManagement = () => {
   );
   const [memberKey, setMemberKey] = useState([]);
   const [memberName, setMemberName] = useState([]);
+  const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
   const cookie = getCookie('myToken');
@@ -75,10 +75,16 @@ const BusinessManagement = () => {
     }, 200);
     const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
+      let obj = {};
       const { data, meta } = result?.data;
+      // key : 키 value : 멤버이름
+      const key = Object.keys(meta?.project_member);
+      const value = Object.values(meta?.project_member);
+      setMemberKey(key);
+      setMemberName(value);
       setList(data);
       setMeta(meta);
-      changeState(setPostInfo, 'project_name', projectValue);
+      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -144,7 +150,13 @@ const BusinessManagement = () => {
 
   useEffect(() => {
     if (getCookie('myToken')) {
-      changeState(setPostInfo, 'request_id', requesterValue);
+      changeState(setPostInfo, 'manager_id', memberCurKey);
+    }
+  }, [contactValue]);
+
+  useEffect(() => {
+    if (getCookie('myToken')) {
+      changeState(setPostInfo, 'request_id', memberCurKey);
     }
   }, [requesterValue]);
 
@@ -153,19 +165,19 @@ const BusinessManagement = () => {
       if (postInfo.status_filter === 'MyProject') {
         setRequesterValue('선택');
         setContactValue(localStorage.getItem('userName'));
-        changeState(
-          setPostInfo,
-          'manager_id',
-          localStorage.getItem('userName')
-        );
+        // changeState(
+        //   setPostInfo,
+        //   'manager_id',
+        //   localStorage.getItem('userName')
+        // );
       } else if (postInfo.status_filter === 'MyRequest') {
         setContactValue('선택');
         setRequesterValue(localStorage.getItem('userName'));
-        changeState(
-          setPostInfo,
-          'request_id',
-          localStorage.getItem('userName')
-        );
+        // changeState(
+        //   setPostInfo,
+        //   'request_id',
+        //   localStorage.getItem('userName')
+        // );
       }
       getBusinessReadApi();
     }
@@ -251,12 +263,6 @@ const BusinessManagement = () => {
 
   const { project_member, project_name } = meta;
 
-  // project_member?.forEach(element => {
-  //   return (
-
-  //   )
-  // });
-
   return (
     <>
       <div className='container'>
@@ -314,70 +320,82 @@ const BusinessManagement = () => {
               <div className='project-list'>
                 <span>담당자</span>
 
-                {/* {postInfo.status_filter === 'MyProject' ? (
+                {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='MyProject'
                     person='person'
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='MyRequest'
                     person='person'
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='All'
                     person='person'
                   />
                 ) : (
                   <></>
-                )} */}
+                )}
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
                 {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='MyProject'
                     person='request'
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='MyRequest'
                     person='request'
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={project_member}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
                     pathname={pathname}
+                    nameKey={memberKey}
+                    setMemberCurKey={setMemberCurKey}
                     filter='All'
                     person='request'
                   />

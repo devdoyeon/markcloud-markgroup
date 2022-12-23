@@ -21,7 +21,6 @@ const SideMenu = () => {
 
   const checkUser = async () => {
     const result = await checkPoint();
-    console.log(result);
     if (typeof result === 'object') {
       setRender('active');
     } else if (result === 'paymentRequired') {

@@ -167,7 +167,7 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
 };
 export const getNoticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/info?notice_id=${id}`);
+    return await axios.get(`/bw/notice/info?notice_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -337,7 +337,10 @@ export const getDepartmentList = async ({ page, limit }) => {
 
 export const getDepartmentInfo = async id => {
   try {
-    return await axios.get(`/bw/personnel/department/info?department_id=${id}`);
+    return await axios.get(
+      `/bw/personnel/department/info?department_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -394,7 +397,10 @@ export const getMemberList = async ({ page, limit }) => {
 
 export const getMemberInfo = async id => {
   try {
-    return await axios.get(`/bw/personnel/member/info?member_id=${id}`);
+    return await axios.get(
+      `/bw/personnel/member/info?member_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
