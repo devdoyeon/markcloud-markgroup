@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CommonSiteMap from 'common/CommonSiteMap';
 import CommonFooter from 'common/CommonFooter';
+import SideMenuBtn from 'common/SideMenuBtn';
 import PaymentStepNav from 'common/PaymentStepNav';
 import { changeTitle } from 'js/commonUtils';
 import PaymentInfo from 'common/PaymentInfo';
@@ -49,6 +50,7 @@ const Payment = memo(() => {
 
   return (
     <>
+      <SideMenuBtn />
       <CommonSiteMap color='black' />
       <section className='payment-home'>
         <div className='content-container'>

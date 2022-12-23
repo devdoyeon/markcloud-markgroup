@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import CommonSiteMap from 'common/CommonSiteMap';
 import CommonFooter from 'common/CommonFooter';
+import SideMenuBtn from 'common/SideMenuBtn';
 import costBg from 'image/costBg.png';
 
 const Cost = () => {
   return (
     <div className='container'>
+      <SideMenuBtn/>
       <CommonSiteMap color='black' />
       <div className='cost'>
         <img src={costBg} alt='요금제 안내 이미지' />

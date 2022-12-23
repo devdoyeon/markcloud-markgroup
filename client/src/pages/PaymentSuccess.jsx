@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import PaymentStepNav from 'common/PaymentStepNav';
 import CommonSiteMap from 'common/CommonSiteMap';
 import CommonFooter from 'common/CommonFooter';
+import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, addComma } from 'js/commonUtils';
 
 const PaymentSuccess = () => {
@@ -52,6 +53,7 @@ const PaymentSuccess = () => {
 
   return (
     <section className='payment-home'>
+      <SideMenuBtn />
       <CommonSiteMap color='black' />
       <div className='content-container'>
         <PaymentStepNav step={2} />
