@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import cloudIcon from 'image/sideBtnIcon01.png';
 import viewIcon from 'image/sideBtnIcon02.png';
 import tongIcon from 'image/sideBtnIcon03.png';
-import linkIcon from 'image/sideBtnIcon04.png';
+// import linkIcon from 'image/sideBtnIcon04.png';
 
 const SideMenuBtn = () => {
   const [scrollY, setScrollY] = useState(0);
