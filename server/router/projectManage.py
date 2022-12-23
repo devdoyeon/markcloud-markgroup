@@ -26,29 +26,29 @@ def read_projects(
     limit: int = 10,
     db:Session = Depends(get_db)
 ):
+    try:
+        offset = (page - 1) * limit
+        total_count, project_list = get_project_list(db, offset, limit, user_pk, status_filter) # 나의 업무현황 데이터
+        total_page = total_count // limit
+        
 
+        if total_count % limit != 0:
+            total_page += 1
+            
+        all_project_name = get_project_name(db,user_pk) # 전체 프로젝트명
+        project_member = get_project_member(db,project_name) # 요청자 & 담당자
     
-    offset = (page - 1) * limit
-    total_count, project_list = get_project_list(db, offset, limit, user_pk, status_filter) # 나의 업무현황 데이터
-    total_page = total_count // limit
-    
-
-    if total_count % limit != 0:
-        total_page += 1
-
-    if project_name == None:
-        project_name = get_project_name(db,user_pk) # 프로젝트명
-
-    project_member = get_project_member(db,project_name) # 요청자 & 담당자
-    
-    return Response().metadata(
-        project_name = project_name,
-        project_member = project_member,
-        page=page,
-        totalPage=total_page,
-        offset=offset,
-        limit=limit
-    ).success_response(project_list)
+        
+        return Response().metadata(
+            project_name = all_project_name,
+            project_member = project_member,
+            page=page,
+            totalPage=total_page,
+            offset=offset,
+            limit=limit
+        ).success_response(project_list)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadPjtError')
 
 
 # 프로젝트 필터 
@@ -63,20 +63,23 @@ def read_project_list(
     limit: int = 10,
     db: Session = Depends(get_db)
 ):
-    offset = (page - 1) * limit
-    total_count, project_list = get_project_list(db, offset, limit, user_pk ,status_filter, filter_data)
-    total_page = total_count // limit
+    try:
+        offset = (page - 1) * limit
+        total_count, project_list = get_project_list(db, offset, limit, user_pk ,status_filter, filter_data)
+        total_page = total_count // limit
 
-    
-    if total_count % limit != 0:
-        total_page += 1
-    
-    return Response().metadata(
-        page=page,
-        totalPage=total_page,
-        offset=offset,
-        limit=limit
-    ).success_response(project_list)
+        
+        if total_count % limit != 0:
+            total_page += 1
+        
+        return Response().metadata(
+            page=page,
+            totalPage=total_page,
+            offset=offset,
+            limit=limit
+        ).success_response(project_list)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadPjtFilterError')
     
 # 프로젝트 상세페이지
 @router_project.get('/info', response_model = ProjectManageOut)
@@ -84,9 +87,12 @@ def read_project_info(
     project_id:int,
     db: Session = Depends(get_db)
 ):
-    result = get_project_info(db,project_id)
-    return result
-
+    try:
+        result = get_project_info(db,project_id)
+        return result
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadPjtInfoError')
+    
 # 프로젝트 생성
 @router_project.post('/create')
 @author_chk.varify_access_token
@@ -96,7 +102,10 @@ def create_project(
     user_pk:int = None,
     db: Session = Depends(get_db),
 ):
-    insert_project(db,inbound_data, user_pk)
+    try:
+        insert_project(db,inbound_data, user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='CreatePjtError')
     
 # 프로젝트 수정
 @router_project.post('/update')
@@ -108,8 +117,11 @@ def update_project(
     user_pk:int = None,
     db:Session = Depends(get_db)
 ):
-    change_project(db,inbound_data,project_id,user_pk)
-
+    try:
+        change_project(db,inbound_data,project_id,user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='UpdatePjtError')
+    
 # 프로젝트 삭제    
 @router_project.post('/delete')
 @author_chk.varify_access_token
@@ -119,4 +131,7 @@ def delete_project(
     user_pk:int = None,
     db:Session = Depends(get_db)
 ):
-    remove_project(db,project_id,user_pk)
+    try:
+        remove_project(db,project_id,user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='DeletePjtError')

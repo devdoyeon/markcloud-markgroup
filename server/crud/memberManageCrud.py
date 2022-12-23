@@ -4,8 +4,6 @@ from router import author_chk
 from fastapi import HTTPException
 from sqlalchemy import desc
 from datetime import datetime,date
-
-
     
 ##################################부서 관리##################################
 
@@ -25,7 +23,7 @@ def get_department_list(db, offset, limit, user_pk):
         
         return total_count, department_list
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='GetDpError')
 
 
 def get_department_info(db,department_id):
@@ -37,7 +35,7 @@ def get_department_info(db,department_id):
                         department_table.department_name.label('section'),
                         department_table.created_at).filter(department_table.id == department_id).first()
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='GetDpInfoError')
 
 def insert_department(db, inbound_data, user_pk):
     
@@ -54,7 +52,7 @@ def insert_department(db, inbound_data, user_pk):
         db.add(db_query)
 
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='InsertDpError')
     
 
 def change_department(db, inboud_data, department_id):
@@ -67,7 +65,7 @@ def change_department(db, inboud_data, department_id):
         
         db.query(department_table).filter_by(id = department_id).update(values)
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='ChangeDpERror')
     
 def remove_department(db, department_id):
     
@@ -76,7 +74,7 @@ def remove_department(db, department_id):
     try:
         db.query(department_table).filter(department_table.id == department_id).delete()
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='RemoveDpError')
     
     
     
@@ -93,7 +91,7 @@ def get_member_list(db, offset,limit, user_pk):
         member_list = query.offset(offset).limit(limit).all()
         return total_count, member_list
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='GetMbError')
     
     
 def get_member_info(db,member_id):
@@ -105,7 +103,7 @@ def get_member_info(db,member_id):
         return department_info
     
     except:
-        raise HTTPException(status_code=500, detail='DBError')    
+        raise HTTPException(status_code=500, detail='GetMbInfoError')    
 
 
 def insert_member(db,inbound_data,user_pk):
@@ -135,7 +133,7 @@ def insert_member(db,inbound_data,user_pk):
         db.add(db_query)
 
     except Exception:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='InsertMbError')
 
 def change_member(db, inbound_data, member_id):
     
@@ -158,7 +156,7 @@ def change_member(db, inbound_data, member_id):
         db.query(member_table).filter_by(id = member_id).update(values)
     
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='ChangeMbError')
 
 
     
@@ -170,5 +168,5 @@ def remove_member(db,member_id):
         db.query(member_table).filter(member_table.id == member_id).delete()
     except Exception as e:
         print(e)
-        raise HTTPException(status_code=500, detail='DBError')            
+        raise HTTPException(status_code=500, detail='RemoveMbError')            
     

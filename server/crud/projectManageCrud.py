@@ -24,7 +24,7 @@ def get_project_member(db, project_name):
         return project_member
     
     except:
-        raise HTTPException(status_code=500, detail='DBError')     
+        raise HTTPException(status_code=500, detail='GetPjtMbError')     
 
 
 def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 프로젝트 데이터
@@ -49,10 +49,9 @@ def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 �
             all_pjt_name = db.execute(p_name_query).fetchall()
 
         all_pjt_name = [name for name, in all_pjt_name] 
-        print(all_pjt_name)
         return all_pjt_name
     except:
-        raise HTTPException(status_code=500, detail='DBError')        
+        raise HTTPException(status_code=500, detail='GetPjtNmError')        
     
 def get_project_list(db, offset, limit, user_pk, *filter):
 
@@ -115,9 +114,8 @@ def get_project_list(db, offset, limit, user_pk, *filter):
         project_list = query.offset(offset).limit(limit).all()
         
         return project_count, project_list
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail='DBError')    
+    except:
+        raise HTTPException(status_code=500, detail='GetPjtError')    
     
 def get_project_info(db, project_id):
     
@@ -140,7 +138,7 @@ def get_project_info(db, project_id):
         return project_info
     
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='GetPjtInfoError')
 
 def insert_project(db,inbound_data,user_pk):
     
@@ -165,7 +163,7 @@ def insert_project(db,inbound_data,user_pk):
         db.add(db_query)
 
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='InsertPjtError')
     
 
 def change_project(db,inbound_data, project_id, user_pk):
@@ -193,7 +191,7 @@ def change_project(db,inbound_data, project_id, user_pk):
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='ChangePjtError')
     
 
 def remove_project(db, notice_id, user_pk):
@@ -210,4 +208,4 @@ def remove_project(db, notice_id, user_pk):
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
-        raise HTTPException(status_code=500, detail='DBError')
+        raise HTTPException(status_code=500, detail='RemovePjtError')

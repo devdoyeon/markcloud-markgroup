@@ -27,20 +27,24 @@ def read_notice_list(
     limit: int = 9,
     db: Session = Depends(get_db)
 ):
-    offset = (page - 1) * limit
-    
-    total_count, notice_list = get_notice_list(db, offset, limit, user_pk, filter_type, filter_val)
-    total_page = total_count // limit 
-    
-    if total_count % limit != 0:
-        total_page += 1
+    try:
+        offset = (page - 1) * limit
         
-    return Response().metadata(
-        page=page,
-        totalPage=total_page,
-        offset=offset,
-        limit=limit
-    ).success_response(notice_list)
+        total_count, notice_list = get_notice_list(db, offset, limit, user_pk, filter_type, filter_val)
+        total_page = total_count // limit 
+        
+        if total_count % limit != 0:
+            total_page += 1
+            
+        return Response().metadata(
+            page=page,
+            totalPage=total_page,
+            offset=offset,
+            limit=limit
+        ).success_response(notice_list)
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadNtError')
+
 
 
 # 공지 상세페이지
@@ -49,8 +53,11 @@ def read_notice_info(
     notice_id :int,
     db: Session = Depends(get_db)
 ):
-    notice_info =  get_notice_info(db, notice_id)
-    return notice_info
+    try:
+        notice_info =  get_notice_info(db, notice_id)
+        return notice_info
+    except:
+        raise HTTPException(status_cdoe=500, detail='ReadNtInfoError')
 
 # 공지 생성
 @router_notice.post('/create')
@@ -61,8 +68,11 @@ def create_notice(
     user_pk:int = None,
     db: Session = Depends(get_db),
 ):
-    insert_notice(db,inbound_data, user_pk)
-    
+    try:
+        insert_notice(db,inbound_data, user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='CreateNtError')
+        
 # 공지 수정
 @router_notice.post('/update') 
 @author_chk.varify_access_token
@@ -73,8 +83,11 @@ def update_notice(
     user_pk:int = None,
     db: Session = Depends(get_db)
 ):
-    return change_notice(db,inbound_data,notice_id,user_pk)
-
+    try:
+        return change_notice(db,inbound_data,notice_id,user_pk)
+    except:
+        raise HTTPException(status_cdoe=500, detail='UpdateNtError')
+    
 # 공지 삭제
 @router_notice.post('/delete')
 @author_chk.varify_access_token
@@ -84,5 +97,8 @@ def delete_notice(
     access_token:str = Header(None),
     db: Session = Depends(get_db)
 ):
-    result = remove_notice(db,notice_id,user_pk)
-    return result
+    try:
+        result = remove_notice(db,notice_id,user_pk)
+        return result
+    except:
+        raise HTTPException(status_cdoe=500, detail='DeleteNtError')
