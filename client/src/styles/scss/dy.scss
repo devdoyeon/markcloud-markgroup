@@ -894,6 +894,10 @@
   span {
     @include txt-style(14px, $gray01);
     width: 113px;
+    &.dateRange {
+      width: auto;
+      margin: 0 10px;
+    }
   }
   hr {
     width: 100%;
@@ -909,8 +913,19 @@
     border-radius: 8px;
     padding: 6px 16px;
   }
+  input[type='date'] {
+    width: 200px;
+  }
   > .row {
     width: 860px;
+    &.dateSearchArea {
+      justify-content: flex-start;
+      >.row{
+        &:first-child::after {
+          border-color: transparent;
+        }
+      }
+    }
     &.btnWrap {
       margin-top: 15px;
       position: relative;
@@ -952,7 +967,7 @@
   margin: 84px 0 56px;
   padding: 20px 16px;
   text-align: center;
-  >.noneList {
+  > .noneList {
     span {
       color: $gray03;
     }

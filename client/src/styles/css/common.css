@@ -817,6 +817,122 @@ input {
   margin-top: 56px;
 }
 
+.side-home {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  transition: bottom 0.5s;
+}
+.side-home > div {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  -webkit-transform: translate3d(0, 80px, 0);
+  transform: translate3d(0, 80px, 0);
+  -webkit-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.side-home > div ul {
+  position: absolute;
+  right: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 0;
+  height: 70px;
+  padding: 10px 50px 0 20px;
+  background: -o-linear-gradient(355.3deg, #36d1dc 0%, #5b86e5 109.97%);
+  background: linear-gradient(94.7deg, #36d1dc 0%, #5b86e5 109.97%);
+  border-radius: 45px;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+  transition: 0.4s;
+  opacity: 0;
+}
+.side-home > div ul li {
+  display: none;
+  margin-right: 20px;
+}
+.side-home > div ul a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.side-home > div ul span {
+  font-size: 12px;
+  color: #ffffff;
+}
+.side-home > div ul.active {
+  width: 400px;
+  opacity: 1;
+}
+.side-home > div ul.active li {
+  width: 67px;
+  display: block;
+}
+.side-home > div ul.active li span {
+  width: 100%;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.side-home > div ul.active li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.side-home button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  -webkit-box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.35);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.35);
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.side-home button.page-move-btn {
+  position: relative;
+  z-index: 9;
+  background: url("image/plusIcon.png") no-repeat center, -o-linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%);
+  background: url("image/plusIcon.png") no-repeat center, linear-gradient(315deg, #5b86e5 0%, #36d1dc 100%);
+}
+.side-home button.scroll-top-btn {
+  margin-top: 10px;
+  background: url("image/scrollTopIcon.png") no-repeat center, #ffffff;
+  -webkit-transform: translate3d(130px, 0, 0);
+  transform: translate3d(130px, 0, 0);
+}
+.side-home.active > div {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.side-home.active .scroll-top-btn {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+
 .error-home {
   width: 100%;
   height: 100vh;

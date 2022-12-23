@@ -898,6 +898,10 @@
   color: #585858;
   width: 113px;
 }
+.selectArea span.dateRange {
+  width: auto;
+  margin: 0 10px;
+}
 .selectArea hr {
   width: 100%;
   height: 1px;
@@ -912,8 +916,17 @@
   border-radius: 8px;
   padding: 6px 16px;
 }
+.selectArea input[type=date] {
+  width: 200px;
+}
 .selectArea > .row {
   width: 860px;
+}
+.selectArea > .row.dateSearchArea {
+  justify-content: flex-start;
+}
+.selectArea > .row.dateSearchArea > .row:first-child::after {
+  border-color: transparent;
 }
 .selectArea > .row.btnWrap {
   margin-top: 15px;

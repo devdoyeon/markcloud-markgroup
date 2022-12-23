@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import CommonFooter from 'common/CommonFooter';
 import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
+import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo, checkPoint } from 'js/groupwareApi';
-import { getCookie, setCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';
@@ -65,6 +66,7 @@ const Home = () => {
 
   return (
     <>
+    <SideMenuBtn/>
       <div className='main container column'>
         <CommonSiteMap color='white' />
         <div className='mainContent-wrap'>

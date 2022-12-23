@@ -171,9 +171,9 @@ const ProjectStatus = () => {
               </div>
             </div>
             <hr />
-            <div className='row'>
+            <div className='row dateSearchArea'>
               <div className='row'>
-                <span>프로젝트 시작일</span>
+                <span>프로젝트 일자</span>
                 <input
                   type='date'
                   value={search.start_date}
@@ -181,9 +181,7 @@ const ProjectStatus = () => {
                     changeState(setSearch, 'start_date', e.target.value)
                   }
                 />
-              </div>
-              <div className='row'>
-                <span>프로젝트 종료일</span>
+                <span className='dateRange'>~</span>
                 <input
                   type='date'
                   value={search.end_date}
