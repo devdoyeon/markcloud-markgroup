@@ -10,7 +10,7 @@ from datetime import datetime
 def get_project_member(db, project_name):
     
     try:
-        p_member_query = f'''SELECT name, section
+        p_member_query = f'''SELECT id, name, section
         FROM members
         WHERE user_id = ANY(SELECT user_id 
         FROM groupware_project_members
@@ -19,21 +19,21 @@ def get_project_member(db, project_name):
         WHERE project_name = "{project_name}")) 
         '''
         project_member = db.execute(p_member_query).fetchall() 
-        project_member = [(i[0]+'('+str(i[1])+')')for i in project_member] 
-        
+        # project_member = [{i[0]:(i[1]+'('+str(i[2])+')')} for i in project_member]
+        project_member = {i[0]:i[1]+'('+str(i[2])+')' for i in project_member}
+
         return project_member
     
     except:
         raise HTTPException(status_code=500, detail='GetPjtMbError')     
 
 
-def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 프로젝트 데이터
+def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는 프로젝트 데이터
     
     project_table = projectManageModel.ProjectTable
 
     try:
-        user_info = author_chk.get_user_info(db, user_pk)
-        
+
         # admin 계정일 경우 전체 프로젝트명 가져오기
         if user_info.groupware_only_yn == 'N': 
             all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).all()
@@ -47,21 +47,18 @@ def get_project_name(db, user_pk): # 처음 렌더링할때 뿌려줘야하는 �
             '''
             
             all_pjt_name = db.execute(p_name_query).fetchall()
-
         all_pjt_name = [name for name, in all_pjt_name] 
         return all_pjt_name
     except:
         raise HTTPException(status_code=500, detail='GetPjtNmError')        
     
-def get_project_list(db, offset, limit, user_pk, *filter):
+def get_project_list(db, offset, limit, user_info, *filter):
 
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
     member_table = memberManageModel.MemberTable
 
     try:    
-        user_info = author_chk.get_user_info(db,user_pk)
-
         query = db.query(project_manage_table.id,
                         project_manage_table.title,
                         project_table.project_name,
@@ -73,7 +70,7 @@ def get_project_list(db, offset, limit, user_pk, *filter):
                         project_manage_table.work_end_date
                         ).filter(project_table.organ_code==user_info.department_code
                         ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id))
-                            
+                
         if filter:
             if len(filter) != 1: # filter-read
                 status_filter = filter[0].value                
@@ -102,7 +99,7 @@ def get_project_list(db, offset, limit, user_pk, *filter):
              
             if status_filter:  
                 # 유저 아이디로 유저 이름+ 부서명 추출 ex) 송모아나(SI팀)
-                member_name = db.query(member_table.name, member_table.section).filter(member_table.id == user_pk).all()
+                member_name = db.query(member_table.name, member_table.section).filter(member_table.id == user_info.id).all()
                 member_name = [(i[0]+'('+str(i[1])+')')for i in member_name] 
                 if status_filter == 'MyProject': # default
                     query = query.filter(project_manage_table.manager_id == member_name)
@@ -117,7 +114,7 @@ def get_project_list(db, offset, limit, user_pk, *filter):
     except:
         raise HTTPException(status_code=500, detail='GetPjtError')    
     
-def get_project_info(db, project_id):
+def get_project_info(db, project_id,user_info):
     
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
@@ -133,6 +130,7 @@ def get_project_info(db, project_id):
                         project_manage_table.created_at,
                         project_manage_table.work_end_date
                         ).filter(project_manage_table.id == project_id
+                        ).filter(project_manage_table.organ_code == user_info.department_code
                         ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id)).first()
                         
         return project_info
@@ -140,25 +138,24 @@ def get_project_info(db, project_id):
     except:
         raise HTTPException(status_code=500, detail='GetPjtInfoError')
 
-def insert_project(db,inbound_data,user_pk):
+def insert_project(db,inbound_data,user_info):
     
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
 
     try:
 
-        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
         project_code = db.query(project_table.project_code).filter(project_table.project_name == inbound_data.project_name).first()
         
         db_query = project_manage_table(
-            organ_code=user_organ_code,
+            organ_code=user_info.department_code,
             project_code=project_code[0],
             title=inbound_data.title,
             request_id=inbound_data.request_id,
             manager_id=inbound_data.manager_id,
             content=inbound_data.content,
             work_status=inbound_data.work_status,
-            created_id=user_pk)
+            created_id=user_info.id)
         
         db.add(db_query)
 
@@ -166,12 +163,11 @@ def insert_project(db,inbound_data,user_pk):
         raise HTTPException(status_code=500, detail='InsertPjtError')
     
 
-def change_project(db,inbound_data, project_id, user_pk):
+def change_project(db,inbound_data, project_id, user_info):
     
     project_manage_table = projectManageModel.ProjectManageTable
     
     try:
-        user_info = author_chk.get_user_info(db, user_pk)
         
         base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
         values = {
@@ -185,7 +181,7 @@ def change_project(db,inbound_data, project_id, user_pk):
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_pk == int(base_q.created_id) or user_info.groupware_only_yn == 'N':
+        if user_info.id == int(base_q.created_id) or user_info.groupware_only_yn == 'N':
             db.query(project_manage_table).filter_by(id = project_id).update(values)
             
         else:
@@ -194,16 +190,13 @@ def change_project(db,inbound_data, project_id, user_pk):
         raise HTTPException(status_code=500, detail='ChangePjtError')
     
 
-def remove_project(db, notice_id, user_pk):
+def remove_project(db, notice_id, user_info):
 
     project_table = projectManageModel.ProjectManageTable
     
     try:
-        
-        user_info = author_chk.get_user_info(db, user_pk)
-        
         base_q = db.query(project_table).filter(project_table.id == notice_id)
-        if int(base_q.first().created_id) == user_pk or user_info.groupware_only_yn == 'N':
+        if user_info.id == int(base_q.first().created_id) or user_info.groupware_only_yn == 'N':
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
