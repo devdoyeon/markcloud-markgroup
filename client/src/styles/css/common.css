@@ -746,16 +746,19 @@ input {
 .list-wrap .noneList span {
   color: #cdcdcd;
 }
-.list-wrap ul {
+.list-wrap .list {
+  height: 586px;
+  width: 980px;
+}
+.list-wrap .list ul {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
-  width: 980px;
-  height: 586px;
+  width: 100%;
 }
-.list-wrap ul li {
+.list-wrap .list ul li {
   cursor: pointer;
   padding: 26px 24px;
   width: 310px;
@@ -765,38 +768,38 @@ input {
   border: 1px solid #eeeeee;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
 }
-.list-wrap ul li .postInfo {
+.list-wrap .list ul li .postInfo {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 16px;
 }
-.list-wrap ul li .postInfo .date {
+.list-wrap .list ul li .postInfo .date {
   font-size: 12px;
   color: #858585;
 }
-.list-wrap ul li .postInfo .alertNew {
+.list-wrap .list ul li .postInfo .alertNew {
   font-size: 10px;
   color: white;
   border-radius: 8px;
   padding: 2px 11px;
   background-color: #5b84e3;
 }
-.list-wrap ul li .postTitle {
+.list-wrap .list ul li .postTitle {
   margin-bottom: 40px;
 }
-.list-wrap ul li > hr {
+.list-wrap .list ul li > hr {
   width: 310px;
   transform: translateX(-24px);
   height: 1px;
   border: 0;
   background: #f5f5f5;
 }
-.list-wrap ul li .postWriter {
+.list-wrap .list ul li .postWriter {
   font-size: 14px;
   color: #585858;
   margin-top: 10px;
 }
-.list-wrap ul li:nth-child(3n) {
+.list-wrap .list ul li:nth-child(3n) {
   margin-right: 0;
 }
 .list-wrap .btn-wrap {

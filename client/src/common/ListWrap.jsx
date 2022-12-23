@@ -34,9 +34,9 @@ const ListWrap = ({ list }) => {
   return (
     <div className='list-wrap'>
       {list?.length ? (
-        <>
+        <div className='list'>
           <ul>{renderList()}</ul>
-        </>
+        </div>
       ) : (
         <div className='noneList column'>
           <img src={noneImg} alt='글 없음 아이콘' />

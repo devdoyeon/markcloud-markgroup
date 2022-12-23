@@ -680,49 +680,52 @@ input {
       color: $gray03;
     }
   }
-  ul {
-    @include flex-style($alignVal: flex-start, $justifyVal: flex-start);
-    width: $width02;
+  .list {
     height: 586px;
-    li {
-      cursor: pointer;
-      padding: 26px 24px;
-      width: 310px;
-      height: 170px;
-      margin: 0 25px 38px 0;
-      border-radius: 16px;
-      border: 1px solid $footerColor;
-      box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
-      .postInfo {
-        width: 100%;
-        justify-content: space-between;
-        margin-bottom: 16px;
-        .date {
-          @include txt-style(12px, $gray02);
-        }
-        .alertNew {
-          @include txt-style(10px, white);
-          border-radius: 8px;
-          padding: 2px 11px;
-          background-color: $mainBlue;
-        }
-      }
-      .postTitle {
-        margin-bottom: 40px;
-      }
-      > hr {
+    width: $width02;
+    ul {
+      @include flex-style($alignVal: flex-start, $justifyVal: flex-start);
+      width: 100%;
+      li {
+        cursor: pointer;
+        padding: 26px 24px;
         width: 310px;
-        transform: translateX(-24px);
-        height: 1px;
-        border: 0;
-        background: $gray05;
-      }
-      .postWriter {
-        @include txt-style(14px, $gray01);
-        margin-top: 10px;
-      }
-      &:nth-child(3n) {
-        margin-right: 0;
+        height: 170px;
+        margin: 0 25px 38px 0;
+        border-radius: 16px;
+        border: 1px solid $footerColor;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        .postInfo {
+          width: 100%;
+          justify-content: space-between;
+          margin-bottom: 16px;
+          .date {
+            @include txt-style(12px, $gray02);
+          }
+          .alertNew {
+            @include txt-style(10px, white);
+            border-radius: 8px;
+            padding: 2px 11px;
+            background-color: $mainBlue;
+          }
+        }
+        .postTitle {
+          margin-bottom: 40px;
+        }
+        > hr {
+          width: 310px;
+          transform: translateX(-24px);
+          height: 1px;
+          border: 0;
+          background: $gray05;
+        }
+        .postWriter {
+          @include txt-style(14px, $gray01);
+          margin-top: 10px;
+        }
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
       }
     }
   }
