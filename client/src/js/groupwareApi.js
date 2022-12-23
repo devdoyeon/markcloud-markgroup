@@ -12,7 +12,6 @@ const header = () => ({
 export const apiErrorHandling = async error => {
   const { status } = error?.response;
   const { detail } = error?.response?.data;
-  const failCount = detail?.split(',')[1];
   switch (status) {
     case 401:
       if (detail === 'Access Denied') return 'accessDenied';
@@ -22,8 +21,7 @@ export const apiErrorHandling = async error => {
       else if (detail === 'LoginRequired') return 'tokenExpired';
       else if (detail === 'DuplicateLoginDetection') return 'duplicateLogin';
       else if (detail === 'Invaild User ID') return 'wrongId';
-      else if (detail === `Invaild Password,${failCount}`)
-        return `wrongPw,${failCount}`;
+      else if (detail.includes(`Invaild Password`)) return `wrongPw`;
       else if (detail === 'Logins Exceeded') return 'loginExceeded';
       else if (detail === 'Payment Required') return 'paymentRequired';
       else if (detail === 'Service Expired, please contact to your manager')

@@ -5,7 +5,7 @@ import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo, checkPoint } from 'js/groupwareApi';
-import { getCookie } from 'js/cookie';
+import { getCookie, setCookie } from 'js/cookie';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';
@@ -45,6 +45,10 @@ const Home = () => {
     } else {
       const checkResult = await checkPoint();
       if (typeof checkResult === 'object') {
+        if (checkResult?.data?.status?.code === 301)
+          localStorage.setItem('yn', 'n');
+        else if (checkResult?.data?.status?.code === 302)
+          localStorage.setItem('yn', 'y');
         const userResult = await checkUserInfo();
         if (typeof userResult === 'object') {
           const { name, user_id } = userResult?.data?.data;

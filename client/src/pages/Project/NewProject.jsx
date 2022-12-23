@@ -60,8 +60,15 @@ const NewProject = () => {
         project_start_date,
         project_end_date,
         project_status,
+        created_id,
       } = result?.data;
-
+      if (
+        localStorage.getItem('yn') === 'y' &&
+        created_id !== localStorage.getItem('userName')
+      ) {
+        setAlert('notAuthority');
+        commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
+      }
       setProjectInfo(prev => {
         const clone = { ...prev };
         clone.project_name = project_name;
@@ -270,6 +277,7 @@ const NewProject = () => {
               alert === 'completeEdit'
             )
               navigate('/project');
+            else if (alert === 'notAuthority') navigate(`/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');

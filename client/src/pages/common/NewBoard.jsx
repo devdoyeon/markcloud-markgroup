@@ -78,6 +78,16 @@ const NewBoard = () => {
         return;
     }
     if (typeof result === 'object') {
+      if (
+        result?.data?.created_id !== localStorage.getItem('userName') &&
+        (localStorage.getItem('yn') === 'y' ||
+          (localStorage.getItem('yn') === 'n' &&
+            path.split('/')[1] === 'report'))
+      ) {
+        //= 내가 쓴 게 아님 && 사용자임 || 대표인데 주간 업무 보고임
+        setAlert('notAuthority');
+        commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
+      }
       setPostInfo(result?.data);
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
@@ -285,7 +295,8 @@ const NewBoard = () => {
             )
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'deleteConfirm') deletePost();
-            else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+            else if (alert === 'edit' || alert === 'notAuthority')
+              navigate(`/${path.split('/')[1]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
             else return;

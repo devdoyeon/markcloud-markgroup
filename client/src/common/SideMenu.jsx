@@ -10,20 +10,19 @@ import { checkPoint } from 'js/groupwareApi';
 
 const SideMenu = () => {
   const [render, setRender] = useState('active');
-  const [authority, setAuthrotiy] = useState('user');
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     content: '',
     bool: false,
   });
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
 
   const checkUser = async () => {
     const result = await checkPoint();
     if (typeof result === 'object') {
       setRender('active');
-      if (result?.data?.status?.code === 201) setAuthrotiy('admin');
-      else if (result?.data?.status?.code === 301) setAuthrotiy('user');
     } else if (result === 'paymentRequired') {
       setAlert(result);
       commonModalSetting(
@@ -56,13 +55,16 @@ const SideMenu = () => {
         '로그인이 필요한 서비스입니다.'
       );
       setRender('block');
-
       return;
+    } else if (
+      path.includes('/personnel') &&
+      localStorage.getItem('yn') === 'y'
+    ) {
+      setAlert('notAuthority');
+      commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
+      setRender('block');
     } else checkUser();
   }, []);
-
-  const path = useLocation().pathname;
-  const navigate = useNavigate();
 
   return (
     <>
@@ -99,7 +101,7 @@ const SideMenu = () => {
               onClick={() => navigate('/board')}>
               게시판
             </li>
-            {authority === 'admin' ? (
+            {localStorage.getItem('yn') === 'n' ? (
               <>
                 <li
                   className={path.includes('/personnel') ? 'active' : ''}
@@ -151,7 +153,8 @@ const SideMenu = () => {
           okFn={() => {
             if (alert === 'needLogin') return navigate('/sign-in');
             else if (alert === 'paymentRequired') return navigate('/cost');
-            else if (alert === 'serviceExpired') return navigate('/')
+            else if (alert === 'serviceExpired') return navigate('/');
+            else if (alert === 'notAuthority') return navigate('/business');
             else return;
           }}
         />

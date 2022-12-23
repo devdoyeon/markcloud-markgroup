@@ -5,7 +5,14 @@ import CommonFooter from 'common/CommonFooter';
 import CommonSiteMap from 'common/CommonSiteMap';
 import { signIn } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
-import { catchError, changeState, enterFn, changeTitle } from 'js/commonUtils';
+import {
+  catchError,
+  changeState,
+  enterFn,
+  changeTitle,
+  commonModalSetting,
+  errorList,
+} from 'js/commonUtils';
 
 const SignIn = () => {
   const [alert, setAlert] = useState('');
@@ -14,7 +21,7 @@ const SignIn = () => {
     emptyId: false,
     emptyPw: false,
     wrongId: false,
-    wrongPw: { bool: false, failCount: 0 },
+    wrongPw: false,
   };
   const [userInfo, setUserInfo] = useState({
     id: '',
@@ -30,16 +37,15 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   //~ 아이디 | 비밀번호 확인해서 틀리거나 빈 부분 알려주는 함수
-  const checkForm = async (checkStr, bool, failCount) => {
+  const checkForm = async (checkStr, bool) => {
     const obj = {
       emptyBoth: false,
       emptyId: false,
       emptyPw: false,
       wrongId: false,
-      wrongPw: { bool: false, failCount: 0 },
+      wrongPw: false,
     };
     obj[checkStr] = bool;
-    if (failCount) obj[checkStr] = { bool: bool, failCount: failCount };
     setFormCheck(obj);
   };
 
@@ -64,12 +70,8 @@ const SignIn = () => {
       navigate('/');
     } else {
       //@ Error Handling
-      const failCount = result?.split(',')[1];
-      if (result === 'wrongId') {
-        checkForm('wrongId', true);
-      } else if (result === `wrongPw,${failCount}`) {
-        checkForm('wrongPw', true, failCount);
-      } else return catchError(result, navigate, setAlertBox, setAlert);
+      if (result === 'wrongId' || result === 'wrongPw') checkForm(result, true);
+      else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -77,6 +79,27 @@ const SignIn = () => {
     if (getCookie('myToken')) navigate('/');
     changeTitle('그룹웨어 > 로그인');
   }, []);
+
+  useEffect(() => {
+    if (formCheck.emptyBoth)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        errorList.emptyBoth
+      );
+    else if (formCheck.emptyId)
+      return commonModalSetting(setAlertBox, true, 'alert', errorList.emptyId);
+    else if (formCheck.emptyPw)
+      return commonModalSetting(setAlertBox, true, 'alert', errorList.emptyPw);
+    else if (formCheck.wrongId || formCheck.wrongPw)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        errorList.wrongInfo
+      );
+  }, [formCheck]);
 
   return (
     <div className='container'>
@@ -110,38 +133,6 @@ const SignIn = () => {
             <p>
               <span>CapsLock</span>이 켜져 있습니다.
             </p>
-          )}
-          {formCheck.emptyBoth && (
-            <span>
-              <p className='white'>아이디</p>와{' '}
-              <p className='white'>비밀번호</p>를 입력해 주세요.
-            </span>
-          )}
-          {formCheck.emptyId && (
-            <span>
-              <p className='white'>아이디</p>를 입력해 주세요.
-            </span>
-          )}
-          {formCheck.emptyPw && (
-            <span>
-              <p className='white'>비밀번호</p>를 입력해 주세요.
-            </span>
-          )}
-          {formCheck.wrongId && (
-            <span>
-              <p className='white'>아이디 또는 비밀번호</p>가 일치하지 않습니다.
-              <br />
-              다시 입력해 주세요.
-            </span>
-          )}
-          {formCheck.wrongPw.bool && (
-            <span>
-              <p className='white'>비밀번호</p>를{' '}
-              <p className='white'>{formCheck.wrongPw.failCount}번</p>{' '}
-              틀리셨습니다.
-              <br />
-              다시 입력해 주세요.
-            </span>
           )}
           <div className='row'>
             <a href='https://markcloud.co.kr/sign-up'>회원가입</a>

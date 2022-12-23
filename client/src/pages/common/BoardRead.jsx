@@ -24,8 +24,6 @@ const BoardRead = () => {
   const [header, setHeader] = useState('');
   const [info, setInfo] = useState({});
 
-  const cookie = getCookie('myToken');
-
   const getDetail = async () => {
     if (prevent) return;
     prevent = false;
@@ -96,11 +94,17 @@ const BoardRead = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button
-              className='commonBtn'
-              onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
-              수정
-            </button>
+            {info.created_id === localStorage.getItem('userName') ||
+            (localStorage.getItem('yn') === 'n' &&
+              path.split('/')[1] !== 'report') ? (
+              <button
+                className='commonBtn'
+                onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
+                수정
+              </button>
+            ) : (
+              <></>
+            )}
             <button
               className='commonBtn list'
               onClick={() => navigate(`/${path.split('/')[1]}`)}>

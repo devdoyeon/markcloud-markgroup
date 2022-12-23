@@ -188,11 +188,16 @@ const ProjectDetail = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button
-              className='commonBtn editBtn'
-              onClick={() => navigate(`/project/write/${id}`)}>
-              수정
-            </button>
+            {localStorage.getItem('yn') === 'n' ||
+            projectInfo?.created_id === localStorage.getItem('userName') ? (
+              <button
+                className='commonBtn editBtn'
+                onClick={() => navigate(`/project/write/${id}`)}>
+                수정
+              </button>
+            ) : (
+              <></>
+            )}
             <button
               className='commonBtn listBtn'
               onClick={() => navigate('/project')}>
