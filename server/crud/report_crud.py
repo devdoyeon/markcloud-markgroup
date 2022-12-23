@@ -22,8 +22,8 @@ def get_report_list(db: Session, filter_type: str, filter_val: str, offset: int,
         
         # user_id의 회사 대표계정 id 가져오기
         owner_id = db.query(OrganizationTable.owner_user_id).filter(memberManageModel.MemberTable.user_id == user_id).first()
-        print(owner_id)
-        print("===")
+        # print(owner_id)
+        # print("===")
         owner_id = owner_id[0]
         
         if user_id == owner_id:

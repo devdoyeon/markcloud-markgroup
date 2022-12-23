@@ -23,6 +23,7 @@ def varify_access_token(f):
         try:
             access_payload = jwt.decode(access_token,SECRET_KEY, algorithms=SECURITY_ALGORITHM)
             kwargs['user_pk'] = access_payload['user_pk']
+            print(" a c c e s s _ p a y l o a d : " ,access_payload)
             
         # 토큰만료
         except jwt.ExpiredSignatureError:

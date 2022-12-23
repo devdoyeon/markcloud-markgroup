@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from starlette import status
@@ -7,6 +7,7 @@ from database import get_db
 from schema.base_schema import Response, filterType
 from schema.report_schema import BusinessReport, ReportListOut, ReportOut, ReportCreate, ReportUpdate
 from crud import report_crud
+from router import author_chk
 import utils
 
 
@@ -14,12 +15,18 @@ router = APIRouter(prefix="/report")
 
 
 @router.get("/list", response_model=Response[List[ReportListOut]])
-def report_list(filter_type: Optional[filterType] = None,
-                filter_val: Optional[str] = None,
-                user_id: str = "mxxvii",     # 로그인한 사용자의 아이디.
-                page: int = 1,
-                limit: int = 5,
-                db: Session = Depends(get_db)):
+@author_chk.varify_access_token
+def report_list(
+    access_token: str = Header(None),
+    user_pk:int = None,
+    filter_type: Optional[filterType] = None,
+    filter_val: Optional[str] = None,
+    user_id: str = "mxxvii",     # 로그인한 사용자의 아이디.
+    page: int = 1,
+    limit: int = 5,
+    db: Session = Depends(get_db)
+):
+    
     offset = (page - 1) * limit
     total, _report_list = report_crud.get_report_list(db, filter_type, filter_val, offset, limit, user_id)
     totalPage = total // limit
