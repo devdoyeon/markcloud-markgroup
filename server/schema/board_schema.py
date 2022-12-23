@@ -43,7 +43,7 @@ class PostOut(BaseModel):
 class PostCreate(BaseModel):
     title: str
     content: str
-    created_id: str # current_user id 자동으로 가져와야함.
+    # created_id: str # current_user id 자동으로 가져와야함.
 
 
 class PostUpdate(BaseModel):
