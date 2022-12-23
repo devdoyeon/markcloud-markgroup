@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
-import { getBusinessRead } from 'js/groupwareApi';
+import BusinessCommonSelect from './BusinessCommonSelect';
+import {
+  getBusinessFilterRead,
+  getBusinessInfo,
+  getBusinessRead,
+} from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeState, changeTitle } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
@@ -37,17 +42,14 @@ const BusinessManagement = () => {
   });
 
   const [projectValue, setProjectValue] = useState('선택');
-  // const [contactValue, setContactValue] = useState(
-  //   postInfo.status_filter === 'MyProject'
-  //     ? localStorage.getItem('userName')
-  //     : '선택'
-  // );
   const [contactValue, setContactValue] = useState(
     localStorage.getItem('userName')
   );
   const [requesterValue, setRequesterValue] = useState(
     localStorage.getItem('userName')
   );
+  const [memberKey, setMemberKey] = useState([]);
+  const [memberName, setMemberName] = useState([]);
 
   const navigate = useNavigate();
   const cookie = getCookie('myToken');
@@ -84,6 +86,10 @@ const BusinessManagement = () => {
         return clone;
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const getSearchFilterApi = async () => {
+    const result = await getBusinessFilterRead(pageInfo, postInfo);
   };
 
   const renderTable = () => {
@@ -135,6 +141,13 @@ const BusinessManagement = () => {
       changeState(setPostInfo, 'project_name', projectValue);
     }
   }, [projectValue]);
+
+  useEffect(() => {
+    if (getCookie('myToken')) {
+      changeState(setPostInfo, 'request_id', requesterValue);
+    }
+  }, [requesterValue]);
+
   useEffect(() => {
     if (getCookie('myToken')) {
       if (postInfo.status_filter === 'MyProject') {
@@ -161,10 +174,88 @@ const BusinessManagement = () => {
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
-  const handleChangeClear = () => {};
+  const changeCheckHandler = e => {
+    switch (e.target.value) {
+      case '요청':
+        if (e.target.checked === true) {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status, e.target.value];
+            return clone;
+          });
+        } else {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status].filter(
+              state => state !== '요청'
+            );
+            return clone;
+          });
+        }
+        break;
+      case '접수':
+        if (e.target.checked === true) {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status, e.target.value];
+            return clone;
+          });
+        } else {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status].filter(
+              state => state !== '접수'
+            );
+            return clone;
+          });
+        }
+        break;
+      case '진행':
+        if (e.target.checked === true) {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status, e.target.value];
+            return clone;
+          });
+        } else {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status].filter(
+              state => state !== '진행'
+            );
+            return clone;
+          });
+        }
+        break;
+      case '완료':
+        if (e.target.checked === true) {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status, e.target.value];
+            return clone;
+          });
+        } else {
+          setPostInfo(prev => {
+            const clone = { ...prev };
+            clone.progress_status = [...clone.progress_status].filter(
+              state => state !== '완료'
+            );
+            return clone;
+          });
+        }
+        break;
+      default:
+        return;
+    }
+  };
 
   const { project_member, project_name } = meta;
-  console.log(meta);
+
+  // project_member?.forEach(element => {
+  //   return (
+
+  //   )
+  // });
 
   return (
     <>
@@ -223,8 +314,8 @@ const BusinessManagement = () => {
               <div className='project-list'>
                 <span>담당자</span>
 
-                {postInfo.status_filter === 'MyProject' ? (
-                  <CommonSelect
+                {/* {postInfo.status_filter === 'MyProject' ? (
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
@@ -234,7 +325,7 @@ const BusinessManagement = () => {
                     person='person'
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
-                  <CommonSelect
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
@@ -244,7 +335,7 @@ const BusinessManagement = () => {
                     person='person'
                   />
                 ) : postInfo.status_filter === 'All' ? (
-                  <CommonSelect
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
@@ -255,13 +346,13 @@ const BusinessManagement = () => {
                   />
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
                 {postInfo.status_filter === 'MyProject' ? (
-                  <CommonSelect
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
@@ -271,7 +362,7 @@ const BusinessManagement = () => {
                     person='request'
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
-                  <CommonSelect
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
@@ -281,7 +372,7 @@ const BusinessManagement = () => {
                     person='request'
                   />
                 ) : postInfo.status_filter === 'All' ? (
-                  <CommonSelect
+                  <BusinessCommonSelect
                     opt={project_member}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
@@ -308,7 +399,6 @@ const BusinessManagement = () => {
                   />
                 </label>
               </div>
-              {console.log(postInfo)}
               <div className='content-text'>
                 <label>
                   <span>내용</span>
@@ -325,26 +415,50 @@ const BusinessManagement = () => {
             <div className='progress'>
               <span>진행상태</span>
               <label>
-                <input type='checkbox' />
+                <input
+                  type='checkbox'
+                  name='progress-state'
+                  value='요청'
+                  onChange={e => changeCheckHandler(e)}
+                />
                 요청
               </label>
               <label>
-                <input type='checkbox' />
+                <input
+                  type='checkbox'
+                  name='progress-state'
+                  value='접수'
+                  onChange={e => changeCheckHandler(e)}
+                />
                 접수
               </label>
               <label>
-                <input type='checkbox' />
+                <input
+                  type='checkbox'
+                  name='progress-state'
+                  value='진행'
+                  onChange={e => changeCheckHandler(e)}
+                />
                 진행
               </label>
               <label>
-                <input type='checkbox' />
+                <input
+                  type='checkbox'
+                  name='progress-state'
+                  value='완료'
+                  onChange={e => changeCheckHandler(e)}
+                />
                 완료
               </label>
             </div>
             <div className='btnWrap work-btn-wrap'>
               <div></div>
               <div className='search-option'>
-                <button className='commonBtn search'>검색</button>
+                <button
+                  className='commonBtn search'
+                  onClick={() => getSearchFilterApi()}>
+                  검색
+                </button>
                 <button className='commonBtn clear'>초기화</button>
               </div>
               <div
@@ -371,30 +485,6 @@ const BusinessManagement = () => {
               <div className='line'></div>
             </div>
             <div className='check-work-wrap'>
-              {/* <div className='check-tab-list'>
-            <div
-              className={num === 0 ? 'my-check active' : 'my-check'}
-              onClick={() => setNum(0)}>
-              <span className={num === 0 ? 'active' : ''}>나의 업무현황</span>
-              <div className={num === 0 ? 'num active' : 'num'}>
-                {list.length}
-              </div>
-            </div>
-            <div
-              className={num === 1 ? 'request-check active' : 'request-check'}
-              onClick={() => setNum(1)}>
-              <span className={num === 1 ? 'active' : ''}>
-                내가 요청한 업무
-              </span>
-              <div className={num === 1 ? 'num active' : 'num'}>0</div>
-            </div>
-            <div
-              className={num === 2 ? 'all-check active' : 'all-check'}
-              onClick={() => setNum(2)}>
-              <span className={num === 2 ? 'active' : ''}>전체 업무현황</span>
-              <div className={num === 2 ? 'num active' : 'num'}>0</div>
-            </div>
-          </div> */}
               <div className='table'>
                 <div>
                   <table>
