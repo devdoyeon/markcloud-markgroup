@@ -20,6 +20,7 @@ const SideMenu = () => {
 
   const checkUser = async () => {
     const result = await checkPoint();
+    console.log(result);
     if (typeof result === 'object') {
       setRender('active');
       if (result?.data?.status?.code === 201) setAuthrotiy('admin');
@@ -151,7 +152,7 @@ const SideMenu = () => {
           okFn={() => {
             if (alert === 'needLogin') return navigate('/sign-in');
             else if (alert === 'paymentRequired') return navigate('/cost');
-            else if (alert === 'serviceExpired') return navigate('/')
+            else if (alert === 'serviceExpired') return navigate('/');
             else return;
           }}
         />

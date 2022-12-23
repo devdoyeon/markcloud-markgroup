@@ -45,7 +45,6 @@ const BusinessNewBoard = () => {
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
-  const cookie = getCookie('myToken');
 
   let prevent = false;
 
@@ -77,7 +76,7 @@ const BusinessNewBoard = () => {
       changeState(setPostInfo, 'title', e.target.value);
     }
   };
-
+  console.log(postInfo);
   const createWorkBusiness = async () => {
     const result = await createBusiness(postInfo);
     if (typeof result === 'object') {
@@ -107,7 +106,6 @@ const BusinessNewBoard = () => {
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
-      // if (id?.length) getOriginDetail();
       getBusinessProjectNameApi();
     }
   }, []);
@@ -147,7 +145,6 @@ const BusinessNewBoard = () => {
   // useEffect(()=> {
   //   if(id?.length) getProjectInfo();
   // },[])
-  console.log(postInfo);
   const { project_name, project_member } = meta;
   return (
     <>
