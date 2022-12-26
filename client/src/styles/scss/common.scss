@@ -715,7 +715,12 @@ input {
           }
         }
         .postTitle {
-          margin-bottom: 40px;
+          width: 276px;
+          height: 64px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
         }
         > hr {
           width: 310px;

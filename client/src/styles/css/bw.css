@@ -131,6 +131,13 @@
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectVal {
   width: 100%;
 }
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectVal > span {
+  width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectOptGroup {
   top: 30px;
   left: 15px;

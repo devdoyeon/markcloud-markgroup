@@ -116,6 +116,13 @@
                 position: relative;
                 > .selectVal {
                   width: 100%;
+                  > span {
+                    width: 135px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: inline-block;
+                  }
                 }
                 > .selectOptGroup {
                   top: 30px;
