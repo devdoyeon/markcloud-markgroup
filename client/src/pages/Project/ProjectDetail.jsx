@@ -26,7 +26,6 @@ const ProjectDetail = () => {
   const [memberObj, setMemberObj] = useState({});
   const [personArr, setPersonArr] = useState([]);
   const [projectInfo, setProjectInfo] = useState({});
-  const [statusValue, setStatusValue] = useState('===');
   const [personValue, setPersonValue] = useState('선택');
   const [participation, setParticipation] = useState([]);
   let prevent = false;
@@ -41,7 +40,6 @@ const ProjectDetail = () => {
     const result = await getProjectDetail(id);
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
-      setStatusValue(result?.data?.project_status);
       setParticipation(result?.data?.project_members);
       document.querySelector('.content').innerHTML =
         new DOMParser().parseFromString(
@@ -99,9 +97,20 @@ const ProjectDetail = () => {
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken'))
-      changeState(setProjectInfo, 'project_status', statusValue);
-  }, [statusValue]);
+    switch (projectInfo.project_status) {
+      case 'before':
+        changeState(setProjectInfo, 'project_status', '시작 전');
+        break;
+      case 'progress':
+        changeState(setProjectInfo, 'project_status', '진행 중');
+        break;
+      case 'complete':
+        changeState(setProjectInfo, 'project_status', '종료');
+        break;
+      default:
+        return;
+    }
+  }, [projectInfo]);
 
   return (
     <>

@@ -695,7 +695,7 @@ export const deleteProject = async id => {
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
-    return await axios.get(`/groupware/project/member`, null, header());
+    return await axios.get(`/groupware/project/member`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
