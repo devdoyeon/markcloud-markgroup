@@ -118,7 +118,7 @@ const BusinessBoardRead = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <div>ㅇㅇㅇ</div>
+                <div>{project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
@@ -153,19 +153,17 @@ const BusinessBoardRead = () => {
             </div>
           </div>
           <div className='btn-wrap'>
-            <button className='commonBtn applyBtn'>수정</button>
+            <button
+              className='commonBtn applyBtn'
+              onClick={() => {
+                navigate(`/business/write/${id}`);
+              }}>
+              수정
+            </button>
             <button
               className='commonBtn list'
               onClick={() => {
-                setAlert('cancel');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  `수정을 취소하시겠습니까?<br/>
-                    수정
-                  이 취소된 글은 복구할 수 없습니다.`
-                );
+                navigate('/business');
               }}>
               목록
             </button>
