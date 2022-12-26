@@ -10,7 +10,6 @@ import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
 
 const ProjectStatus = () => {
-  const date = new Date();
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -26,22 +25,34 @@ const ProjectStatus = () => {
   const [list, setList] = useState([]);
   const [search, setSearch] = useState({
     name: '',
-    start_date: `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`,
-    end_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+    start_date: '',
+    end_date: '',
   });
   const navigate = useNavigate();
   const statusArr = ['전체', '시작 전', '진행 중', '종료'];
   let prevent = false;
 
-  const projectList = async () => {
+  const projectList = async func => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectList(pageInfo, search, selectVal);
+    let result;
+    if (func === 'reset') {
+      setSelectVal('전체');
+      setSearch({
+        name: '',
+        start_date: '',
+        end_date: '',
+      });
+      const obj = {
+        name: '',
+        start_date: '',
+        end_date: '',
+      };
+      result = await getProjectList(pageInfo, obj, selectVal);
+    } else result = await getProjectList(pageInfo, search, selectVal);
     if (typeof result === 'object') {
       setList(result?.data?.data);
       setPageInfo(prev => {
@@ -51,19 +62,6 @@ const ProjectStatus = () => {
         return clone;
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
-  };
-
-  const resetSearch = () => {
-    setSearch({
-      name: '',
-      start_date: `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}`,
-      end_date: `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}`,
-    });
-    setSelectVal('전체');
   };
 
   const renderTable = () => {
@@ -193,10 +191,14 @@ const ProjectStatus = () => {
             </div>
             <hr />
             <div className='row btnWrap'>
-              <button className='commonBtn searchBtn' onClick={projectList}>
+              <button
+                className='commonBtn searchBtn'
+                onClick={() => projectList('search')}>
                 검색
               </button>
-              <button className='commonBtn resetBtn' onClick={resetSearch}>
+              <button
+                className='commonBtn resetBtn'
+                onClick={() => projectList('reset')}>
                 초기화
               </button>
               <button
