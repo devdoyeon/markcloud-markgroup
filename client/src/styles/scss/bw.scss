@@ -396,6 +396,19 @@
                     &:nth-child(2n) {
                       background-color: $subTableColor;
                     }
+                    &.table-row {
+                      td {
+                        &.red {
+                          color: #df0000;
+                        }
+                        &.gray {
+                          color: $gray02;
+                        }
+                        &.blue {
+                          color: $mainBlue;
+                        }
+                      }
+                    }
                     td {
                       text-align: center;
                       padding: 18px 0;

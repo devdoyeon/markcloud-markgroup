@@ -75,7 +75,6 @@ const BusinessManagement = () => {
     }, 200);
     const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
-      let obj = {};
       const { data, meta } = result?.data;
       // key : 키 value : 멤버이름
       const key = Object.keys(meta?.project_member);
@@ -96,10 +95,21 @@ const BusinessManagement = () => {
 
   const getSearchFilterApi = async () => {
     const result = await getBusinessFilterRead(pageInfo, postInfo);
+    if (typeof result === 'object') {
+      const { data, meta } = result?.data;
+      setList(data);
+      setMeta(meta);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.page = meta?.page;
+        clone.totalPage = meta?.totalPage;
+        return clone;
+      });
+    }
   };
 
   const renderTable = () => {
-    return list.reduce(
+    return list?.reduce(
       (
         acc,
         {
@@ -117,13 +127,13 @@ const BusinessManagement = () => {
         return (
           <>
             {acc}
-            <tr onClick={() => navigate(`/business/${id}`)}>
+            <tr onClick={() => navigate(`/business/${id}`)} className="table-row">
               <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
               <td>{title}</td>
               <td>{project_name}</td>
               <td>{request_id}</td>
               <td>{manager_id}</td>
-              <td>{work_status}</td>
+              <td className={work_status === "요청" ? "red" : work_status === "완료" ? "gray" : "blue"}>{work_status}</td>
               <td>{created_at}</td>
               <td>{work_end_date}</td>
             </tr>
@@ -135,7 +145,10 @@ const BusinessManagement = () => {
   };
 
   useEffect(() => {
-    if (getCookie('myToken')) changeTitle('그룹웨어 > 업무 관리');
+    if (getCookie('myToken')) {
+      changeTitle('그룹웨어 > 업무 관리');
+      getBusinessReadApi();
+    }
   }, []);
 
   useEffect(() => {
@@ -175,11 +188,10 @@ const BusinessManagement = () => {
     }
   }, [postInfo.status_filter, postInfo.project_name]);
 
-  console.log(postInfo);
-
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
   };
+
   const changeCheckHandler = e => {
     switch (e.target.value) {
       case '요청':

@@ -421,6 +421,15 @@
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr:nth-child(2n) {
   background-color: #f8f8fd;
 }
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.red {
+  color: #df0000;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.gray {
+  color: #858585;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.blue {
+  color: #5b84e3;
+}
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr td {
   text-align: center;
   padding: 18px 0;

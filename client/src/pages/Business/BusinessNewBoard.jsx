@@ -10,7 +10,12 @@ import {
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { createBusiness, getBusinessRead } from 'js/groupwareApi';
+import BusinessCommonSelect from './BusinessCommonSelect';
+import {
+  createBusiness,
+  getBusinessInfo,
+  getBusinessRead,
+} from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 
 const BusinessNewBoard = () => {
@@ -40,6 +45,11 @@ const BusinessNewBoard = () => {
   const [requesterValue, setRequesterValue] = useState('선택');
   const [contactValue, setContactValue] = useState('선택');
   const [progressValue, setProgressValue] = useState('선택');
+
+  const [memberKey, setMemberKey] = useState([]);
+  const [memberName, setMemberName] = useState([]);
+  const [memberCurKey, setMemberCurKey] = useState();
+
   const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
@@ -58,9 +68,13 @@ const BusinessNewBoard = () => {
     const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
+      const key = Object.keys(meta?.project_member);
+      const value = Object.values(meta?.project_member);
+      setMemberKey(key);
+      setMemberName(value);
       setList(data);
       setMeta(meta);
-      changeState(setPostInfo, 'project_name', projectValue);
+      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -69,6 +83,36 @@ const BusinessNewBoard = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
+
+  const getBusinessCurInfo = async () => {
+    const result = await getBusinessInfo(id);
+    if (typeof result === 'object') {
+      const {
+        content,
+        manager_id,
+        project_name,
+        request_id,
+        title,
+        work_status,
+      } = result?.data;
+
+      setPostInfo(prev => {
+        const clone = { ...prev };
+        clone.content = content;
+        clone.project_name = project_name;
+        clone.request_id = request_id;
+        clone.manager_id = manager_id;
+        clone.work_status = work_status;
+        clone.title = title;
+        return clone;
+      });
+      setProjectValue(title);
+      setContactValue(manager_id);
+      setRequesterValue(request_id);
+      setProgressValue(work_status);
+    }
+  };
+
   const handleChangeRadioButton = (e, type) => {
     if (type === 'title') {
       changeState(setPostInfo, 'title', e.target.value);
@@ -76,7 +120,6 @@ const BusinessNewBoard = () => {
       changeState(setPostInfo, 'title', e.target.value);
     }
   };
-  console.log(postInfo);
   const createWorkBusiness = async () => {
     const result = await createBusiness(postInfo);
     if (typeof result === 'object') {
@@ -107,6 +150,9 @@ const BusinessNewBoard = () => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
       getBusinessProjectNameApi();
+      if (id !== undefined) {
+        getBusinessCurInfo();
+      }
     }
   }, []);
 
@@ -117,12 +163,12 @@ const BusinessNewBoard = () => {
   }, [postInfo.status_filter, postInfo.project_name]);
   useEffect(() => {
     if (getCookie('myToken'))
-      changeState(setPostInfo, 'request_id', requesterValue);
+      changeState(setPostInfo, 'request_id', memberCurKey);
   }, [requesterValue]);
 
   useEffect(() => {
     if (getCookie('myToken'))
-      changeState(setPostInfo, 'manager_id', contactValue);
+      changeState(setPostInfo, 'manager_id', memberCurKey);
   }, [contactValue]);
 
   useEffect(() => {
@@ -136,16 +182,8 @@ const BusinessNewBoard = () => {
     }
   }, [projectValue]);
 
-  // useEffect(() => {
-  //   if (getCookie('myToken')) {
-  //     getBusinessProjectNameApi();
-  //   }
-  // }, [postInfo.status_filter]);
+  const { project_name } = meta;
 
-  // useEffect(()=> {
-  //   if(id?.length) getProjectInfo();
-  // },[])
-  const { project_name, project_member } = meta;
   return (
     <>
       <div className='container'>
@@ -170,18 +208,22 @@ const BusinessNewBoard = () => {
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
-                <CommonSelect
-                  opt={project_member}
+                <BusinessCommonSelect
+                  opt={memberName}
                   selectVal={requesterValue}
+                  nameKey={memberKey}
+                  setMemberCurKey={setMemberCurKey}
                   setSelectVal={setRequesterValue}
                 />
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
-                <CommonSelect
-                  opt={project_member}
+                <BusinessCommonSelect
+                  opt={memberName}
                   selectVal={contactValue}
+                  nameKey={memberKey}
+                  setMemberCurKey={setMemberCurKey}
                   setSelectVal={setContactValue}
                 />
               </div>
@@ -203,13 +245,14 @@ const BusinessNewBoard = () => {
                     type='text'
                     placeholder='제목을 입력해 주세요.'
                     onChange={e => handleChangeRadioButton(e, 'title')}
+                    value={postInfo?.title}
                   />
                 </label>
               </div>
             </div>
             <div className='content edit'>
               <EditorComponent
-                content={postInfo.content}
+                content={postInfo?.content}
                 setContent={setPostInfo}
                 col='content'
               />
@@ -224,15 +267,7 @@ const BusinessNewBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                setAlert('cancel');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  `${id?.length ? '수정' : '작성'}을 취소하시겠습니까?<br/>${
-                    id?.length ? '수정' : '작성'
-                  }이 취소된 글은 복구할 수 없습니다.`
-                );
+                navigate(`/business`);
               }}>
               목록
             </button>
