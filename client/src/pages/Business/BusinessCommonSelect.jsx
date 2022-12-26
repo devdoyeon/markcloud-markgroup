@@ -54,7 +54,7 @@ const BusinessCommonSelect = ({
           }
           select === 'on' ? setSelect('off') : setSelect('on');
         }}>
-        {changeSelectVal()}
+        <span>{changeSelectVal()}</span>
         <img src={selectArrow} alt='선택 아이콘' />
       </div>
       {select === 'on' && (

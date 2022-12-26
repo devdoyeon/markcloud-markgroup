@@ -792,7 +792,12 @@ input {
   background-color: #5b84e3;
 }
 .list-wrap .list ul li .postTitle {
-  margin-bottom: 40px;
+  width: 276px;
+  height: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 .list-wrap .list ul li > hr {
   width: 310px;

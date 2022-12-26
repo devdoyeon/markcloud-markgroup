@@ -40,6 +40,10 @@ const PersonnelBusinessPopup = ({
     const del = await getDepartmentDelete(curDepartment?.id);
   };
 
+  const closePersonnelDepartment = () => {
+    changeState(setCurDepartment, 'section', '');
+  };
+
   return (
     <div className='popup-bg'>
       <div className='popup'>
@@ -78,6 +82,7 @@ const PersonnelBusinessPopup = ({
                 onClick={() => {
                   setPopup(false);
                   setButtonControl('');
+                  closePersonnelDepartment();
                 }}>
                 닫기
               </button>
@@ -107,6 +112,7 @@ const PersonnelBusinessPopup = ({
                 onClick={() => {
                   setPopup(false);
                   setButtonControl('');
+                  closePersonnelDepartment();
                 }}>
                 닫기
               </button>
