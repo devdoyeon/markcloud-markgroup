@@ -48,7 +48,7 @@ const SideMenuBtn = () => {
         <ul className={listActive ? 'active' : ''}>
           <li>
             <a
-              href='/'
+              href='https://markcloud.co.kr/'
               rel='noopener noreferrer'
               target='_self'
               title='마크클라우드로 이동'>
@@ -58,7 +58,7 @@ const SideMenuBtn = () => {
           </li>
           <li>
             <a
-              href='/mark-view'
+              href='https://markcloud.co.kr/mark-view'
               rel='noopener noreferrer'
               target='_self'
               title='마크뷰로 이동'>
