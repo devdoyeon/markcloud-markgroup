@@ -87,7 +87,6 @@ const PersonnelManagement = () => {
       });
     }
   };
-
   const renderTable = () => {
     return manageList?.reduce(
       (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {

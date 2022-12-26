@@ -223,7 +223,7 @@ export const getBusinessRead = async (
   { page, limit }
 ) => {
   try {
-    if (project_name === '') {
+    if (project_name === '' || project_name === '선택') {
       return await axios.get(
         `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
         header()
