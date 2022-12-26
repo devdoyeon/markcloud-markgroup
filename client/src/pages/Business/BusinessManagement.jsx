@@ -112,14 +112,7 @@ const BusinessManagement = () => {
     return list.length === 0 ? (
       <>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td colSpan={8}>등록된 게시글이 없습니다.</td>
         </tr>
       </>
     ) : (
@@ -358,7 +351,7 @@ const BusinessManagement = () => {
               {/* ============================= */}
               <div className='project-list'>
                 <span>프로젝트</span>
-                <CommonSelect
+                <BusinessCommonSelect
                   opt={project_name}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}

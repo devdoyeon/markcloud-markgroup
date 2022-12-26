@@ -368,7 +368,8 @@ export const getDepartmentUpdate = async ({ id, section }) => {
       `/bw/personnel/department/update?department_id=${id}`,
       {
         department_name: section,
-      }
+      },
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -378,7 +379,9 @@ export const getDepartmentUpdate = async ({ id, section }) => {
 export const getDepartmentDelete = async id => {
   try {
     return await axios.post(
-      `/bw/personnel/department/delete?department_id=${id}`
+      `/bw/personnel/department/delete?department_id=${id}`,
+      null,
+      header()
     );
   } catch (error) {
     return apiErrorHandling(error);
