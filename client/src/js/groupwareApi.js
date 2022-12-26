@@ -167,7 +167,7 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
 };
 export const getNoticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/info?notice_id=${id}`, null, header());
+    return await axios.get(`/bw/notice/info?notice_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
