@@ -9,6 +9,7 @@ import {
   getPeopleList,
   addProjectMember,
   deleteProjectMember,
+  getProjectPeople,
 } from 'js/groupwareApi';
 import { changeState, getKeyByValue } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
@@ -30,26 +31,6 @@ const ProjectDetail = () => {
   const [participation, setParticipation] = useState([]);
   let prevent = false;
 
-  //= 프로젝트 상세 내역
-  const projectDetail = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, []);
-    const result = await getProjectDetail(id);
-    if (typeof result === 'object') {
-      setProjectInfo(result?.data);
-      setParticipation(result?.data?.project_members);
-      document.querySelector('.content').innerHTML =
-        new DOMParser().parseFromString(
-          result?.data?.project_description,
-          'text/html'
-        ).body.innerHTML;
-      peopleList();
-    } else return catchError(result, navigate, setAlertBox, setAlert);
-  };
-
   //= 멤버 리스트
   const peopleList = async () => {
     setPersonArr([]);
@@ -68,6 +49,34 @@ const ProjectDetail = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 프로젝트 참가 인원 목록
+  const projectPeople = async () => {
+    const result = await getProjectPeople(id);
+    if (typeof result === 'object') {
+      setParticipation(result?.data);
+      peopleList();
+    } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  //= 프로젝트 상세 내역
+  const projectDetail = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, []);
+    const result = await getProjectDetail(id);
+    if (typeof result === 'object') {
+      setProjectInfo(result?.data);
+      document.querySelector('.content').innerHTML =
+        new DOMParser().parseFromString(
+          result?.data?.project_description,
+          'text/html'
+        ).body.innerHTML;
+      projectPeople();
+    } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
   //= 프로젝트 멤버 추가
   const addMember = async () => {
     if (participation.includes(memberObj[personValue]))
@@ -78,14 +87,14 @@ const ProjectDetail = () => {
         '이미 추가된 인원입니다.'
       );
     const result = await addProjectMember(id, memberObj[personValue]);
-    if (typeof result === 'object') projectDetail();
+    if (typeof result === 'object') projectPeople();
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 프로젝트 멤버 삭제
   const deleteMember = async user => {
     const result = await deleteProjectMember(id, user);
-    if (typeof result === 'object') projectDetail();
+    if (typeof result === 'object') projectPeople();
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 

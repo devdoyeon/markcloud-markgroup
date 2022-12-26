@@ -685,6 +685,19 @@ export const deleteProject = async id => {
   try {
     return await axios.post(
       `/groupware/project/delete?project_id=${id}`,
+      null,
+      header()
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 프로젝트 참가 인원 불러오기
+export const getProjectPeople = async id => {
+  try {
+    return await axios.get(
+      `/groupware/project/project_members?project_id=${id}`,
       header()
     );
   } catch (error) {
