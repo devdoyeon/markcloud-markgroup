@@ -147,7 +147,6 @@ const ProjectDetail = () => {
               <div className='content'></div>
               <hr />
               <div className='projectSetting column'>
-                <hr />
                 <div className='row statusSelect'>
                   <span>프로젝트 상태</span>
                   <div className='fixedStatus'>

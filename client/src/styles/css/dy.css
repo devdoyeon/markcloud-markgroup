@@ -1123,11 +1123,9 @@
   background-color: #eeeefa;
   width: auto;
   padding: 6px 16px;
-  height: 32px;
   border-radius: 16px;
-  color: black;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  color: #15171a;
+  margin: 3px 10px 3px 0;
 }
 .projectWrapper .peopleWrap .row .personBtn:last-child {
   margin-right: 0;
