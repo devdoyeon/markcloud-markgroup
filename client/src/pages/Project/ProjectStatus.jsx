@@ -4,7 +4,7 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
-import { changeTitle, changeState, catchError } from 'js/commonUtils';
+import { changeTitle, changeState, catchError, enterFn } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
@@ -32,14 +32,14 @@ const ProjectStatus = () => {
   const statusArr = ['전체', '시작 전', '진행 중', '종료'];
   let prevent = false;
 
-  const projectList = async func => {
+  const projectList = async int => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
     let result;
-    if (func === 'reset') {
+    if (int === 0) {
       setSelectVal('전체');
       setSearch({
         name: '',
@@ -51,16 +51,17 @@ const ProjectStatus = () => {
         start_date: '',
         end_date: '',
       };
-      result = await getProjectList(pageInfo, obj, selectVal);
-    } else result = await getProjectList(pageInfo, search, selectVal);
+      result = await getProjectList(1, pageInfo.limit, obj, selectVal);
+    } else
+      result = await getProjectList(
+        int === 1 ? int : pageInfo.page,
+        pageInfo.limit,
+        search,
+        selectVal
+      );
     if (typeof result === 'object') {
       setList(result?.data?.data);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.totalPage = result?.data?.meta?.totalPage;
-        clone.page = result?.data?.meta?.page;
-        return clone;
-      });
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -113,6 +114,10 @@ const ProjectStatus = () => {
   };
 
   useEffect(() => {
+    if (getCookie('myToken')) changeTitle('그룹웨어 > 프로젝트 현황');
+  }, []);
+
+  useEffect(() => {
     let kor = selectVal;
     switch (kor) {
       case '전체':
@@ -134,7 +139,6 @@ const ProjectStatus = () => {
 
   useEffect(() => {
     if (getCookie('myToken')) {
-      changeTitle('그룹웨어 > 프로젝트 현황');
       projectList();
     }
   }, [pageInfo.page]);
@@ -157,6 +161,12 @@ const ProjectStatus = () => {
                   placeholder='프로젝트명을 입력해 주세요.'
                   value={search.name}
                   onChange={e => changeState(setSearch, 'name', e.target.value)}
+                  onKeyDown={e =>
+                    enterFn(e, () => {
+                      changeState(setPageInfo, 'page', 1);
+                      projectList(1);
+                    })
+                  }
                 />
               </div>
               <div className='row'>
@@ -193,12 +203,15 @@ const ProjectStatus = () => {
             <div className='row btnWrap'>
               <button
                 className='commonBtn searchBtn'
-                onClick={() => projectList('search')}>
+                onClick={() => {
+                  changeState(setPageInfo, 'page', 1);
+                  projectList(1);
+                }}>
                 검색
               </button>
               <button
                 className='commonBtn resetBtn'
-                onClick={() => projectList('reset')}>
+                onClick={() => projectList(0)}>
                 초기화
               </button>
               <button
