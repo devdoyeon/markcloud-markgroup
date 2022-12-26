@@ -52,7 +52,6 @@ const BusinessManagement = () => {
   const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
-  const cookie = getCookie('myToken');
   const path = useLocation().pathname;
   const pathname = path.split('/')[1];
 
@@ -73,6 +72,7 @@ const BusinessManagement = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
+
     const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
@@ -109,56 +109,70 @@ const BusinessManagement = () => {
   };
 
   const renderTable = () => {
-    return list?.reduce(
-      (
-        acc,
-        {
-          title,
-          project_name,
-          request_id,
-          manager_id,
-          work_status,
-          created_at,
-          work_end_date,
-          id,
+    return list.length === 0 ? (
+      <>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </>
+    ) : (
+      list?.reduce(
+        (
+          acc,
+          {
+            title,
+            project_name,
+            request_id,
+            manager_id,
+            work_status,
+            created_at,
+            work_end_date,
+            id,
+          },
+          idx
+        ) => {
+          return (
+            <>
+              {acc}
+              <tr
+                onClick={() => navigate(`/business/${id}`)}
+                className='table-row'>
+                <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
+                <td>{title}</td>
+                <td>{project_name}</td>
+                <td>{request_id}</td>
+                <td>{manager_id}</td>
+                <td
+                  className={
+                    work_status === '요청'
+                      ? 'red'
+                      : work_status === '완료'
+                      ? 'gray'
+                      : 'blue'
+                  }>
+                  {work_status}
+                </td>
+                <td>{created_at}</td>
+                <td>{work_end_date}</td>
+              </tr>
+            </>
+          );
         },
-        idx
-      ) => {
-        return (
-          <>
-            {acc}
-            <tr
-              onClick={() => navigate(`/business/${id}`)}
-              className='table-row'>
-              <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
-              <td>{title}</td>
-              <td>{project_name}</td>
-              <td>{request_id}</td>
-              <td>{manager_id}</td>
-              <td
-                className={
-                  work_status === '요청'
-                    ? 'red'
-                    : work_status === '완료'
-                    ? 'gray'
-                    : 'blue'
-                }>
-                {work_status}
-              </td>
-              <td>{created_at}</td>
-              <td>{work_end_date}</td>
-            </tr>
-          </>
-        );
-      },
-      <></>
+        <></>
+      )
     );
   };
 
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 관리');
-      getBusinessReadApi();
     }
   }, []);
 
