@@ -12,6 +12,7 @@ import {
   changeTitle,
   commonModalSetting,
   errorList,
+  emptyCheck,
 } from 'js/commonUtils';
 
 const SignIn = () => {
@@ -51,10 +52,10 @@ const SignIn = () => {
 
   const login = async () => {
     //@ 아이디, 비밀번호 Input이 비어 있는지 확인
-    if (userInfo.id.trim() === '' && userInfo.pw.trim() === '')
+    if (!emptyCheck(userInfo.id) && !emptyCheck(userInfo.pw))
       return checkForm('emptyBoth', true);
-    else if (userInfo.id.trim() === '') return checkForm('emptyId', true);
-    else if (userInfo.pw.trim() === '') return checkForm('emptyPw', true);
+    else if (!emptyCheck(userInfo.id)) return checkForm('emptyId', true);
+    else if (!emptyCheck(userInfo.pw)) return checkForm('emptyPw', true);
 
     const result = await signIn(userInfo.id, userInfo.pw);
     if (typeof result === 'object') {

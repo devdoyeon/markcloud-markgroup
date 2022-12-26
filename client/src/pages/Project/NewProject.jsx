@@ -9,6 +9,7 @@ import {
   changeTitle,
   changeState,
   catchError,
+  emptyCheck,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -83,14 +84,14 @@ const NewProject = () => {
 
   //= 작성일 때 입력값 확인 후 새 프로젝트 생성
   const postProject = async () => {
-    if (projectInfo.project_name.trim() === '')
+    if (!emptyCheck(projectInfo.project_name))
       commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '프로젝트명을 입력해 주세요.'
       );
-    else if (projectInfo.project_description.trim() === '')
+    else if (!emptyCheck(projectInfo.project_description))
       commonModalSetting(
         setAlertBox,
         true,

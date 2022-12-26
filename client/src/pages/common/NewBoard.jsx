@@ -7,6 +7,7 @@ import {
   commonModalSetting,
   catchError,
   changeTitle,
+  emptyCheck,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
@@ -58,8 +59,8 @@ const NewBoard = () => {
   //= 빈 input 찾기
   const findEmptyValue = () => {
     const tagRegExp = /<[^>]*>?/g;
-    if (postInfo.title.trim() === '') return 'emptyTitle';
-    else if (postInfo.content.replace(tagRegExp, '').trim() === '')
+    if (!emptyCheck(postInfo.title)) return 'emptyTitle';
+    else if (!emptyCheck(postInfo.content.replace(tagRegExp, '')))
       return 'emptyContent';
   };
 
