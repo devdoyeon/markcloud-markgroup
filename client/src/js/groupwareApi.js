@@ -694,7 +694,7 @@ export const deleteProject = async id => {
 };
 
 //& 프로젝트 참가 인원 불러오기
-export const getProjectPeople = async id => {
+export const getProjectMember = async id => {
   try {
     return await axios.get(
       `/groupware/project/project_members?project_id=${id}`,

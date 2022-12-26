@@ -9,7 +9,7 @@ import {
   getPeopleList,
   addProjectMember,
   deleteProjectMember,
-  getProjectPeople,
+  getProjectMember,
 } from 'js/groupwareApi';
 import { changeState, getKeyByValue } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
@@ -50,8 +50,8 @@ const ProjectDetail = () => {
   };
 
   //= 프로젝트 참가 인원 목록
-  const projectPeople = async () => {
-    const result = await getProjectPeople(id);
+  const getMember = async () => {
+    const result = await getProjectMember(id);
     if (typeof result === 'object') {
       setParticipation(result?.data);
       peopleList();
@@ -73,7 +73,7 @@ const ProjectDetail = () => {
           result?.data?.project_description,
           'text/html'
         ).body.innerHTML;
-      projectPeople();
+      getMember();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -87,14 +87,14 @@ const ProjectDetail = () => {
         '이미 추가된 인원입니다.'
       );
     const result = await addProjectMember(id, memberObj[personValue]);
-    if (typeof result === 'object') projectPeople();
+    if (typeof result === 'object') getMember();
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 프로젝트 멤버 삭제
   const deleteMember = async user => {
     const result = await deleteProjectMember(id, user);
-    if (typeof result === 'object') projectPeople();
+    if (typeof result === 'object') getMember();
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
