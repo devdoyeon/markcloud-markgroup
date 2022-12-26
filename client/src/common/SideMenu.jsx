@@ -134,8 +134,9 @@ const SideMenu = () => {
               className='logoutBtn'
               onClick={() => {
                 removeCookie('myToken');
-                navigate('/');
+                removeCookie('rfToken');
                 localStorage.clear();
+                navigate('/');
               }}>
               로그아웃
             </div>

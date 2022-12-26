@@ -9,8 +9,9 @@ const CommonMenu = () => {
           <button
             onClick={() => {
               removeCookie('myToken');
-              window.location.reload();
+              removeCookie('rfToken')
               localStorage.clear();
+              window.location.reload();
               return;
             }}>
             로그아웃
