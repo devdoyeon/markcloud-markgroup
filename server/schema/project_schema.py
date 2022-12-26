@@ -4,25 +4,6 @@ from typing import Optional
 from datetime import date
 
 
-class Project(BaseModel):
-    id: str
-    organ_code: str
-    project_code: str
-    project_name: str
-    project_description: Optional[str] = None
-    project_start_date: date
-    project_end_date: date
-    project_status: str
-    created_at: date
-    created_id: str
-    updated_at: Optional[date] = None
-    updated_id: Optional[str] = None
-    project_members: list
-    
-    class Config:
-        orm_mode = True
-        
-
 class ProjectListOut(BaseModel):
     id: str
     project_name: str
@@ -38,10 +19,14 @@ class ProjectListOut(BaseModel):
 
 class ProjectOut(BaseModel):
     id: str
+    project_code: str
     project_name: str
+    project_description: Optional[str] = None
     project_start_date: date
     project_end_date: date
     project_status: str
+    created_at: date
+    created_id: str
     
     class Config:
         orm_mode = True
@@ -49,6 +34,13 @@ class ProjectOut(BaseModel):
 
 class ProjectMemberListOut(BaseModel):
     user_id: str
+    
+    class Config:
+        orm_mode = True
+        
+        
+class ProjectMemberListOut2(BaseModel):
+    project_members: list
     
     class Config:
         orm_mode = True
