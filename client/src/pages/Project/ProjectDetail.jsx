@@ -37,14 +37,12 @@ const ProjectDetail = () => {
     const result = await getPeopleList();
     if (typeof result === 'object') {
       let obj = {};
+      let arr = [];
       result?.data?.forEach(i => {
-        setPersonArr(prev => {
-          const clone = [...prev];
-          clone.push(`${i?.name} (${i?.section})`);
-          return clone;
-        });
+        arr.push(`${i?.name} (${i?.section})`);
         obj[`${i?.name} (${i?.section})`] = i?.user_id;
       });
+      setPersonArr(arr);
       setMemberObj(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
