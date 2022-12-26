@@ -32,7 +32,7 @@ const BusinessManagement = () => {
   });
   const [postInfo, setPostInfo] = useState({
     project_name: '',
-    status_filter: 'MyProject',
+    status_filter: localStorage.getItem('yn') === 'y' ? 'MyProject' : 'All',
     manager_id: '',
     request_id: '',
     title: '',
@@ -177,7 +177,13 @@ const BusinessManagement = () => {
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken')) getBusinessReadApi();
+    if (getCookie('myToken')) {
+      if (localStorage.getItem('yn') === 'y') {
+        getBusinessReadApi();
+      } else if (localStorage.getItem('yn') === 'n') {
+        getBusinessReadApi();
+      }
+    }
   }, [pageInfo.page]);
 
   useEffect(() => {
@@ -305,26 +311,33 @@ const BusinessManagement = () => {
           <div className='work-wrap'>
             <div className='work-situation'>
               <span>업무현황</span>
-              <label className='work-bg'>
-                <input
-                  type='radio'
-                  name='work'
-                  value='MyProject'
-                  checked={postInfo.status_filter === 'MyProject'}
-                  onChange={handleChangeRadioButton}
-                />
-                <span>나의 업무현황</span>
-              </label>
-              <label className='work-bg'>
-                <input
-                  type='radio'
-                  name='work'
-                  value='MyRequest'
-                  checked={postInfo.status_filter === 'MyRequest'}
-                  onChange={handleChangeRadioButton}
-                />
-                <span>내가 요청한 업무</span>
-              </label>
+              {console.log(localStorage.getItem('yn'))}
+              {localStorage.getItem('yn') === 'y' ? (
+                <>
+                  <label className='work-bg'>
+                    <input
+                      type='radio'
+                      name='work'
+                      value='MyProject'
+                      checked={postInfo.status_filter === 'MyProject'}
+                      onChange={handleChangeRadioButton}
+                    />
+                    <span>나의 업무현황</span>
+                  </label>
+                  <label className='work-bg'>
+                    <input
+                      type='radio'
+                      name='work'
+                      value='MyRequest'
+                      checked={postInfo.status_filter === 'MyRequest'}
+                      onChange={handleChangeRadioButton}
+                    />
+                    <span>내가 요청한 업무</span>
+                  </label>
+                </>
+              ) : (
+                <></>
+              )}
               {localStorage.getItem('yn') === 'n' ? (
                 <label className='work-bg'>
                   <input
