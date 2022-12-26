@@ -127,13 +127,24 @@ const BusinessManagement = () => {
         return (
           <>
             {acc}
-            <tr onClick={() => navigate(`/business/${id}`)} className="table-row">
+            <tr
+              onClick={() => navigate(`/business/${id}`)}
+              className='table-row'>
               <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
               <td>{title}</td>
               <td>{project_name}</td>
               <td>{request_id}</td>
               <td>{manager_id}</td>
-              <td className={work_status === "요청" ? "red" : work_status === "완료" ? "gray" : "blue"}>{work_status}</td>
+              <td
+                className={
+                  work_status === '요청'
+                    ? 'red'
+                    : work_status === '완료'
+                    ? 'gray'
+                    : 'blue'
+                }>
+                {work_status}
+              </td>
               <td>{created_at}</td>
               <td>{work_end_date}</td>
             </tr>
@@ -300,16 +311,20 @@ const BusinessManagement = () => {
                 />
                 <span>내가 요청한 업무</span>
               </label>
-              <label className='work-bg'>
-                <input
-                  type='radio'
-                  name='work'
-                  value='All'
-                  checked={postInfo.status_filter === 'All'}
-                  onChange={handleChangeRadioButton}
-                />
-                <span>전체 업무현황</span>
-              </label>
+              {localStorage.getItem('yn') === 'n' ? (
+                <label className='work-bg'>
+                  <input
+                    type='radio'
+                    name='work'
+                    value='All'
+                    checked={postInfo.status_filter === 'All'}
+                    onChange={handleChangeRadioButton}
+                  />
+                  <span>전체 업무현황</span>
+                </label>
+              ) : (
+                <></>
+              )}
             </div>
 
             <div className='project-wrap'>

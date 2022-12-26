@@ -106,10 +106,19 @@ const BusinessNewBoard = () => {
         clone.title = title;
         return clone;
       });
-      setProjectValue(title);
+      setProjectValue(project_name);
       setContactValue(manager_id);
       setRequesterValue(request_id);
       setProgressValue(work_status);
+
+      const memberRead = await getBusinessRead({ project_name }, pageInfo);
+      const { meta, data } = memberRead?.data;
+      const key = Object.keys(meta?.project_member);
+      const value = Object.values(meta?.project_member);
+      setMemberKey(key);
+      setMemberName(value);
+      // setList(data);
+      // setMeta(meta);
     }
   };
 

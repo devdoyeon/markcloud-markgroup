@@ -80,7 +80,6 @@ const SideMenu = () => {
               className='departmentName'
               onClick={() => navigate('/business')}>
               (주)마크클라우드
-              {/* 제가짱인디요 */}
             </li>
             <li
               className={path.includes('/business') ? 'active' : ''}
