@@ -308,13 +308,17 @@ export const updateBusiness = async (
   id
 ) => {
   try {
-    return await axios.post(`/bw/projects/update?project_id=${id}`, {
-      request_id,
-      manager_id,
-      work_status,
-      title,
-      content,
-    });
+    return await axios.post(
+      `/bw/projects/update?project_id=${id}`,
+      {
+        request_id,
+        manager_id,
+        work_status,
+        title,
+        content,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

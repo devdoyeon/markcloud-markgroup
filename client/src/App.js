@@ -22,6 +22,7 @@ import BusinessNewBoard from 'pages/Business/BusinessNewBoard';
 import NotFound from 'pages/common/NotFound';
 import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
 import PersonnelMember from 'pages/Personnel/PersonnelMember';
+import BusinessEditBoard from 'pages/Business/BusinessEditBoard';
 
 function App() {
   const { pathname } = useLocation();
@@ -68,7 +69,7 @@ function App() {
         <Route path='/report/write/:id' element={<NewBoard />} />
         <Route path='/board/write/:id' element={<NewBoard />} />
         <Route path='/notice/write/:id' element={<NewBoard />} />
-        <Route path='/business/write/:id' element={<BusinessNewBoard />} />
+        <Route path='/business/write/:id' element={<BusinessEditBoard />} />
         <Route path='/personnel/write/:id' element={<PersonnelMember />} />
         {/* -------------------------------------------------- */}
         <Route path='/*' element={<NotFound />} />
