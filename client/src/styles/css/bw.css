@@ -275,7 +275,6 @@
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
-  position: relative;
 }
 .container .content-wrap.business .work-wrap .work-btn-wrap .search-option {
   display: flex;
@@ -283,7 +282,6 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  position: absolute;
 }
 .container .content-wrap.business .work-wrap .work-btn-wrap .search-option .commonBtn.search {
   margin-right: 24px;
@@ -294,12 +292,14 @@
   border: 1px solid #858585;
   color: #858585;
   background-color: #ffffff;
-}
-.container .content-wrap.business .work-wrap .work-btn-wrap .commonBtn.create {
-  margin-left: auto;
-  cursor: pointer;
+  padding: 8px 22px 8px 21px;
 }
 .container .content-wrap.business .work-table-wrap .check-work-head-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 38px;
 }
 .container .content-wrap.business .work-table-wrap .check-work-head-wrap .check-work-title {
@@ -331,6 +331,10 @@
   color: #ffffff;
   background-color: #5850cc;
   border-radius: 16px;
+}
+.container .content-wrap.business .work-table-wrap .check-work-head-wrap .create {
+  padding: 8px 28px;
+  cursor: pointer;
 }
 .container .content-wrap.business .work-table-wrap .check-work-wrap .check-tab-list {
   display: flex;

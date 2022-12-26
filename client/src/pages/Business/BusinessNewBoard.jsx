@@ -223,6 +223,7 @@ const BusinessNewBoard = () => {
                   nameKey={memberKey}
                   setMemberCurKey={setMemberCurKey}
                   setSelectVal={setRequesterValue}
+                  admin={'admin'}
                 />
               </div>
               {/* ============================= */}

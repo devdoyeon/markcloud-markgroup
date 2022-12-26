@@ -920,7 +920,7 @@
     width: 860px;
     &.dateSearchArea {
       justify-content: flex-start;
-      >.row{
+      > .row {
         &:first-child::after {
           border-color: transparent;
         }
@@ -931,9 +931,6 @@
       position: relative;
     }
     .commonBtn {
-      width: 94px;
-      height: 47px;
-      padding: 12px;
       &.searchBtn {
         background-color: $gray02;
         margin-right: 32px;
@@ -942,6 +939,7 @@
         background-color: white;
         border: 1px solid $gray02;
         color: $gray02;
+        padding: 8px 22px 8px 21px;
       }
       &.applyBtn {
         position: absolute;

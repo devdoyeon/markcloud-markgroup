@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
+import { useLocation } from 'react-router-dom';
 
 const BusinessCommonSelect = ({
   opt,
@@ -11,6 +12,7 @@ const BusinessCommonSelect = ({
   person,
   nameKey,
   setMemberCurKey,
+  admin,
 }) => {
   const [select, setSelect] = useState('off');
 
@@ -45,6 +47,11 @@ const BusinessCommonSelect = ({
               if (filter === 'MyRequest') {
                 return setSelect('off');
               }
+            }
+          }
+          if (admin === 'admin') {
+            if (localStorage.getItem('yn') === 'n') {
+              return setSelect('off');
             }
           }
           select === 'on' ? setSelect('off') : setSelect('on');

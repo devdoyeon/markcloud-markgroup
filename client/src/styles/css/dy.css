@@ -932,11 +932,6 @@
   margin-top: 15px;
   position: relative;
 }
-.selectArea > .row .commonBtn {
-  width: 94px;
-  height: 47px;
-  padding: 12px;
-}
 .selectArea > .row .commonBtn.searchBtn {
   background-color: #858585;
   margin-right: 32px;
@@ -945,6 +940,7 @@
   background-color: white;
   border: 1px solid #858585;
   color: #858585;
+  padding: 8px 22px 8px 21px;
 }
 .selectArea > .row .commonBtn.applyBtn {
   position: absolute;
