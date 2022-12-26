@@ -41,7 +41,7 @@ const ProjectStatus = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getProjectList(search, selectVal);
+    const result = await getProjectList(pageInfo, search, selectVal);
     if (typeof result === 'object') {
       setList(result?.data?.data);
       setPageInfo(prev => {
@@ -139,7 +139,7 @@ const ProjectStatus = () => {
       changeTitle('그룹웨어 > 프로젝트 현황');
       projectList();
     }
-  }, []);
+  }, [pageInfo.page]);
 
   return (
     <>

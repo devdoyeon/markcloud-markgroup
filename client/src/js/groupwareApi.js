@@ -627,16 +627,17 @@ export const deleteReport = async id => {
 
 //& 프로젝트 현황 불러오기
 export const getProjectList = async (
+  { page, limit },
   { name, start_date, end_date },
   status
 ) => {
   try {
     return await axios.get(
-      `/groupware/project/list?${name?.length ? `project_name=${name}` : ''}${
-        status?.length ? `&project_status=${status}` : ''
-      }${start_date?.length ? `&start_date=${start_date}` : ''}${
-        end_date?.length ? `&end_date=${end_date}` : ''
-      }`,
+      `/groupware/project/list?page=${page}&limit=${limit}${
+        name?.length ? `project_name=${name}` : ''
+      }${status?.length ? `&project_status=${status}` : ''}${
+        start_date?.length ? `&start_date=${start_date}` : ''
+      }${end_date?.length ? `&end_date=${end_date}` : ''}`,
       header()
     );
   } catch (error) {
