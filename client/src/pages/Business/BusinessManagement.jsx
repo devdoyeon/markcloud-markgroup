@@ -28,7 +28,7 @@ const BusinessManagement = () => {
   const [pageInfo, setPageInfo] = useState({
     page: 1,
     totalPage: 0,
-    limit: 5,
+    limit: 10,
   });
   const [postInfo, setPostInfo] = useState({
     project_name: '',
@@ -144,7 +144,7 @@ const BusinessManagement = () => {
               <tr
                 onClick={() => navigate(`/business/${id}`)}
                 className='table-row'>
-                <td>{(pageInfo.page - 1) * 5 + idx + 1}</td>
+                <td>{(pageInfo.page - 1) * 10 + idx + 1}</td>
                 <td>{title}</td>
                 <td>{project_name}</td>
                 <td>{request_id}</td>
@@ -514,11 +514,6 @@ const BusinessManagement = () => {
                 </button>
                 <button className='commonBtn clear'>초기화</button>
               </div>
-              <div
-                className='commonBtn create'
-                onClick={() => navigate(`/business/write`)}>
-                등록
-              </div>
             </div>
           </div>
           <div className='work-table-wrap'>
@@ -533,9 +528,14 @@ const BusinessManagement = () => {
                     ? '전체 업무현황'
                     : ''}
                 </h4>
+
                 <div className='rect-num'>{list.length}</div>
               </div>
-              <div className='line'></div>
+              <div
+                className='commonBtn create'
+                onClick={() => navigate(`/business/write`)}>
+                등록
+              </div>
             </div>
             <div className='check-work-wrap'>
               <div className='table'>

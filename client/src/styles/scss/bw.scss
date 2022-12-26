@@ -263,10 +263,8 @@
         }
         .work-btn-wrap {
           @include flex-style($justifyVal: center, $alignVal: flex-start);
-          position: relative;
           .search-option {
             @include flex-style();
-            position: absolute;
             .commonBtn {
               &.search {
                 margin-right: 24px;
@@ -277,19 +275,18 @@
                 border: 1px solid $gray02;
                 color: $gray02;
                 background-color: $white;
+                padding: 8px 22px 8px 21px;
               }
-            }
-          }
-          .commonBtn {
-            &.create {
-              margin-left: auto;
-              cursor: pointer;
             }
           }
         }
       }
       .work-table-wrap {
         .check-work-head-wrap {
+          @include flex-style(
+            $justifyVal: space-between,
+            $alignVal: flex-start
+          );
           margin-bottom: 38px;
           .check-work-title {
             @include flex-style($justifyVal: space-between, $alignVal: center);
@@ -312,6 +309,10 @@
               background-color: $mainColor;
               border-radius: 16px;
             }
+          }
+          .create {
+            padding: 8px 28px;
+            cursor: pointer;
           }
         }
         .check-work-wrap {
