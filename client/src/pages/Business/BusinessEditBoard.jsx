@@ -15,10 +15,11 @@ import {
   createBusiness,
   getBusinessInfo,
   getBusinessRead,
+  updateBusiness,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 
-const BusinessNewBoard = () => {
+const BusinessEditBoard = () => {
   const [alert, setAlert] = useState('');
   const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
@@ -142,6 +143,19 @@ const BusinessNewBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
+  const editPost = async () => {
+    const result = await updateBusiness(postInfo, id);
+    if (typeof result === 'object') {
+      setAlert('edit');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '수정이 완료되었습니다.'
+      );
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
@@ -159,9 +173,8 @@ const BusinessNewBoard = () => {
   }, [postInfo.status_filter, postInfo.project_name]);
   useEffect(() => {
     if (getCookie('myToken'))
-      changeState(setPostInfo, 'request_id', memberCurKey);
+      changeState(setPostInfo, 'request_id', requesterValue);
   }, [requesterValue]);
-
   useEffect(() => {
     if (getCookie('myToken'))
       changeState(setPostInfo, 'manager_id', memberCurKey);
@@ -210,6 +223,7 @@ const BusinessNewBoard = () => {
                   nameKey={memberKey}
                   setMemberCurKey={setMemberCurKey}
                   setSelectVal={setRequesterValue}
+                  admin={'admin'}
                 />
               </div>
               {/* ============================= */}
@@ -257,8 +271,8 @@ const BusinessNewBoard = () => {
           <div className='btn-wrap'>
             <button
               className='commonBtn applyBtn'
-              onClick={() => createWorkBusiness()}>
-              등록
+              onClick={id?.length ? editPost : ''}>
+              수정
             </button>
             <button
               className='commonBtn list'
@@ -288,4 +302,4 @@ const BusinessNewBoard = () => {
   );
 };
 
-export default BusinessNewBoard;
+export default BusinessEditBoard;

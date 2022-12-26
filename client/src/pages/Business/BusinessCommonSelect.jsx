@@ -50,9 +50,7 @@ const BusinessCommonSelect = ({
             }
           }
           if (admin === 'admin') {
-            if (localStorage.getItem('yn') === 'n') {
-              return setSelect('off');
-            }
+            return setSelect('off');
           }
           select === 'on' ? setSelect('off') : setSelect('on');
         }}>
