@@ -116,6 +116,15 @@ export const getKeyByValue = (obj, value) => {
   return Object.keys(obj).find(key => obj[key] === value);
 };
 
+export const text2html = (c, str) => {
+  document.querySelector(c).innerHTML = new DOMParser().parseFromString(
+    str,
+    'text/html'
+  ).body.innerHTML;
+};
+
+//----------------------------------------------------------------------------------------
+
 export const numberWithCommas = x => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

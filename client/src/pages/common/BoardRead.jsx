@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import { catchError, changeTitle } from 'js/commonUtils';
+import { catchError, changeTitle, text2html } from 'js/commonUtils';
 import {
   getBoardDetail,
   getNoticeInfo,
@@ -50,15 +50,8 @@ const BoardRead = () => {
     }
     if (typeof result === 'object') {
       setInfo(result?.data);
-      document.querySelector('.content').innerHTML =
-        new DOMParser().parseFromString(
-          result?.data?.content,
-          'text/html'
-        ).body.innerHTML;
-    } else {
-      //에러핸들링
-      return catchError(result, navigate, setAlertBox, setAlert);
-    }
+      text2html('.content', result?.data?.content);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {

@@ -3,7 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import { commonModalSetting, changeTitle, catchError } from 'js/commonUtils';
+import {
+  commonModalSetting,
+  changeTitle,
+  catchError,
+  text2html,
+} from 'js/commonUtils';
 import {
   getProjectDetail,
   getPeopleList,
@@ -64,14 +69,10 @@ const ProjectDetail = () => {
       prevent = false;
     }, []);
     const result = await getProjectDetail(id);
-  
+
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
-      document.querySelector('.content').innerHTML =
-        new DOMParser().parseFromString(
-          result?.data?.project_description,
-          'text/html'
-        ).body.innerHTML;
+      text2html('.content', result?.data?.project_description);
       getMember();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
