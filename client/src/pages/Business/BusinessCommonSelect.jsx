@@ -61,6 +61,9 @@ const BusinessCommonSelect = ({
         <div className='selectOptGroup'>
           {opt?.length > 0 ? (
             opt?.reduce((acc, option, idx) => {
+              {
+                console.log(idx);
+              }
               return (
                 <>
                   {acc}
