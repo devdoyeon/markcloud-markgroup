@@ -24,11 +24,12 @@ const BusinessNewBoard = () => {
   const [meta, setMeta] = useState({});
   const [postInfo, setPostInfo] = useState({
     project_name: '',
-    status_filter: 'MyProject',
+    status_filter: localStorage.getItem('yn') === 'y' ? 'MyProject' : 'All',
     manager_id: '',
     request_id: '',
     title: '',
     content: '',
+    progress_status: [],
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',

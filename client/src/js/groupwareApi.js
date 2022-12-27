@@ -218,52 +218,73 @@ export const deleteNotice = async id => {
 };
 // ================================ 업무 관리 ================================
 
-export const getBusinessRead = async (
-  { project_name, status_filter },
-  { page, limit }
-) => {
-  try {
-    if (project_name === '' || project_name === '선택') {
-      return await axios.get(
-        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
-        header()
-      );
-    } else {
-      return await axios.get(
-        `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
-        header()
-      );
-    }
-  } catch (error) {
-    return apiErrorHandling(error);
-  }
-};
+// export const getBusinessRead = async (
+//   { project_name, status_filter },
+//   { page, limit }
+// ) => {
+//   try {
+//     if (project_name === '' || project_name === '선택') {
+//       return await axios.get(
+//         `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+//         header()
+//       );
+//     } else {
+//       return await axios.get(
+//         `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
+//         header()
+//       );
+//     }
+//   } catch (error) {
+//     return apiErrorHandling(error);
+//   }
+// };
 
-export const getBusinessFilterRead = async (
-  { page, limit },
+export const getBusinessRead = async (
   {
     project_name,
     manager_id,
     request_id,
     title,
-    content,
     progress_status,
+    content,
     status_filter,
-  }
+  },
+  { page, limit }
 ) => {
   try {
-    return await axios.post(
-      `/bw/projects/filter_read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
-      {
-        project_name,
-        manager_id,
-        request_id,
-        title,
-        content,
-        progress_status,
-      },
-      header()
-    );
+    if (project_name === '선택') {
+      return await axios.post(
+        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        {
+          project_name: '',
+          manager_id: manager_id === undefined ? '' : manager_id,
+          request_id: request_id === undefined ? '' : request_id,
+          title: title,
+          content: content,
+          progress_status:
+            progress_status.length === 0
+              ? ['요청', '접수', '진행', '완료']
+              : progress_status,
+        },
+        header()
+      );
+    } else {
+      return await axios.post(
+        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        {
+          project_name: project_name,
+          manager_id: manager_id === undefined ? '' : manager_id,
+          request_id: request_id === undefined ? '' : request_id,
+          title: title,
+          content: content,
+          progress_status:
+            progress_status.length === 0
+              ? ['요청', '접수', '진행', '완료']
+              : progress_status,
+        },
+        header()
+      );
+    }
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -311,11 +332,17 @@ export const updateBusiness = async (
     return await axios.post(
       `/bw/projects/update?project_id=${id}`,
       {
-        request_id,
-        manager_id,
-        work_status,
-        title,
-        content,
+        request_id:
+          request_id === 'undefined' || request_id === undefined
+            ? ''
+            : request_id,
+        manager_id:
+          manager_id === 'undefined' || manager_id === undefined
+            ? ''
+            : manager_id,
+        work_status: work_status,
+        title: title,
+        content: content,
       },
       header()
     );

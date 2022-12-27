@@ -73,7 +73,6 @@ const BusinessBoardRead = () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
-    console.log(result);
     if (typeof result === 'object') {
       setInfo(result?.data);
       document.querySelector('.edit').innerHTML =
