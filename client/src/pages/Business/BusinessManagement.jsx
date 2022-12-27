@@ -23,7 +23,7 @@ const BusinessManagement = () => {
   });
   const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
-  const [meta, setMeta] = useState({});
+  const [metaData, setMetaData] = useState({});
 
   const [pageInfo, setPageInfo] = useState({
     page: 1,
@@ -49,20 +49,12 @@ const BusinessManagement = () => {
   );
   const [memberKey, setMemberKey] = useState([]);
   const [memberName, setMemberName] = useState([]);
+  const [projectName, setProjectName] = useState(['선택']);
   const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
   const path = useLocation().pathname;
   const pathname = path.split('/')[1];
-
-  const projectNameArr = [
-    '마크클라우드',
-    '마크뷰',
-    '마크통',
-    '마크링크',
-    '삼성전자',
-    '그린터치',
-  ];
 
   let prevent = false;
 
@@ -82,7 +74,16 @@ const BusinessManagement = () => {
       setMemberKey(key);
       setMemberName(value);
       setList(data);
-      setMeta(meta);
+      setMetaData(meta);
+      if (projectName.length === 1) {
+        setProjectName(prev => {
+          const clone = [...prev];
+          meta?.project_name.forEach(name => {
+            clone.push(name);
+          });
+          return clone;
+        });
+      }
       // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
@@ -93,19 +94,9 @@ const BusinessManagement = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  const getSearchFilterApi = async () => {
-    const result = await getBusinessFilterRead(pageInfo, postInfo);
-    if (typeof result === 'object') {
-      const { data, meta } = result?.data;
-      setList(data);
-      setMeta(meta);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.page = meta?.page;
-        clone.totalPage = meta?.totalPage;
-        return clone;
-      });
-    }
+  const searchStart = async () => {
+    // 여기 밑에서 api 요청
+    await getBusinessReadApi();
   };
 
   const renderTable = () => {
@@ -213,7 +204,7 @@ const BusinessManagement = () => {
       }
       getBusinessReadApi();
     }
-  }, [postInfo.status_filter, postInfo.project_name]);
+  }, [postInfo.status_filter]);
 
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
@@ -294,8 +285,6 @@ const BusinessManagement = () => {
     }
   };
 
-  const { project_name } = meta;
-
   return (
     <>
       <div className='container'>
@@ -307,7 +296,6 @@ const BusinessManagement = () => {
           <div className='work-wrap'>
             <div className='work-situation'>
               <span>업무현황</span>
-              {console.log(localStorage.getItem('yn'))}
               {localStorage.getItem('yn') === 'y' ? (
                 <>
                   <label className='work-bg'>
@@ -355,7 +343,7 @@ const BusinessManagement = () => {
               <div className='project-list'>
                 <span>프로젝트</span>
                 <CommonSelect
-                  opt={project_name}
+                  opt={projectName && projectName}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
                 />
@@ -518,7 +506,7 @@ const BusinessManagement = () => {
               <div className='search-option'>
                 <button
                   className='commonBtn search'
-                  onClick={() => getSearchFilterApi()}>
+                  onClick={() => searchStart()}>
                   검색
                 </button>
                 <button className='commonBtn clear'>초기화</button>
@@ -538,7 +526,7 @@ const BusinessManagement = () => {
                     : ''}
                 </h4>
 
-                <div className='rect-num'>{list.length}</div>
+                <div className='rect-num'>{metaData?.total_count}</div>
               </div>
               <div
                 className='commonBtn create'
