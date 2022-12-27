@@ -84,44 +84,6 @@ const BusinessNewBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  const getBusinessCurInfo = async () => {
-    const result = await getBusinessInfo(id);
-    if (typeof result === 'object') {
-      const {
-        content,
-        manager_id,
-        project_name,
-        request_id,
-        title,
-        work_status,
-      } = result?.data;
-
-      setPostInfo(prev => {
-        const clone = { ...prev };
-        clone.content = content;
-        clone.project_name = project_name;
-        clone.request_id = request_id;
-        clone.manager_id = manager_id;
-        clone.work_status = work_status;
-        clone.title = title;
-        return clone;
-      });
-      setProjectValue(project_name);
-      setContactValue(manager_id);
-      setRequesterValue(request_id);
-      setProgressValue(work_status);
-
-      const memberRead = await getBusinessRead({ project_name }, pageInfo);
-      const { meta, data } = memberRead?.data;
-      const key = Object.keys(meta?.project_member);
-      const value = Object.values(meta?.project_member);
-      setMemberKey(key);
-      setMemberName(value);
-      // setList(data);
-      // setMeta(meta);
-    }
-  };
-
   const handleChangeRadioButton = (e, type) => {
     if (type === 'title') {
       changeState(setPostInfo, 'title', e.target.value);
@@ -146,9 +108,6 @@ const BusinessNewBoard = () => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
       getBusinessProjectNameApi();
-      if (id !== undefined) {
-        getBusinessCurInfo();
-      }
     }
   }, []);
 

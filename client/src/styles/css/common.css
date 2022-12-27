@@ -332,6 +332,11 @@ input {
 .container .content-wrap .btn-wrap > button.list {
   background-color: #858585;
 }
+.container .content-wrap .btn-wrap > button.close {
+  background-color: #ffffff;
+  color: #858585;
+  border: 1px solid #858585;
+}
 .container .content-wrap > .search-wrap {
   display: flex;
   flex-direction: row;

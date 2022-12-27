@@ -64,6 +64,7 @@ const ProjectDetail = () => {
       prevent = false;
     }, []);
     const result = await getProjectDetail(id);
+  
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
       document.querySelector('.content').innerHTML =

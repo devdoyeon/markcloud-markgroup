@@ -66,6 +66,17 @@
 .container .content-wrap.business .work-wrap.project-work-wrap {
   height: 720px;
 }
+.container .content-wrap.business .work-wrap.project-work-wrap .edit {
+  padding: 20px 0;
+  height: 430px;
+}
+.container .content-wrap.business .work-wrap.project-work-wrap .edit .quill {
+  width: 100%;
+  height: 430px;
+}
+.container .content-wrap.business .work-wrap.project-work-wrap .edit .quill > .ql-container {
+  height: 346px;
+}
 .container .content-wrap.business .work-wrap .work-situation {
   display: flex;
   flex-direction: row;
@@ -248,17 +259,6 @@
   right: -6px;
   height: 36px;
   background-color: #eeeeee;
-}
-.container .content-wrap.business .work-wrap .content.edit {
-  padding: 20px 0;
-  height: 430px;
-}
-.container .content-wrap.business .work-wrap .content.edit .quill {
-  width: 100%;
-  height: 430px;
-}
-.container .content-wrap.business .work-wrap .content.edit .quill > .ql-container {
-  height: 346px;
 }
 .container .content-wrap.business .work-wrap .progress {
   margin-bottom: 24px;

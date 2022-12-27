@@ -291,7 +291,7 @@ const BusinessManagement = () => {
     }
   };
 
-  const { project_member, project_name } = meta;
+  const { project_name } = meta;
 
   return (
     <>

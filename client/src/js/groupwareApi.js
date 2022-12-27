@@ -324,6 +324,18 @@ export const updateBusiness = async (
   }
 };
 
+export const deleteBusiness = async id => {
+  try {
+    return await axios.post(
+      `/bw/projects/delete?project_id=${id}`,
+      null,
+      header()
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
 // ================================인사 관리 ================================
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~department~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export const getDepartmentList = async ({ page, limit }) => {
@@ -458,18 +470,22 @@ export const getMemberUpdate = async ({
   zip_code,
 }) => {
   try {
-    return await axios.post(`/bw/personnel/member/update?member_id=${id}`, {
-      id,
-      user_id,
-      name,
-      gender,
-      birthday,
-      section,
-      phone,
-      email,
-      address,
-      zip_code,
-    });
+    return await axios.post(
+      `/bw/personnel/member/update?member_id=${id}`,
+      {
+        id,
+        user_id,
+        name,
+        gender,
+        birthday,
+        section,
+        phone,
+        email,
+        address,
+        zip_code,
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -477,7 +493,11 @@ export const getMemberUpdate = async ({
 
 export const getMemberDelete = async id => {
   try {
-    return await axios.post(`/bw/personnel/member/delete?member_id=${id}`);
+    return await axios.post(
+      `/bw/personnel/member/delete?member_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

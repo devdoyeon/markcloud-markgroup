@@ -277,6 +277,11 @@ input {
         &.list {
           background-color: $gray02;
         }
+        &.close {
+          background-color: $white;
+          color: $gray02;
+          border: 1px solid $gray02;
+        }
       }
     }
     > .search-wrap {

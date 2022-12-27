@@ -48,51 +48,50 @@ const BusinessBoardRead = () => {
 
   let prevent = false;
 
-  const getDetail = async () => {
-    if (prevent) return;
-    prevent = false;
-    setTimeout(() => {
-      prevent = true;
-    }, 200);
+  // const getDetail = async () => {
+  //   if (prevent) return;
+  //   prevent = false;
+  //   setTimeout(() => {
+  //     prevent = true;
+  //   }, 200);
+  //   const result = await getBusinessInfo(id);
+  //   console.log(result);
+  //   if (typeof result === 'object') {
+  //     setInfo(result?.data);
+  //     document.querySelector('.content').innerHTML =
+  //       new DOMParser().parseFromString(
+  //         result?.data?.content,
+  //         'text/html'
+  //       ).body.innerHTML;
+  //   } else {
+  //     catchError(result, navigate, setAlertBox, setAlert);
+  //     //에러핸들링
+  //   }
+  // };
+
+  const getBusinessDetail = async () => {
+    const pathName = path.split(`/`)[1];
+    if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     console.log(result);
     if (typeof result === 'object') {
       setInfo(result?.data);
-      document.querySelector('.content').innerHTML =
-        new DOMParser().parseFromString(
-          result?.data?.content,
-          'text/html'
-        ).body.innerHTML;
-    } else {
-      catchError(result, navigate, setAlertBox, setAlert);
-      //에러핸들링
-    }
-  };
-
-  const getProjectDetail = async () => {
-    const pathName = path.split(`/`)[1];
-    if (pathName !== 'business') return;
-    const result = await getBusinessInfo(id);
-
-    if (typeof result === 'object') {
-      setInfo(result?.data);
-      document.querySelector('.content').innerHTML =
+      document.querySelector('.edit').innerHTML =
         new DOMParser().parseFromString(
           result?.data?.content,
           'text/html'
         ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 상세 보기');
-      if (id?.length) getProjectDetail();
+      if (id?.length) getBusinessDetail();
     }
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken')) if (id?.length) getProjectDetail();
+    if (getCookie('myToken')) if (id?.length) getBusinessDetail();
   }, []);
 
   const {
@@ -144,7 +143,7 @@ const BusinessBoardRead = () => {
                 <div className='input-read'>{title}</div>
               </div>
             </div>
-            <div className='content edit'>
+            <div className='edit'>
               {/* <EditorComponent
                 content={postInfo.content}
                 setContent={setPostInfo}

@@ -13,6 +13,7 @@ import CommonSelect from 'common/CommonSelect';
 import BusinessCommonSelect from './BusinessCommonSelect';
 import {
   createBusiness,
+  deleteBusiness,
   getBusinessInfo,
   getBusinessRead,
   updateBusiness,
@@ -156,6 +157,19 @@ const BusinessEditBoard = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
+  const deletePost = async () => {
+    const result = await deleteBusiness(id);
+    if (typeof result === 'object') {
+      setAlert('deleteAlert');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'confirm',
+        '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+      );
+    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+  };
+
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
@@ -274,6 +288,9 @@ const BusinessEditBoard = () => {
               onClick={id?.length ? editPost : ''}>
               수정
             </button>
+            <button className='commonBtn close' onClick={() => deletePost()}>
+              삭제
+            </button>
             <button
               className='commonBtn list'
               onClick={() => {
@@ -289,7 +306,11 @@ const BusinessEditBoard = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'apply')
+            if (
+              alert === 'cancel' ||
+              alert === 'apply' ||
+              alert === 'deleteAlert'
+            )
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')

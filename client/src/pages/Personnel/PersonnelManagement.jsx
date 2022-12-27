@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Pagination from 'common/Pagination';
 import SideMenu from 'common/SideMenu';
-import { changeTitle } from 'js/commonUtils';
+import { addHypen, changeTitle } from 'js/commonUtils';
 import PersonnelBusinessPopup from './PersonnelBusinessPopup';
 import {
   getDepartmentInfo,
@@ -98,7 +98,7 @@ const PersonnelManagement = () => {
               <td>{user_id}</td>
               <td>{name}</td>
               <td>{section}</td>
-              <td>{phone}</td>
+              <td>{addHypen(phone)}</td>
               <td>{email}</td>
               <td>{birthday}</td>
             </tr>

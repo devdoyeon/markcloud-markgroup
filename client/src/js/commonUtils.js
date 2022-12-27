@@ -116,13 +116,15 @@ export const getKeyByValue = (obj, value) => {
   return Object.keys(obj).find(key => obj[key] === value);
 };
 
-//================================== 병욱 ==================================
-
 export const numberWithCommas = x => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-// ------------------------------------------------------------정규식--------------------------------------------------------------
+export const addHypen = str => {
+  if (!str) return '';
+  return str.substr(0, 3) + '-' + str.substr(3, 4) + '-' + str.substr(7);
+};
+
 export const regularExpression = async (type, str) => {
   let regExp;
   switch (type) {
