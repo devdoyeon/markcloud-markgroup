@@ -37,7 +37,9 @@
 
 ## CLIENT DEVELOPMENT
 
-- [] 메인 페이지 [Mark.KDY,Mark.ABW]
+- [] 메인 페이지 [Mark.KDY]
+- [] 요금제 안내 페이지 [Mark.KDY]
+- [] 결제 페이지 [Mark.KDY]
 - [] 프로젝트 현황 [Mark.KDY]
 - [] 주간 업무 보고 [Mark.KDY]
 - [] 게시판 [Mark.KDY]
