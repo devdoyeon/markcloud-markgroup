@@ -117,6 +117,10 @@ const PersonnelManagement = () => {
     if (getCookie('myToken')) getPersonMemberApi();
   }, [managePageInfo.page]);
 
+  useEffect(() => {
+    getPersonDepartmentApi();
+  }, [departmentList]);
+
   return (
     <>
       <div className='container'>
