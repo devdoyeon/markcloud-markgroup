@@ -207,6 +207,9 @@ const BusinessManagement = () => {
         setContactValue('선택');
         setRequesterValue(localStorage.getItem('userName'));
         changeState(setPostInfo, 'request_id', '');
+      } else if (postInfo.status_filter === 'All') {
+        setContactValue('선택');
+        setRequesterValue('선택');
       }
       getBusinessReadApi();
     }
@@ -351,7 +354,7 @@ const BusinessManagement = () => {
               {/* ============================= */}
               <div className='project-list'>
                 <span>프로젝트</span>
-                <BusinessCommonSelect
+                <CommonSelect
                   opt={project_name}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
