@@ -251,7 +251,7 @@ const NewBoard = () => {
             <button
               className='commonBtn applyBtn'
               onClick={id?.length ? editPost : createNew}>
-              등록
+              {id?.length ? '수정' : '등록'}
             </button>
             {id?.length ? (
               <button
