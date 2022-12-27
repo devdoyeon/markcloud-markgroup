@@ -173,7 +173,9 @@ const ProjectDetail = () => {
                             <>
                               {acc}
                               <span className='personBtn'>
-                                {getKeyByValue(memberObj, person)}
+                                {getKeyByValue(memberObj, person) === undefined
+                                  ? '삭제된 회원'
+                                  : getKeyByValue(memberObj, person)}
                                 {localStorage.getItem('yn') === 'n' ||
                                 projectInfo?.created_id ===
                                   localStorage.getItem('userName') ? (
