@@ -377,7 +377,7 @@
   line-height: 23px;
   transition: 0.5s;
 }
-.cost > .row > div > div a {
+.cost > .row > div > div button {
   display: flex;
   flex-direction: row;
   align-items: center;
