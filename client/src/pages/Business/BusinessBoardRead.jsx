@@ -74,10 +74,11 @@ const BusinessBoardRead = () => {
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
-      setInfo(result?.data);
+      console.log(result);
+      setInfo(result?.data[0]);
       document.querySelector('.edit').innerHTML =
         new DOMParser().parseFromString(
-          result?.data?.content,
+          result?.data[0].content,
           'text/html'
         ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
