@@ -20,6 +20,7 @@ import {
   updateBusiness,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
+import { post } from 'jquery';
 
 const BusinessEditBoard = () => {
   const [alert, setAlert] = useState('');
@@ -76,9 +77,9 @@ const BusinessEditBoard = () => {
       const { data, meta } = result?.data;
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
-      console.log(meta.project_member);
       setMemberKey(key);
       setMemberName(value);
+      setMemberObj(meta?.project_member);
       setList(data);
       setMeta(meta);
       // changeState(setPostInfo, 'project_name', projectValue);
@@ -100,7 +101,7 @@ const BusinessEditBoard = () => {
         request_id,
         title,
         work_status,
-      } = result?.data;
+      } = result?.data[0];
       setPostInfo(prev => {
         const clone = { ...prev };
         clone.content = content;
@@ -111,7 +112,6 @@ const BusinessEditBoard = () => {
         clone.title = title;
         return clone;
       });
-
       setProjectValue(project_name);
       setContactValue(manager_id);
       setRequesterValue(request_id);
@@ -127,12 +127,19 @@ const BusinessEditBoard = () => {
       // if (memberKey.length > 0 && memberName.length > 0) {
       //   console.log('dddd');
       // }
-      if (memberKey.length && memberName.length) {
+      if (memberKey.length > 0) {
+        setPostInfo(prev => {
+          const clone = { ...prev };
+          clone.manager_id = getKeyByValue(memberObj, contactValue);
+          clone.request_id = getKeyByValue(memberObj, requesterValue);
+          return clone;
+        });
       }
       // setList(data);
       // setMeta(meta);
     }
   };
+  console.log(postInfo);
   const handleChangeRadioButton = (e, type) => {
     if (type === 'title') {
       changeState(setPostInfo, 'title', e.target.value);
@@ -154,13 +161,11 @@ const BusinessEditBoard = () => {
   };
 
   const editPost = async () => {
-    // setPostInfo(prev => {
-    //   const clone = { ...prev };
-    //   clone.manager_id = getKeyByValue(memberObj, contactValue);
-    //   clone.request_id = getKeyByValue(memberObj, requesterValue);
-    //   return clone;
-    // });
-    const result = await updateBusiness(postInfo, id);
+    const obj = { ...postInfo };
+    obj.manager_id = getKeyByValue(memberObj, contactValue);
+    obj.request_id = getKeyByValue(memberObj, requesterValue);
+
+    const result = await updateBusiness(obj, id);
     if (typeof result === 'object') {
       setAlert('edit');
       return commonModalSetting(
@@ -189,17 +194,17 @@ const BusinessEditBoard = () => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
       getBusinessProjectNameApi();
-      // if (id !== 'undefined' || id !== undefined) {
-      //   getBusinessCurInfo();
-      // }
+      if (id !== 'undefined' || id !== undefined) {
+        getBusinessCurInfo();
+      }
     }
   }, []);
 
-  useEffect(() => {
-    if (getCookie('myToken')) {
-      getBusinessProjectNameApi();
-    }
-  }, [postInfo.status_filter]);
+  // useEffect(() => {
+  //   if (getCookie('myToken')) {
+  //     getBusinessProjectNameApi();
+  //   }
+  // }, [postInfo.status_filter]);
   // useEffect(() => {
   //   if (getCookie('myToken'))
   //     changeState(setPostInfo, 'request_id', memberCurKey);
@@ -207,7 +212,6 @@ const BusinessEditBoard = () => {
   // useEffect(() => {
   //   if (getCookie('myToken'))
   //     changeState(setPostInfo, 'manager_id', memberCurKey);
-  //
   // }, [contactValue]);
 
   useEffect(() => {
@@ -233,7 +237,8 @@ const BusinessEditBoard = () => {
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
                 /> */}
-                <div className='selectBox'>{projectValue}</div>
+
+                <div className='selectBox'>{postInfo.project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
