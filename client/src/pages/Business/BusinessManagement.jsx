@@ -50,6 +50,7 @@ const BusinessManagement = () => {
   const [memberKey, setMemberKey] = useState([]);
   const [memberName, setMemberName] = useState([]);
   const [projectName, setProjectName] = useState(['선택']);
+  const [requestName, setRequestName] = useState(['선택']);
   const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
