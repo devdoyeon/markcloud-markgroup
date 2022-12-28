@@ -16,9 +16,9 @@ class ProjectManageTable(Base):
     work_status = Column(VARCHAR(10), nullable = False)
     work_end_date = Column(DateTime, nullable = True)
     created_at = Column(DateTime,default=datetime.today(), nullable = False)  
-    created_id = Column(VARCHAR(30), nullable = False)
+    created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime,default=datetime.today(), nullable = False) 
-    updated_id = Column(VARCHAR(30), default=created_id, nullable = False)
+    updated_id = Column(BigInteger, default=created_id, nullable = False)
 
 
 class ProjectTable(Base):
@@ -33,9 +33,9 @@ class ProjectTable(Base):
     project_end_date = Column(DateTime, nullable = False)
     project_status = Column(VARCHAR(10), nullable = False)
     created_at = Column(DateTime, nullable = False)
-    created_id = Column(VARCHAR(30), nullable = False)
+    created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime, nullable = False)
-    updated_id = Column(VARCHAR(30), nullable = False)
+    updated_id = Column(BigInteger, nullable = False)
     
     
 class ProjectMemberTable(Base):
@@ -45,7 +45,7 @@ class ProjectMemberTable(Base):
     project_code = Column(VARCHAR(14),nullable = False)
     user_id = Column(VARCHAR(14),nullable = False)
     created_at = Column(DateTime, nullable = False)
-    created_id = Column(VARCHAR(30), nullable = False)
+    created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime, nullable = False)
-    updated_id = Column(VARCHAR(30), nullable = False)
+    updated_id = Column(BigInteger, nullable = False)
     

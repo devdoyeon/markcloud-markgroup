@@ -25,7 +25,7 @@ class MemberOut(BaseModel):
     id:int
     user_id:str
     name:str
-    section:str
+    section:Optional[str]
     phone:str
     email:str
     birthday:date
@@ -40,7 +40,7 @@ class Memberinfo(BaseModel):
     name:str
     gender:str
     birthday:date
-    section:str
+    section:Optional[str]
     phone:str
     email:str
     address:str

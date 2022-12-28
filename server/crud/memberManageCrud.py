@@ -7,16 +7,17 @@ from datetime import datetime,date
     
 ##################################부서 관리##################################
 
-def get_department_list(db, offset, limit, user_pk):
+def get_department_list(db, offset, limit, user_info):
     
     department_table = memberManageModel.DepartmentTable
     
     try:
-        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
         
         query = db.query(department_table.id,
-                         department_table.department_name.label('section'),
-                         department_table.created_at).filter(department_table.organ_code == user_organ_code).order_by(department_table.id)
+                        department_table.department_name.label('section'),
+                        department_table.created_at
+                        ).filter(department_table.organ_code == user_info.department_code
+                        ).order_by(department_table.id)
         
         total_count = query.count()
         department_list = query.offset(offset).limit(limit).all()
@@ -26,28 +27,29 @@ def get_department_list(db, offset, limit, user_pk):
         raise HTTPException(status_code=500, detail='GetDpError')
 
 
-def get_department_info(db,department_id):
+def get_department_info(db,department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
     
     try:
         return db.query(department_table.id,
                         department_table.department_name.label('section'),
-                        department_table.created_at).filter(department_table.id == department_id).first()
+                        department_table.created_at
+                        ).filter(department_table.id == department_id
+                        ).filter(department_table.organ_code == user_info.department_code
+                        ).first()
     except:
         raise HTTPException(status_code=500, detail='GetDpInfoError')
 
-def insert_department(db, inbound_data, user_pk):
+def insert_department(db, inbound_data, user_info):
     
     department_table = memberManageModel.DepartmentTable
 
     try:
-        user_organ_code = author_chk.get_user_info(db,user_pk).department_code
-                
         db_query = department_table(
         department_name=inbound_data.department_name,
-        organ_code = user_organ_code,
-        created_id = user_pk)
+        organ_code = user_info.department_code,
+        created_id = user_info.id)
         
         db.add(db_query)
 
@@ -55,7 +57,7 @@ def insert_department(db, inbound_data, user_pk):
         raise HTTPException(status_code=500, detail='InsertDpError')
     
 
-def change_department(db, inboud_data, department_id):
+def change_department(db, inboud_data, department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
     
@@ -63,32 +65,40 @@ def change_department(db, inboud_data, department_id):
         values = {'department_name':inboud_data.department_name,
                   'updated_at':datetime.today()}
         
-        db.query(department_table).filter_by(id = department_id).update(values)
+        db.query(department_table
+                ).filter_by(id = department_id
+                ).filter(department_table.organ_code == user_info.department_code
+                ).update(values)
     except:
         raise HTTPException(status_code=500, detail='ChangeDpERror')
     
-def remove_department(db, department_id):
+def remove_department(db, department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
     
     try:
-        db.query(department_table).filter(department_table.id == department_id).delete()
+        db.query(department_table
+                ).filter(department_table.id == department_id
+                ).filter(department_table.organ_code == user_info.department_code
+                ).delete()
     except:
         raise HTTPException(status_code=500, detail='RemoveDpError')
     
-    
-    
+
 ##################################직원 관리##################################
-def get_member_list(db, offset,limit, user_pk):
+def get_member_list(db, offset,limit, user_info):
     
     member_table = memberManageModel.MemberTable
     
     try:
-        user_organ_code = author_chk.get_user_info(db, user_pk).department_code
-        query = db.query(member_table).filter(member_table.department_code == user_organ_code).order_by(member_table.id)
+        query = db.query(member_table
+                ).filter(member_table.department_code == user_info.department_code
+                ).filter(member_table.is_active == 1
+                ).order_by(member_table.id)
         
         total_count = query.count()
         member_list = query.offset(offset).limit(limit).all()
+
         return total_count, member_list
     except:
         raise HTTPException(status_code=500, detail='GetMbError')
@@ -106,13 +116,12 @@ def get_member_info(db,member_id):
         raise HTTPException(status_code=500, detail='GetMbInfoError')    
 
 
-def insert_member(db,inbound_data,user_pk):
+def insert_member(db,inbound_data,user_info):
 
     member_table = memberManageModel.MemberTable
 
     try:
         # admin 정보
-        user_info = author_chk.get_user_info(db, user_pk)
         hashed_password = author_chk.get_hashed_password(inbound_data.password)
         
         db_query = member_table(
@@ -165,8 +174,8 @@ def remove_member(db,member_id):
     member_table = memberManageModel.MemberTable
 
     try:
-        db.query(member_table).filter(member_table.id == member_id).delete()
-    except Exception as e:
-        print(e)
+        values = {'is_active': 0}
+        db.query(member_table).filter(member_table.id == member_id).update(values)
+    except:
         raise HTTPException(status_code=500, detail='RemoveMbError')            
     
