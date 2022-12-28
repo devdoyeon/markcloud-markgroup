@@ -76,7 +76,7 @@ def project_update(project_id: int,
     try:
         project_crud.update_project(db, project_update, project_id, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='UpdateNtError')
     
 
 @router.get("/member")
@@ -134,8 +134,4 @@ def project_delete(
     access_token:str = Header(None),
     db: Session = Depends(get_db)):
     
-    try:
-        project_crud.delete_project(db, project_id, user_pk)
-    except:
-        raise HTTPException(status_cdoe=500, detail='DeleteNtError')
-    
+    project_crud.delete_project(db, project_id, user_pk)

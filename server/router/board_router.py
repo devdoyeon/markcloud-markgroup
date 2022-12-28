@@ -62,7 +62,7 @@ def post_update(
     try:
         board_crud.update_post(db, _post_update, post_id, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='UpdateNtError')
     
 
 @router.post("/delete")
@@ -76,4 +76,4 @@ def post_delete(
     try:
         board_crud.delete_post(db, post_id, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='DeleteNtError')
+        raise HTTPException(status_code=500, detail='DeleteNtError')

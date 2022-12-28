@@ -44,7 +44,7 @@ def read_department_list(
         limit=limit).success_response(department_list)
         
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadDpError')
+        raise HTTPException(status_code=500, detail='ReadDpError')
         
 
 # 부서 상세페이지
@@ -56,7 +56,7 @@ def read_department_info(
     try:
         return get_department_info(db, department_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadDpInfoError')
+        raise HTTPException(status_code=500, detail='ReadDpInfoError')
 
 # 부서 등록
 @router_member.post('/department/create')
@@ -70,7 +70,7 @@ def create_department(
     try:
         insert_department(db, inbound_data, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='CreateDpError')
+        raise HTTPException(status_code=500, detail='CreateDpError')
 # 부서 수정
 @router_member.post('/department/update')
 def update_department(
@@ -81,7 +81,7 @@ def update_department(
     try:
         change_department(db, inbound_data, department_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateDpError')
+        raise HTTPException(status_code=500, detail='UpdateDpError')
 
 # 부서 삭제
 @router_member.post('/department/delete')
@@ -92,7 +92,7 @@ def delete_department(
     try:
         remove_department(db, department_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='DeleteDpError')
+        raise HTTPException(status_code=500, detail='DeleteDpError')
 ##################################직원 관리##################################
 
 # 직원 리스트
@@ -121,7 +121,7 @@ def read_member_list(
             limit=limit
         ).success_response(member_list)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadMbError')
+        raise HTTPException(status_code=500, detail='ReadMbError')
 
 # 직원 상세페이지
 @router_member.get('/member/info',response_model= Memberinfo)
@@ -132,7 +132,7 @@ def read_member_info(
     try:
         return get_member_info(db, member_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadMbInfoError')
+        raise HTTPException(status_code=500, detail='ReadMbInfoError')
 
 
 # 직원 등록
@@ -147,7 +147,7 @@ def create_member(
     try:
         insert_member(db,inbound_data,user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='CreateMbError')
+        raise HTTPException(status_code=500, detail='CreateMbError')
 
 # 직원 수정
 @router_member.post('/member/update')
@@ -159,7 +159,7 @@ def update_member(
     try:
         change_member(db, inboud_data ,member_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateMbError')
+        raise HTTPException(status_code=500, detail='UpdateMbError')
 
 # 직원 삭제
 @router_member.post('/member/delete')
@@ -170,4 +170,4 @@ def delete_member(
     try:
         remove_member(db,member_id)
     except:
-        raise HTTPException(status_cdoe=500, detail='DeleteMbError')
+        raise HTTPException(status_code=500, detail='DeleteMbError')

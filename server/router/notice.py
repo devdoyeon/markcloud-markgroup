@@ -43,7 +43,7 @@ def read_notice_list(
             limit=limit
         ).success_response(notice_list)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadNtError')
+        raise HTTPException(status_code=500, detail='ReadNtError')
 
 
 
@@ -57,7 +57,7 @@ def read_notice_info(
         notice_info =  get_notice_info(db, notice_id)
         return notice_info
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadNtInfoError')
+        raise HTTPException(status_code=500, detail='ReadNtInfoError')
 
 # 공지 생성
 @router_notice.post('/create')
@@ -71,7 +71,7 @@ def create_notice(
     try:
         insert_notice(db,inbound_data, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='CreateNtError')
+        raise HTTPException(status_code=500, detail='CreateNtError')
         
 # 공지 수정
 @router_notice.post('/update') 
@@ -86,7 +86,7 @@ def update_notice(
     try:
         return change_notice(db,inbound_data,notice_id,user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='UpdateNtError')
     
 # 공지 삭제
 @router_notice.post('/delete')
@@ -101,4 +101,4 @@ def delete_notice(
         result = remove_notice(db,notice_id,user_pk)
         return result
     except:
-        raise HTTPException(status_cdoe=500, detail='DeleteNtError')
+        raise HTTPException(status_code=500, detail='DeleteNtError')

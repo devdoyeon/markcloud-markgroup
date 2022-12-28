@@ -63,7 +63,7 @@ def report_update(report_id: int,
     try:
         report_crud.update_report(db, _report_update, report_id, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='UpdateNtError')
     
     
 @router.post("/delete")
@@ -76,6 +76,6 @@ def report_delete(report_id: int,
     try:
         report_crud.delete_report(db, report_id, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='DeleteNtError')
+        raise HTTPException(status_code=500, detail='DeleteNtError')
     
    

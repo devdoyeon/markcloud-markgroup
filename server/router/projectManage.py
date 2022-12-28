@@ -48,7 +48,7 @@ def read_projects(
             limit=limit
         ).success_response(project_list)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadPjtError')
+        raise HTTPException(status_code=500, detail='ReadPjtError')
 
 
 # 프로젝트 필터 
@@ -79,7 +79,7 @@ def read_project_list(
             limit=limit
         ).success_response(project_list)
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadPjtFilterError')
+        raise HTTPException(status_code=500, detail='ReadPjtFilterError')
     
 # 프로젝트 상세페이지
 @router_project.get('/info', response_model = ProjectManageOut)
@@ -91,7 +91,7 @@ def read_project_info(
         result = get_project_info(db,project_id)
         return result
     except:
-        raise HTTPException(status_cdoe=500, detail='ReadPjtInfoError')
+        raise HTTPException(status_code=500, detail='ReadPjtInfoError')
     
 # 프로젝트 생성
 @router_project.post('/create')
@@ -105,7 +105,7 @@ def create_project(
     try:
         insert_project(db,inbound_data, user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='CreatePjtError')
+        raise HTTPException(status_code=500, detail='CreatePjtError')
     
 # 프로젝트 수정
 @router_project.post('/update')
@@ -120,7 +120,7 @@ def update_project(
     try:
         change_project(db,inbound_data,project_id,user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='UpdatePjtError')
+        raise HTTPException(status_code=500, detail='UpdatePjtError')
     
 # 프로젝트 삭제    
 @router_project.post('/delete')
@@ -134,4 +134,4 @@ def delete_project(
     try:
         remove_project(db,project_id,user_pk)
     except:
-        raise HTTPException(status_cdoe=500, detail='DeletePjtError')
+        raise HTTPException(status_code=500, detail='DeletePjtError')
