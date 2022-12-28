@@ -34,10 +34,12 @@ const PersonnelBusinessPopup = ({
 
   const updatePersonnelDepartment = async () => {
     const curData = await getDepartmentUpdate(curDepartment);
+    changeState(setCurDepartment, 'section', '');
   };
 
   const deletePersonnelDepartment = async () => {
     const del = await getDepartmentDelete(curDepartment?.id);
+    changeState(setCurDepartment, 'section', '');
   };
 
   const closePersonnelDepartment = () => {
@@ -59,7 +61,7 @@ const PersonnelBusinessPopup = ({
               <input
                 type='text'
                 placeholder='부서명을 입력해주세요.'
-                value={curDepartment?.section}
+                value={curDepartment?.section ? curDepartment?.section : ''}
                 onChange={e =>
                   changeState(setCurDepartment, 'section', e.target.value)
                 }
