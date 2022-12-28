@@ -42,14 +42,8 @@ class ReportOut(BaseModel):
 class ReportCreate(BaseModel):
     title: str
     content: str
-    created_id: str # current_user id 자동으로 가져와야함.
 
 
 class ReportUpdate(BaseModel):
     title: str
     content: str
-    # created_id: str
-
-
-# class ReportDelete(BaseModel):
-#     report_id: int

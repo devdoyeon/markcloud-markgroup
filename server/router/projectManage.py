@@ -14,36 +14,41 @@ router_project = APIRouter(
     tags=["Project Manage API"]
 )
 
-# 프로젝트 관련 데이터 
-@router_project.get('/read',response_model = Response[List[ProjectManageOut]])
+# 프로젝트 관련 데이터
+@router_project.post('/read',response_model = Response[List[ProjectManageOut]])
 @author_chk.varify_access_token
 @author_chk.user_chk
 def read_projects(
     access_token: str = Header(None),
+    inbound_filter: Optional[ProjectManageFilter] = None,
     user_pk: int = None,
     user_info:str = None,
-    project_name: Optional[str] = None,
-    status_filter:str = "MyProject",
+    status_filter : Optional[ProjectManageStatusFilter] = 'MyProject',
     page: int = 1,
     limit: int = 10,
     db:Session = Depends(get_db)
 ):
-    
+    # 관리자 확인
+    if status_filter.value == 'All':
+        if user_info.groupware_only_yn == 'Y':
+            raise HTTPException(status_code=422, detail = 'InValidClient')
+        
     try:
         offset = (page - 1) * limit
-        total_count, project_list = get_project_list(db, offset, limit, user_info, status_filter) # 나의 업무현황 데이터
+        total_count, project_list = get_project_list(db, offset, limit, user_info, status_filter, inbound_filter) # 업무현황 데이터
         total_page = total_count // limit
         
 
         if total_count % limit != 0:
             total_page += 1
+            
         all_project_name = get_project_name(db,user_info) # 전체 프로젝트명 
-        project_member = get_project_member(db,project_name) # 요청자 & 담당자
-    
-        
+        project_member = get_project_member(db,user_info, inbound_filter) # 요청자 & 담당자
+
         return Response().metadata(
             project_name = all_project_name,
             project_member = project_member,
+            total_count = total_count,
             page=page,
             totalPage=total_page,
             offset=offset,
@@ -53,41 +58,8 @@ def read_projects(
     except:
         raise HTTPException(status_code=500, detail='ReadPjtError')
 
-
-# 프로젝트 필터 
-@router_project.post('/filter_read', response_model = Response[List[ProjectManageOut]])
-@author_chk.varify_access_token
-@author_chk.user_chk
-def read_project_list(
-    access_token: str = Header(None),
-    filter_data: Optional[ProjectManageFilter] = None,
-    status_filter: Optional[ProjectManageStatusFilter] = 'MyProject',
-    user_pk: int = None,
-    user_info:str= None,
-    page: int = 1,
-    limit: int = 10,
-    db: Session = Depends(get_db)
-):
-    try:
-        offset = (page - 1) * limit
-        total_count, project_list = get_project_list(db, offset, limit, user_info ,status_filter, filter_data)
-        total_page = total_count // limit
-
-        
-        if total_count % limit != 0:
-            total_page += 1
-        
-        return Response().metadata(
-            page=page,
-            totalPage=total_page,
-            offset=offset,
-            limit=limit
-        ).success_response(project_list)
-    except:
-        raise HTTPException(status_code=500, detail='ReadPjtFilterError')
-    
 # 프로젝트 상세페이지
-@router_project.get('/info', response_model = ProjectManageOut)
+@router_project.get('/info', response_model = List[ProjectManageOut])
 @author_chk.varify_access_token
 @author_chk.user_chk
 def read_project_info(
@@ -98,14 +70,14 @@ def read_project_info(
     db: Session = Depends(get_db)
 ):
     try:
-        result = get_project_info(db,project_id,user_info)
-        return result
+        return get_project_info(db,project_id,user_info)
     except:
         raise HTTPException(status_code=500, detail='ReadPjtInfoError')
     
 # 프로젝트 생성
 @router_project.post('/create')
 @author_chk.varify_access_token
+@author_chk.user_chk
 def create_project(
     inbound_data: ProjectManageIn,
     access_token: str = Header(None),

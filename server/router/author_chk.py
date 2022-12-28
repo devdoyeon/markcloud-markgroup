@@ -17,9 +17,11 @@ def varify_access_token(f):
     @wraps(f)
     def decode(*args, **kwargs):
         access_token = kwargs['access_token']
+
         try:
             access_payload = jwt.decode(access_token,SECRET_KEY, algorithms=SECURITY_ALGORITHM)
             kwargs['user_pk'] = access_payload['user_pk']
+            
 
         # 토큰만료
         except jwt.ExpiredSignatureError:
@@ -37,13 +39,6 @@ def varify_access_token(f):
             raise HTTPException(status_code=499, detail='Invalid Token Format')
         return f(*args, **kwargs)
     return decode
-
-# def get_user_info(db, user_pk):
-#     member_table = memberManageModel.MemberTable
-#     try: 
-#         return db.query(member_table).filter(member_table.id == user_pk).first()
-#     except:
-#         HTTPException(status_code=500, detail='DBError')
         
 def user_chk(f):
     @wraps(f)
@@ -61,5 +56,15 @@ def user_chk(f):
         return f(*args, **kwargs)
     return get_user_info
         
+
+
+def get_user_info(db, user_pk):
+    member_table = memberManageModel.MemberTable
+    try: 
+        return db.query(member_table).filter(member_table.id == user_pk).first()
+    except:
+        HTTPException(status_code=500, detail='DBError')
+
+
 def get_hashed_password(password: str):
     return pwd_context.hash(password)

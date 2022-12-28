@@ -40,7 +40,7 @@ class Memberinfo(BaseModel):
     name:str
     gender:str
     birthday:date
-    section:str
+    section:Optional[str]
     phone:str
     email:str
     address:str

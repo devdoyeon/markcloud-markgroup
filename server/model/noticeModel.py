@@ -12,6 +12,6 @@ class NoticeTable(Base):
     title = Column(VARCHAR(50), nullable = False)
     content = Column(TEXT, nullable = False)
     created_at = Column(DateTime, default=datetime.today(), nullable = False)
-    created_id = Column(VARCHAR(30), nullable = False)
+    created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime, default=datetime.today(), nullable = False)
-    updated_id = Column(VARCHAR(30), default =created_id, nullable = False)
+    updated_id = Column(BigInteger, default =created_id, nullable = False)

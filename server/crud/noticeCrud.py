@@ -92,7 +92,7 @@ def remove_notice(db,notice_id, user_info):
     try:          
         base_q = db.query(notice_table).filter(notice_table.id == notice_id)
         
-        if user_info.id == int(base_q.first().created_id) or user_info.groupware_only_yn == 'N':
+        if user_info.id == base_q.first().created_id or user_info.groupware_only_yn == 'N':
             base_q.delete()
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')

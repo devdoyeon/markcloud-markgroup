@@ -79,7 +79,7 @@ def remove_department(db, department_id, user_info):
     try:
         db.query(department_table
                 ).filter(department_table.id == department_id
-                ).filter(department_table.organ_code == user_info.id
+                ).filter(department_table.organ_code == user_info.department_code
                 ).delete()
     except:
         raise HTTPException(status_code=500, detail='RemoveDpError')
@@ -91,13 +91,14 @@ def get_member_list(db, offset,limit, user_info):
     member_table = memberManageModel.MemberTable
     
     try:
-        query = db.query(member_table).filter(member_table.department_code == user_info.department_code).order_by(member_table.id)
+        query = db.query(member_table
+                ).filter(member_table.department_code == user_info.department_code
+                ).filter(member_table.is_active == 1
+                ).order_by(member_table.id)
         
         total_count = query.count()
         member_list = query.offset(offset).limit(limit).all()
-        print(member_list[1].section)
-                
-        
+
         return total_count, member_list
     except:
         raise HTTPException(status_code=500, detail='GetMbError')
@@ -173,8 +174,8 @@ def remove_member(db,member_id):
     member_table = memberManageModel.MemberTable
 
     try:
-        db.query(member_table).filter(member_table.id == member_id).delete()
-    except Exception as e:
-        print(e)
+        values = {'is_active': 0}
+        db.query(member_table).filter(member_table.id == member_id).update(values)
+    except:
         raise HTTPException(status_code=500, detail='RemoveMbError')            
     

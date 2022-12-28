@@ -22,9 +22,9 @@ class DepartmentTable(Base):
     organ_code = Column(VARCHAR(14), nullable = False)
     department_name = Column(VARCHAR(50), nullable = False)
     created_at = Column(DateTime, default=datetime.today(),nullable = False)
-    created_id = Column(VARCHAR(30), nullable = False)
+    created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime, default=datetime.today(),nullable = False)
-    updated_id = Column(VARCHAR(30), default = created_id, nullable = False)
+    updated_id = Column(BigInteger, default = created_id, nullable = False)
     
     
 class MemberTable(Base):
