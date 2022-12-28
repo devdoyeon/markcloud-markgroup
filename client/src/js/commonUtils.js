@@ -20,6 +20,7 @@ export const errorList = {
     '유료 결제가 필요한 서비스입니다.<br/>요금제 안내 페이지로 이동하시겠습니까?',
   serviceExpired: '서비스 사용 기간이 만료되었습니다.',
   alreadyProjectName: '이미 있는 프로젝트 이름입니다.',
+  alreadyUsedProject: '업무 관리에 등록되어 있는 프로젝트입니다.<br/>프로젝트를 삭제할 수 없습니다.'
 };
 
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
@@ -30,7 +31,8 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     result === 'tokenExpired' ||
     result === 'loginExceeded' ||
     result === 'serviceExpired' ||
-    result === 'alreadyProjectName'
+    result === 'alreadyProjectName' ||
+    result === 'alreadyUsedProject'
   ) {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
