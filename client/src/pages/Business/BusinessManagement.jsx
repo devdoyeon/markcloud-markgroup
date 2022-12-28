@@ -77,13 +77,15 @@ const BusinessManagement = () => {
       setList(data);
       setMetaData(meta);
       if (projectName.length === 1) {
-        setProjectName(prev => {
-          const clone = [...prev];
-          meta?.project_name.forEach(name => {
-            clone.push(name);
-          });
-          return clone;
-        });
+        console.log(projectName.length);
+        // setProjectName(prev => {
+        //   const clone = [...prev, ...meta?.project_name];
+        //   // meta?.project_name.forEach(name => {
+        //   //   clone.push(name);
+        //   // });
+        //   return clone;
+        // });
+        setProjectName(['선택', ...meta?.project_name]);
       }
       // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
@@ -169,7 +171,7 @@ const BusinessManagement = () => {
         getBusinessReadApi();
       }
     }
-  }, [pageInfo.page]);
+  }, [pageInfo.page, postInfo.project_name]);
 
   useEffect(() => {
     if (getCookie('myToken')) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Pagination from 'common/Pagination';
 import SideMenu from 'common/SideMenu';
 import { addHypen, changeTitle } from 'js/commonUtils';
@@ -14,7 +14,7 @@ import { getCookie } from 'js/cookie';
 const PersonnelManagement = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [departmentMeta, setDepartmentMeta] = useState({});
-  const [curDepartment, setCurDepartment] = useState({});
+  const [curDepartment, setCurDepartment] = useState('');
   const [departmentPageInfo, setDepartmentPageInfo] = useState({
     page: 1,
     totalPage: 0,
@@ -35,8 +35,6 @@ const PersonnelManagement = () => {
   useEffect(() => {
     changeTitle('그룹웨어 > 인사 관리');
   }, []);
-  const path = useLocation().pathname;
-  const { id } = useParams();
   const navigate = useNavigate();
 
   let prevent = false;
@@ -47,11 +45,14 @@ const PersonnelManagement = () => {
     prevent = true;
     setTimeout(() => {
       prevent = false;
-    }, 200);
+    }, 300);
     const result = await getDepartmentList(departmentPageInfo);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
-      setDepartmentList(data);
+      setDepartmentList(prev => {
+        const clone = [...data];
+        return clone;
+      });
       setDepartmentMeta(meta);
       setDepartmentPageInfo(prev => {
         const clone = { ...prev };
@@ -87,6 +88,7 @@ const PersonnelManagement = () => {
       });
     }
   };
+  console.log(manageList);
   const renderTable = () => {
     return manageList?.reduce(
       (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {
@@ -110,16 +112,14 @@ const PersonnelManagement = () => {
   };
 
   useEffect(() => {
-    if (!popup && getCookie('myToken')) getPersonDepartmentApi();
-  }, [departmentPageInfo.page, popup]);
+    if (!popup && getCookie('myToken')) {
+      getPersonDepartmentApi();
+    }
+  }, [popup, departmentPageInfo.page]);
 
   useEffect(() => {
     if (getCookie('myToken')) getPersonMemberApi();
   }, [managePageInfo.page]);
-
-  // useEffect(() => {
-  //   getPersonDepartmentApi();
-  // }, [departmentList]);
 
   return (
     <>
@@ -148,7 +148,7 @@ const PersonnelManagement = () => {
                       }}>
                       <div className='date-num'>
                         <span>
-                          [{(departmentPageInfo.page - 1) * 5 + idx + 1}]
+                          [{(departmentPageInfo.page - 1) * 6 + idx + 1}]
                         </span>
                         <span>{cur.created_at}</span>
                       </div>

@@ -1,38 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import {
-  changeState,
-  commonModalSetting,
-  catchError,
-  changeTitle,
-} from 'js/commonUtils';
+import { catchError, changeTitle } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
-import CommonSelect from 'common/CommonSelect';
 import { getBusinessInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import {
-  getBoardDetail,
-  createBoard,
-  editBoard,
-  editNotice,
-  getNoticeInfo,
-  createNotice,
-} from 'js/groupwareApi';
 
 const BusinessBoardRead = () => {
   const [alert, setAlert] = useState('');
-  const [list, setList] = useState([]);
-  const [meta, setMeta] = useState({});
-  const [postInfo, setPostInfo] = useState({
-    project_name: '==',
-    title: '',
-    content: '',
-    work_status: '==',
-    request_id: '==',
-    manager_id: '==',
-  });
   const [alertBox, setAlertBox] = useState({
     mode: '',
     content: '',
@@ -40,41 +15,15 @@ const BusinessBoardRead = () => {
   });
   const [info, setInfo] = useState({});
 
-  const progressArr = ['요청', '접수', '진행', '완료'];
-
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
-
-  let prevent = false;
-
-  // const getDetail = async () => {
-  //   if (prevent) return;
-  //   prevent = false;
-  //   setTimeout(() => {
-  //     prevent = true;
-  //   }, 200);
-  //   const result = await getBusinessInfo(id);
-  //   console.log(result);
-  //   if (typeof result === 'object') {
-  //     setInfo(result?.data);
-  //     document.querySelector('.content').innerHTML =
-  //       new DOMParser().parseFromString(
-  //         result?.data?.content,
-  //         'text/html'
-  //       ).body.innerHTML;
-  //   } else {
-  //     catchError(result, navigate, setAlertBox, setAlert);
-  //     //에러핸들링
-  //   }
-  // };
 
   const getBusinessDetail = async () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
-      console.log(result);
       setInfo(result?.data[0]);
       document.querySelector('.edit').innerHTML =
         new DOMParser().parseFromString(
@@ -94,15 +43,7 @@ const BusinessBoardRead = () => {
     if (getCookie('myToken')) if (id?.length) getBusinessDetail();
   }, []);
 
-  const {
-    created_at,
-    manager_id,
-    project_name,
-    request_id,
-    title,
-    work_end_date,
-    work_status,
-  } = info;
+  const { manager_id, project_name, request_id, title, work_status } = info;
 
   return (
     <>
@@ -126,12 +67,10 @@ const BusinessBoardRead = () => {
                 <span>요청자</span>
                 <div>{request_id}</div>
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
                 <div>{manager_id}</div>
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>진행상태</span>
                 <div>{work_status}</div>
@@ -143,13 +82,7 @@ const BusinessBoardRead = () => {
                 <div className='input-read'>{title}</div>
               </div>
             </div>
-            <div className='edit'>
-              {/* <EditorComponent
-                content={postInfo.content}
-                setContent={setPostInfo}
-                col='content'
-              /> */}
-            </div>
+            <div className='edit'>{/* HTML PARSER 로 데이터 표시 */}</div>
           </div>
           <div className='btn-wrap'>
             <button
