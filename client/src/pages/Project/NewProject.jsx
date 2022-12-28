@@ -48,7 +48,7 @@ const NewProject = () => {
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert)
   };
 
   //= 수정일 때 기존 디테일 불러오기
@@ -125,7 +125,7 @@ const NewProject = () => {
     if (typeof result === 'object') {
       setAlert('completeDelete');
       commonModalSetting(setAlertBox, true, 'alert', `삭제되었습니다.`);
-    }
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -296,7 +296,8 @@ const NewProject = () => {
               alert === 'completeEdit'
             )
               navigate('/project');
-            else if (alert === 'notAuthority') navigate(`/project/${id}`);
+            else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
+              navigate(`/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/sign-in');
