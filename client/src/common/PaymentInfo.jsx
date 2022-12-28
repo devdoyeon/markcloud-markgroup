@@ -102,7 +102,7 @@ const PaymentInfo = memo(({ curData }) => {
         },
         vbank_due: dueDate(), //가상계좌 입금기한(입금기한 설정되면 사용자가 수정 불가)
       },
-      async function (rsp) {
+      async rsp => {
         //callback
         if (rsp.success) {
           // 결제 성공 시 로직
