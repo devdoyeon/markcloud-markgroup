@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
 import CommonSiteMap from 'common/CommonSiteMap';
-import { signIn } from 'js/groupwareApi';
+import { signIn, checkPoint } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import {
   catchError,
@@ -50,6 +50,17 @@ const SignIn = () => {
     setFormCheck(obj);
   };
 
+  const checkUser = async () => {
+    const result = await checkPoint();
+    if (
+      result?.data?.status?.code === 301 ||
+      result?.data?.status?.code === 201
+    )
+      localStorage.setItem('yn', 'n');
+    else if (result?.data?.status?.code === 302)
+      localStorage.setItem('yn', 'y');
+  };
+
   const login = async () => {
     //@ 아이디, 비밀번호 Input이 비어 있는지 확인
     if (!emptyCheck(userInfo.id) && !emptyCheck(userInfo.pw))
@@ -68,6 +79,7 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
+      checkUser();
       navigate('/');
     } else {
       //@ Error Handling

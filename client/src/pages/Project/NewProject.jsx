@@ -136,24 +136,25 @@ const NewProject = () => {
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken'))
+    if (getCookie('myToken')) {
       changeState(setProjectInfo, 'project_status', selectVal);
-    let kor = selectVal;
-    switch (kor) {
-      case '전체':
-        setSelectVal('all');
-        break;
-      case '시작 전':
-        setSelectVal('before');
-        break;
-      case '진행 중':
-        setSelectVal('progress');
-        break;
-      case '종료':
-        setSelectVal('complete');
-        break;
-      default:
-        return;
+      let kor = selectVal;
+      switch (kor) {
+        case '전체':
+          setSelectVal('all');
+          break;
+        case '시작 전':
+          setSelectVal('before');
+          break;
+        case '진행 중':
+          setSelectVal('progress');
+          break;
+        case '종료':
+          setSelectVal('complete');
+          break;
+        default:
+          return;
+      }
     }
   }, [selectVal]);
 

@@ -26,6 +26,7 @@ export const apiErrorHandling = async error => {
       else if (detail === 'Payment Required') return 'paymentRequired';
       else if (detail === 'Service Expired, please contact to your manager')
         return 'serviceExpired';
+      else if (detail === 'AlreadyProjectName') return 'alreadyProjectName';
       break;
     case 404:
       return 'notFound';

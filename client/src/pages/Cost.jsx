@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
 import CommonFooter from 'common/CommonFooter';
@@ -48,7 +48,14 @@ const Cost = () => {
                         'alert',
                         '로그인이 필요한 서비스입니다.'
                       );
-                    } else
+                    } else if (localStorage.getItem('yn') === 'y')
+                      commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'alert',
+                        '사용자 계정은 결제가 불가합니다.'
+                      );
+                    else
                       navigate('/payment', {
                         state: {
                           merchant_code: 'MV180',
@@ -84,7 +91,14 @@ const Cost = () => {
                         'alert',
                         '로그인이 필요한 서비스입니다.'
                       );
-                    } else
+                    } else if (localStorage.getItem('yn') === 'y')
+                      commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'alert',
+                        '사용자 계정은 결제가 불가합니다.'
+                      );
+                    else
                       navigate('/payment', {
                         state: {
                           merchant_code: 'MV365',
@@ -106,7 +120,7 @@ const Cost = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') navigate('/sign-in')
+            if (alert === 'needLogin') navigate('/sign-in');
             else return;
           }}
         />
