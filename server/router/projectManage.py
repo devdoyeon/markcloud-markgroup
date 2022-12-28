@@ -31,7 +31,7 @@ def read_projects(
     # 관리자 확인
     if status_filter.value == 'All':
         if user_info.groupware_only_yn == 'Y':
-            raise HTTPException(status_code=422, detail = 'InValidClient')
+            raise HTTPException(status_code=422, detail = 'NotAdmin')
         
     try:
         offset = (page - 1) * limit

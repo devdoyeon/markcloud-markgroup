@@ -13,9 +13,13 @@ def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
 
     try:
               
-        query = db.query(notice_table.id, notice_table.created_at, member_table.name.label('created_id'), notice_table.title).filter(
-            notice_table.organ_code == user_info.department_code).join(
-            member_table, notice_table.created_id == member_table.id).order_by(desc(notice_table.id))
+        query = db.query(notice_table.id,
+                        notice_table.created_at,
+                        member_table.name.label('created_id'),
+                        notice_table.title
+                        ).filter(notice_table.organ_code == user_info.department_code
+                        ).join(member_table, notice_table.created_id == member_table.id
+                        ).order_by(desc(notice_table.id))
 
         # 필터 O
         if filter_type:    
@@ -23,11 +27,11 @@ def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
                 query = query.filter(notice_table.title.ilike(f'%{filter_val}%'))
 
             elif filter_type == 'created_id':
-
                 query = query.filter(member_table.name.ilike(f'%{filter_val}%'))
         
         notice_count = query.count()
         notice_list = query.offset(offset).limit(limit).all()
+        
         return notice_count, notice_list
     
     except:
@@ -41,7 +45,8 @@ def get_notice_info(db, notice_id, user_info):
      
     try:
         
-        notice_info = db.query(notice_table.title,notice_table.created_at, notice_table.updated_at, notice_table.content, member_table.name.label('created_id')
+        notice_info = db.query(notice_table.title,notice_table.created_at,
+                            notice_table.updated_at, notice_table.content, member_table.name.label('created_id')
                                 ).filter(notice_table.id == notice_id
                                 ).filter(notice_table.organ_code == user_info.department_code
                                 ).join(member_table,notice_table.created_id == member_table.id
