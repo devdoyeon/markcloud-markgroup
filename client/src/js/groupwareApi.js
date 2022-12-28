@@ -24,20 +24,16 @@ export const apiErrorHandling = async error => {
       else if (detail.includes(`Invaild Password`)) return `wrongPw`;
       else if (detail === 'Logins Exceeded') return 'loginExceeded';
       else if (detail === 'Payment Required') return 'paymentRequired';
-      else if (detail === 'Service Expired, please contact to your manager')
-        return 'serviceExpired';
+      else if (detail.includes('Service Expired')) return 'serviceExpired';
       else if (detail === 'AlreadyProjectName') return 'alreadyProjectName';
-      else if (detail === 'AlreadyUsedProject') return 'alreadyUsedProject'
+      else if (detail === 'AlreadyUsedProject') return 'alreadyUsedProject';
       break;
     case 404:
       return 'notFound';
     case 422:
-      switch (detail) {
-        case 'InvalidClient':
-          return 'NotAuthority';
-        default:
-          return '';
-      }
+      if (detail === 'InvalidClient' || detail === 'notAdmin')
+        return 'notAuthority';
+      break;
     case 500:
     case 501:
     case 504:
