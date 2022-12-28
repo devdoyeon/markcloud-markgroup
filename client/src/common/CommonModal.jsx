@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
-import { commonModalSetting } from 'js/commonUtils';
+import { commonModalSetting, text2html } from 'js/commonUtils';
 
 const CommonModal = ({ setModal, modal, okFn }) => {
   useEffect(() => {
     if (modal.content === undefined || modal.content === 'undefined')
       setModal(false);
-    document.querySelector('.alert-content').innerHTML =
-      new DOMParser().parseFromString(
-        modal.content,
-        'text/html'
-      ).body.innerHTML;
+    text2html('.alert-content', modal.content);
     // 줄바꿈 태그 <br/> 사용하기 위해서 String2DOM 변환
   }, []);
 
