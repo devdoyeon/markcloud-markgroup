@@ -12,7 +12,6 @@ def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
     member_table = memberManageModel.MemberTable
 
     try:
-              
         query = db.query(notice_table.id,
                         notice_table.created_at,
                         member_table.name.label('created_id'),
@@ -66,6 +65,7 @@ def insert_notice(db,inbound_data,user_info):
             content=inbound_data.content,
             created_id=user_info.id)
         db.add(db_query)
+        
     except:
         raise HTTPException(status_code=500, detail='InsertNtError')
 

@@ -37,7 +37,6 @@ def read_projects(
         offset = (page - 1) * limit
         total_count, project_list = get_project_list(db, offset, limit, user_info, status_filter, inbound_filter) # 업무현황 데이터
         total_page = total_count // limit
-        
 
         if total_count % limit != 0:
             total_page += 1

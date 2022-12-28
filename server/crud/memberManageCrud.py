@@ -46,13 +46,18 @@ def insert_department(db, inbound_data, user_info):
     department_table = memberManageModel.DepartmentTable
 
     try:
-        db_query = department_table(
-        department_name=inbound_data.department_name,
-        organ_code = user_info.department_code,
-        created_id = user_info.id)
         
-        db.add(db_query)
-
+        dp_chk = db.query(department_table).filter(department_table.department_name == inbound_data.department_name).first()
+        
+        if dp_chk:
+            return 500
+        else:
+            db_query = department_table(
+            department_name=inbound_data.department_name,
+            organ_code = user_info.department_code,
+            created_id = user_info.id)
+            
+            db.add(db_query)
     except:
         raise HTTPException(status_code=500, detail='InsertDpError')
     

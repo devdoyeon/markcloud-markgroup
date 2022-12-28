@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-
+import time
 
 from database import *
 from crud.memberManageCrud import *
@@ -83,9 +83,11 @@ def create_department(
 ):
     if user_info.groupware_only_yn == 'N':
         try:
-            insert_department(db, inbound_data, user_info)
+            result = insert_department(db, inbound_data, user_info)
         except:
             raise HTTPException(status_code=500, detail='CreateDpError')
+        if result == 500:
+            raise HTTPException(status_code=500, detail='DuplicatedDpError')   
     else:
         raise HTTPException(status_code=422, detail='NotAdmin')
             

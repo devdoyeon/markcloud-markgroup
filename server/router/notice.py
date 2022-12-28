@@ -47,8 +47,6 @@ def read_notice_list(
     except:
         raise HTTPException(status_code=500, detail='ReadNtError')
 
-
-
 # 공지 상세페이지
 @router_notice.get('/info',response_model = NoticeInfo)
 @author_chk.varify_access_token

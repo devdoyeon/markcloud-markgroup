@@ -21,7 +21,6 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
             WHERE project_name = "{inbound_filter.project_name}")) 
             '''
             project_member = db.execute(p_member_query).fetchall() 
-
         else: # 기본
             project_member = db.query(member_table.id,
                                   member_table.name,
@@ -51,7 +50,6 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
             WHERE project_code = ANY(SELECT project_code 
             FROM groupware_project_members WHERE user_id = "{user_info.user_id}")
             '''
-            
             all_pjt_name = db.execute(p_name_query).fetchall()
         all_pjt_name = [name for name, in all_pjt_name] 
         return all_pjt_name
@@ -59,25 +57,8 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
         raise HTTPException(status_code=500, detail='GetPjtNmError')            
     
 def get_project_list(db, offset, limit, user_info, *filter):
-
-    # project_manage_table = projectManageModel.ProjectManageTable
-    # project_table = projectManageModel.ProjectTable
     
-    try:    
-        # query = db.query(project_manage_table.id,
-        #                 project_manage_table.title,
-        #                 project_table.project_name,
-        #                 project_manage_table.content,
-        #                 project_manage_table.request_id,
-        #                 project_manage_table.manager_id,
-        #                 project_manage_table.work_status,
-        #                 project_manage_table.created_at,
-        #                 project_manage_table.work_end_date
-        #                 ).filter(project_table.organ_code==user_info.department_code
-        #                 ).join(member_table, member_table.id == project_manage_table.request_id
-        #                 ).join(project_table, project_manage_table.project_code == project_table.project_code
-        #                 ).order_by(desc(project_manage_table.id))
-        
+    try:  
         query = f'''SELECT a.id,
                     a.title,
                     b.project_name,
@@ -93,7 +74,6 @@ def get_project_list(db, offset, limit, user_info, *filter):
                     WHERE b.organ_code = "{user_info.department_code}"
                     '''     
         
-        
         status_filter = filter[0].value
         project_name = filter[1].project_name
         manager_id = filter[1].manager_id
@@ -103,29 +83,21 @@ def get_project_list(db, offset, limit, user_info, *filter):
         progress_status = filter[1].progress_status
             
         if status_filter == 'MyProject':
-            # query = query.filter(project_manage_table.manager_id == user_info.id)
             query = query + f' AND a.manager_id = "{user_info.id}"'
         elif status_filter == 'MyRequest':
-            # query = query.filter(project_manage_table.request_id == user_info.id)
             query = query + f' AND a.request_id = "{user_info.id}"'
         if project_name:
-            # query = query.filter(project_table.project_name == project_name)
             query = query + f' AND b.project_name = "{project_name}"'
         if manager_id:
-            # query = query.filter(project_manage_table.manager_id == manager_id)
             query = query + f' AND a.manager_id = "{manager_id}"'
         if request_id:
-            # query = query.filter(project_manage_table.request_id == request_id)
             query = query + f' AND a.request_id = "{request_id}"'
         if title:
-            # query = query.filter(project_manage_table.title.ilike(f'%{title}%'))
             query = query + f' AND a.title LIKE "%{title}%"'
         if content:
-            # query = query.filter(project_manage_table.content.ilike(f'%{content}%'))
             query = query + f' AND a.content LIKE "%{content}%"'
             
         if len(progress_status) == 1: #
-            # query = query.filter(project_manage_table.work_status.in_(progress_status)) 
             query = query + f'AND a.work_status = "{progress_status[0]}" '   
         else: 
             query = query + f'AND a.work_status IN {tuple(progress_status)} '     
@@ -134,6 +106,7 @@ def get_project_list(db, offset, limit, user_info, *filter):
         
         query = query + f' ORDER BY a.id DESC LIMIT {limit} OFFSET {offset}'
         project_list = db.execute(query).fetchall()
+
 
         return project_count, project_list
     except:
@@ -144,19 +117,6 @@ def get_project_list(db, offset, limit, user_info, *filter):
 def get_project_info(db, project_id,user_info):
 
     try:
-        # project_info = db.query(project_manage_table.id,
-        #                 project_manage_table.title,
-        #                 project_manage_table.content,
-        #                 project_table.project_name,
-        #                 project_manage_table.request_id,
-        #                 project_manage_table.manager_id,
-        #                 project_manage_table.work_status,
-        #                 project_manage_table.created_at,
-        #                 project_manage_table.work_end_date
-        #                 ).filter(project_manage_table.id == project_id
-        #                 ).filter(project_manage_table.organ_code == user_info.department_code
-        #                 ).join(project_table, project_manage_table.project_code == project_table.project_code).order_by(desc(project_manage_table.id)).first()
-        
         query = f'''
                     SELECT 
                     a.id, 
