@@ -85,7 +85,7 @@ def update_post(
     db_post = db.query(BoardTable).filter(BoardTable.id == post_id).first()
     
     print(type(db_post.created_id))
-    if user_pk == int(db_post.created_id) or user_info.groupware_only_yn == 'N':
+    if user_pk == db_post.created_id or user_info.groupware_only_yn == 'N':
         db.query(BoardTable).filter_by(id = post_id).update(update_values)
     else:
         raise HTTPException(status_code=422, detail='InvalidClient')
@@ -97,7 +97,7 @@ def delete_post(db: Session, post_id: int, user_pk: int):
 
     db_post = db.query(BoardTable).filter(BoardTable.id == post_id)    
     
-    if user_pk == int(db_post.first().created_id) or user_info.groupware_only_yn == 'N':
+    if user_pk == db_post.first().created_id or user_info.groupware_only_yn == 'N':
         db_post.delete()
     else:
         raise HTTPException(status_code=422, detail='InvalidClient')

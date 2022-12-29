@@ -80,7 +80,7 @@ def update_report(db: Session, report_update: ReportUpdate, report_id: int, user
     
     db_report = db.query(BusinessReportTable).filter(BusinessReportTable.id == report_id).first()
     
-    if user_pk == int(db_report.created_id) or user_info.groupware_only_yn == 'N':
+    if user_pk == db_report.created_id or user_info.groupware_only_yn == 'N':
         db.query(BusinessReportTable).filter_by(id = report_id).update(update_values)
     else:
         raise HTTPException(status_code=422, detail='InvalidClient')
@@ -92,7 +92,7 @@ def delete_report(db: Session, report_id: int, user_pk: int):
 
     db_report = db.query(BusinessReportTable).filter(BusinessReportTable.id == report_id)    
     
-    if user_pk == int(db_report.first().created_id) or user_info.groupware_only_yn == 'N':
+    if user_pk == db_report.first().created_id or user_info.groupware_only_yn == 'N':
         db_report.delete()
     else:
         raise HTTPException(status_code=422, detail='InvalidClient')
