@@ -88,7 +88,6 @@ const PersonnelManagement = () => {
       });
     }
   };
-  console.log(manageList);
   const renderTable = () => {
     return manageList?.reduce(
       (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {
@@ -112,10 +111,8 @@ const PersonnelManagement = () => {
   };
 
   useEffect(() => {
-    if (!popup && getCookie('myToken')) {
-      getPersonDepartmentApi();
-    }
-  }, [popup, departmentPageInfo.page]);
+    if (getCookie('myToken')) getPersonDepartmentApi();
+  }, [departmentPageInfo.page]);
 
   useEffect(() => {
     if (getCookie('myToken')) getPersonMemberApi();
@@ -219,6 +216,8 @@ const PersonnelManagement = () => {
           setButtonControl={setButtonControl}
           curDepartment={curDepartment}
           setCurDepartment={setCurDepartment}
+          getPersonDepartmentApi={getPersonDepartmentApi}
+          departmentList={departmentList}
         />
       )}
     </>

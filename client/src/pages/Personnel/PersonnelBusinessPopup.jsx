@@ -17,6 +17,8 @@ const PersonnelBusinessPopup = ({
   setButtonControl,
   curDepartment,
   setCurDepartment,
+  getPersonDepartmentApi,
+  departmentList,
 }) => {
   const navigate = useNavigate();
   const [alert, setAlert] = useState('');
@@ -25,21 +27,37 @@ const PersonnelBusinessPopup = ({
     content: '',
     bool: false,
   });
-  const cookie = getCookie('myToken');
+  const projectName = [];
+  if (departmentList.length > 0) {
+    departmentList?.forEach(ele => {
+      projectName.push(ele.section);
+    });
+  }
 
   const createPersonnelDepartment = async () => {
-    const create = await getDepartmentCreate(curDepartment?.section);
-    changeState(setCurDepartment, 'section', '');
+    if (curDepartment?.section.trim() !== '') {
+      const create = await getDepartmentCreate(curDepartment?.section);
+      if (typeof create === 'object') {
+        changeState(setCurDepartment, 'section', '');
+        getPersonDepartmentApi();
+      }
+    }
   };
 
   const updatePersonnelDepartment = async () => {
     const curData = await getDepartmentUpdate(curDepartment);
-    changeState(setCurDepartment, 'section', '');
+    if (typeof curData === 'object') {
+      getPersonDepartmentApi();
+      changeState(setCurDepartment, 'section', '');
+    }
   };
 
   const deletePersonnelDepartment = async () => {
     const del = await getDepartmentDelete(curDepartment?.id);
-    changeState(setCurDepartment, 'section', '');
+    if (typeof del === 'object') {
+      getPersonDepartmentApi();
+      changeState(setCurDepartment, 'section', '');
+    }
   };
 
   const closePersonnelDepartment = () => {

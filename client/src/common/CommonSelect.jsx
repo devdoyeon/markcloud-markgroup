@@ -1,15 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
+import { useNavigate } from 'react-router-dom';
 
-const CommonSelect = ({
-  opt,
-  selectVal,
-  setSelectVal,
-  postInfo,
-  pathname,
-  filter,
-  person,
-}) => {
+const CommonSelect = ({ opt, selectVal, setSelectVal, pathname, postInfo }) => {
   const [select, setSelect] = useState('off');
 
   /*
@@ -17,7 +10,6 @@ const CommonSelect = ({
     & opt => type(Array) => 선택 옵션
     = useState[selectVal, setSelectVal] => type(String) => 선택된 값
   */
-
   const changeSelectVal = () => {
     switch (selectVal) {
       case 'created_id':
@@ -25,17 +17,23 @@ const CommonSelect = ({
       case 'title':
         return '제목';
       case 'all':
-        return '전체'
+        return '전체';
       case 'before':
-        return '시작 전'
+        return '시작 전';
       case 'progress':
-        return '진행 중'
+        return '진행 중';
       case 'complete':
-        return '종료'
+        return '종료';
       default:
         return selectVal;
     }
   };
+
+  useEffect(() => {
+    if (pathname === 'business') {
+      setSelect('off');
+    }
+  }, [postInfo.status_filter]);
 
   return (
     <div className={`selectBox ${select}`}>
@@ -44,7 +42,7 @@ const CommonSelect = ({
         onClick={() => {
           select === 'on' ? setSelect('off') : setSelect('on');
         }}>
-        {changeSelectVal()}
+        <span>{changeSelectVal()}</span>
         <img src={selectArrow} alt='선택 아이콘' />
       </div>
       {select === 'on' && (

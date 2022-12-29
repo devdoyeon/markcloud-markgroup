@@ -47,10 +47,10 @@ const BusinessManagement = () => {
   const [requesterValue, setRequesterValue] = useState(
     localStorage.getItem('userName')
   );
-  const [memberKey, setMemberKey] = useState([]);
-  const [memberName, setMemberName] = useState([]);
+  const [memberKey, setMemberKey] = useState(['선택']);
+  const [memberValueName, setMemberValueName] = useState([]);
   const [projectName, setProjectName] = useState(['선택']);
-  const [requestName, setRequestName] = useState(['선택']);
+  const [memberName, setMemberName] = useState(['선택']);
   const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
@@ -58,6 +58,7 @@ const BusinessManagement = () => {
   const pathname = path.split('/')[1];
 
   let prevent = false;
+  let dropBool = true;
 
   const getBusinessReadApi = async () => {
     if (prevent) return;
@@ -72,22 +73,17 @@ const BusinessManagement = () => {
       // key : 키 value : 멤버이름
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
-      setMemberKey(key);
-      setMemberName(value);
+      setMemberKey(['선택', ...key]);
+      setMemberValueName(value);
       setList(data);
       setMetaData(meta);
       if (projectName.length === 1) {
-        console.log(projectName.length);
-        // setProjectName(prev => {
-        //   const clone = [...prev, ...meta?.project_name];
-        //   // meta?.project_name.forEach(name => {
-        //   //   clone.push(name);
-        //   // });
-        //   return clone;
-        // });
         setProjectName(['선택', ...meta?.project_name]);
       }
-      // changeState(setPostInfo, 'project_name', projectValue);
+      console.log(memberValueName.length);
+      if (memberName.length === 1) {
+        setMemberName(['선택', ...value]);
+      }
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -97,9 +93,12 @@ const BusinessManagement = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  const searchStart = async () => {
-    // 여기 밑에서 api 요청
-    await getBusinessReadApi();
+  const searchStart = () => {
+    getBusinessReadApi();
+  };
+
+  const handleDataClear = () => {
+    window.location.reload();
   };
 
   const renderTable = () => {
@@ -349,6 +348,8 @@ const BusinessManagement = () => {
                   opt={projectName && projectName}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
+                  pathname={pathname}
+                  postInfo={postInfo}
                 />
               </div>
               {/* ============================= */}
@@ -512,7 +513,11 @@ const BusinessManagement = () => {
                   onClick={() => searchStart()}>
                   검색
                 </button>
-                <button className='commonBtn clear'>초기화</button>
+                <button
+                  className='commonBtn clear'
+                  onClick={() => handleDataClear()}>
+                  초기화
+                </button>
               </div>
             </div>
           </div>
