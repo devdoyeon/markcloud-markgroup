@@ -73,6 +73,7 @@ const PaymentInfo = memo(({ curData }) => {
     const result = await createMID(data);
     if (typeof result === 'object') {
       paymentParams = result?.data?.data;
+      paymentParams.name = paymentParams.name.replace('마크뷰', '마크그룹웨어');
       bool = true;
       if (bool) requestPay();
     } else return catchError(result, navigate, setAlertBox, setAlert);
