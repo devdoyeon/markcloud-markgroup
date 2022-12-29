@@ -116,6 +116,7 @@ const PersonnelMember = () => {
     }
   };
   const createMember = async () => {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //유효성 검사
     if (inputRef.current[0].value === '') {
       return commonModalSetting(
@@ -123,6 +124,13 @@ const PersonnelMember = () => {
         true,
         'alert',
         '아이디를 입력하지 않았습니다.'
+      );
+    } else if (korean.test(inputRef.current[0].value)) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디에 한글을 포함할 수 없습니다.'
       );
     } else if (inputRef.current[1].value === '') {
       return commonModalSetting(
@@ -198,8 +206,21 @@ const PersonnelMember = () => {
   // -- 아이디 중복체크
   const duplicateId = async () => {
     if (!(await regularExpression('id', memberInfo.user_id))) {
-      setAlert('incorrect_id');
-      return;
+      if (inputRef.current[0].value.length < 4) {
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '아이디의 길이는 4~30 입니다.'
+        );
+      } else {
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '아이디에 한글을 포함할 수 없습니다.'
+        );
+      }
     }
     const param = { user_id: memberInfo.user_id.trim() };
     const headers = {
@@ -333,11 +354,18 @@ const PersonnelMember = () => {
                       중복체크
                     </button>
                     <span className={idCheck === false ? 'red' : 'blue'}>
-                      {idCheck === undefined
+                      {inputRef.current[0]?.value === ''
+                        ? ''
+                        : idCheck === undefined
                         ? ''
                         : idCheck === false
                         ? '중복된 아이디입니다.'
                         : '사용가능한 아이디입니다.'}
+                      {/* {idCheck === undefined
+                        ? ''
+                        : idCheck === false
+                        ? '중복된 아이디입니다.'
+                        : '사용가능한 아이디입니다.'} */}
                     </span>
                   </>
                 )}

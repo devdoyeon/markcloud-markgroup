@@ -13,6 +13,7 @@ import CommonModal from 'common/CommonModal';
 import { catchError, changeState, changeTitle } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
 import { useLocation } from 'react-router-dom';
+import BusinessProjectSelect from './BusinessProjectSelect';
 
 const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
@@ -73,7 +74,7 @@ const BusinessManagement = () => {
       // key : 키 value : 멤버이름
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
-      setMemberKey(['선택', ...key]);
+      setMemberKey(['', ...key]);
       setMemberValueName(value);
       setList(data);
       setMetaData(meta);
@@ -344,8 +345,8 @@ const BusinessManagement = () => {
               {/* ============================= */}
               <div className='project-list'>
                 <span>프로젝트</span>
-                <CommonSelect
-                  opt={projectName && projectName}
+                <BusinessProjectSelect
+                  opt={projectName}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
                   pathname={pathname}

@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
 import { useNavigate } from 'react-router-dom';
 
-const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
+const BusinessProjectSelect = ({
+  opt,
+  selectVal,
+  setSelectVal,
+  pathname,
+  postInfo,
+}) => {
   const [select, setSelect] = useState('off');
 
   /*
@@ -28,6 +34,12 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
         return selectVal;
     }
   };
+
+  useEffect(() => {
+    if (pathname === 'business') {
+      setSelect('off');
+    }
+  }, [postInfo.status_filter]);
 
   return (
     <div className={`selectBox ${select}`}>
@@ -70,4 +82,4 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
   );
 };
 
-export default CommonSelect;
+export default BusinessProjectSelect;

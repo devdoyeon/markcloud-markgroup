@@ -19,6 +19,8 @@ const PersonnelBusinessPopup = ({
   setCurDepartment,
   getPersonDepartmentApi,
   departmentList,
+  departmentPageInfo,
+  setDepartmentPageInfo,
 }) => {
   const navigate = useNavigate();
   const [alert, setAlert] = useState('');
@@ -55,7 +57,9 @@ const PersonnelBusinessPopup = ({
   const deletePersonnelDepartment = async () => {
     const del = await getDepartmentDelete(curDepartment?.id);
     if (typeof del === 'object') {
-      getPersonDepartmentApi();
+      const pageCon = { ...departmentPageInfo };
+      pageCon.page = 1;
+      getPersonDepartmentApi(pageCon);
       changeState(setCurDepartment, 'section', '');
     }
   };

@@ -40,13 +40,13 @@ const PersonnelManagement = () => {
   let prevent = false;
   let prevent2 = false;
 
-  const getPersonDepartmentApi = async () => {
+  const getPersonDepartmentApi = async (pageCon) => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 300);
-    const result = await getDepartmentList(departmentPageInfo);
+    const result = await getDepartmentList(departmentPageInfo,pageCon);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(prev => {
@@ -111,7 +111,9 @@ const PersonnelManagement = () => {
   };
 
   useEffect(() => {
-    if (getCookie('myToken')) getPersonDepartmentApi();
+    if (getCookie('myToken')) {
+      getPersonDepartmentApi();
+    }
   }, [departmentPageInfo.page]);
 
   useEffect(() => {
@@ -218,6 +220,8 @@ const PersonnelManagement = () => {
           setCurDepartment={setCurDepartment}
           getPersonDepartmentApi={getPersonDepartmentApi}
           departmentList={departmentList}
+          departmentPageInfo={departmentPageInfo}
+          setDepartmentPageInfo={setDepartmentPageInfo}
         />
       )}
     </>
