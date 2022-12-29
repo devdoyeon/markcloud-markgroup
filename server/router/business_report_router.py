@@ -23,25 +23,30 @@ def report_list(
     limit: int = 5,
     db: Session = Depends(get_db)
 ):
-    
-    offset = (page - 1) * limit
-    total, _report_list = report_crud.get_report_list(db, filter_type, filter_val, offset, limit, user_pk)
-    totalPage = total // limit
-    if total % limit != 0:
-        totalPage += 1
-    
-    return Response().metadata(
-        page=page,
-        totalPage=totalPage,
-        offset=offset,
-        limit=limit
-    ).success_response(_report_list)
+    try:
+        offset = (page - 1) * limit
+        total, _report_list = report_crud.get_report_list(db, filter_type, filter_val, offset, limit, user_pk)
+        totalPage = total // limit
+        if total % limit != 0:
+            totalPage += 1
+        
+        return Response().metadata(
+            page=page,
+            totalPage=totalPage,
+            offset=offset,
+            limit=limit
+        ).success_response(_report_list)
+    except:
+        raise HTTPException(status_code=500, detail='ReportListError')
     
     
 @router.get("/detail", response_model=ReportOut)
 def report_detail(report_id: int, db: Session = Depends(get_db)):
-    report = report_crud.get_report(db, report_id)
-    return report
+    try:
+        report = report_crud.get_report(db, report_id)
+        return report
+    except:
+        raise HTTPException(status_code=500, detail='ReportDetailError')
 
 
 @router.post("/create")
@@ -50,8 +55,10 @@ def report_create(_report_create: ReportCreate,
                   access_token:str = Header(None),
                   user_pk:int = None, 
                   db: Session = Depends(get_db)):
-    report_crud.create_report(db, user_pk, _report_create)
-
+    try:
+        report_crud.create_report(db, user_pk, _report_create)
+    except:
+        raise HTTPException(status_code=500, detail='ReportCreateError')
 
 @router.post("/update")
 @author_chk.varify_access_token
@@ -63,7 +70,7 @@ def report_update(report_id: int,
     try:
         report_crud.update_report(db, _report_update, report_id, user_pk)
     except:
-        raise HTTPException(status_code=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='ReportUpdateError')
     
     
 @router.post("/delete")
@@ -76,6 +83,6 @@ def report_delete(report_id: int,
     try:
         report_crud.delete_report(db, report_id, user_pk)
     except:
-        raise HTTPException(status_code=500, detail='DeleteNtError')
+        raise HTTPException(status_code=500, detail='ReportDeleteError')
     
    

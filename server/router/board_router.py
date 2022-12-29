@@ -21,25 +21,31 @@ def post_list(
     page: int = 1,
     limit: int = 5,
     db:Session = Depends(get_db)
-):  
-    offset = (page - 1) * limit
-    total, _post_list = board_crud.get_post_list(db, filter_type, filter_val, offset, limit, user_pk)
-    totalPage = total // limit
-    if total % limit != 0:
-        totalPage += 1
-    
-    return Response().metadata(
-        page=page,
-        totalPage=totalPage,
-        offset=offset,
-        limit=limit
-    ).success_response(_post_list)
+):
+    try:
+        offset = (page - 1) * limit
+        total, _post_list = board_crud.get_post_list(db, filter_type, filter_val, offset, limit, user_pk)
+        totalPage = total // limit
+        if total % limit != 0:
+            totalPage += 1
+        
+        return Response().metadata(
+            page=page,
+            totalPage=totalPage,
+            offset=offset,
+            limit=limit
+        ).success_response(_post_list)
+    except:
+        raise HTTPException(status_code=500, detail='PostListError')
 
 
 @router.get("/detail", response_model=PostOut)
 def post_detail(post_id: int, db: Session = Depends(get_db)):
-    post = board_crud.get_post(db, post_id)
-    return post
+    try:
+        post = board_crud.get_post(db, post_id)
+        return post
+    except:
+        raise HTTPException(status_code=500, detail='PostDetailError')
 
 
 @router.post("/create")
@@ -48,7 +54,10 @@ def post_create(_post_create: PostCreate,
                 access_token:str = Header(None),
                 user_pk: int = None,  
                 db: Session = Depends(get_db)):
-    board_crud.create_post(db, user_pk, _post_create)
+    try:
+        board_crud.create_post(db, user_pk, _post_create)
+    except:
+        raise HTTPException(status_code=500, detail='PostCreateError')
     
 
 @router.post("/update")
@@ -62,7 +71,7 @@ def post_update(
     try:
         board_crud.update_post(db, _post_update, post_id, user_pk)
     except:
-        raise HTTPException(status_code=500, detail='UpdateNtError')
+        raise HTTPException(status_code=500, detail='PostUpdateError')
     
 
 @router.post("/delete")
@@ -76,4 +85,4 @@ def post_delete(
     try:
         board_crud.delete_post(db, post_id, user_pk)
     except:
-        raise HTTPException(status_code=500, detail='DeleteNtError')
+        raise HTTPException(status_code=500, detail='PostDeleteError')
