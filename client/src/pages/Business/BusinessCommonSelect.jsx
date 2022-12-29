@@ -32,7 +32,6 @@ const BusinessCommonSelect = ({
   //       return selectVal;
   //   }
   // };
-
   useEffect(() => {
     if (pathname === 'business') {
       setSelect('off');

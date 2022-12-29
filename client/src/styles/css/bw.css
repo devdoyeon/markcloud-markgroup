@@ -136,6 +136,12 @@
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list {
   margin-right: 16px;
 }
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list.list-detail {
+  width: 100%;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list.list-detail > .name-wrap {
+  width: 782px;
+}
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox {
   position: relative;
 }
@@ -421,9 +427,23 @@
   border-style: hidden;
 }
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table thead th {
-  padding: 10px 24px;
+  padding: 10px 14px;
   color: #585858;
   font-size: 14px;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table thead th.title {
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table thead th.p-name {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr {
   background-color: #fcfcfc;
@@ -441,10 +461,29 @@
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.blue {
   color: #5b84e3;
 }
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.title {
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr.table-row td.p-name {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
 .container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr td {
   text-align: center;
   padding: 18px 0;
   font-size: 14px;
+}
+.container .content-wrap.business .work-table-wrap .check-work-wrap .table > div table tbody tr td.none-list {
+  color: #858585;
+  font-size: 14px;
+  font-family: "NotoSansR";
 }
 
 .container .content-wrap.personnel {
@@ -485,6 +524,19 @@
   right: 0;
   transform: translateY(-50%);
   z-index: 1;
+}
+.container .content-wrap .department-manage-wrap > .no-img-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.container .content-wrap .department-manage-wrap > .no-img-wrap > span {
+  font-size: 16px;
+  font-family: "NotoSansR";
+  color: #cdcdcd;
 }
 .container .content-wrap .department-manage-wrap > .card-wrap {
   padding: 58px 0 52px 0;
@@ -594,6 +646,11 @@
   text-align: center;
   padding: 18px 0;
   font-size: 14px;
+}
+.container .content-wrap .member-manage-wrap > .table > div table tbody tr td.none-list {
+  color: #858585;
+  font-size: 14px;
+  font-family: "NotoSansR";
 }
 .container .content-wrap.member {
   width: 1060px;

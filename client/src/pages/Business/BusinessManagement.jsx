@@ -75,13 +75,12 @@ const BusinessManagement = () => {
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
       setMemberKey(['', ...key]);
-      setMemberValueName(value);
+      setMemberValueName(['선택', ...value]);
       setList(data);
       setMetaData(meta);
       if (projectName.length === 1) {
         setProjectName(['선택', ...meta?.project_name]);
       }
-      console.log(memberValueName.length);
       if (memberName.length === 1) {
         setMemberName(['선택', ...value]);
       }
@@ -93,7 +92,8 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-
+  console.log(memberName);
+  console.log(memberValueName);
   const searchStart = () => {
     getBusinessReadApi();
   };
@@ -106,7 +106,9 @@ const BusinessManagement = () => {
     return list.length === 0 ? (
       <>
         <tr>
-          <td colSpan={8}>등록된 게시글이 없습니다.</td>
+          <td colSpan={8} className='none-list'>
+            등록된 게시글이 없습니다.
+          </td>
         </tr>
       </>
     ) : (
@@ -132,8 +134,8 @@ const BusinessManagement = () => {
                 onClick={() => navigate(`/business/${id}`)}
                 className='table-row'>
                 <td>{(pageInfo.page - 1) * 10 + idx + 1}</td>
-                <td>{title}</td>
-                <td>{project_name}</td>
+                <td className='title'>{title}</td>
+                <td className='p-name'>{project_name}</td>
                 <td>{request_id}</td>
                 <td>{manager_id}</td>
                 <td
@@ -359,7 +361,7 @@ const BusinessManagement = () => {
 
                 {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -371,7 +373,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -383,7 +385,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -402,7 +404,7 @@ const BusinessManagement = () => {
                 <span>요청자</span>
                 {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -414,7 +416,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -426,7 +428,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={memberName}
+                    opt={memberValueName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -550,8 +552,8 @@ const BusinessManagement = () => {
                     <thead>
                       <tr>
                         <th>번호</th>
-                        <th>제목</th>
-                        <th>프로젝트</th>
+                        <th className='title'>제목</th>
+                        <th className='p-name'>프로젝트</th>
                         <th>요청자</th>
                         <th>담당자</th>
                         <th>진행상태</th>

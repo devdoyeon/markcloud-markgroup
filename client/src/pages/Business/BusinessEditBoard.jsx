@@ -11,7 +11,7 @@ import {
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
-import BusinessCommonSelect from './BusinessCommonSelect';
+import BusinessProjectSelect from './BusinessCommonSelect';
 import {
   createBusiness,
   deleteBusiness,
@@ -82,7 +82,6 @@ const BusinessEditBoard = () => {
       setMemberObj(meta?.project_member);
       setList(data);
       setMeta(meta);
-      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -124,9 +123,7 @@ const BusinessEditBoard = () => {
       setMemberKey(key);
       setMemberName(value);
       setMemberObj(meta?.project_member);
-      // if (memberKey.length > 0 && memberName.length > 0) {
-      //   console.log('dddd');
-      // }
+
       if (memberKey.length > 0) {
         setPostInfo(prev => {
           const clone = { ...prev };
@@ -135,11 +132,8 @@ const BusinessEditBoard = () => {
           return clone;
         });
       }
-      // setList(data);
-      // setMeta(meta);
     }
   };
-  console.log(postInfo);
   const handleChangeRadioButton = (e, type) => {
     if (type === 'title') {
       changeState(setPostInfo, 'title', e.target.value);
@@ -200,20 +194,6 @@ const BusinessEditBoard = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (getCookie('myToken')) {
-  //     getBusinessProjectNameApi();
-  //   }
-  // }, [postInfo.status_filter]);
-  // useEffect(() => {
-  //   if (getCookie('myToken'))
-  //     changeState(setPostInfo, 'request_id', memberCurKey);
-  // }, [requesterValue]);
-  // useEffect(() => {
-  //   if (getCookie('myToken'))
-  //     changeState(setPostInfo, 'manager_id', memberCurKey);
-  // }, [contactValue]);
-
   useEffect(() => {
     if (getCookie('myToken')) {
       changeState(setPostInfo, 'work_status', progressValue);
@@ -232,38 +212,26 @@ const BusinessEditBoard = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                {/* <CommonSelect
-                  opt={project_name}
-                  selectVal={projectValue}
-                  setSelectVal={setProjectValue}
-                /> */}
-
-                <div className='selectBox'>{postInfo.project_name}</div>
+                <div className='selectBox detail'>{postInfo.project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
-                {/* <BusinessCommonSelect
-                  opt={memberName}
-                  selectVal={requesterValue}
-                  nameKey={memberKey}
-                  setMemberCurKey={setMemberCurKey}
-                  setSelectVal={setRequesterValue}
-                  admin={'admin'}
-                /> */}
                 <div className='selectBox'>{requesterValue}</div>
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
-                <BusinessCommonSelect
+                <BusinessProjectSelect
                   opt={memberName}
                   selectVal={contactValue}
                   nameKey={memberKey}
                   setMemberCurKey={setMemberCurKey}
                   setSelectVal={setContactValue}
+                  postInfo={postInfo}
+                  setPostInfo={setPostInfo}
                 />
               </div>
               {/* ============================= */}

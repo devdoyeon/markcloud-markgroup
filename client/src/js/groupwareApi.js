@@ -366,13 +366,11 @@ export const deleteBusiness = async id => {
 export const getDepartmentList = async ({ page, limit }, pageCon) => {
   try {
     if (pageCon === undefined || pageCon === 'undefined') {
-      console.log(pageCon);
       return await axios.get(
         `/bw/personnel/department/list?page=${page}&limit=${limit}`,
         header()
       );
     } else {
-      console.log(pageCon);
       return await axios.get(
         `/bw/personnel/department/list?page=${1}&limit=${limit}`,
         header()

@@ -170,6 +170,8 @@ const BusinessNewBoard = () => {
                   nameKey={memberKey}
                   setMemberCurKey={setMemberCurKey}
                   setSelectVal={setRequesterValue}
+                  postInfo={postInfo}
+                  setPostInfo={setPostInfo}
                 />
               </div>
               {/* ============================= */}
@@ -181,6 +183,8 @@ const BusinessNewBoard = () => {
                   nameKey={memberKey}
                   setMemberCurKey={setMemberCurKey}
                   setSelectVal={setContactValue}
+                  postInfo={postInfo}
+                  setPostInfo={setPostInfo}
                 />
               </div>
               {/* ============================= */}

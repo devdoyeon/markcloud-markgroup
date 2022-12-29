@@ -1,18 +1,11 @@
-import { usecontent, useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import SideMenu from 'common/SideMenu';
-import {
-  useLoaderData,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CommonSelect from 'common/CommonSelect';
 import {
   getDepartmentList,
-  getBusinessRead,
   getMemberCreate,
   getMemberInfo,
-  duplicateIdCheck,
   getMemberUpdate,
   getMemberDelete,
 } from 'js/groupwareApi';
@@ -131,6 +124,13 @@ const PersonnelMember = () => {
         true,
         'alert',
         '아이디에 한글을 포함할 수 없습니다.'
+      );
+    } else if (idCheck === undefined || idCheck === 'undefined') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디 중복체크를 하지 않았습니다.'
       );
     } else if (inputRef.current[1].value === '') {
       return commonModalSetting(
@@ -341,9 +341,12 @@ const PersonnelMember = () => {
                     autoComplete='off'
                     placeholder='아이디를 입력해주세요.'
                     ref={el => (inputRef.current[0] = el)}
-                    onChange={e =>
-                      changeState(setMemberInfo, 'user_id', e.target.value)
-                    }
+                    onChange={e => {
+                      changeState(setMemberInfo, 'user_id', e.target.value);
+                      if (inputRef.current[0].value === '') {
+                        setIdCheck();
+                      }
+                    }}
                   />
                 )}
                 {id ? (

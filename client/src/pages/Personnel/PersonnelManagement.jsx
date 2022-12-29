@@ -4,6 +4,7 @@ import Pagination from 'common/Pagination';
 import SideMenu from 'common/SideMenu';
 import { addHypen, changeTitle } from 'js/commonUtils';
 import PersonnelBusinessPopup from './PersonnelBusinessPopup';
+import noneImg from 'image/noneList.svg';
 import {
   getDepartmentInfo,
   getDepartmentList,
@@ -40,13 +41,13 @@ const PersonnelManagement = () => {
   let prevent = false;
   let prevent2 = false;
 
-  const getPersonDepartmentApi = async (pageCon) => {
+  const getPersonDepartmentApi = async pageCon => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 300);
-    const result = await getDepartmentList(departmentPageInfo,pageCon);
+    const result = await getDepartmentList(departmentPageInfo, pageCon);
     if (typeof result === 'object') {
       const { data, meta } = result?.data;
       setDepartmentList(prev => {
@@ -89,24 +90,34 @@ const PersonnelManagement = () => {
     }
   };
   const renderTable = () => {
-    return manageList?.reduce(
-      (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {
-        return (
-          <>
-            {acc}
-            <tr onClick={() => navigate(`/personnel/write/${id}`)}>
-              <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
-              <td>{user_id}</td>
-              <td>{name}</td>
-              <td>{section}</td>
-              <td>{addHypen(phone)}</td>
-              <td>{email}</td>
-              <td>{birthday}</td>
-            </tr>
-          </>
-        );
-      },
-      []
+    return manageList.length === 0 ? (
+      <>
+        <tr>
+          <td colSpan={7} className='none-list'>
+            등록된 계정이 없습니다
+          </td>
+        </tr>
+      </>
+    ) : (
+      manageList?.reduce(
+        (acc, { id, user_id, name, section, phone, email, birthday }, idx) => {
+          return (
+            <>
+              {acc}
+              <tr onClick={() => navigate(`/personnel/write/${id}`)}>
+                <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
+                <td>{user_id}</td>
+                <td>{name}</td>
+                <td>{section}</td>
+                <td>{addHypen(phone)}</td>
+                <td>{email}</td>
+                <td>{birthday}</td>
+              </tr>
+            </>
+          );
+        },
+        <></>
+      )
     );
   };
 
@@ -133,30 +144,38 @@ const PersonnelManagement = () => {
               <div className='rect'>부서관리</div>
               <div className='line'></div>
             </div>
-            <ul className='card-wrap'>
-              {departmentList.reduce((acc, cur, idx) => {
-                return (
-                  <>
-                    {acc}
-                    <li
-                      className='card'
-                      onClick={() => {
-                        setPopup(true);
-                        setButtonControl('수정');
-                        getPersonDepartmentInfo(cur.id);
-                      }}>
-                      <div className='date-num'>
-                        <span>
-                          [{(departmentPageInfo.page - 1) * 6 + idx + 1}]
-                        </span>
-                        <span>{cur.created_at}</span>
-                      </div>
-                      <div className='team'>{cur.section}</div>
-                    </li>
-                  </>
-                );
-              }, [])}
-            </ul>
+            {departmentList.length === 0 ? (
+              <div className='no-img-wrap'>
+                <img src={noneImg} alt='부서 없음' />
+                <span>등록 된 부서가 없습니다.</span>
+              </div>
+            ) : (
+              <ul className='card-wrap'>
+                {departmentList.reduce((acc, cur, idx) => {
+                  return (
+                    <>
+                      {acc}
+                      <li
+                        className='card'
+                        onClick={() => {
+                          setPopup(true);
+                          setButtonControl('수정');
+                          getPersonDepartmentInfo(cur.id);
+                        }}>
+                        <div className='date-num'>
+                          <span>
+                            [{(departmentPageInfo.page - 1) * 6 + idx + 1}]
+                          </span>
+                          <span>{cur.created_at}</span>
+                        </div>
+                        <div className='team'>{cur.section}</div>
+                      </li>
+                    </>
+                  );
+                }, [])}
+              </ul>
+            )}
+
             <div className='page-wrap'>
               <Pagination
                 pageInfo={departmentPageInfo}
