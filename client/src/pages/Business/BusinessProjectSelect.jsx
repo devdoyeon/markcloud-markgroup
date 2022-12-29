@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
-import { useNavigate } from 'react-router-dom';
 
 const BusinessProjectSelect = ({
   opt,

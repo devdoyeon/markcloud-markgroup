@@ -1,14 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
-import CommonSelect from 'common/CommonSelect';
 import BusinessCommonSelect from './BusinessCommonSelect';
-import {
-  getBusinessFilterRead,
-  getBusinessInfo,
-  getBusinessRead,
-} from 'js/groupwareApi';
+import { getBusinessRead } from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeState, changeTitle } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
@@ -22,7 +17,6 @@ const BusinessManagement = () => {
     content: '',
     bool: false,
   });
-  const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
   const [metaData, setMetaData] = useState({});
 
@@ -59,7 +53,6 @@ const BusinessManagement = () => {
   const pathname = path.split('/')[1];
 
   let prevent = false;
-  let dropBool = true;
 
   const getBusinessReadApi = async () => {
     if (prevent) return;
@@ -92,8 +85,6 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-  console.log(memberName);
-  console.log(memberValueName);
   const searchStart = () => {
     getBusinessReadApi();
   };
@@ -344,7 +335,6 @@ const BusinessManagement = () => {
             </div>
 
             <div className='project-wrap'>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>프로젝트</span>
                 <BusinessProjectSelect
@@ -355,7 +345,6 @@ const BusinessManagement = () => {
                   postInfo={postInfo}
                 />
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
 
@@ -399,7 +388,6 @@ const BusinessManagement = () => {
                   <></>
                 )}
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
                 {postInfo.status_filter === 'MyProject' ? (

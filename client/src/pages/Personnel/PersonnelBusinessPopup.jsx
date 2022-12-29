@@ -1,14 +1,11 @@
 import { changeState } from 'js/commonUtils';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   getDepartmentCreate,
   getDepartmentDelete,
   getDepartmentUpdate,
 } from 'js/groupwareApi';
-import { commonModalSetting, catchError, changeTitle } from 'js/commonUtils';
-import CommonModal from 'common/CommonModal';
-import { getCookie } from 'js/cookie';
 
 const PersonnelBusinessPopup = ({
   popup,
@@ -20,15 +17,7 @@ const PersonnelBusinessPopup = ({
   getPersonDepartmentApi,
   departmentList,
   departmentPageInfo,
-  setDepartmentPageInfo,
 }) => {
-  const navigate = useNavigate();
-  const [alert, setAlert] = useState('');
-  const [alertBox, setAlertBox] = useState({
-    mode: '',
-    content: '',
-    bool: false,
-  });
   const projectName = [];
   if (departmentList.length > 0) {
     departmentList?.forEach(ele => {

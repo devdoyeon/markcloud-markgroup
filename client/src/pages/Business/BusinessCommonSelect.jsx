@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
-import { useLocation } from 'react-router-dom';
 
 const BusinessCommonSelect = ({
   opt,
@@ -22,16 +21,6 @@ const BusinessCommonSelect = ({
     = useState[selectVal, setSelectVal] => type(String) => 선택된 값
   */
 
-  // const changeSelectVal = () => {
-  //   switch (selectVal) {
-  //     case 'created_id':
-  //       return '작성자';
-  //     case 'title':
-  //       return '제목';
-  //     default:
-  //       return selectVal;
-  //   }
-  // };
   useEffect(() => {
     if (pathname === 'business') {
       setSelect('off');

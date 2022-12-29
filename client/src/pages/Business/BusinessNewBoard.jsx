@@ -11,11 +11,7 @@ import {
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import BusinessCommonSelect from './BusinessCommonSelect';
-import {
-  createBusiness,
-  getBusinessInfo,
-  getBusinessRead,
-} from 'js/groupwareApi';
+import { createBusiness, getBusinessRead } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 
 const BusinessNewBoard = () => {
@@ -75,7 +71,6 @@ const BusinessNewBoard = () => {
       setMemberName(value);
       setList(data);
       setMeta(meta);
-      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -161,7 +156,6 @@ const BusinessNewBoard = () => {
               </div>
             </div>
             <div className='project-wrap board-head'>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
                 <BusinessCommonSelect
@@ -174,7 +168,6 @@ const BusinessNewBoard = () => {
                   setPostInfo={setPostInfo}
                 />
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
                 <BusinessCommonSelect
@@ -187,7 +180,6 @@ const BusinessNewBoard = () => {
                   setPostInfo={setPostInfo}
                 />
               </div>
-              {/* ============================= */}
               <div className='project-list'>
                 <span>진행상태</span>
                 <CommonSelect

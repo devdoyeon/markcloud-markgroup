@@ -260,7 +260,7 @@ const PersonnelMember = () => {
         'alert',
         '수정이 완료되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); 
   };
   //~~~~~~~~~ 멤버 삭제 ~~~~~~~~~~
   const deleteMemberApi = async () => {
@@ -273,7 +273,7 @@ const PersonnelMember = () => {
         'alert',
         '삭제가 완료되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert); 
   };
 
   const phoneNumRegex = e => {
@@ -364,11 +364,6 @@ const PersonnelMember = () => {
                         : idCheck === false
                         ? '중복된 아이디입니다.'
                         : '사용가능한 아이디입니다.'}
-                      {/* {idCheck === undefined
-                        ? ''
-                        : idCheck === false
-                        ? '중복된 아이디입니다.'
-                        : '사용가능한 아이디입니다.'} */}
                     </span>
                   </>
                 )}
