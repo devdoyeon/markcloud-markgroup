@@ -137,7 +137,7 @@ export const checkPay = async data => {
 export const checkPoint = async () => {
   try {
     return await axios.get(
-      `/api/checkpoint/groupware?current_ip=${await getIp()}`,
+      `/api/checkpoint?current_ip=${await getIp()}`,
       header()
     );
   } catch (error) {
@@ -215,28 +215,6 @@ export const deleteNotice = async id => {
   }
 };
 // ================================ 업무 관리 ================================
-
-// export const getBusinessRead = async (
-//   { project_name, status_filter },
-//   { page, limit }
-// ) => {
-//   try {
-//     if (project_name === '' || project_name === '선택') {
-//       return await axios.get(
-//         `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
-//         header()
-//       );
-//     } else {
-//       return await axios.get(
-//         `/groupware/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
-//         header()
-//       );
-//     }
-//   } catch (error) {
-//     return apiErrorHandling(error);
-//   }
-// };
-
 export const getBusinessRead = async (
   {
     project_name,
@@ -290,7 +268,10 @@ export const getBusinessRead = async (
 
 export const getBusinessInfo = async id => {
   try {
-    return await axios.get(`/groupware/projects/info?project_id=${id}`, header());
+    return await axios.get(
+      `/groupware/projects/info?project_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -541,7 +522,7 @@ export const getMemberDelete = async id => {
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/groupware/board/list?page=${page}&limit=${limit}&filter_type=${
+      `/board/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
       }${value?.length ? `&filter_val=${value}` : ''}`,
       header()
@@ -554,11 +535,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 //& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
-    return await axios.get(
-      `/groupware/board/detail?post_id=${id}`,
-      null,
-      header()
-    );
+    return await axios.get(`/board/detail?post_id=${id}`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -568,7 +545,7 @@ export const getBoardDetail = async id => {
 export const createBoard = async ({ title, content }) => {
   try {
     return await axios.post(
-      `/groupware/board/create`,
+      `/board/create`,
       {
         title: title,
         content: content,
@@ -584,7 +561,7 @@ export const createBoard = async ({ title, content }) => {
 export const editBoard = async ({ title, content }, id) => {
   try {
     return await axios.post(
-      `/groupware/board/update?post_id=${id}`,
+      `/board/update?post_id=${id}`,
       {
         title: title,
         content: content,
@@ -599,11 +576,7 @@ export const editBoard = async ({ title, content }, id) => {
 //& 게시글 삭제
 export const deleteBoard = async id => {
   try {
-    return await axios.post(
-      `/groupware/board/delete?post_id=${id}`,
-      null,
-      header()
-    );
+    return await axios.post(`/board/delete?post_id=${id}`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -615,7 +588,7 @@ export const deleteBoard = async id => {
 export const getReportList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/groupware/report/list?page=${page}&limit=${limit}&filter_type=${
+      `/report/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
       }${value?.length ? `&filter_val=${value}` : ''}`,
       header()
@@ -628,10 +601,7 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
 //& 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
-    return await axios.get(
-      `/groupware/report/detail?report_id=${id}`,
-      header()
-    );
+    return await axios.get(`/report/detail?report_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -641,7 +611,7 @@ export const getReportDetail = async id => {
 export const createReport = async ({ title, content }) => {
   try {
     return await axios.post(
-      `/groupware/report/create`,
+      `/report/create`,
       {
         title: title,
         content: content,
@@ -657,7 +627,7 @@ export const createReport = async ({ title, content }) => {
 export const editReport = async ({ title, content }, id) => {
   try {
     return await axios.post(
-      `/groupware/report/update?report_id=${id}`,
+      `/report/update?report_id=${id}`,
       {
         title: title,
         content: content,
@@ -672,11 +642,7 @@ export const editReport = async ({ title, content }, id) => {
 //& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
-    return await axios.post(
-      `/groupware/report/delete?report_id=${id}`,
-      null,
-      header()
-    );
+    return await axios.post(`/report/delete?report_id=${id}`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -693,7 +659,7 @@ export const getProjectList = async (
 ) => {
   try {
     return await axios.get(
-      `/groupware/project/list?page=${page}&limit=${limit}${
+      `/project/list?page=${page}&limit=${limit}${
         name?.length ? `&project_name=${name}` : ''
       }${status?.length ? `&project_status=${status}` : ''}${
         start_date?.length ? `&start_date=${start_date}` : ''
@@ -708,10 +674,7 @@ export const getProjectList = async (
 //& 프로젝트 상세 보기
 export const getProjectDetail = async id => {
   try {
-    return await axios.get(
-      `/groupware/project/detail?project_id=${id}`,
-      header()
-    );
+    return await axios.get(`/project/detail?project_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -720,7 +683,7 @@ export const getProjectDetail = async id => {
 //& 프로젝트 생성
 export const createProject = async projectInfo => {
   try {
-    return await axios.post(`/groupware/project/create`, projectInfo, header());
+    return await axios.post(`/project/create`, projectInfo, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -730,7 +693,7 @@ export const createProject = async projectInfo => {
 export const editProject = async (id, projectInfo) => {
   try {
     return await axios.post(
-      `/groupware/project/update?project_id=${id}`,
+      `/project/update?project_id=${id}`,
       projectInfo,
       header()
     );
@@ -742,11 +705,7 @@ export const editProject = async (id, projectInfo) => {
 //& 프로젝트 삭제
 export const deleteProject = async id => {
   try {
-    return await axios.post(
-      `/groupware/project/delete?project_id=${id}`,
-      null,
-      header()
-    );
+    return await axios.post(`/project/delete?project_id=${id}`, null, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -756,7 +715,7 @@ export const deleteProject = async id => {
 export const getProjectMember = async id => {
   try {
     return await axios.get(
-      `/groupware/project/project_members?project_id=${id}`,
+      `/project/project_members?project_id=${id}`,
       header()
     );
   } catch (error) {
@@ -767,7 +726,7 @@ export const getProjectMember = async id => {
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
-    return await axios.get(`/groupware/project/member`, header());
+    return await axios.get(`/project/member`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -777,7 +736,7 @@ export const getPeopleList = async () => {
 export const addProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/groupware/project/member_add?project_id=${id}`,
+      `/project/member_add?project_id=${id}`,
       { new_member_id: memberId },
       header()
     );
@@ -790,7 +749,7 @@ export const addProjectMember = async (id, memberId) => {
 export const deleteProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/groupware/project/member_delete?project_id=${id}`,
+      `/project/member_delete?project_id=${id}`,
       { delete_member_id: memberId },
       header()
     );
