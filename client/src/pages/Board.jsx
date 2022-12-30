@@ -27,6 +27,7 @@ const Board = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 사내 게시판 리스트 불러오기
   const getBoard = async () => {
     if (prevent) return;
     prevent = true;

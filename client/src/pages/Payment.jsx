@@ -18,17 +18,15 @@ const Payment = memo(() => {
   let discountMoney = 0;
   let totalMoney = 0;
 
-  //결제 수단 state
+  //= 결제 수단 state
   const [payMethod, setPayMethod] = useState('card');
-  //resize 관련 state
 
-  //title 변경
+  //= title 변경
   useEffect(() => {
     changeTitle('그룹웨어 > 결제');
   }, []);
 
-  //props 값 없을시 error page로 이동
-
+  //=props 값 없을시 error page로 이동
   if (!location?.state) navigate('/error');
   else {
     merchant_code = location?.state?.merchant_code;
