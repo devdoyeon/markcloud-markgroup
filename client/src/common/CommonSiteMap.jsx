@@ -32,7 +32,7 @@ const CommonSiteMap = ({ color }) => {
     });
   };
 
-  //header hover Event 실행
+  //= header hover Event 실행
   useEffect(() => {
     headerHoverEvent();
   }, []);

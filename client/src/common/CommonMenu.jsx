@@ -23,7 +23,7 @@ const CommonMenu = () => {
       <li>
         {getCookie('myToken') ? (
           <a
-            href='http://localhost:3000/mark-mypage'
+            href='https://markcloud.co.kr/mark-mypage'
             rel='noopener noreferrer'
             target='_self'>
             마이페이지

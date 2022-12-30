@@ -11,7 +11,7 @@ const PaymentSuccess = () => {
   const location = useLocation();
 
   if (!location?.state) {
-    window.location.href = 'http://localhost:3000/mark-error';
+    window.location.href = '/error';
   }
 
   const splitDate = (str, type) => {
@@ -103,7 +103,7 @@ const PaymentSuccess = () => {
             )}
             <div className='btn-wrap'>
               <a
-                href='http://localhost:3000/mark-mypage'
+                href='https://markcloud.co.kr/mark-mypage'
                 rel='noopener noreferrer'
                 target='_self'>
                 <button className='commonBtn go-list'>구매내역 보기</button>
