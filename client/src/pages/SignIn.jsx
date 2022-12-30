@@ -93,6 +93,7 @@ const SignIn = () => {
     changeTitle('그룹웨어 > 로그인');
   }, []);
 
+  //= formCheck UseEffect
   useEffect(() => {
     if (formCheck.emptyBoth)
       return commonModalSetting(

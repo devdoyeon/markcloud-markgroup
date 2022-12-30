@@ -150,12 +150,12 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
     if (type === '' || value === '') {
       return await axios.get(
-        `/bw/notice/list?page=${page}&limit=${limit}`,
+        `/groupware/notice/list?page=${page}&limit=${limit}`,
         header()
       );
     } else {
       return await axios.get(
-        `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
+        `/groupware/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
         header()
       );
     }
@@ -165,7 +165,7 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
 };
 export const getNoticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/info?notice_id=${id}`, header());
+    return await axios.get(`/groupware/notice/info?notice_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -174,7 +174,7 @@ export const getNoticeInfo = async id => {
 export const createNotice = async ({ title, content, created_id }) => {
   try {
     return await axios.post(
-      `/bw/notice/create`,
+      `/groupware/notice/create`,
       {
         title: title,
         content: content,
@@ -190,7 +190,7 @@ export const createNotice = async ({ title, content, created_id }) => {
 export const editNotice = async ({ title, content, created_id }, id) => {
   try {
     return await axios.post(
-      `/bw/notice/update?notice_id=${id}`,
+      `/groupware/notice/update?notice_id=${id}`,
       {
         title: title,
         content: content,
@@ -206,7 +206,7 @@ export const editNotice = async ({ title, content, created_id }, id) => {
 export const deleteNotice = async id => {
   try {
     return await axios.post(
-      `/bw/notice/delete?notice_id=${id}`,
+      `/groupware/notice/delete?notice_id=${id}`,
       null,
       header()
     );
@@ -223,12 +223,12 @@ export const deleteNotice = async id => {
 //   try {
 //     if (project_name === '' || project_name === '선택') {
 //       return await axios.get(
-//         `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+//         `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
 //         header()
 //       );
 //     } else {
 //       return await axios.get(
-//         `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
+//         `/groupware/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
 //         header()
 //       );
 //     }
@@ -252,7 +252,7 @@ export const getBusinessRead = async (
   try {
     if (project_name === '선택') {
       return await axios.post(
-        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
         {
           project_name: '',
           manager_id: manager_id === undefined ? '' : manager_id,
@@ -268,7 +268,7 @@ export const getBusinessRead = async (
       );
     } else {
       return await axios.post(
-        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
         {
           project_name: project_name,
           manager_id: manager_id === undefined ? '' : manager_id,
@@ -290,7 +290,7 @@ export const getBusinessRead = async (
 
 export const getBusinessInfo = async id => {
   try {
-    return await axios.get(`/bw/projects/info?project_id=${id}`, header());
+    return await axios.get(`/groupware/projects/info?project_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -306,7 +306,7 @@ export const createBusiness = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/projects/create`,
+      `/groupware/projects/create`,
       {
         project_name: project_name,
         title: title,
@@ -328,7 +328,7 @@ export const updateBusiness = async (
 ) => {
   try {
     return await axios.post(
-      `/bw/projects/update?project_id=${id}`,
+      `/groupware/projects/update?project_id=${id}`,
       {
         request_id:
           request_id === 'undefined' || request_id === undefined
@@ -352,7 +352,7 @@ export const updateBusiness = async (
 export const deleteBusiness = async id => {
   try {
     return await axios.post(
-      `/bw/projects/delete?project_id=${id}`,
+      `/groupware/projects/delete?project_id=${id}`,
       null,
       header()
     );
@@ -367,12 +367,12 @@ export const getDepartmentList = async ({ page, limit }, pageCon) => {
   try {
     if (pageCon === undefined || pageCon === 'undefined') {
       return await axios.get(
-        `/bw/personnel/department/list?page=${page}&limit=${limit}`,
+        `/groupware/personnel/department/list?page=${page}&limit=${limit}`,
         header()
       );
     } else {
       return await axios.get(
-        `/bw/personnel/department/list?page=${1}&limit=${limit}`,
+        `/groupware/personnel/department/list?page=${1}&limit=${limit}`,
         header()
       );
     }
@@ -384,7 +384,7 @@ export const getDepartmentList = async ({ page, limit }, pageCon) => {
 export const getDepartmentInfo = async id => {
   try {
     return await axios.get(
-      `/bw/personnel/department/info?department_id=${id}`,
+      `/groupware/personnel/department/info?department_id=${id}`,
       header()
     );
   } catch (error) {
@@ -395,7 +395,7 @@ export const getDepartmentInfo = async id => {
 export const getDepartmentCreate = async name => {
   try {
     return await axios.post(
-      `/bw/personnel/department/create`,
+      `/groupware/personnel/department/create`,
       {
         department_name: name,
       },
@@ -409,7 +409,7 @@ export const getDepartmentCreate = async name => {
 export const getDepartmentUpdate = async ({ id, section }) => {
   try {
     return await axios.post(
-      `/bw/personnel/department/update?department_id=${id}`,
+      `/groupware/personnel/department/update?department_id=${id}`,
       {
         department_name: section,
       },
@@ -423,7 +423,7 @@ export const getDepartmentUpdate = async ({ id, section }) => {
 export const getDepartmentDelete = async id => {
   try {
     return await axios.post(
-      `/bw/personnel/department/delete?department_id=${id}`,
+      `/groupware/personnel/department/delete?department_id=${id}`,
       null,
       header()
     );
@@ -436,7 +436,7 @@ export const getDepartmentDelete = async id => {
 export const getMemberList = async ({ page, limit }) => {
   try {
     return await axios.get(
-      `/bw/personnel/member/list?page=${page}&limit=${limit}`,
+      `/groupware/personnel/member/list?page=${page}&limit=${limit}`,
       header()
     );
   } catch (error) {
@@ -447,7 +447,7 @@ export const getMemberList = async ({ page, limit }) => {
 export const getMemberInfo = async id => {
   try {
     return await axios.get(
-      `/bw/personnel/member/info?member_id=${id}`,
+      `/groupware/personnel/member/info?member_id=${id}`,
       header()
     );
   } catch (error) {
@@ -469,7 +469,7 @@ export const getMemberCreate = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/personnel/member/create`,
+      `/groupware/personnel/member/create`,
       {
         name,
         user_id,
@@ -503,7 +503,7 @@ export const getMemberUpdate = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/personnel/member/update?member_id=${id}`,
+      `/groupware/personnel/member/update?member_id=${id}`,
       {
         id,
         user_id,
@@ -526,7 +526,7 @@ export const getMemberUpdate = async ({
 export const getMemberDelete = async id => {
   try {
     return await axios.post(
-      `/bw/personnel/member/delete?member_id=${id}`,
+      `/groupware/personnel/member/delete?member_id=${id}`,
       null,
       header()
     );
