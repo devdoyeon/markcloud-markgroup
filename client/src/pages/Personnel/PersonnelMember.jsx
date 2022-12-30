@@ -72,7 +72,7 @@ const PersonnelMember = () => {
   const inputRef = useRef([]);
 
   let prevent = false;
-
+  //~부서 리스트 API 요청
   const getPersonDepartmentApi = async () => {
     if (prevent) return;
     prevent = true;
@@ -96,6 +96,7 @@ const PersonnelMember = () => {
     }
   };
   let prevent2 = false;
+  //~ 사용자계정 정보 API 요청
   const getPersonMemberInfo = async () => {
     if (prevent2) return;
     prevent = true;
@@ -110,7 +111,7 @@ const PersonnelMember = () => {
   };
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    //유효성 검사
+    //~ 사용자계정 생성 유효성 검사
     if (inputRef.current[0].value === '') {
       return commonModalSetting(
         setAlertBox,
@@ -190,7 +191,7 @@ const PersonnelMember = () => {
         '이메일의 형식이 맞지 않습니다.'
       );
     }
-    // --
+    // - 사용자계정 생성
     const result = await getMemberCreate(memberInfo);
     if (typeof result === 'object') {
       setAlert('apply');
@@ -200,7 +201,7 @@ const PersonnelMember = () => {
         'alert',
         '등록이 완료되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   // -- 아이디 중복체크
@@ -260,7 +261,7 @@ const PersonnelMember = () => {
         'alert',
         '수정이 완료되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); 
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
   //~~~~~~~~~ 멤버 삭제 ~~~~~~~~~~
   const deleteMemberApi = async () => {
@@ -273,7 +274,7 @@ const PersonnelMember = () => {
         'alert',
         '삭제가 완료되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); 
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const phoneNumRegex = e => {

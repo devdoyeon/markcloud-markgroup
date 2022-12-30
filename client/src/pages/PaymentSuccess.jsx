@@ -7,7 +7,7 @@ import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, addComma } from 'js/commonUtils';
 
 const PaymentSuccess = () => {
-  //props값 없을 시 error page로 이동
+  //= props값 없을 시 error page로 이동
   const location = useLocation();
 
   if (!location?.state) {
@@ -38,7 +38,7 @@ const PaymentSuccess = () => {
             }
         }`;
 
-  //dataLayer 추가
+  //= dataLayer 추가
   useEffect(() => {
     var script = document.createElement('script');
     script.innerHTML = `window.dataLayer = window.dataLayer || [];
@@ -46,7 +46,7 @@ const PaymentSuccess = () => {
     document.head.append(script);
   }, [appendData]);
 
-  //title 변경
+  //= title 변경
   useEffect(() => {
     changeTitle('그룹웨어 > 결제 성공');
   }, []);

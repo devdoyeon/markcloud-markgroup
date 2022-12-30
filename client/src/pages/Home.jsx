@@ -34,6 +34,7 @@ const Home = () => {
     changeTitle('그룹웨어 > 메인');
   }, []);
 
+  //= 체크포인트
   const navigateHandling = async () => {
     if (!getCookie('myToken')) {
       commonModalSetting(
