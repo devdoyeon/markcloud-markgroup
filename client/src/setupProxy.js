@@ -8,24 +8,29 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+
+  // 공지사항
   app.use(
-    '/groupware',
-    createProxyMiddleware({
-      target: 'http://192.168.0.44:8002/',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/groupware': '',
-      },
-    })
-  );
-  app.use(
-    '/bw',
+    `/notice`,
     createProxyMiddleware({
       target: 'http://192.168.0.38:8000/',
       changeOrigin: true,
-      pathRewrite: {
-        '^/bw': '',
-      },
+    })
+  );
+  // 업무관리
+  app.use(
+    `/projects`,
+    createProxyMiddleware({
+      target: 'http://192.168.0.38:8000/',
+      changeOrigin: true,
+    })
+  );
+  // 인사관리
+  app.use(
+    `/personnel`,
+    createProxyMiddleware({
+      target: 'http://192.168.0.38:8000/',
+      changeOrigin: true,
     })
   );
 };
