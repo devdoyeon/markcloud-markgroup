@@ -5,8 +5,6 @@ import activePrevPage from 'image/prevPageActive.svg';
 import nextPage from 'image/nextPage.svg';
 import prevPage from 'image/prevPage.svg';
 
-//= 페이지네이션 적용 시 스타일 수정 필요
-
 const Pagination = ({ pageInfo, setPageInfo }) => {
   const [pageGroup, setPageGroup] = useState([]);
   const { totalPage, page } = pageInfo;
