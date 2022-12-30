@@ -16,11 +16,11 @@ python -m venv ./venv && \
 source ./venv/bin/activate && \
 pip install -r requirements.txt && \
 pip freeze > requirements.txt && \
-uvicorn server.main:app --host 0.0.0.0 --port 3001 --reload \
+uvicorn main:app --host 0.0.0.0 --port 3001 --reload \
 ;else \
 echo "[INFO] >> Ready to luanch server, checking new dependencies, please wait..." && \
 source ./venv/bin/activate && \
 pip install -r requirements.txt && \
 pip freeze > requirements.txt && \
-uvicorn server.main:app --host 0.0.0.0 --port 3001 --reload \
+uvicorn main:app --host 0.0.0.0 --port 3001 --reload \
 ;fi
