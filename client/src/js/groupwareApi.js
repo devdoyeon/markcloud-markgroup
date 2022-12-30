@@ -137,7 +137,7 @@ export const checkPay = async data => {
 export const checkPoint = async () => {
   try {
     return await axios.get(
-      `/api/checkpoint?current_ip=${await getIp()}`,
+      `/api/checkpoint/groupware?current_ip=${await getIp()}`,
       header()
     );
   } catch (error) {
