@@ -137,7 +137,7 @@ export const checkPay = async data => {
 export const checkPoint = async () => {
   try {
     return await axios.get(
-      `/api/checkpoint/groupware?current_ip=${await getIp()}`,
+      `/api/checkpoint?current_ip=${await getIp()}`,
       header()
     );
   } catch (error) {
@@ -150,12 +150,12 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
   try {
     if (type === '' || value === '') {
       return await axios.get(
-        `/bw/notice/list?page=${page}&limit=${limit}`,
+        `/notice/list?page=${page}&limit=${limit}`,
         header()
       );
     } else {
       return await axios.get(
-        `/bw/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
+        `/notice/list?page=${page}&limit=${limit}&filter_type=${type}&filter_val=${value}`,
         header()
       );
     }
@@ -165,7 +165,7 @@ export const getNoticeList = async ({ page, limit = 9 }, type, value) => {
 };
 export const getNoticeInfo = async id => {
   try {
-    return await axios.get(`/bw/notice/info?notice_id=${id}`, header());
+    return await axios.get(`/notice/info?notice_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -174,7 +174,7 @@ export const getNoticeInfo = async id => {
 export const createNotice = async ({ title, content, created_id }) => {
   try {
     return await axios.post(
-      `/bw/notice/create`,
+      `/notice/create`,
       {
         title: title,
         content: content,
@@ -190,7 +190,7 @@ export const createNotice = async ({ title, content, created_id }) => {
 export const editNotice = async ({ title, content, created_id }, id) => {
   try {
     return await axios.post(
-      `/bw/notice/update?notice_id=${id}`,
+      `/notice/update?notice_id=${id}`,
       {
         title: title,
         content: content,
@@ -206,7 +206,7 @@ export const editNotice = async ({ title, content, created_id }, id) => {
 export const deleteNotice = async id => {
   try {
     return await axios.post(
-      `/bw/notice/delete?notice_id=${id}`,
+      `/notice/delete?notice_id=${id}`,
       null,
       header()
     );
@@ -215,27 +215,6 @@ export const deleteNotice = async id => {
   }
 };
 // ================================ 업무 관리 ================================
-
-// export const getBusinessRead = async (
-//   { project_name, status_filter },
-//   { page, limit }
-// ) => {
-//   try {
-//     if (project_name === '' || project_name === '선택') {
-//       return await axios.get(
-//         `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
-//         header()
-//       );
-//     } else {
-//       return await axios.get(
-//         `/bw/projects/read?limit=${limit}&page=${page}&project_name=${project_name}&status_filter=${status_filter}`,
-//         header()
-//       );
-//     }
-//   } catch (error) {
-//     return apiErrorHandling(error);
-//   }
-// };
 
 export const getBusinessRead = async (
   {
@@ -252,7 +231,7 @@ export const getBusinessRead = async (
   try {
     if (project_name === '선택') {
       return await axios.post(
-        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        `/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
         {
           project_name: '',
           manager_id: manager_id === undefined ? '' : manager_id,
@@ -268,7 +247,7 @@ export const getBusinessRead = async (
       );
     } else {
       return await axios.post(
-        `/bw/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+        `/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
         {
           project_name: project_name,
           manager_id: manager_id === undefined ? '' : manager_id,
@@ -290,7 +269,7 @@ export const getBusinessRead = async (
 
 export const getBusinessInfo = async id => {
   try {
-    return await axios.get(`/bw/projects/info?project_id=${id}`, header());
+    return await axios.get(`/projects/info?project_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -306,7 +285,7 @@ export const createBusiness = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/projects/create`,
+      `/projects/create`,
       {
         project_name: project_name,
         title: title,
@@ -328,7 +307,7 @@ export const updateBusiness = async (
 ) => {
   try {
     return await axios.post(
-      `/bw/projects/update?project_id=${id}`,
+      `/projects/update?project_id=${id}`,
       {
         request_id:
           request_id === 'undefined' || request_id === undefined
@@ -352,7 +331,7 @@ export const updateBusiness = async (
 export const deleteBusiness = async id => {
   try {
     return await axios.post(
-      `/bw/projects/delete?project_id=${id}`,
+      `/projects/delete?project_id=${id}`,
       null,
       header()
     );
@@ -367,12 +346,12 @@ export const getDepartmentList = async ({ page, limit }, pageCon) => {
   try {
     if (pageCon === undefined || pageCon === 'undefined') {
       return await axios.get(
-        `/bw/personnel/department/list?page=${page}&limit=${limit}`,
+        `/personnel/department/list?page=${page}&limit=${limit}`,
         header()
       );
     } else {
       return await axios.get(
-        `/bw/personnel/department/list?page=${1}&limit=${limit}`,
+        `/personnel/department/list?page=${1}&limit=${limit}`,
         header()
       );
     }
@@ -384,7 +363,7 @@ export const getDepartmentList = async ({ page, limit }, pageCon) => {
 export const getDepartmentInfo = async id => {
   try {
     return await axios.get(
-      `/bw/personnel/department/info?department_id=${id}`,
+      `/personnel/department/info?department_id=${id}`,
       header()
     );
   } catch (error) {
@@ -395,7 +374,7 @@ export const getDepartmentInfo = async id => {
 export const getDepartmentCreate = async name => {
   try {
     return await axios.post(
-      `/bw/personnel/department/create`,
+      `/personnel/department/create`,
       {
         department_name: name,
       },
@@ -409,7 +388,7 @@ export const getDepartmentCreate = async name => {
 export const getDepartmentUpdate = async ({ id, section }) => {
   try {
     return await axios.post(
-      `/bw/personnel/department/update?department_id=${id}`,
+      `/personnel/department/update?department_id=${id}`,
       {
         department_name: section,
       },
@@ -423,7 +402,7 @@ export const getDepartmentUpdate = async ({ id, section }) => {
 export const getDepartmentDelete = async id => {
   try {
     return await axios.post(
-      `/bw/personnel/department/delete?department_id=${id}`,
+      `/personnel/department/delete?department_id=${id}`,
       null,
       header()
     );
@@ -436,7 +415,7 @@ export const getDepartmentDelete = async id => {
 export const getMemberList = async ({ page, limit }) => {
   try {
     return await axios.get(
-      `/bw/personnel/member/list?page=${page}&limit=${limit}`,
+      `personnel/member/list?page=${page}&limit=${limit}`,
       header()
     );
   } catch (error) {
@@ -447,7 +426,7 @@ export const getMemberList = async ({ page, limit }) => {
 export const getMemberInfo = async id => {
   try {
     return await axios.get(
-      `/bw/personnel/member/info?member_id=${id}`,
+      `/personnel/member/info?member_id=${id}`,
       header()
     );
   } catch (error) {
@@ -469,7 +448,7 @@ export const getMemberCreate = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/personnel/member/create`,
+      `/personnel/member/create`,
       {
         name,
         user_id,
@@ -503,7 +482,7 @@ export const getMemberUpdate = async ({
 }) => {
   try {
     return await axios.post(
-      `/bw/personnel/member/update?member_id=${id}`,
+      `/personnel/member/update?member_id=${id}`,
       {
         id,
         user_id,
@@ -526,7 +505,7 @@ export const getMemberUpdate = async ({
 export const getMemberDelete = async id => {
   try {
     return await axios.post(
-      `/bw/personnel/member/delete?member_id=${id}`,
+      `/personnel/member/delete?member_id=${id}`,
       null,
       header()
     );
@@ -541,7 +520,7 @@ export const getMemberDelete = async id => {
 export const getBoardList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/groupware/board/list?page=${page}&limit=${limit}&filter_type=${
+      `/board/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
       }${value?.length ? `&filter_val=${value}` : ''}`,
       header()
@@ -555,7 +534,7 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 export const getBoardDetail = async id => {
   try {
     return await axios.get(
-      `/groupware/board/detail?post_id=${id}`,
+      `/board/detail?post_id=${id}`,
       null,
       header()
     );
@@ -568,7 +547,7 @@ export const getBoardDetail = async id => {
 export const createBoard = async ({ title, content }) => {
   try {
     return await axios.post(
-      `/groupware/board/create`,
+      `/board/create`,
       {
         title: title,
         content: content,
@@ -584,7 +563,7 @@ export const createBoard = async ({ title, content }) => {
 export const editBoard = async ({ title, content }, id) => {
   try {
     return await axios.post(
-      `/groupware/board/update?post_id=${id}`,
+      `/board/update?post_id=${id}`,
       {
         title: title,
         content: content,
@@ -600,7 +579,7 @@ export const editBoard = async ({ title, content }, id) => {
 export const deleteBoard = async id => {
   try {
     return await axios.post(
-      `/groupware/board/delete?post_id=${id}`,
+      `/board/delete?post_id=${id}`,
       null,
       header()
     );
@@ -615,7 +594,7 @@ export const deleteBoard = async id => {
 export const getReportList = async ({ page, limit = 9 }, type, value) => {
   try {
     return await axios.get(
-      `/groupware/report/list?page=${page}&limit=${limit}&filter_type=${
+      `/report/list?page=${page}&limit=${limit}&filter_type=${
         value?.length ? type : 'all'
       }${value?.length ? `&filter_val=${value}` : ''}`,
       header()
@@ -629,7 +608,7 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
 export const getReportDetail = async id => {
   try {
     return await axios.get(
-      `/groupware/report/detail?report_id=${id}`,
+      `/report/detail?report_id=${id}`,
       header()
     );
   } catch (error) {
@@ -641,7 +620,7 @@ export const getReportDetail = async id => {
 export const createReport = async ({ title, content }) => {
   try {
     return await axios.post(
-      `/groupware/report/create`,
+      `/report/create`,
       {
         title: title,
         content: content,
@@ -657,7 +636,7 @@ export const createReport = async ({ title, content }) => {
 export const editReport = async ({ title, content }, id) => {
   try {
     return await axios.post(
-      `/groupware/report/update?report_id=${id}`,
+      `/report/update?report_id=${id}`,
       {
         title: title,
         content: content,
@@ -673,7 +652,7 @@ export const editReport = async ({ title, content }, id) => {
 export const deleteReport = async id => {
   try {
     return await axios.post(
-      `/groupware/report/delete?report_id=${id}`,
+      `/report/delete?report_id=${id}`,
       null,
       header()
     );
@@ -693,7 +672,7 @@ export const getProjectList = async (
 ) => {
   try {
     return await axios.get(
-      `/groupware/project/list?page=${page}&limit=${limit}${
+      `/project/list?page=${page}&limit=${limit}${
         name?.length ? `&project_name=${name}` : ''
       }${status?.length ? `&project_status=${status}` : ''}${
         start_date?.length ? `&start_date=${start_date}` : ''
@@ -709,7 +688,7 @@ export const getProjectList = async (
 export const getProjectDetail = async id => {
   try {
     return await axios.get(
-      `/groupware/project/detail?project_id=${id}`,
+      `/project/detail?project_id=${id}`,
       header()
     );
   } catch (error) {
@@ -720,7 +699,7 @@ export const getProjectDetail = async id => {
 //& 프로젝트 생성
 export const createProject = async projectInfo => {
   try {
-    return await axios.post(`/groupware/project/create`, projectInfo, header());
+    return await axios.post(`/project/create`, projectInfo, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -730,7 +709,7 @@ export const createProject = async projectInfo => {
 export const editProject = async (id, projectInfo) => {
   try {
     return await axios.post(
-      `/groupware/project/update?project_id=${id}`,
+      `/project/update?project_id=${id}`,
       projectInfo,
       header()
     );
@@ -743,7 +722,7 @@ export const editProject = async (id, projectInfo) => {
 export const deleteProject = async id => {
   try {
     return await axios.post(
-      `/groupware/project/delete?project_id=${id}`,
+      `/project/delete?project_id=${id}`,
       null,
       header()
     );
@@ -756,7 +735,7 @@ export const deleteProject = async id => {
 export const getProjectMember = async id => {
   try {
     return await axios.get(
-      `/groupware/project/project_members?project_id=${id}`,
+      `/project/project_members?project_id=${id}`,
       header()
     );
   } catch (error) {
@@ -767,7 +746,7 @@ export const getProjectMember = async id => {
 //& 프로젝트에 추가 가능한 인원 불러오기
 export const getPeopleList = async () => {
   try {
-    return await axios.get(`/groupware/project/member`, header());
+    return await axios.get(`/project/member`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -777,7 +756,7 @@ export const getPeopleList = async () => {
 export const addProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/groupware/project/member_add?project_id=${id}`,
+      `/project/member_add?project_id=${id}`,
       { new_member_id: memberId },
       header()
     );
@@ -790,7 +769,7 @@ export const addProjectMember = async (id, memberId) => {
 export const deleteProjectMember = async (id, memberId) => {
   try {
     return await axios.post(
-      `/groupware/project/member_delete?project_id=${id}`,
+      `/project/member_delete?project_id=${id}`,
       { delete_member_id: memberId },
       header()
     );
