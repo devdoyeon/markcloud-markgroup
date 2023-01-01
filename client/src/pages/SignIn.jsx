@@ -160,8 +160,8 @@ const SignIn = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+            if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else return;
           }}
         />
       )}

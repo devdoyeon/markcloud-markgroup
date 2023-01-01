@@ -8,7 +8,7 @@ import {
   getNoticeInfo,
   getReportDetail,
 } from 'js/groupwareApi';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -113,9 +113,12 @@ const BoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'deleteAlert') navigate(`/${path.split('/')[1]}`);
-            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
-            else return;
+            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}

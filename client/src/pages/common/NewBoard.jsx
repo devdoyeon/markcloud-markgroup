@@ -24,7 +24,7 @@ import {
   createNotice,
   deleteNotice,
 } from 'js/groupwareApi';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 
 const NewBoard = () => {
   const [alert, setAlert] = useState('');
@@ -302,9 +302,12 @@ const NewBoard = () => {
             else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit' || alert === 'notAuthority')
               navigate(`/${path.split('/')[1]}/${id}`);
-            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
-            else return;
+            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}
