@@ -535,7 +535,11 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 //& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
-    return await axios.get(`/groupware/board/detail?post_id=${id}`, null, header());
+    return await axios.get(
+      `/groupware/board/detail?post_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -576,7 +580,11 @@ export const editBoard = async ({ title, content }, id) => {
 //& 게시글 삭제
 export const deleteBoard = async id => {
   try {
-    return await axios.post(`/groupware/board/delete?post_id=${id}`, null, header());
+    return await axios.post(
+      `/groupware/board/delete?post_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -601,7 +609,10 @@ export const getReportList = async ({ page, limit = 9 }, type, value) => {
 //& 주간 업무 보고 상세내역 불러오기
 export const getReportDetail = async id => {
   try {
-    return await axios.get(`/groupware/report/detail?report_id=${id}`, header());
+    return await axios.get(
+      `/groupware/report/detail?report_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -642,7 +653,11 @@ export const editReport = async ({ title, content }, id) => {
 //& 주간 업무 보고 삭제
 export const deleteReport = async id => {
   try {
-    return await axios.post(`/groupware/report/delete?report_id=${id}`, null, header());
+    return await axios.post(
+      `/groupware/report/delete?report_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -674,7 +689,10 @@ export const getProjectList = async (
 //& 프로젝트 상세 보기
 export const getProjectDetail = async id => {
   try {
-    return await axios.get(`/groupware/project/detail?project_id=${id}`, header());
+    return await axios.get(
+      `/groupware/project/detail?project_id=${id}`,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -705,7 +723,11 @@ export const editProject = async (id, projectInfo) => {
 //& 프로젝트 삭제
 export const deleteProject = async id => {
   try {
-    return await axios.post(`/groupware/project/delete?project_id=${id}`, null, header());
+    return await axios.post(
+      `/groupware/project/delete?project_id=${id}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

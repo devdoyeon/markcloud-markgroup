@@ -18,7 +18,7 @@ import {
   regularExpression,
 } from 'js/commonUtils';
 import PostCode from './PostCode';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 import axios from 'axios';
 
 const PersonnelMember = () => {
@@ -564,9 +564,12 @@ const PersonnelMember = () => {
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply') navigate(`/personnel`);
             else if (alert === 'edit') navigate(`/personnel/${id}`);
-            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
-            else return;
+            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}

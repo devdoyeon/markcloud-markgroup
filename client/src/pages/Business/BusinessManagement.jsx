@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import SideMenu from 'common/SideMenu';
 import Pagination from 'common/Pagination';
 import { useNavigate } from 'react-router-dom';
+import CommonSelect from 'common/CommonSelect';
 import BusinessCommonSelect from './BusinessCommonSelect';
-import { getBusinessRead } from 'js/groupwareApi';
+import {
+  getBusinessFilterRead,
+  getBusinessInfo,
+  getBusinessRead,
+} from 'js/groupwareApi';
 import CommonModal from 'common/CommonModal';
 import { catchError, changeState, changeTitle } from 'js/commonUtils';
 import { getCookie } from 'js/cookie';
 import { useLocation } from 'react-router-dom';
-import BusinessProjectSelect from './BusinessProjectSelect';
 
 const BusinessManagement = () => {
   const [alert, setAlert] = useState('');
@@ -17,6 +21,7 @@ const BusinessManagement = () => {
     content: '',
     bool: false,
   });
+  const [num, setNum] = useState(0);
   const [list, setList] = useState([]);
   const [metaData, setMetaData] = useState({});
 
@@ -42,10 +47,9 @@ const BusinessManagement = () => {
   const [requesterValue, setRequesterValue] = useState(
     localStorage.getItem('userName')
   );
-  const [memberKey, setMemberKey] = useState(['선택']);
-  const [memberValueName, setMemberValueName] = useState([]);
+  const [memberKey, setMemberKey] = useState([]);
+  const [memberName, setMemberName] = useState([]);
   const [projectName, setProjectName] = useState(['선택']);
-  const [memberName, setMemberName] = useState(['선택']);
   const [memberCurKey, setMemberCurKey] = useState();
 
   const navigate = useNavigate();
@@ -67,16 +71,20 @@ const BusinessManagement = () => {
       // key : 키 value : 멤버이름
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
-      setMemberKey(['', ...key]);
-      setMemberValueName(['선택', ...value]);
+      setMemberKey(key);
+      setMemberName(value);
       setList(data);
       setMetaData(meta);
       if (projectName.length === 1) {
-        setProjectName(['선택', ...meta?.project_name]);
+        setProjectName(prev => {
+          const clone = [...prev];
+          meta?.project_name.forEach(name => {
+            clone.push(name);
+          });
+          return clone;
+        });
       }
-      if (memberName.length === 1) {
-        setMemberName(['선택', ...value]);
-      }
+      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;
@@ -85,21 +93,17 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-  const searchStart = () => {
-    getBusinessReadApi();
-  };
 
-  const handleDataClear = () => {
-    window.location.reload();
+  const searchStart = async () => {
+    // 여기 밑에서 api 요청
+    await getBusinessReadApi();
   };
 
   const renderTable = () => {
     return list.length === 0 ? (
       <>
         <tr>
-          <td colSpan={8} className='none-list'>
-            등록된 게시글이 없습니다.
-          </td>
+          <td colSpan={8}>등록된 게시글이 없습니다.</td>
         </tr>
       </>
     ) : (
@@ -125,8 +129,8 @@ const BusinessManagement = () => {
                 onClick={() => navigate(`/business/${id}`)}
                 className='table-row'>
                 <td>{(pageInfo.page - 1) * 10 + idx + 1}</td>
-                <td className='title'>{title}</td>
-                <td className='p-name'>{project_name}</td>
+                <td>{title}</td>
+                <td>{project_name}</td>
                 <td>{request_id}</td>
                 <td>{manager_id}</td>
                 <td
@@ -164,7 +168,7 @@ const BusinessManagement = () => {
         getBusinessReadApi();
       }
     }
-  }, [pageInfo.page, postInfo.project_name]);
+  }, [pageInfo.page]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
@@ -335,22 +339,22 @@ const BusinessManagement = () => {
             </div>
 
             <div className='project-wrap'>
+              {/* ============================= */}
               <div className='project-list'>
                 <span>프로젝트</span>
-                <BusinessProjectSelect
-                  opt={projectName}
+                <CommonSelect
+                  opt={projectName && projectName}
                   selectVal={projectValue}
                   setSelectVal={setProjectValue}
-                  pathname={pathname}
-                  postInfo={postInfo}
                 />
               </div>
+              {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
 
                 {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -362,7 +366,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -374,7 +378,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={contactValue}
                     setSelectVal={setContactValue}
                     postInfo={postInfo}
@@ -388,11 +392,12 @@ const BusinessManagement = () => {
                   <></>
                 )}
               </div>
+              {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
                 {postInfo.status_filter === 'MyProject' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -404,7 +409,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'MyRequest' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -416,7 +421,7 @@ const BusinessManagement = () => {
                   />
                 ) : postInfo.status_filter === 'All' ? (
                   <BusinessCommonSelect
-                    opt={memberValueName}
+                    opt={memberName}
                     selectVal={requesterValue}
                     setSelectVal={setRequesterValue}
                     postInfo={postInfo}
@@ -504,11 +509,7 @@ const BusinessManagement = () => {
                   onClick={() => searchStart()}>
                   검색
                 </button>
-                <button
-                  className='commonBtn clear'
-                  onClick={() => handleDataClear()}>
-                  초기화
-                </button>
+                <button className='commonBtn clear'>초기화</button>
               </div>
             </div>
           </div>
@@ -540,8 +541,8 @@ const BusinessManagement = () => {
                     <thead>
                       <tr>
                         <th>번호</th>
-                        <th className='title'>제목</th>
-                        <th className='p-name'>프로젝트</th>
+                        <th>제목</th>
+                        <th>프로젝트</th>
                         <th>요청자</th>
                         <th>담당자</th>
                         <th>진행상태</th>

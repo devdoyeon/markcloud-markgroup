@@ -31,7 +31,6 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     result === 'serverError' ||
     result === 'accessDenied' ||
     result === 'NotAuthority' ||
-    result === 'tokenExpired' ||
     result === 'loginExceeded' ||
     result === 'serviceExpired' ||
     result === 'alreadyProjectName' ||
@@ -50,6 +49,10 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     return navigate('/not-found');
   } else if (result === 'DuplicatedDpError') {
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+  } else if (result === 'tokenExpired') {
+    setAlert(result);
+    removeCookie('myToken')
+    removeCookie('rfToken')
   }
 };
 

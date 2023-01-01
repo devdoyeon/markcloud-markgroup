@@ -7,7 +7,7 @@ import ListWrap from 'common/ListWrap';
 import CommonModal from 'common/CommonModal';
 import { getBoardList } from 'js/groupwareApi';
 import { catchError, changeTitle } from 'js/commonUtils';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 
 const Board = () => {
   const [alert, setAlert] = useState('');
@@ -77,8 +77,12 @@ const Board = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+            if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}
