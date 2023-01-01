@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { removeCookie } from './cookie';
 
 // ================================== DY ==================================
