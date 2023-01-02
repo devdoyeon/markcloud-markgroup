@@ -85,7 +85,7 @@ const BusinessBoardRead = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <div>{project_name}</div>
+                <div className='pr-name'>{project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
