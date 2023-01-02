@@ -18,7 +18,6 @@ def varify_access_token(f):
     def decode(*args, **kwargs):
 
         access_token = kwargs['access_token']
-        print(access_token)
 
         try:
             access_payload = jwt.decode(access_token,SECRET_KEY, algorithms=SECURITY_ALGORITHM)
