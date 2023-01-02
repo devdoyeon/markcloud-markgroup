@@ -134,7 +134,6 @@ const NewProject = () => {
       changeTitle('그룹웨어 > 프로젝트 작성');
       getOrigin();
     } else return;
-    console.log(projectInfo.project_start_date, projectInfo.project_end_date);
   }, []);
 
   useEffect(() => {
