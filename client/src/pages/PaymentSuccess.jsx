@@ -40,7 +40,7 @@ const PaymentSuccess = () => {
 
   //= dataLayer 추가
   useEffect(() => {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.innerHTML = `window.dataLayer = window.dataLayer || [];
         dataLayer.push({${appendData}})`;
     document.head.append(script);
@@ -67,7 +67,6 @@ const PaymentSuccess = () => {
                 </h2>
                 <div>
                   <h3>
-                    검색 서비스
                     <br />
                     <span className='highlight'>{name}</span>
                   </h3>

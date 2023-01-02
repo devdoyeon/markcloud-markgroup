@@ -10,6 +10,7 @@ import {
   changeState,
   catchError,
   emptyCheck,
+  addZero,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -33,12 +34,12 @@ const NewProject = () => {
   const [projectInfo, setProjectInfo] = useState({
     project_name: '',
     project_description: '',
-    project_start_date: `${date.getFullYear()}-${
+    project_start_date: `${date.getFullYear()}-${addZero(
       date.getMonth() + 1
-    }-${date.getDate()}`,
-    project_end_date: `${date.getFullYear()}-${
+    )}-${addZero(date.getDate())}`,
+    project_end_date: `${date.getFullYear()}-${addZero(
       date.getMonth() + 1
-    }-${date.getDate()}`,
+    )}-${addZero(date.getDate())}`,
     project_status: selectVal,
   });
   const navigate = useNavigate();
@@ -133,6 +134,7 @@ const NewProject = () => {
       changeTitle('그룹웨어 > 프로젝트 작성');
       getOrigin();
     } else return;
+    console.log(projectInfo.project_start_date, projectInfo.project_end_date);
   }, []);
 
   useEffect(() => {
