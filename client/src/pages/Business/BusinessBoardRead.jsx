@@ -46,38 +46,15 @@ const BusinessBoardRead = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  let prevent = false;
-
-  // const getDetail = async () => {
-  //   if (prevent) return;
-  //   prevent = false;
-  //   setTimeout(() => {
-  //     prevent = true;
-  //   }, 200);
-  //   const result = await getBusinessInfo(id);
-  //   console.log(result);
-  //   if (typeof result === 'object') {
-  //     setInfo(result?.data);
-  //     document.querySelector('.content').innerHTML =
-  //       new DOMParser().parseFromString(
-  //         result?.data?.content,
-  //         'text/html'
-  //       ).body.innerHTML;
-  //   } else {
-  //     catchError(result, navigate, setAlertBox, setAlert);
-  //     //에러핸들링
-  //   }
-  // };
-
   const getBusinessDetail = async () => {
     const pathName = path.split(`/`)[1];
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
-      setInfo(result?.data);
+      setInfo(result?.data[0]);
       document.querySelector('.edit').innerHTML =
         new DOMParser().parseFromString(
-          result?.data?.content,
+          result?.data[0]?.content,
           'text/html'
         ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -93,15 +70,7 @@ const BusinessBoardRead = () => {
     if (getCookie('myToken')) if (id?.length) getBusinessDetail();
   }, []);
 
-  const {
-    created_at,
-    manager_id,
-    project_name,
-    request_id,
-    title,
-    work_end_date,
-    work_status,
-  } = info;
+  const { manager_id, project_name, request_id, title, work_status } = info;
 
   return (
     <>
