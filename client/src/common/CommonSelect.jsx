@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import selectArrow from 'image/selectArrow.svg';
-import { useNavigate } from 'react-router-dom';
 
 const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
   const [select, setSelect] = useState('off');

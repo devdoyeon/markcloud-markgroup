@@ -7,7 +7,7 @@ import CommonModal from 'common/CommonModal';
 import ListWrap from 'common/ListWrap';
 import { getReportList } from 'js/groupwareApi';
 import { catchError, changeTitle } from 'js/commonUtils';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 
 const Report = () => {
   const [alert, setAlert] = useState('');
@@ -27,6 +27,7 @@ const Report = () => {
   let prevent = false;
   const navigate = useNavigate;
 
+  //= 주간 업무 보고 리스트 불러오기
   const getReport = async () => {
     if (prevent) return;
     prevent = true;
@@ -76,8 +77,12 @@ const Report = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+            if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}

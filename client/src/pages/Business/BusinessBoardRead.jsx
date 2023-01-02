@@ -1,19 +1,46 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import { catchError, changeTitle } from 'js/commonUtils';
+import {
+  changeState,
+  commonModalSetting,
+  catchError,
+  changeTitle,
+} from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
+import CommonSelect from 'common/CommonSelect';
 import { getBusinessInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
+import {
+  getBoardDetail,
+  createBoard,
+  editBoard,
+  editNotice,
+  getNoticeInfo,
+  createNotice,
+} from 'js/groupwareApi';
 
 const BusinessBoardRead = () => {
   const [alert, setAlert] = useState('');
+  const [list, setList] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [postInfo, setPostInfo] = useState({
+    project_name: '==',
+    title: '',
+    content: '',
+    work_status: '==',
+    request_id: '==',
+    manager_id: '==',
+  });
   const [alertBox, setAlertBox] = useState({
     mode: '',
     content: '',
     bool: false,
   });
   const [info, setInfo] = useState({});
+
+  const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
   const { id } = useParams();
@@ -27,7 +54,7 @@ const BusinessBoardRead = () => {
       setInfo(result?.data[0]);
       document.querySelector('.edit').innerHTML =
         new DOMParser().parseFromString(
-          result?.data[0].content,
+          result?.data[0]?.content,
           'text/html'
         ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -56,9 +83,9 @@ const BusinessBoardRead = () => {
 
           <div className='work-wrap project-work-wrap'>
             <div className='project-wrap project-name'>
-              <div className='project-list list-detail'>
+              <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <div className='name-wrap'>{project_name}</div>
+                <div className='pr-name'>{project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
@@ -67,10 +94,12 @@ const BusinessBoardRead = () => {
                 <span>요청자</span>
                 <div>{request_id}</div>
               </div>
+              {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
                 <div>{manager_id}</div>
               </div>
+              {/* ============================= */}
               <div className='project-list'>
                 <span>진행상태</span>
                 <div>{work_status}</div>
@@ -82,7 +111,13 @@ const BusinessBoardRead = () => {
                 <div className='input-read'>{title}</div>
               </div>
             </div>
-            <div className='edit'>{/* HTML PARSER 로 데이터 표시 */}</div>
+            <div className='edit'>
+              {/* <EditorComponent
+                content={postInfo.content}
+                setContent={setPostInfo}
+                col='content'
+              /> */}
+            </div>
           </div>
           <div className='btn-wrap'>
             <button

@@ -144,7 +144,7 @@ const CommonFooter = () => {
                 'scrollbars=no,resizable=no,width=565,height=683'
               )
             }
-            className='mobile-none'
+            className='commonFooter mobile-none'
           />
         </div>
       </div>

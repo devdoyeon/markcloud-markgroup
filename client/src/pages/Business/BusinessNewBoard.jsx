@@ -166,6 +166,7 @@ const BusinessNewBoard = () => {
                   setSelectVal={setRequesterValue}
                   postInfo={postInfo}
                   setPostInfo={setPostInfo}
+                  projectValue={projectValue}
                 />
               </div>
               <div className='project-list'>
@@ -178,6 +179,7 @@ const BusinessNewBoard = () => {
                   setSelectVal={setContactValue}
                   postInfo={postInfo}
                   setPostInfo={setPostInfo}
+                  projectValue={projectValue}
                 />
               </div>
               <div className='project-list'>

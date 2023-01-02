@@ -7,11 +7,11 @@ import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, addComma } from 'js/commonUtils';
 
 const PaymentSuccess = () => {
-  //props값 없을 시 error page로 이동
+  //= props값 없을 시 error page로 이동
   const location = useLocation();
 
   if (!location?.state) {
-    window.location.href = 'http://localhost:3000/mark-error';
+    window.location.href = '/error';
   }
 
   const splitDate = (str, type) => {
@@ -38,15 +38,15 @@ const PaymentSuccess = () => {
             }
         }`;
 
-  //dataLayer 추가
+  //= dataLayer 추가
   useEffect(() => {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.innerHTML = `window.dataLayer = window.dataLayer || [];
         dataLayer.push({${appendData}})`;
     document.head.append(script);
   }, [appendData]);
 
-  //title 변경
+  //= title 변경
   useEffect(() => {
     changeTitle('그룹웨어 > 결제 성공');
   }, []);
@@ -67,9 +67,8 @@ const PaymentSuccess = () => {
                 </h2>
                 <div>
                   <h3>
-                    검색 서비스
                     <br />
-                    <span className='highlight'>{name}</span>
+                    <span className='highlight'>{name.replaceAll('마크뷰', '마크그룹웨어')}</span>
                   </h3>
                   <h4>
                     총 결제금액&nbsp;
@@ -103,7 +102,7 @@ const PaymentSuccess = () => {
             )}
             <div className='btn-wrap'>
               <a
-                href='http://localhost:3000/mark-mypage'
+                href='https://markcloud.co.kr/mark-mypage'
                 rel='noopener noreferrer'
                 target='_self'>
                 <button className='commonBtn go-list'>구매내역 보기</button>

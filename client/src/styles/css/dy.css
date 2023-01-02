@@ -1164,3 +1164,7 @@
   border-radius: 8px;
   margin-left: 16px;
 }
+
+.commonFooter {
+  cursor: pointer;
+}

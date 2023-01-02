@@ -142,7 +142,7 @@ const SideMenu = () => {
             </div>
             <a
               className='row go-myPage'
-              href='http://localhost:3000/mark-mypage'>
+              href='https://markcloud.co.kr/mark-mypage'>
               <span>
                 {localStorage.getItem('userName')}(
                 {localStorage.getItem('userId')})

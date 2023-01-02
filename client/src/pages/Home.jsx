@@ -6,7 +6,7 @@ import CommonSiteMap from 'common/CommonSiteMap';
 import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo, checkPoint } from 'js/groupwareApi';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';
@@ -34,6 +34,7 @@ const Home = () => {
     changeTitle('그룹웨어 > 메인');
   }, []);
 
+  //= 체크포인트
   const navigateHandling = async () => {
     if (!getCookie('myToken')) {
       commonModalSetting(
@@ -66,7 +67,7 @@ const Home = () => {
 
   return (
     <>
-    <SideMenuBtn/>
+      <SideMenuBtn />
       <div className='main container column'>
         <CommonSiteMap color='white' />
         <div className='mainContent-wrap'>
@@ -237,10 +238,13 @@ const Home = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'needLogin') return navigate('/sign-in');
-            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/sign-in');
             else if (alert === 'paymentRequired') return navigate('/cost');
-            else return;
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}

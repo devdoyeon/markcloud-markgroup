@@ -1,8 +1,8 @@
-import $ from 'jquery';
 import { removeCookie } from './cookie';
 
-// ================================== 도연 ==================================
+// ================================== DY ==================================
 
+//& 에러 리스트
 export const errorList = {
   emptyBoth: '아이디와 비밀번호를 입력해 주세요.',
   emptyId: '아이디를 입력해 주세요.',
@@ -19,17 +19,17 @@ export const errorList = {
   paymentRequired:
     '유료 결제가 필요한 서비스입니다.<br/>요금제 안내 페이지로 이동하시겠습니까?',
   serviceExpired: '서비스 사용 기간이 만료되었습니다.',
-  alreadyProjectName: '이미 있는 프로젝트 이름입니다.',
+  alreadyProjectName: '이미 존재하는 프로젝트 이름입니다.',
   alreadyUsedProject:
     '업무 관리에 등록되어 있는 프로젝트입니다.<br/>프로젝트를 삭제할 수 없습니다.',
 };
 
+//& API 통신 결과 에러 반환일 때 ErrorHandling Fn
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
   if (
     result === 'serverError' ||
     result === 'accessDenied' ||
     result === 'NotAuthority' ||
-    result === 'tokenExpired' ||
     result === 'loginExceeded' ||
     result === 'serviceExpired' ||
     result === 'alreadyProjectName' ||
@@ -44,18 +44,23 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
   } else if (result === 'paymentRequired') {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
-  } else if (result === 'notFound') {
-    return navigate('/not-found');
-  } else if (result === 'DuplicatedDpError') {
+  } else if (result === 'notFound') return navigate('/not-found');
+  else if (result === 'DuplicatedDpError')
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+  else if (result === 'tokenExpired') {
+    setAlert(result);
+    removeCookie('myToken');
+    removeCookie('rfToken');
   }
 };
 
+//& Input이나 기타 str값 emptyCheck
 export const emptyCheck = value => {
   if (!value?.length || value?.trim() === '') return false;
   else return true;
 };
 
+//& Object 형식의 State 변경 용이하게 하는 함수
 export const changeState = (setState, col, val) => {
   setState(prev => {
     const clone = { ...prev };
@@ -64,10 +69,12 @@ export const changeState = (setState, col, val) => {
   });
 };
 
+//& 엔터 입력했을 때 사용하는 함수
 export const enterFn = (e, okFn) => {
   if (e.key === 'Enter') okFn();
 };
 
+//& alert, confirm창 Handling
 export const commonModalSetting = (setAlertBox, bool, mode, content) => {
   if (bool) {
     setAlertBox({
@@ -84,47 +91,29 @@ export const commonModalSetting = (setAlertBox, bool, mode, content) => {
   }
 };
 
+//& Document Title 변경 함수
 export const changeTitle = txt => {
   document.title = txt;
 };
 
-export const headerHoverEvent = () => {
-  const main = '.main-nav';
-  const sub = '.sub-nav';
-  const bg = '.sub-nav-bg';
-  const speed = 300;
-  $(main).mouseenter(function () {
-    $('.common-header').css({
-      backgroundColor: 'rgba(21, 23, 26, 0.5)',
-      borderBottom: '1px solid #FFFFFF',
-    });
-    $(sub + ',' + bg)
-      .stop()
-      .slideUp(0);
-    $(this).next().stop().slideDown(speed);
-    $(bg).stop().slideDown(speed);
-    $(this)
-      .parent()
-      .mouseleave(function () {
-        $(this).find(sub).stop().slideUp(speed);
-        $(bg).stop().slideUp(speed);
-        $('.common-header').css({
-          backgroundColor: 'transparent',
-          borderBottom: 'none',
-        });
-      });
-  });
-};
-
+//& 천 원 단위로 콤마 찍어주는 함수
 export const addComma = str => {
   if (!str) return '';
   return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+//& 10보다 작을 경우 0 포함
+export const addZero = t => {
+  if (t < 10) return `0${t}`;
+  else return t;
+};
+
+//& Object Value로 Key 뽑아와 주는 함수
 export const getKeyByValue = (obj, value) => {
   return Object.keys(obj).find(key => obj[key] === value);
 };
 
+//& string을 html Type으로 변경해 주는 함수
 export const text2html = (c, str) => {
   document.querySelector(c).innerHTML = new DOMParser().parseFromString(
     str,
@@ -132,7 +121,7 @@ export const text2html = (c, str) => {
   ).body.innerHTML;
 };
 
-//----------------------------------------------------------------------------------------
+// ================================== BW ==================================
 
 export const numberWithCommas = x => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

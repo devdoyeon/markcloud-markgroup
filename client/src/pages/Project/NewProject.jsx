@@ -10,6 +10,7 @@ import {
   changeState,
   catchError,
   emptyCheck,
+  addZero,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -17,7 +18,7 @@ import {
   editProject,
   deleteProject,
 } from 'js/groupwareApi';
-import { getCookie } from 'js/cookie';
+import { getCookie, removeCookie } from 'js/cookie';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -33,12 +34,12 @@ const NewProject = () => {
   const [projectInfo, setProjectInfo] = useState({
     project_name: '',
     project_description: '',
-    project_start_date: `${date.getFullYear()}-${
+    project_start_date: `${date.getFullYear()}-${addZero(
       date.getMonth() + 1
-    }-${date.getDate()}`,
-    project_end_date: `${date.getFullYear()}-${
+    )}-${addZero(date.getDate())}`,
+    project_end_date: `${date.getFullYear()}-${addZero(
       date.getMonth() + 1
-    }-${date.getDate()}`,
+    )}-${addZero(date.getDate())}`,
     project_status: selectVal,
   });
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const NewProject = () => {
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
-    } else return catchError(result, navigate, setAlertBox, setAlert)
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 수정일 때 기존 디테일 불러오기
@@ -299,9 +300,12 @@ const NewProject = () => {
             else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
               navigate(`/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
-            else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
-            else return;
+            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'tokenExpired') {
+              removeCookie('myToken');
+              removeCookie('rfToken');
+              navigate('/');
+            } else return;
           }}
         />
       )}
