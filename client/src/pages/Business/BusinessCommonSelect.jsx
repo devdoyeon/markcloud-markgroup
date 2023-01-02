@@ -12,6 +12,7 @@ const BusinessCommonSelect = ({
   nameKey,
   setMemberCurKey,
   admin,
+  projectValue,
 }) => {
   const [select, setSelect] = useState('off');
 
@@ -44,6 +45,9 @@ const BusinessCommonSelect = ({
             }
           }
           if (admin === 'admin') {
+            return setSelect('off');
+          }
+          if (projectValue === '선택') {
             return setSelect('off');
           }
           select === 'on' ? setSelect('off') : setSelect('on');
