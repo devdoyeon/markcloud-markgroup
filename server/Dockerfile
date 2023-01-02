@@ -8,8 +8,8 @@ RUN apk add --no-cache pkgconfig \
                        libc-dev \
                        && rm -rf /var/cache/apk/*
 
-WORKDIR /app
-COPY ./ /app
+WORKDIR /server
+COPY ./ /server
 ENTRYPOINT if [ ! -d ./venv/ ]; then \
 echo "[INFO] >> Installing dependencies, please wait..." && \
 python -m venv ./venv && \
