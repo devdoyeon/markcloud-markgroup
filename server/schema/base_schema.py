@@ -29,3 +29,10 @@ class filterType(str, Enum):
     all = "all"
     title = "title"
     created_id = "created_id"
+    
+    
+class projectStatusType(str, Enum):
+    all = "all"             # 전체
+    before = "before"       # 시작전
+    progress = "progress"   # 진행중
+    complete = "complete"   # 종료

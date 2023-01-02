@@ -4,3 +4,4 @@ server/*/__pycache__/
 server/*/*/__pycache__/
 .env
 /venv/
+venv/

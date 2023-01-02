@@ -4,14 +4,11 @@ from starlette import status
 
 from datetime import datetime
 
-from models import BoardTable, OrganizationTable
-from model import memberManageModel
+from models import BoardTable
+from model.memberManageModel import *
 
 from schema.board_schema import PostCreate, PostUpdate
-
-member_table = memberManageModel.MemberTable
-organization_table = OrganizationTable
-
+from router import author_chk
 
 
 def get_post_list(db: Session, 
@@ -19,39 +16,20 @@ def get_post_list(db: Session,
                   filter_val: str, 
                   offset: int, 
                   limit: int, 
-                  user_id: str):
-    
+                  user_pk: int):
     try:  
-        # user_id의 회사 코드 가져오기 (본인 회사의 글만 db에서 가져와야 함)
-        
-        # #
-        # sql = db.query(member_table.department_code).filter(member_table.user_id == user_id)
-        # organ_code = db.execute(sql).all()
-        # organ_code = [i for i, in organ_code]
-        # post_list = db.query(BoardTable).filter(BoardTable.organ_code==organ_code)
-        # #
-        
-        ##
-        # member = db.query(MemberTable).filter(MemberTable.user_id == user_id).first()
-        # post_list = db.query(BoardTable).filter(BoardTable.organ_code == member.department_code)
-        # print(" m e m b e r ", member)
-        # ##
-        
-        
-        # ### join 쓰는 코드로 변경하기 (추후에)
-        # post_list_2 = db.query(BoardTable).join(MemberTable).filter(MemberTable.user_id == user_id)
-        query = db.query(BoardTable)
-        post_list = query.join(memberManageModel.MemberTable, BoardTable.organ_code == memberManageModel.MemberTable.department_code).filter(memberManageModel.MemberTable.user_id == user_id)
-        
+        user_info = author_chk.get_user_info(db, user_pk)
+        post_list = db.query(BoardTable.id, BoardTable.created_at, MemberTable.name.label('created_id'), BoardTable.title) \
+            .filter(BoardTable.organ_code == user_info.department_code) \
+                .join(MemberTable, BoardTable.created_id == MemberTable.id).order_by(BoardTable.id.desc())
         
         search = f'%%{filter_val}%%'
         if filter_type == "title":
             post_list = post_list.filter(BoardTable.title.ilike(search))
         elif filter_type == "created_id":
-            post_list = post_list.filter(BoardTable.created_id.ilike(search))
+            post_list = post_list.filter(MemberTable.name.ilike(search))
         total = post_list.distinct().count()
         print(f"t o t a l :: {total}")
-        print(post_list)
         post_list = post_list.order_by(BoardTable.created_at.desc()).offset(offset).limit(limit).all()
         return total, post_list
     except:
@@ -60,48 +38,68 @@ def get_post_list(db: Session,
 
 def get_post(db: Session, post_id: int):
     try:
-        post = db.query(BoardTable).get(post_id)
+        post = db.query(BoardTable.title, BoardTable.created_at, BoardTable.updated_at, BoardTable.content, 
+                        MemberTable.name.label('created_id'), MemberTable.id.label('user_pk')) \
+            .filter(BoardTable.id == post_id) \
+                .join(MemberTable,BoardTable.created_id == MemberTable.id).first()
+        
+        
         return post
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
-def create_post(db: Session, user_id: str, post_create: PostCreate):
-    try:  
-        # user_id의 회사 코드 가져오기 (본인 회사의 글만 db에서 가져와야 함)
-        sql = db.query(member_table.department_code).filter(member_table.user_id == user_id)
-        organ_code = db.execute(sql).all()
-        organ_code = [i for i, in organ_code]
+
+def create_post(db: Session, user_pk: int, post_create: PostCreate):
+    try: 
+        user_info = author_chk.get_user_info(db, user_pk)
+        organ_code = user_info.department_code
         
         db_post = BoardTable(organ_code=organ_code,
                         title=post_create.title,
                         content=post_create.content,
                         created_at=datetime.now(),
-                        created_id=user_id,
+                        created_id=user_pk,
                         updated_at=datetime.now(),
-                        updated_id=user_id
+                        updated_id=user_pk
                         )
         db.add(db_post)
-        db.commit()
-        
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
 
-def update_post(db: Session, db_post: BoardTable, post_update: PostUpdate, user_id: str):     # current_user로 고치기
-    try:
-        db_post.title = post_update.title
-        db_post.content = post_update.content
-        db_post.updated_at = datetime.now()
-        db_post.updated_id = user_id     # current_user로 고치기
-        db.add(db_post)
-        db.commit()
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+def update_post(
+    db: Session,
+    post_update: PostUpdate,
+    post_id: int,
+    user_pk: int
+    ):
+    user_info = author_chk.get_user_info(db, user_pk)
     
-     
-def delete_post(db: Session, db_post: BoardTable):
-    try:    
-        db.delete(db_post)
-        db.commit()
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+    update_values = {
+        "title": post_update.title,
+        "content": post_update.content,
+        "updated_at": datetime.now(),
+        "updated_id": user_pk
+    }
+    
+    db_post = db.query(BoardTable).filter(BoardTable.id == post_id).first()
+    
+    print(type(db_post.created_id))
+    if user_pk == db_post.created_id or user_info.groupware_only_yn == 'N':
+        db.query(BoardTable).filter_by(id = post_id).update(update_values)
+    else:
+        raise HTTPException(status_code=422, detail='InvalidClient')
+
+
+def delete_post(db: Session, post_id: int, user_pk: int):
+    
+    user_info = author_chk.get_user_info(db, user_pk)
+
+    db_post = db.query(BoardTable).filter(BoardTable.id == post_id)    
+    
+    if user_pk == db_post.first().created_id or user_info.groupware_only_yn == 'N':
+        db_post.delete()
+    else:
+        raise HTTPException(status_code=422, detail='InvalidClient')
+    
+    
