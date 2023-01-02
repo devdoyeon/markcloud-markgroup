@@ -115,6 +115,15 @@
         }
         .project-wrap {
           @include flex-style($justifyVal: flex-start);
+          &.project-name {
+            > .project-list {
+              width: 100%;
+              @include flex-style($direction: row, $justifyVal: flex-start);
+              .pr-name {
+                width: 782px;
+              }
+            }
+          }
           &.board-head {
             > .project-list {
               padding-left: 8px;
@@ -154,6 +163,9 @@
                     }
                   }
                 }
+              }
+              > .detail {
+                width: 782px;
               }
             }
             width: calc((100% / 3) - 14px);

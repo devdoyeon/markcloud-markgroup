@@ -120,6 +120,17 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 }
+.container .content-wrap.business .work-wrap .project-wrap.project-name > .project-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.container .content-wrap.business .work-wrap .project-wrap.project-name > .project-list .pr-name {
+  width: 782px;
+}
 .container .content-wrap.business .work-wrap .project-wrap.board-head > .project-list {
   padding-left: 8px;
 }
@@ -165,6 +176,9 @@
 }
 .container .content-wrap.business .work-wrap .project-wrap > div.project-list > .selectBox > .selectOptGroup > div:hover {
   color: #5850cc;
+}
+.container .content-wrap.business .work-wrap .project-wrap > div.project-list > .detail {
+  width: 782px;
 }
 .container .content-wrap.business .work-wrap .project-wrap > div::after {
   content: "";
