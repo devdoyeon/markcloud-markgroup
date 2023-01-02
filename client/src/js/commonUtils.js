@@ -102,6 +102,12 @@ export const addComma = str => {
   return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+//& 10보다 작을 경우 0 포함
+export const addZero = t => {
+  if (t < 10) return `0${t}`;
+  else return t;
+};
+
 //& Object Value로 Key 뽑아와 주는 함수
 export const getKeyByValue = (obj, value) => {
   return Object.keys(obj).find(key => obj[key] === value);
