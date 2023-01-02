@@ -169,3 +169,16 @@ $thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+//---------------애니메이션---------------
+@keyframes marquee {
+  from {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  99%,
+  to {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
