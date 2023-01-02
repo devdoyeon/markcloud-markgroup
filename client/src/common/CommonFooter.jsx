@@ -13,7 +13,7 @@ const CommonFooter = () => {
           <ul>
             <li className='nav-list'>
               <a
-                href='/mark-business'
+                href='https://markcloud.co.kr/mark-business'
                 rel='noopener noreferrer'
                 target='_self'
                 className='bold'>
@@ -22,7 +22,7 @@ const CommonFooter = () => {
             </li>
             <li className='nav-list'>
               <a
-                href='/mark-map'
+                href='https://markcloud.co.kr/mark-map'
                 rel='noopener noreferrer'
                 target='_self'
                 className='bold'>
@@ -31,7 +31,7 @@ const CommonFooter = () => {
             </li>
             <li className='nav-list'>
               <a
-                href='/privacy'
+                href='https://markcloud.co.kr/privacy'
                 rel='noopener noreferrer'
                 target='_self'
                 className='highlight'>
@@ -40,7 +40,7 @@ const CommonFooter = () => {
             </li>
             <li className='nav-list'>
               <a
-                href='/use'
+                href='https://markcloud.co.kr/use'
                 rel='noopener noreferrer'
                 target='_self'
                 className='bold'>
@@ -86,7 +86,7 @@ const CommonFooter = () => {
                     rel='noopener noreferrer'
                     target='_self'
                     className='last'>
-                    그룹웨어
+                    마크그룹웨어
                   </a>
                 </li>
               </ul>
