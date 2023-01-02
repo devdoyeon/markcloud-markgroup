@@ -48,7 +48,7 @@ const BusinessManagement = () => {
     localStorage.getItem('userName')
   );
   const [memberKey, setMemberKey] = useState([]);
-  const [memberName, setMemberName] = useState([]);
+  const [memberName, setMemberName] = useState(['선택']);
   const [projectName, setProjectName] = useState(['선택']);
   const [memberCurKey, setMemberCurKey] = useState();
 
@@ -71,8 +71,8 @@ const BusinessManagement = () => {
       // key : 키 value : 멤버이름
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
-      setMemberKey(key);
-      setMemberName(value);
+      setMemberKey(['', ...key]);
+      setMemberName(['선택', ...value]);
       setList(data);
       setMetaData(meta);
       if (projectName.length === 1) {

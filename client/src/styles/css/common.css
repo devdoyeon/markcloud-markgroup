@@ -1,4 +1,14 @@
 @charset "UTF-8";
+@keyframes marquee {
+  from {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  99%, to {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
