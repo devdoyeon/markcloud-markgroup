@@ -72,15 +72,15 @@ const SignIn = () => {
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
-        path: '/',
+        path: '/gp',
         secure: false,
       });
       setCookie('rfToken', refresh_token, {
-        path: '/',
+        path: '/gp',
         secure: false,
       });
       checkUser();
-      navigate('/');
+      navigate('/gp');
     } else {
       //@ Error Handling
       if (result === 'wrongId' || result === 'wrongPw') checkForm(result, true);
