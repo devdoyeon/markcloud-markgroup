@@ -41,16 +41,16 @@ function App() {
     <div className='App'>
       <Routes>
         <Route path='/gp' element={<Home />} />
-        <Route path='/gp/sign-in' element={<SignIn />} />
-        <Route path='/gp/cost' element={<Cost />} />
-        <Route path='/gp/payment' element={<Payment />} />
-        <Route path='/gp/payment-success' element={<PaymentSuccess />} />
-        <Route path='/gp/project' element={<ProjectStatus />} />
-        <Route path='/gp/report' element={<Report />} />
-        <Route path='/gp/board' element={<Board />} />
-        <Route path='/gp/business' element={<BusinessManagement />} />
-        <Route path='/gp/personnel' element={<PersonnelManagement />} />
-        <Route path='/gp/notice' element={<Notice />} />
+        <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/cost' element={<Cost />} />
+        <Route path='/payment' element={<Payment />} />
+        <Route path='/payment-success' element={<PaymentSuccess />} />
+        <Route path='/project' element={<ProjectStatus />} />
+        <Route path='/report' element={<Report />} />
+        <Route path='/board' element={<Board />} />
+        <Route path='/business' element={<BusinessManagement />} />
+        <Route path='/personnel' element={<PersonnelManagement />} />
+        <Route path='/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
         <Route path='/gp/project/:id' element={<ProjectDetail />} />
         <Route path='/gp/report/:id' element={<BoardRead />} />
