@@ -41,36 +41,36 @@ function App() {
     <div className='App'>
       <Routes>
         <Route path='/gp' element={<Home />} />
-        <Route path='/sign-in' element={<SignIn />} />
-        <Route path='/cost' element={<Cost />} />
-        <Route path='/payment' element={<Payment />} />
-        <Route path='/payment-success' element={<PaymentSuccess />} />
-        <Route path='/project' element={<ProjectStatus />} />
-        <Route path='/report' element={<Report />} />
-        <Route path='/board' element={<Board />} />
-        <Route path='/business' element={<BusinessManagement />} />
-        <Route path='/personnel' element={<PersonnelManagement />} />
-        <Route path='/notice' element={<Notice />} />
+        <Route path='/gp/sign-in' element={<SignIn />} />
+        <Route path='/gp/cost' element={<Cost />} />
+        <Route path='/gp/payment' element={<Payment />} />
+        <Route path='/gp/payment-success' element={<PaymentSuccess />} />
+        <Route path='/gp/project' element={<ProjectStatus />} />
+        <Route path='/gp/report' element={<Report />} />
+        <Route path='/gp/board' element={<Board />} />
+        <Route path='/gp/business' element={<BusinessManagement />} />
+        <Route path='/gp/personnel' element={<PersonnelManagement />} />
+        <Route path='/gp/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
-        <Route path='/project/:id' element={<ProjectDetail />} />
-        <Route path='/report/:id' element={<BoardRead />} />
-        <Route path='/board/:id' element={<BoardRead />} />
-        <Route path='/notice/:id' element={<BoardRead />} />
-        <Route path='/business/:id' element={<BusinessBoardRead />} />
+        <Route path='/gp/project/:id' element={<ProjectDetail />} />
+        <Route path='/gp/report/:id' element={<BoardRead />} />
+        <Route path='/gp/board/:id' element={<BoardRead />} />
+        <Route path='/gp/notice/:id' element={<BoardRead />} />
+        <Route path='/gp/business/:id' element={<BusinessBoardRead />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
-        <Route path='/project/write' element={<NewProject />} />
-        <Route path='/report/write' element={<NewBoard />} />
-        <Route path='/board/write' element={<NewBoard />} />
-        <Route path='/notice/write' element={<NewBoard />} />
-        <Route path='/business/write' element={<BusinessNewBoard />} />
-        <Route path='/personnel/write' element={<PersonnelMember />} />
+        <Route path='/gp/project/write' element={<NewProject />} />
+        <Route path='/gp/report/write' element={<NewBoard />} />
+        <Route path='/gp/board/write' element={<NewBoard />} />
+        <Route path='/gp/notice/write' element={<NewBoard />} />
+        <Route path='/gp/business/write' element={<BusinessNewBoard />} />
+        <Route path='/gp/personnel/write' element={<PersonnelMember />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
-        <Route path='/project/write/:id' element={<NewProject />} />
-        <Route path='/report/write/:id' element={<NewBoard />} />
-        <Route path='/board/write/:id' element={<NewBoard />} />
-        <Route path='/notice/write/:id' element={<NewBoard />} />
-        <Route path='/business/write/:id' element={<BusinessEditBoard />} />
-        <Route path='/personnel/write/:id' element={<PersonnelMember />} />
+        <Route path='/gp/project/write/:id' element={<NewProject />} />
+        <Route path='/gp/report/write/:id' element={<NewBoard />} />
+        <Route path='/gp/board/write/:id' element={<NewBoard />} />
+        <Route path='/gp/notice/write/:id' element={<NewBoard />} />
+        <Route path='/gp/business/write/:id' element={<BusinessEditBoard />} />
+        <Route path='/gp/personnel/write/:id' element={<PersonnelMember />} />
         {/* -------------------------------------------------- */}
         <Route path='/*' element={<NotFound />} />
       </Routes>
