@@ -27,8 +27,6 @@ const Notice = () => {
   let prevent = false;
   const navigate = useNavigate();
 
-  const cookie = getCookie('myToken');
-
   const getNoticeApi = async () => {
     if (prevent) return;
     prevent = true;

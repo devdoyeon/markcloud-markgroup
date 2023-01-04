@@ -32,7 +32,7 @@ const BoardRead = () => {
       prevent = true;
     }, 200);
     let result;
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'notice':
         setHeader('공지사항');
         result = await getNoticeInfo(id);
@@ -90,10 +90,12 @@ const BoardRead = () => {
           <div className='btn-wrap'>
             {info.created_id === localStorage.getItem('userName') ||
             (localStorage.getItem('yn') === 'n' &&
-              path.split('/')[1] !== 'report') ? (
+              path.split('/')[2] !== 'report') ? (
               <button
                 className='commonBtn'
-                onClick={() => navigate(`/${path.split('/')[1]}/write/${id}`)}>
+                onClick={() =>
+                  navigate(`/gp/${path.split('/')[2]}/write/${id}`)
+                }>
                 수정
               </button>
             ) : (
@@ -101,7 +103,7 @@ const BoardRead = () => {
             )}
             <button
               className='commonBtn list'
-              onClick={() => navigate(`/${path.split('/')[1]}`)}>
+              onClick={() => navigate(`/gp/${path.split('/')[2]}`)}>
               목록
             </button>
           </div>
@@ -112,7 +114,7 @@ const BoardRead = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'deleteAlert') navigate(`/${path.split('/')[1]}`);
+            if (alert === 'deleteAlert') navigate(`/gp/${path.split('/')[2]}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');

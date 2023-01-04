@@ -82,7 +82,7 @@ const CommonFooter = () => {
                 </li>
                 <li>
                   <a
-                    href='/'
+                    href='/gp/'
                     rel='noopener noreferrer'
                     target='_self'
                     className='last'>

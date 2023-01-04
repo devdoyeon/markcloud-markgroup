@@ -222,7 +222,7 @@ const ProjectDetail = () => {
             projectInfo?.created_id === localStorage.getItem('userName') ? (
               <button
                 className='commonBtn editBtn'
-                onClick={() => navigate(`/project/write/${id}`)}>
+                onClick={() => navigate(`/gp/project/write/${id}`)}>
                 수정
               </button>
             ) : (

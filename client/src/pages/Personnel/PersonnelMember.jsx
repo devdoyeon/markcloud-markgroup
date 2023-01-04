@@ -562,8 +562,8 @@ const PersonnelMember = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'apply') navigate(`/personnel`);
-            else if (alert === 'edit') navigate(`/personnel/${id}`);
+            if (alert === 'cancel' || alert === 'apply') navigate(`/gp/personnel`);
+            else if (alert === 'edit') navigate(`/gp/personnel/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');

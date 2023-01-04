@@ -123,7 +123,7 @@ const BusinessBoardRead = () => {
             <button
               className='commonBtn applyBtn'
               onClick={() => {
-                navigate(`/business/write/${id}`);
+                navigate(`/gp/business/write/${id}`);
               }}>
               수정
             </button>
@@ -143,10 +143,11 @@ const BusinessBoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply')
-              navigate(`/${path.split('/')[1]}`);
+              navigate(`/gp/${path.split('/')[2]}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/gp/sign-in');
-            else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+            else if (alert === 'edit')
+              navigate(`/gp/${path.split('/')[2]}/${id}`);
             else return;
           }}
         />

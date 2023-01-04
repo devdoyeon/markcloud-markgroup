@@ -44,7 +44,7 @@ const NewBoard = () => {
   const cookie = getCookie('myToken');
 
   const returnHeader = () => {
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'report':
         return '주간 업무 보고';
       case 'board':
@@ -67,7 +67,7 @@ const NewBoard = () => {
   //= 수정일 때 기존 상세내역 불러오기
   const getOriginDetail = async () => {
     let result;
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'notice':
         result = await getNoticeInfo(id);
         break;
@@ -85,7 +85,7 @@ const NewBoard = () => {
         result?.data?.created_id !== localStorage.getItem('userName') &&
         (localStorage.getItem('yn') === 'y' ||
           (localStorage.getItem('yn') === 'n' &&
-            path.split('/')[1] === 'report'))
+            path.split('/')[2] === 'report'))
       ) {
         setAlert('notAuthority');
         commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
@@ -111,7 +111,7 @@ const NewBoard = () => {
         '내용을 입력해 주세요.'
       );
     let result;
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'notice':
         result = await createNotice(postInfo);
         break;
@@ -137,7 +137,7 @@ const NewBoard = () => {
   //= delete post
   const deletePost = async () => {
     let result;
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'notice':
         result = await deleteNotice(id, cookie);
         break;
@@ -173,7 +173,7 @@ const NewBoard = () => {
         '내용을 입력해 주세요.'
       );
     let result;
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'notice':
         result = await editNotice(postInfo, id);
         break;
@@ -298,10 +298,10 @@ const NewBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/${path.split('/')[1]}`);
+              navigate(`/gp/${path.split('/')[2]}`);
             else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit' || alert === 'notAuthority')
-              navigate(`/${path.split('/')[1]}/${id}`);
+              navigate(`/gp/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');

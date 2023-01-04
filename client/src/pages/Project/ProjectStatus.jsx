@@ -98,7 +98,7 @@ const ProjectStatus = () => {
             {acc}
             <tr
               className={idx % 2 === 1 ? 'odd' : 'even'}
-              onClick={() => navigate(`/project/${id}`)}>
+              onClick={() => navigate(`/gp/project/${id}`)}>
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
               <td>{project_name}</td>

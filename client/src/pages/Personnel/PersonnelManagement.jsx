@@ -104,7 +104,7 @@ const PersonnelManagement = () => {
           return (
             <>
               {acc}
-              <tr onClick={() => navigate(`/personnel/write/${id}`)}>
+              <tr onClick={() => navigate(`/gp/personnel/write/${id}`)}>
                 <td>{(managePageInfo.page - 1) * 10 + idx + 1}</td>
                 <td>{user_id}</td>
                 <td>{name}</td>
