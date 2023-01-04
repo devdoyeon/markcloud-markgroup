@@ -302,11 +302,11 @@ const NewBoard = () => {
             else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit' || alert === 'notAuthority')
               navigate(`/${path.split('/')[1]}/${id}`);
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

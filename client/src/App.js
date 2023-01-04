@@ -1,6 +1,12 @@
 import 'App.css';
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Redirect,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 // =============== Pages ===============
 import Home from 'pages/Home';
 import SignIn from 'pages/SignIn';
@@ -26,6 +32,7 @@ import BusinessEditBoard from 'pages/Business/BusinessEditBoard';
 
 function App() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     //아임포트 IMP 객체 초기화
@@ -34,45 +41,54 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (pathname === '/') navigate('/gp');
     window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
     <div className='App'>
       <Routes>
-        <Route path='/gp' element={<Home />} />
-        <Route path='/sign-in' element={<SignIn />} />
-        <Route path='/cost' element={<Cost />} />
-        <Route path='/payment' element={<Payment />} />
-        <Route path='/payment-success' element={<PaymentSuccess />} />
-        <Route path='/project' element={<ProjectStatus />} />
-        <Route path='/report' element={<Report />} />
-        <Route path='/board' element={<Board />} />
-        <Route path='/business' element={<BusinessManagement />} />
-        <Route path='/personnel' element={<PersonnelManagement />} />
-        <Route path='/notice' element={<Notice />} />
+        <Route exact path='/gp' element={<Home />} />
+        <Route exact path='/gp/sign-in' element={<SignIn />} />
+        <Route exact path='/gp/cost' element={<Cost />} />
+        <Route exact path='/gp/payment' element={<Payment />} />
+        <Route exact path='/gp/payment-success' element={<PaymentSuccess />} />
+        <Route exact path='/gp/project' element={<ProjectStatus />} />
+        <Route exact path='/gp/report' element={<Report />} />
+        <Route exact path='/gp/board' element={<Board />} />
+        <Route exact path='/gp/business' element={<BusinessManagement />} />
+        <Route exact path='/gp/personnel' element={<PersonnelManagement />} />
+        <Route exact path='/gp/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
-        <Route path='/project/:id' element={<ProjectDetail />} />
-        <Route path='/report/:id' element={<BoardRead />} />
-        <Route path='/board/:id' element={<BoardRead />} />
-        <Route path='/notice/:id' element={<BoardRead />} />
-        <Route path='/business/:id' element={<BusinessBoardRead />} />
+        <Route exact path='/gp/project/:id' element={<ProjectDetail />} />
+        <Route exact path='/gp/report/:id' element={<BoardRead />} />
+        <Route exact path='/gp/board/:id' element={<BoardRead />} />
+        <Route exact path='/gp/notice/:id' element={<BoardRead />} />
+        <Route exact path='/gp/business/:id' element={<BusinessBoardRead />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
-        <Route path='/project/write' element={<NewProject />} />
-        <Route path='/report/write' element={<NewBoard />} />
-        <Route path='/board/write' element={<NewBoard />} />
-        <Route path='/notice/write' element={<NewBoard />} />
-        <Route path='/business/write' element={<BusinessNewBoard />} />
-        <Route path='/personnel/write' element={<PersonnelMember />} />
+        <Route exact path='/gp/project/write' element={<NewProject />} />
+        <Route exact path='/gp/report/write' element={<NewBoard />} />
+        <Route exact path='/gp/board/write' element={<NewBoard />} />
+        <Route exact path='/gp/notice/write' element={<NewBoard />} />
+        <Route exact path='/gp/business/write' element={<BusinessNewBoard />} />
+        <Route exact path='/gp/personnel/write' element={<PersonnelMember />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
-        <Route path='/project/write/:id' element={<NewProject />} />
-        <Route path='/report/write/:id' element={<NewBoard />} />
-        <Route path='/board/write/:id' element={<NewBoard />} />
-        <Route path='/notice/write/:id' element={<NewBoard />} />
-        <Route path='/business/write/:id' element={<BusinessEditBoard />} />
-        <Route path='/personnel/write/:id' element={<PersonnelMember />} />
+        <Route exact path='/gp/project/write/:id' element={<NewProject />} />
+        <Route exact path='/gp/report/write/:id' element={<NewBoard />} />
+        <Route exact path='/gp/board/write/:id' element={<NewBoard />} />
+        <Route exact path='/gp/notice/write/:id' element={<NewBoard />} />
+        <Route
+          exact
+          path='/gp/business/write/:id'
+          element={<BusinessEditBoard />}
+        />
+        <Route
+          exact
+          path='/gp/personnel/write/:id'
+          element={<PersonnelMember />}
+        />
         {/* -------------------------------------------------- */}
-        <Route path='/*' element={<NotFound />} />
+        <Route path='/gp/*' element={<NotFound />} />
       </Routes>
     </div>
   );

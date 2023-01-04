@@ -8,8 +8,9 @@ const CommonMenu = () => {
         {getCookie('myToken') ? (
           <button
             onClick={() => {
-              removeCookie('myToken');
-              removeCookie('rfToken')
+              removeCookie('myToken', { path: '/gp' });
+              removeCookie('rfToken', { path: '/gp' });
+              removeCookie('ip', { path: '/gp' });
               localStorage.clear();
               window.location.reload();
               return;
@@ -17,7 +18,7 @@ const CommonMenu = () => {
             로그아웃
           </button>
         ) : (
-          <Link to='/sign-in'>로그인</Link>
+          <Link to='/gp/sign-in'>로그인</Link>
         )}
       </li>
       <li>

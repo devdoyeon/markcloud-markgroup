@@ -27,7 +27,7 @@ const Payment = memo(() => {
   }, []);
 
   //=props 값 없을시 error page로 이동
-  if (!location?.state) navigate('/error');
+  if (!location?.state) navigate('/gp/error');
   else {
     merchant_code = location?.state?.merchant_code;
     useDay = location?.state?.day;

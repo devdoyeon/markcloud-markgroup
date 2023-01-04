@@ -237,7 +237,7 @@ const BusinessNewBoard = () => {
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+              return navigate('/gp/sign-in');
             else return;
           }}
         />

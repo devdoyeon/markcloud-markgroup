@@ -221,7 +221,7 @@ const PersonnelManagement = () => {
               />
               <button
                 className='commonBtn'
-                onClick={() => navigate('/personnel/write')}>
+                onClick={() => navigate('/gp/personnel/write')}>
                 등록
               </button>
             </div>

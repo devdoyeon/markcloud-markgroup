@@ -79,7 +79,7 @@ const Notice = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+              return navigate('/gp/sign-in');
           }}
         />
       )}

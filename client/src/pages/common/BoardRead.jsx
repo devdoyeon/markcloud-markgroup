@@ -113,11 +113,11 @@ const BoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'deleteAlert') navigate(`/${path.split('/')[1]}`);
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

@@ -550,7 +550,7 @@ const PersonnelMember = () => {
               </button>
               <button
                 className='commonBtn list'
-                onClick={() => navigate('/personnel')}>
+                onClick={() => navigate('/gp/personnel')}>
                 목록
               </button>
             </div>
@@ -564,11 +564,11 @@ const PersonnelMember = () => {
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply') navigate(`/personnel`);
             else if (alert === 'edit') navigate(`/personnel/${id}`);
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

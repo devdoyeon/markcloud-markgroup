@@ -73,44 +73,44 @@ const SideMenu = () => {
           <img
             src={mainLogo}
             alt='마크그룹 로고'
-            onClick={() => navigate('/business')}
+            onClick={() => navigate('/gp/business')}
           />
           <ul>
             <li
               className='departmentName'
-              onClick={() => navigate('/business')}>
+              onClick={() => navigate('/gp/business')}>
               (주)마크클라우드
             </li>
             <li
               className={path.includes('/business') ? 'active' : ''}
-              onClick={() => navigate('/business')}>
+              onClick={() => navigate('/gp/business')}>
               업무 관리
             </li>
             <li
               className={path.includes('/project') ? 'active' : ''}
-              onClick={() => navigate('/project')}>
+              onClick={() => navigate('/gp/project')}>
               프로젝트 현황
             </li>
             <li
               className={path.includes('/report') ? 'active' : ''}
-              onClick={() => navigate('/report')}>
+              onClick={() => navigate('/gp/report')}>
               주간 업무 보고
             </li>
             <li
               className={path.includes('/notice') ? 'active' : ''}
-              onClick={() => navigate('/notice')}>
+              onClick={() => navigate('/gp/notice')}>
               공지사항
             </li>
             <li
               className={path.includes('/board') ? 'active' : ''}
-              onClick={() => navigate('/board')}>
+              onClick={() => navigate('/gp/board')}>
               게시판
             </li>
             {localStorage.getItem('yn') === 'n' ? (
               <>
                 <li
                   className={path.includes('/personnel') ? 'active' : ''}
-                  onClick={() => navigate('/personnel')}>
+                  onClick={() => navigate('/gp/personnel')}>
                   인사 관리
                 </li>
                 <li>
@@ -127,7 +127,7 @@ const SideMenu = () => {
             )}
           </ul>
           <div className='column tools'>
-            <div className='go-home' onClick={() => navigate('/')}>
+            <div className='go-home' onClick={() => navigate('/gp/')}>
               <img src={goHomeIcon} alt='홈으로 가기 아이콘' />
             </div>
             <div
@@ -136,7 +136,7 @@ const SideMenu = () => {
                 removeCookie('myToken');
                 removeCookie('rfToken');
                 localStorage.clear();
-                navigate('/');
+                navigate('/gp/');
               }}>
               로그아웃
             </div>
@@ -159,10 +159,10 @@ const SideMenu = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') return navigate('/sign-in');
-            else if (alert === 'paymentRequired') return navigate('/cost');
-            else if (alert === 'serviceExpired') return navigate('/');
-            else if (alert === 'notAuthority') return navigate('/business');
+            if (alert === 'needLogin') return navigate('/gp/sign-in');
+            else if (alert === 'paymentRequired') return navigate('/gp/cost');
+            else if (alert === 'serviceExpired') return navigate('/gp/');
+            else if (alert === 'notAuthority') return navigate('/gp/business');
             else return;
           }}
         />

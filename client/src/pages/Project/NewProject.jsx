@@ -296,15 +296,15 @@ const NewProject = () => {
               alert === 'completeDelete' ||
               alert === 'completeEdit'
             )
-              navigate('/project');
+              navigate('/gp/project');
             else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
               navigate(`/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />
