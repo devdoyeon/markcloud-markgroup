@@ -130,7 +130,7 @@ const BusinessBoardRead = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate('/business');
+                navigate('/gp/business');
               }}>
               목록
             </button>
@@ -145,7 +145,7 @@ const BusinessBoardRead = () => {
             if (alert === 'cancel' || alert === 'apply')
               navigate(`/${path.split('/')[1]}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/sign-in');
+              return navigate('/gp/sign-in');
             else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
             else return;
           }}

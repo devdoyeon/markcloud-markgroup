@@ -216,7 +216,7 @@ const ProjectStatus = () => {
               </button>
               <button
                 className='commonBtn applyBtn'
-                onClick={() => navigate('/project/write')}>
+                onClick={() => navigate('/gp/project/write')}>
                 등록
               </button>
             </div>
@@ -253,11 +253,11 @@ const ProjectStatus = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin') return navigate('/sign-in');
+            if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

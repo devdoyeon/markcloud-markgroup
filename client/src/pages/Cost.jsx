@@ -56,7 +56,7 @@ const Cost = () => {
                         '사용자 계정은 결제가 불가합니다.'
                       );
                     else
-                      navigate('/payment', {
+                      navigate('/gp/payment', {
                         state: {
                           merchant_code: 'MV180',
                           money: 1500000,
@@ -99,7 +99,7 @@ const Cost = () => {
                         '사용자 계정은 결제가 불가합니다.'
                       );
                     else
-                      navigate('/payment', {
+                      navigate('/gp/payment', {
                         state: {
                           merchant_code: 'MV365',
                           money: 2500000,
@@ -120,7 +120,7 @@ const Cost = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') navigate('/sign-in');
+            if (alert === 'needLogin') navigate('/gp/sign-in');
             else return;
           }}
         />

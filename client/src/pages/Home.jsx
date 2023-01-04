@@ -59,7 +59,7 @@ const Home = () => {
           const { name, user_id } = userResult?.data?.data;
           localStorage.setItem('userName', name);
           localStorage.setItem('userId', user_id);
-          navigate('/business');
+          navigate('/gp/business');
         } else return catchError(userResult, navigate, setAlertBox, setAlert);
       } else catchError(checkResult, navigate, setAlertBox, setAlert);
     }
@@ -237,13 +237,13 @@ const Home = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') return navigate('/sign-in');
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
-            else if (alert === 'paymentRequired') return navigate('/cost');
+            if (alert === 'needLogin') return navigate('/gp/sign-in');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
+            else if (alert === 'paymentRequired') return navigate('/gp/cost');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

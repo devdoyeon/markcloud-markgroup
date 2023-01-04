@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
 import CommonFooter from 'common/CommonFooter';
 import CommonSiteMap from 'common/CommonSiteMap';
-import { signIn, checkPoint } from 'js/groupwareApi';
+import { signIn, checkPoint, getIp } from 'js/groupwareApi';
 import { setCookie, getCookie } from 'js/cookie';
 import {
   catchError,
@@ -72,13 +72,15 @@ const SignIn = () => {
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
-        path: '/',
+        path: '/gp',
         secure: false,
       });
       setCookie('rfToken', refresh_token, {
-        path: '/',
+        path: '/gp',
         secure: false,
       });
+      const ipResult = await getIp();
+      localStorage.setItem('loginIp', ipResult);
       checkUser();
       navigate('/gp');
     } else {
@@ -89,7 +91,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (getCookie('myToken')) navigate('/');
+    if (getCookie('myToken')) navigate('/gp/');
     changeTitle('그룹웨어 > 로그인');
   }, []);
 
@@ -160,7 +162,7 @@ const SignIn = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin') return navigate('/sign-in');
+            if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else return;
           }}
         />

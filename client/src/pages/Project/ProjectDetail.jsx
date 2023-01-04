@@ -127,7 +127,7 @@ const ProjectDetail = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3 onClick={() => navigate('/project')}>프로젝트 현황</h3>
+            <h3 onClick={() => navigate('/gp/project')}>프로젝트 현황</h3>
           </div>
           <div className='projectWrapper detail'>
             <div className='projectTitle'>{projectInfo?.project_name}</div>
@@ -230,7 +230,7 @@ const ProjectDetail = () => {
             )}
             <button
               className='commonBtn listBtn'
-              onClick={() => navigate('/project')}>
+              onClick={() => navigate('/gp/project')}>
               목록
             </button>
           </div>
@@ -242,12 +242,12 @@ const ProjectDetail = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'completeDelete')
-              navigate('/project');
-            else if (alert === 'duplicateLogin') return navigate('/sign-in');
+              navigate('/gp/project');
+            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
-              navigate('/');
+              navigate('/gp/');
             } else return;
           }}
         />

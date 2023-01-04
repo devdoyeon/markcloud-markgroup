@@ -45,7 +45,7 @@ export const apiErrorHandling = async error => {
 
 //# 아이피
 
-const getIp = async () => {
+export const getIp = async () => {
   try {
     const ip = await axios.get('https://api.ip.pe.kr/');
     return ip?.data;
