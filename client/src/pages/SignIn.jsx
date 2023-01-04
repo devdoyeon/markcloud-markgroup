@@ -72,11 +72,11 @@ const SignIn = () => {
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
-        path: '/gp',
+        path: '/',
         secure: false,
       });
       setCookie('rfToken', refresh_token, {
-        path: '/gp',
+        path: '/',
         secure: false,
       });
       checkUser();
