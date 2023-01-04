@@ -8,9 +8,8 @@ const CommonMenu = () => {
         {getCookie('myToken') ? (
           <button
             onClick={() => {
-              removeCookie('myToken', { path: '/gp' });
-              removeCookie('rfToken', { path: '/gp' });
-              removeCookie('ip', { path: '/gp' });
+              removeCookie('myToken', { path: '/' });
+              removeCookie('rfToken', { path: '/' });
               localStorage.clear();
               window.location.reload();
               return;
