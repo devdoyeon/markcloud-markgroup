@@ -122,6 +122,7 @@ const NewBoard = () => {
         result = await createReport(postInfo);
         break;
       default:
+        return;
     }
     if (typeof result === 'object') {
       setAlert('apply');
