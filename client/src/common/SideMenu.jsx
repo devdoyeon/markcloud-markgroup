@@ -10,6 +10,7 @@ import { checkPoint } from 'js/groupwareApi';
 
 const SideMenu = () => {
   const [render, setRender] = useState('active');
+  const [department, setDepartment] = useState('');
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -22,6 +23,7 @@ const SideMenu = () => {
   const checkUser = async () => {
     const result = await checkPoint();
     if (typeof result === 'object') {
+      setDepartment(result?.data?.data);
       setRender('active');
     } else if (result === 'paymentRequired') {
       setAlert(result);
@@ -79,7 +81,7 @@ const SideMenu = () => {
             <li
               className='departmentName'
               onClick={() => navigate('/gp/business')}>
-              (주)마크클라우드
+              {department}
             </li>
             <li
               className={path.includes('/business') ? 'active' : ''}
