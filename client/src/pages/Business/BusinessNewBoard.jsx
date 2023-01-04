@@ -234,8 +234,9 @@ const BusinessNewBoard = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply')
-              navigate(`/${path.split('/')[1]}`);
-            else if (alert === 'edit') navigate(`/${path.split('/')[1]}/${id}`);
+              navigate(`/gp/${path.split('/')[2]}`);
+            else if (alert === 'edit')
+              navigate(`/gp/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/gp/sign-in');
             else return;

@@ -16,7 +16,7 @@ const CommonHeader = ({
   const searchOptionArr = ['작성자', '제목'];
 
   const returnHeader = () => {
-    switch (path.split('/')[1]) {
+    switch (path.split('/')[2]) {
       case 'board':
         return '게시판';
       case 'notice':

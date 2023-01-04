@@ -11,7 +11,7 @@ const ListWrap = ({ list }) => {
       return (
         <>
           {acc}
-          <li onClick={() => navigate(`/${path.split('/')[1]}/${id}`)}>
+          <li onClick={() => navigate(`/gp/${path.split('/')[2]}/${id}`)}>
             <div className='row postInfo'>
               <span className='date'>{created_at.replaceAll('-', '.')}</span>
               {`${today.getFullYear()}-${

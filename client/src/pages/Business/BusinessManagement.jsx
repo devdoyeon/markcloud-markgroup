@@ -54,7 +54,7 @@ const BusinessManagement = () => {
 
   const navigate = useNavigate();
   const path = useLocation().pathname;
-  const pathname = path.split('/')[1];
+  const pathname = path.split('/')[2];
 
   let prevent = false;
 
@@ -126,7 +126,7 @@ const BusinessManagement = () => {
             <>
               {acc}
               <tr
-                onClick={() => navigate(`/business/${id}`)}
+                onClick={() => navigate(`/gp/business/${id}`)}
                 className='table-row'>
                 <td>{(pageInfo.page - 1) * 10 + idx + 1}</td>
                 <td>{title}</td>

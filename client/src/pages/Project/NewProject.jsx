@@ -298,7 +298,7 @@ const NewProject = () => {
             )
               navigate('/gp/project');
             else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
-              navigate(`/project/${id}`);
+              navigate(`/gp/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
