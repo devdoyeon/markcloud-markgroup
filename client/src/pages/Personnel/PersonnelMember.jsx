@@ -84,8 +84,10 @@ const PersonnelMember = () => {
       const { data, meta } = result?.data;
       setDepartmentList(data);
       setDepartmentMeta(meta);
-      for (let i = 0; i < data.length; i++) {
-        setDepartmentName(name => [...name, data[i].section]);
+      if (departmentName.length === 0) {
+        for (let i = 0; i < data.length; i++) {
+          setDepartmentName(name => [...name, data[i].section]);
+        }
       }
       setDepartmentPageInfo(prev => {
         const clone = { ...prev };
@@ -167,6 +169,13 @@ const PersonnelMember = () => {
         true,
         'alert',
         '휴대전화번호를 입력하지 않았습니다.'
+      );
+    } else if (inputRef.current[3].value.length < 11) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '휴대전화번호를 확인해주세요.'
       );
     } else if (inputRef.current[4].value === '') {
       return commonModalSetting(
@@ -539,7 +548,7 @@ const PersonnelMember = () => {
               </button>
               <button
                 className='commonBtn list'
-                onClick={() => navigate(`/personnel`)}>
+                onClick={() => navigate(`/gp/personnel`)}>
                 목록
               </button>
             </div>
@@ -562,7 +571,8 @@ const PersonnelMember = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'apply') navigate(`/gp/personnel`);
+            if (alert === 'cancel' || alert === 'apply')
+              navigate(`/gp/personnel`);
             else if (alert === 'edit') navigate(`/gp/personnel/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
