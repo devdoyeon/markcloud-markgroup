@@ -1,25 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
-import {
-  changeState,
-  commonModalSetting,
-  catchError,
-  changeTitle,
-} from 'js/commonUtils';
+import { catchError, changeTitle } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
-import CommonSelect from 'common/CommonSelect';
 import { getBusinessInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import {
-  getBoardDetail,
-  createBoard,
-  editBoard,
-  editNotice,
-  getNoticeInfo,
-  createNotice,
-} from 'js/groupwareApi';
 
 const BusinessBoardRead = () => {
   const [alert, setAlert] = useState('');
@@ -47,7 +32,7 @@ const BusinessBoardRead = () => {
   const navigate = useNavigate();
 
   const getBusinessDetail = async () => {
-    const pathName = path.split(`/`)[1];
+    const pathName = path.split(`/`)[2];
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
@@ -67,7 +52,9 @@ const BusinessBoardRead = () => {
   }, []);
 
   useEffect(() => {
-    if (getCookie('myToken')) if (id?.length) getBusinessDetail();
+    if (getCookie('myToken')) {
+      if (id?.length) getBusinessDetail();
+    }
   }, []);
 
   const { manager_id, project_name, request_id, title, work_status } = info;
