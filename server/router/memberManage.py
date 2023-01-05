@@ -219,7 +219,7 @@ def create_member(
 @author_chk.user_chk
 def update_member(
     member_id:int,    
-    inboud_data: Memberinfo,
+    inboud_data: MemberModDTO,
     access_token:str = Header(None),
     user_pk:int = None,
     user_info:str = None,
