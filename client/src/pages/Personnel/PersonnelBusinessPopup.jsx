@@ -18,6 +18,7 @@ const PersonnelBusinessPopup = ({
   getPersonDepartmentApi,
   departmentList,
   departmentPageInfo,
+  getPersonMemberApi,
 }) => {
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
@@ -53,6 +54,7 @@ const PersonnelBusinessPopup = ({
     const curData = await getDepartmentUpdate(curDepartment);
     if (typeof curData === 'object') {
       getPersonDepartmentApi();
+      getPersonMemberApi();
       changeState(setCurDepartment, 'section', '');
       setAlert('edit');
       return commonModalSetting(
@@ -108,7 +110,6 @@ const PersonnelBusinessPopup = ({
               <button
                 className='commonBtn'
                 onClick={() => {
-                  // setPopup(false);
                   setButtonControl('');
                   setAlert('createConfirm');
                   commonModalSetting(
