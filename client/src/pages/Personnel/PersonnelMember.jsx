@@ -337,6 +337,7 @@ const PersonnelMember = () => {
                     value={memberInfo.user_id}
                     autoComplete='off'
                     placeholder='아이디를 입력해주세요.'
+                    maxLength='15'
                     disabled='disabled'
                     ref={el => (inputRef.current[0] = el)}
                   />
@@ -346,6 +347,7 @@ const PersonnelMember = () => {
                     value={memberInfo.user_id}
                     autoComplete='off'
                     placeholder='아이디를 입력해주세요.'
+                    maxLength='15'
                     ref={el => (inputRef.current[0] = el)}
                     onChange={e => {
                       changeState(setMemberInfo, 'user_id', e.target.value);
@@ -462,6 +464,7 @@ const PersonnelMember = () => {
                   <input
                     type='text'
                     autoComplete='off'
+                    maxLength='11'
                     placeholder='전화번호를 입력해주세요.'
                     onChange={phoneNumRegex}
                     value={memberInfo.phone}
@@ -470,6 +473,7 @@ const PersonnelMember = () => {
                   <input
                     type='text'
                     autoComplete='off'
+                    maxLength='11'
                     placeholder='전화번호를 입력해주세요.'
                     ref={el => (inputRef.current[3] = el)}
                     onChange={phoneNumRegex}
@@ -485,6 +489,7 @@ const PersonnelMember = () => {
                   <input
                     type='password'
                     autoComplete='off'
+                    maxLength='16'
                     placeholder='비밀번호를 입력해주세요.'
                     ref={el => (inputRef.current[4] = el)}
                     value={memberInfo.password}
