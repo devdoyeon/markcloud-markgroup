@@ -65,27 +65,51 @@ def insert_department(db, inbound_data, user_info):
 def change_department(db, inboud_data, department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
+    member_table = memberManageModel.MemberTable
     
     try:
         values = {'department_name':inboud_data.department_name,
                   'updated_at':datetime.today()}
         
+        # department_id로 기존 부서명 가져오기 
+        origin_dpname = db.query(department_table.department_name).filter(department_table.id == department_id).first() 
+        
         db.query(department_table
                 ).filter_by(id = department_id
                 ).filter(department_table.organ_code == user_info.department_code
                 ).update(values)
+        
+        # 부서 수정시 member table의 section 이 새로운 부서명으로 업데이트 
+        values =  {'section':inboud_data.department_name,
+                  'updated_at':datetime.today()}
+        
+        db.query(member_table).filter(member_table.section == origin_dpname[0]).update(values)
+
     except:
         raise HTTPException(status_code=500, detail='ChangeDpERror')
     
 def remove_department(db, department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
+    member_table = memberManageModel.MemberTable
     
     try:
+        
+        # department_id로 기존 부서명 가져오기 
+        origin_dpname = db.query(department_table.department_name).filter(department_table.id == department_id).first()
+        
         db.query(department_table
                 ).filter(department_table.id == department_id
                 ).filter(department_table.organ_code == user_info.department_code
                 ).delete()
+        
+        
+        # 부서 삭제시 member table의 section -> '무소속'으로 업데이트
+        values =  {'section':'무소속',
+            'updated_at':datetime.today()}
+        
+        db.query(member_table).filter(member_table.section == origin_dpname[0]).update(values)        
+                
     except:
         raise HTTPException(status_code=500, detail='RemoveDpError')
     
@@ -177,10 +201,6 @@ def change_member(db, inbound_data, member_id):
 def remove_member(db,member_id):
     
     member_table = memberManageModel.MemberTable
-
-    try:
-        values = {'is_active': 0}
-        db.query(member_table).filter(member_table.id == member_id).update(values)
-    except:
-        raise HTTPException(status_code=500, detail='RemoveMbError')            
     
+    values = {'is_active': 0}
+    db.query(member_table).filter(member_table.id == member_id).update(values)
