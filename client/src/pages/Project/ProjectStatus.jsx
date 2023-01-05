@@ -51,7 +51,7 @@ const ProjectStatus = () => {
         start_date: '',
         end_date: '',
       };
-      result = await getProjectList(1, pageInfo.limit, obj, selectVal);
+      result = await getProjectList(1, pageInfo.limit, obj, 'all');
     } else
       result = await getProjectList(
         int === 1 ? int : pageInfo.page,
