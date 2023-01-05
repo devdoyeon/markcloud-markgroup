@@ -29,7 +29,7 @@ def read_department_list(
     limit:int = 5,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -63,7 +63,7 @@ def read_department_info(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -83,7 +83,7 @@ def create_department(
     user_info :str = None,
     db :Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -107,7 +107,7 @@ def update_department(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -128,7 +128,7 @@ def delete_department(
     db: Session = Depends(get_db)
 
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -152,7 +152,7 @@ def read_member_list(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     try:
         offset = (page -1) * limit
@@ -184,7 +184,7 @@ def read_member_info(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -204,7 +204,7 @@ def create_member(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
@@ -225,7 +225,7 @@ def update_member(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
     try:
         change_member(db, inboud_data ,member_id)
@@ -244,14 +244,9 @@ def delete_member(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'Y': # admin 인경우
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
-    try:
-        rolechk = db.query(memberManageModel.MemberTable.groupware_only_yn).filter(memberManageModel.MemberTable.id == member_id).first()
-    except:
-        raise HTTPException(status_code=500, detail='DeleteMbError')
-    if rolechk[0] == 'N': # 삭제할 직원이 admin 인 경우
-        raise HTTPException(status_code=501, detail = 'DeleteAdminError')
+
     try:
         remove_member(db,member_id) 
     except:
