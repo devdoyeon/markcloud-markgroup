@@ -246,6 +246,7 @@ const BusinessEditBoard = () => {
                   <input
                     type='text'
                     placeholder='제목을 입력해 주세요.'
+                    maxLength='30'
                     onChange={e => handleChangeRadioButton(e, 'title')}
                     value={postInfo?.title}
                   />
@@ -283,7 +284,7 @@ const BusinessEditBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/business`);
+                navigate(`/gp/business`);
               }}>
               목록
             </button>

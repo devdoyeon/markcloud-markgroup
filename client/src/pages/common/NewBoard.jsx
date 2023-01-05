@@ -230,6 +230,7 @@ const NewBoard = () => {
                     type='text'
                     placeholder='제목을 입력해 주세요.'
                     className='title-input'
+                    maxLength="30"
                     value={postInfo?.title}
                     onChange={e =>
                       changeState(setPostInfo, 'title', e.target.value)

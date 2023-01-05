@@ -26,6 +26,7 @@ const BusinessNewBoard = () => {
     title: '',
     content: '',
     progress_status: [],
+    work_status: '',
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -88,6 +89,64 @@ const BusinessNewBoard = () => {
     }
   };
   const createWorkBusiness = async () => {
+    if (postInfo.project_name === '' || postInfo.project_name === '선택') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '프로젝트를 선택해주세요.'
+      );
+    } else if (
+      postInfo.request_id === '' ||
+      postInfo.request_id === '선택' ||
+      postInfo.request_id === undefined ||
+      postInfo.request_id === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '요청자를 선택해주세요.'
+      );
+    } else if (
+      postInfo.manager_id === '' ||
+      postInfo.manager_id === '선택' ||
+      postInfo.manager_id === undefined ||
+      postInfo.manager_id === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '담당자를 선택해주세요.'
+      );
+    } else if (
+      postInfo.work_status === '' ||
+      postInfo.work_status === '선택' ||
+      postInfo.work_status === undefined ||
+      postInfo.work_status === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '진행상태를 선택해주세요.'
+      );
+    } else if (postInfo.title === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '제목을 입력해주세요'
+      );
+    } else if (postInfo.content === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '내용을 입력해주세요.'
+      );
+    }
     const result = await createBusiness(postInfo);
     if (typeof result === 'object') {
       setAlert('apply');
@@ -198,6 +257,7 @@ const BusinessNewBoard = () => {
                   <input
                     type='text'
                     placeholder='제목을 입력해 주세요.'
+                    maxLength='30'
                     onChange={e => handleChangeRadioButton(e, 'title')}
                     value={postInfo?.title}
                   />
