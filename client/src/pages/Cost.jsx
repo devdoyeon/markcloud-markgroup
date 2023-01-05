@@ -27,14 +27,7 @@ const Cost = () => {
         'alert',
         '로그인이 필요한 서비스입니다.'
       );
-    } else if (localStorage.getItem('yn') === 'y')
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '사용자 계정은 결제가 불가합니다.'
-      );
-    else {
+    } else {
       const result = await checkPoint();
       if (typeof result === 'object') {
         if (
@@ -46,6 +39,13 @@ const Cost = () => {
             true,
             'alert',
             '이미 사용 중인 그룹웨어 이용권이 있습니다.'
+          );
+        else if (result?.data?.status?.code === 302)
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'alert',
+            '사용자 계정은 결제가 불가합니다.'
           );
         else
           navigate('/gp/payment', {
