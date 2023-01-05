@@ -278,12 +278,7 @@ const PersonnelMember = () => {
     const result = await getMemberDelete(id);
     if (typeof result === 'object') {
       setAlert('apply');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '삭제가 완료되었습니다.'
-      );
+      return commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -547,7 +542,15 @@ const PersonnelMember = () => {
               ) : (
                 <button
                   className='commonBtn delete'
-                  onClick={() => deleteMemberApi()}>
+                  onClick={() => {
+                    setAlert('deleteConfirm');
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'confirm',
+                      '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                    );
+                  }}>
                   삭제
                 </button>
               )}
@@ -580,6 +583,7 @@ const PersonnelMember = () => {
               navigate(`/gp/personnel`);
             else if (alert === 'edit') navigate(`/gp/personnel/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
+            else if (alert === 'deleteConfirm') deleteMemberApi();
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');
