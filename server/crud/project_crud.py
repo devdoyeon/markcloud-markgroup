@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
 from fastapi import HTTPException
 from starlette import status
 
@@ -23,12 +22,7 @@ def get_project_list(db: Session,
                      user_pk: int
                      ):
     
-    # # 본인 회사의 프로젝트 리스트만 나오게.
-    # project_list = db.query(ProjectTable).join(MemberTable, ProjectTable.organ_code == MemberTable.department_code).filter(MemberTable.user_id == user_id)
-
     user_info = author_chk.get_user_info(db, user_pk)
-
-    # project_list = db.query(ProjectTable, ProjectMemberTable.name.label('member_cnt'))
     
     sql = f'''
         select
@@ -48,9 +42,8 @@ def get_project_list(db: Session,
         where p.organ_code = "{user_info.department_code}"
     '''
     
-    # 사용자 계정이면
+    # 사용자 계정 : 본인이 참여한 프로젝트 리스트만
     if user_info.groupware_only_yn == 'Y':
-        print("사용자 계정 :: 본인이 참여한 프로젝트 리스트만")
         sql = sql + f'''
         and p.project_code in (
 							select project_code
@@ -62,12 +55,12 @@ def get_project_list(db: Session,
                             where created_id = "{user_pk}"
        )
         '''
-        
     
     # 검색
     if project_name:
         search = f'%%{project_name}%%'
         sql = sql + f''' and p.project_name like "{search}" '''    
+
     if project_status == "before":
         sql = sql + f''' and p.project_status = "before" '''
     elif project_status == "progress":
@@ -79,28 +72,12 @@ def get_project_list(db: Session,
     if start_date:
         sql = sql + f'''
                     and p.project_start_date >= "{start_date}"
-                    '''
-    
+                    '''    
     if end_date:
         sql = sql + f'''
                     and p.project_end_date <= "{end_date}"
                     '''
-    
-    
-    # if project_status:
-    #     print("있음")
-    #     print(project_status)
-    #     print(type(project_status))
-    #     sql = sql + f''' and p.project_status = "{project_status}" '''
-        
-    # sql = sql + ""
-    # project_list = project_list.filter(ProjectTable.project_name.ilike(search))
-    # if project_status:
-    #     project_list = project_list.filter(ProjectTable.project_status=="before")
-    # if start_date:
-    #     project_list = project_list.filter(ProjectTable.project_start_date >= start_date, ProjectTable.project_end_date <= end_date)
-        
-    
+
     sql = sql + '''
                 order by p.id desc
                 '''
@@ -112,26 +89,15 @@ def get_project_list(db: Session,
                 limit {limit}
                 offset {offset}
     '''
-    project_list = db.execute(sql).all()
-    print(f"t o t a l :: {total}")
-    return total, project_list
-    
-    
-    
-    print(project_status)
-    print("= = = 상 태 = = = ")
-    
-    
-    
-    # total = project_list.distinct().count()
-    print(f"t o t a l :: {total}")
-    project_list = project_list.order_by(ProjectTable.created_at.desc()).all()
-    return total, project_list
+    try:
+        project_list = db.execute(sql).all()
+        return total, project_list
+    except:
+        raise HTTPException(status_code=500, detail='GetPjtListError')
 
 
 def get_project(db: Session, project_id: int):
     try:
-
         project = db.query(ProjectTable.id, 
                            ProjectTable.project_code,
                            ProjectTable.project_name,
@@ -143,8 +109,6 @@ def get_project(db: Session, project_id: int):
                            MemberTable.name.label('created_id')
                            ).join(MemberTable, MemberTable.id == ProjectTable.created_id) \
                                .filter(ProjectTable.id == project_id).first()
-
-        
         return project
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
@@ -152,9 +116,7 @@ def get_project(db: Session, project_id: int):
     
 def get_project_members(db: Session, project_code: str):
     try:
-        print(project_code)
         project_members = db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).all()
-        print(project_members)
         return project_members
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
