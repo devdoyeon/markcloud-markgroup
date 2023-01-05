@@ -530,7 +530,7 @@ const BusinessManagement = () => {
               </div>
               <div
                 className='commonBtn create'
-                onClick={() => navigate(`/business/write`)}>
+                onClick={() => navigate(`/gp/business/write`)}>
                 등록
               </div>
             </div>
