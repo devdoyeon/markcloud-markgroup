@@ -50,9 +50,18 @@ const Home = () => {
         if (
           checkResult?.data?.status?.code === 301 ||
           checkResult?.data?.status?.code === 201
-        )
+        ) {
+          if (checkResult?.data?.data === 'none') {
+            setAlert('needDepartmentName');
+            commonModalSetting(
+              setAlertBox,
+              true,
+              'confirm',
+              '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
+            );
+          }
           localStorage.setItem('yn', 'n');
-        else if (checkResult?.data?.status?.code === 302)
+        } else if (checkResult?.data?.status?.code === 302)
           localStorage.setItem('yn', 'y');
         const userResult = await checkUserInfo();
         if (typeof userResult === 'object') {
@@ -240,6 +249,9 @@ const Home = () => {
             if (alert === 'needLogin') return navigate('/gp/sign-in');
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'paymentRequired') return navigate('/gp/cost');
+            else if (alert === 'needDepartmentName')
+              return (window.location.href =
+                'https://markcloud.co.kr/mark-mypage');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');

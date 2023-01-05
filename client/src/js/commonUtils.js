@@ -4,9 +4,11 @@ import { removeCookie } from './cookie';
 
 //& 에러 리스트
 export const errorList = {
+  retiredUser: '탈퇴한 유저입니다.<br/>다시 회원가입해 주세요.',
   emptyBoth: '아이디와 비밀번호를 입력해 주세요.',
   emptyId: '아이디를 입력해 주세요.',
   emptyPw: '비밀번호를 입력해 주세요.',
+  PaymentPending: '결제 혹은 결제 대기 중인 이용권이 있습니다.',
   wrongInfo:
     '아이디 또는 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.',
   serverError: '잠시 후 다시 시도해 주세요.',

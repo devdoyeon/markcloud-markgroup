@@ -4,7 +4,8 @@ import CommonModal from 'common/CommonModal';
 import CommonSiteMap from 'common/CommonSiteMap';
 import CommonFooter from 'common/CommonFooter';
 import SideMenuBtn from 'common/SideMenuBtn';
-import { commonModalSetting } from 'js/commonUtils';
+import { commonModalSetting, catchError } from 'js/commonUtils';
+import { checkPoint } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import costBg from 'image/costBg.png';
 
@@ -16,6 +17,47 @@ const Cost = () => {
     bool: false,
   });
   const navigate = useNavigate();
+
+  const checkUser = async (code, price, day) => {
+    if (!getCookie('myToken')) {
+      setAlert('needLogin');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '로그인이 필요한 서비스입니다.'
+      );
+    } else if (localStorage.getItem('yn') === 'y')
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '사용자 계정은 결제가 불가합니다.'
+      );
+    else {
+      const result = await checkPoint();
+      if (typeof result === 'object') {
+        if (
+          result?.data?.status?.code === 201 ||
+          result?.data?.status?.code === 301
+        )
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'alert',
+            '이미 사용 중인 그룹웨어 이용권이 있습니다.'
+          );
+        else
+          navigate('/gp/payment', {
+            state: {
+              merchant_code: code,
+              money: price,
+              day: day,
+            },
+          });
+      } else catchError(result, navigate, setAlertBox, setAlert);
+    }
+  };
 
   return (
     <>
@@ -38,32 +80,7 @@ const Cost = () => {
                   <br />
                   180일 이용권
                 </p>
-                <button
-                  onClick={() => {
-                    if (!getCookie('myToken')) {
-                      setAlert('needLogin');
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'alert',
-                        '로그인이 필요한 서비스입니다.'
-                      );
-                    } else if (localStorage.getItem('yn') === 'y')
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'alert',
-                        '사용자 계정은 결제가 불가합니다.'
-                      );
-                    else
-                      navigate('/gp/payment', {
-                        state: {
-                          merchant_code: 'MV180',
-                          money: 1500000,
-                          day: 180,
-                        },
-                      });
-                  }}>
+                <button onClick={() => checkUser('MV180', 1500000, 180)}>
                   구매하기
                 </button>
               </div>
@@ -81,32 +98,7 @@ const Cost = () => {
                   <br />
                   365일 이용권
                 </p>
-                <button
-                  onClick={() => {
-                    if (!getCookie('myToken')) {
-                      setAlert('needLogin');
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'alert',
-                        '로그인이 필요한 서비스입니다.'
-                      );
-                    } else if (localStorage.getItem('yn') === 'y')
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'alert',
-                        '사용자 계정은 결제가 불가합니다.'
-                      );
-                    else
-                      navigate('/gp/payment', {
-                        state: {
-                          merchant_code: 'MV365',
-                          money: 2500000,
-                          day: 365,
-                        },
-                      });
-                  }}>
+                <button onClick={() => checkUser('MV365', 2500000, 365)}>
                   구매하기
                 </button>
               </div>
