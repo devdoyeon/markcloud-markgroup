@@ -84,7 +84,6 @@ const BusinessManagement = () => {
           return clone;
         });
       }
-      // changeState(setPostInfo, 'project_name', projectValue);
       setPageInfo(prev => {
         const clone = { ...prev };
         clone.page = meta?.page;

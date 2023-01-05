@@ -111,6 +111,8 @@ const PersonnelMember = () => {
       setContactValue(result?.data.section);
     }
   };
+  console.log(memberInfo);
+  console.log(contactValue);
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //~ 사용자계정 생성 유효성 검사
@@ -541,11 +543,15 @@ const PersonnelMember = () => {
                 }}>
                 수정
               </button>
-              <button
-                className='commonBtn delete'
-                onClick={() => deleteMemberApi()}>
-                삭제
-              </button>
+              {memberInfo.user_id === localStorage.getItem('userId') ? (
+                <></>
+              ) : (
+                <button
+                  className='commonBtn delete'
+                  onClick={() => deleteMemberApi()}>
+                  삭제
+                </button>
+              )}
               <button
                 className='commonBtn list'
                 onClick={() => navigate(`/gp/personnel`)}>
