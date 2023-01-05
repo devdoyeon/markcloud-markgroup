@@ -28,7 +28,7 @@ class ProjectTable(Base):
     organ_code = Column(VARCHAR(14), nullable =False)
     project_code = Column(VARCHAR(14), nullable =False, unique = True)
     project_name = Column(VARCHAR(50), nullable = False)
-    project_description = Column(VARCHAR(200), nullable = False)
+    project_description = Column(TEXT, nullable = False)
     project_start_date = Column(DateTime, nullable = False)
     project_end_date = Column(DateTime, nullable = False)
     project_status = Column(VARCHAR(10), nullable = False)
