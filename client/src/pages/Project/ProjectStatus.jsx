@@ -162,6 +162,7 @@ const ProjectStatus = () => {
                 <span>프로젝트명</span>
                 <input
                   type='text'
+                  maxLength='30'
                   placeholder='프로젝트명을 입력해 주세요.'
                   value={search.name}
                   onChange={e => changeState(setSearch, 'name', e.target.value)}

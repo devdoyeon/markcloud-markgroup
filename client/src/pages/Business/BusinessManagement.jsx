@@ -441,6 +441,7 @@ const BusinessManagement = () => {
                   <input
                     type='text'
                     placeholder='제목을 입력해 주세요.'
+                    maxLength='30'
                     onChange={e =>
                       changeState(setPostInfo, 'title', e.target.value)
                     }
@@ -453,6 +454,7 @@ const BusinessManagement = () => {
                   <input
                     type='text'
                     placeholder='내용을 입력해주세요.'
+                    maxLength='30'
                     onChange={e =>
                       changeState(setPostInfo, 'content', e.target.value)
                     }

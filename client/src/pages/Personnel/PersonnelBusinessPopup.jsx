@@ -1,11 +1,12 @@
-import { changeState } from 'js/commonUtils';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { changeState } from 'js/commonUtils';
+import CommonModal from 'common/CommonModal';
 import {
   getDepartmentCreate,
   getDepartmentDelete,
   getDepartmentUpdate,
 } from 'js/groupwareApi';
+import { commonModalSetting } from 'js/commonUtils';
 
 const PersonnelBusinessPopup = ({
   popup,
@@ -18,6 +19,12 @@ const PersonnelBusinessPopup = ({
   departmentList,
   departmentPageInfo,
 }) => {
+  const [alert, setAlert] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    content: '',
+    bool: false,
+  });
   const projectName = [];
   if (departmentList.length > 0) {
     departmentList?.forEach(ele => {
@@ -31,6 +38,13 @@ const PersonnelBusinessPopup = ({
       if (typeof create === 'object') {
         changeState(setCurDepartment, 'section', '');
         getPersonDepartmentApi();
+        setAlert('create');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '등록이 완료되었습니다.'
+        );
       }
     }
   };
@@ -40,6 +54,13 @@ const PersonnelBusinessPopup = ({
     if (typeof curData === 'object') {
       getPersonDepartmentApi();
       changeState(setCurDepartment, 'section', '');
+      setAlert('edit');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '수정이 완료되었습니다.'
+      );
     }
   };
 
@@ -50,6 +71,8 @@ const PersonnelBusinessPopup = ({
       pageCon.page = 1;
       getPersonDepartmentApi(pageCon);
       changeState(setCurDepartment, 'section', '');
+      setAlert('delete');
+      return commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     }
   };
 
@@ -72,6 +95,7 @@ const PersonnelBusinessPopup = ({
               <input
                 type='text'
                 placeholder='부서명을 입력해주세요.'
+                maxLength='20'
                 value={curDepartment?.section ? curDepartment?.section : ''}
                 onChange={e =>
                   changeState(setCurDepartment, 'section', e.target.value)
@@ -84,9 +108,15 @@ const PersonnelBusinessPopup = ({
               <button
                 className='commonBtn'
                 onClick={() => {
-                  setPopup(false);
+                  // setPopup(false);
                   setButtonControl('');
-                  createPersonnelDepartment();
+                  setAlert('createConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '부서를 등록 하시겠습니까?'
+                  );
                 }}>
                 등록
               </button>
@@ -105,18 +135,29 @@ const PersonnelBusinessPopup = ({
               <button
                 className='commonBtn'
                 onClick={() => {
-                  setPopup(false);
+                  // setPopup(false);
                   setButtonControl('');
-                  updatePersonnelDepartment();
+                  setAlert('updateConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '부서명을 수정하시겠습니까?'
+                  );
                 }}>
                 수정
               </button>
               <button
                 className='commonBtn delete'
                 onClick={() => {
-                  setPopup(false);
                   setButtonControl('');
-                  deletePersonnelDepartment();
+                  setAlert('deleteConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '부서를 삭제하시겠습니까?'
+                  );
                 }}>
                 삭제
               </button>
@@ -133,6 +174,29 @@ const PersonnelBusinessPopup = ({
           )}
         </div>
       </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (
+              alert === 'cancel' ||
+              alert === 'apply' ||
+              alert === 'delete' ||
+              alert === 'edit' ||
+              alert === 'create'
+            ) {
+              setPopup(false);
+            } else if (alert === 'createConfirm') {
+              createPersonnelDepartment();
+            } else if (alert === 'updateConfirm') {
+              updatePersonnelDepartment();
+            } else if (alert === 'deleteConfirm') {
+              deletePersonnelDepartment();
+            } else return;
+          }}
+        />
+      )}
     </div>
   );
 };

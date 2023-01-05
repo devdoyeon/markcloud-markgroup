@@ -188,6 +188,7 @@ const NewProject = () => {
                 <input
                   type='text'
                   placeholder='제목을 입력해 주세요.'
+                  maxLength="30"
                   value={projectInfo.project_name}
                   onChange={e => {
                     if (e.target.value.length > 30) {
