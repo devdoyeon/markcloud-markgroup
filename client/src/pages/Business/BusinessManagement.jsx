@@ -93,7 +93,6 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-
   const searchStart = async () => {
     // 여기 밑에서 api 요청
     await getBusinessReadApi();
@@ -168,7 +167,7 @@ const BusinessManagement = () => {
         getBusinessReadApi();
       }
     }
-  }, [pageInfo.page]);
+  }, [pageInfo.page, postInfo.project_nam]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
@@ -187,12 +186,6 @@ const BusinessManagement = () => {
       changeState(setPostInfo, 'request_id', memberCurKey);
     }
   }, [requesterValue]);
-
-  useEffect(() => {
-    if (getCookie('myToken')) {
-      getBusinessReadApi();
-    }
-  }, [postInfo.project_name]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
