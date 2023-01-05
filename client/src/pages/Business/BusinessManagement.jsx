@@ -93,7 +93,6 @@ const BusinessManagement = () => {
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
-  console.log(projectName);
   const searchStart = async () => {
     // 여기 밑에서 api 요청
     await getBusinessReadApi();
