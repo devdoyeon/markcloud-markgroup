@@ -67,7 +67,8 @@ const Home = () => {
           return;
         } else if (
           checkResult?.data?.status?.code === 201 ||
-          checkResult?.data?.status?.code === 301
+          checkResult?.data?.status?.code === 301 ||
+          checkResult?.data?.status?.code === 302
         ) {
           const userResult = await checkUserInfo();
           if (typeof userResult === 'object') {

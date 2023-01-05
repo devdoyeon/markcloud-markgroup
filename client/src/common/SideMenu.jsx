@@ -29,7 +29,7 @@ const SideMenu = () => {
           setAlertBox,
           true,
           'alert',
-          '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
+          '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동합니다.'
         );
         return;
       } else if (result?.data?.status?.code === 303) {
