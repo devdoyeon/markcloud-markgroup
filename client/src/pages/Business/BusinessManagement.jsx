@@ -167,7 +167,7 @@ const BusinessManagement = () => {
         getBusinessReadApi();
       }
     }
-  }, [pageInfo.page, postInfo.project_nam]);
+  }, [pageInfo.page, postInfo.project_name]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
