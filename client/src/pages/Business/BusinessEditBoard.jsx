@@ -174,13 +174,8 @@ const BusinessEditBoard = () => {
   const deletePost = async () => {
     const result = await deleteBusiness(id);
     if (typeof result === 'object') {
-      setAlert('deleteAlert');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'confirm',
-        '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
-      );
+      setAlert('apply');
+      return commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
@@ -272,7 +267,17 @@ const BusinessEditBoard = () => {
               onClick={id?.length ? editPost : ''}>
               수정
             </button>
-            <button className='commonBtn close' onClick={() => deletePost()}>
+            <button
+              className='commonBtn close'
+              onClick={() => {
+                setAlert('deleteConfirm');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                );
+              }}>
               삭제
             </button>
             <button
@@ -300,6 +305,7 @@ const BusinessEditBoard = () => {
               navigate(`/gp/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
               return navigate('/gp/sign-in');
+            else if (alert === 'deleteConfirm') deletePost();
             else return;
           }}
         />
