@@ -190,6 +190,12 @@ const BusinessManagement = () => {
 
   useEffect(() => {
     if (getCookie('myToken')) {
+      getBusinessReadApi();
+    }
+  }, [postInfo.project_name]);
+
+  useEffect(() => {
+    if (getCookie('myToken')) {
       if (postInfo.status_filter === 'MyProject') {
         setRequesterValue('선택');
         setContactValue(localStorage.getItem('userName'));
