@@ -101,7 +101,11 @@ const ProjectStatus = () => {
               onClick={() => navigate(`/gp/project/${id}`)}>
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
-              <td>{project_name}</td>
+              <td>
+                {project_name.length > 20
+                  ? `${project_name.slice(0, 20)}...`
+                  : project_name}
+              </td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>
               <td>{member_cnt}</td>
