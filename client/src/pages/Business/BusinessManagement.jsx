@@ -509,7 +509,11 @@ const BusinessManagement = () => {
                   onClick={() => searchStart()}>
                   검색
                 </button>
-                <button className='commonBtn clear'>초기화</button>
+                <button
+                  className='commonBtn clear'
+                  onClick={() => window.location.reload()}>
+                  초기화
+                </button>
               </div>
             </div>
           </div>
