@@ -47,20 +47,15 @@ const Home = () => {
     } else {
       const checkResult = await checkPoint();
       if (typeof checkResult === 'object') {
-        if (
-          checkResult?.data?.status?.code === 201 ||
-          checkResult?.data?.status?.code === 301
-        ) {
-          if (checkResult?.data?.data === 'none') {
-            setAlert('needDepartmentName');
-            commonModalSetting(
-              setAlertBox,
-              true,
-              'confirm',
-              '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
-            );
-            return;
-          }
+        if (checkResult?.data?.data === 'none') {
+          setAlert('needDepartmentName');
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'confirm',
+            '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
+          );
+          return;
         } else if (checkResult?.data?.status?.code === 303) {
           setAlert('needPayment');
           commonModalSetting(
@@ -70,7 +65,10 @@ const Home = () => {
             '유료 결제가 필요합니다.<br/>요금제 안내 페이지로 이동하시겠습니까?'
           );
           return;
-        } else {
+        } else if (
+          checkResult?.data?.status?.code === 201 ||
+          checkResult?.data?.status?.code === 301
+        ) {
           const userResult = await checkUserInfo();
           if (typeof userResult === 'object') {
             const { name, user_id } = userResult?.data?.data;
