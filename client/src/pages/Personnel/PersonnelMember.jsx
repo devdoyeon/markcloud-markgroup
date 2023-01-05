@@ -111,8 +111,7 @@ const PersonnelMember = () => {
       setContactValue(result?.data.section);
     }
   };
-  console.log(memberInfo);
-  console.log(contactValue);
+
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //~ 사용자계정 생성 유효성 검사
