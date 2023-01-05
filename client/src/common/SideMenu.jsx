@@ -22,6 +22,16 @@ const SideMenu = () => {
   const checkUser = async () => {
     const result = await checkPoint();
     if (typeof result === 'object') {
+      if (result?.data?.data === 'none') {
+        setAlert('needDepartmentName');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
+        );
+        return;
+      }
       localStorage.setItem('department', result?.data?.data);
       setRender('active');
     } else if (result === 'paymentRequired') {
@@ -163,6 +173,9 @@ const SideMenu = () => {
             if (alert === 'needLogin') return navigate('/gp/sign-in');
             else if (alert === 'paymentRequired') return navigate('/gp/cost');
             else if (alert === 'serviceExpired') return navigate('/gp/');
+            else if (alert === 'needDepartmentName')
+              return (window.location.href =
+                'https://markcloud.co.kr/mark-mypage');
             else if (alert === 'notAuthority') return navigate('/gp/business');
             else return;
           }}
