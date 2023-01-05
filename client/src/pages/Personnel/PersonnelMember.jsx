@@ -40,6 +40,7 @@ const PersonnelMember = () => {
     zip_code: '',
     address: '',
     section: '',
+    groupware_only_yn: '',
   });
   const [departmentName, setDepartmentName] = useState([]);
 
@@ -542,7 +543,7 @@ const PersonnelMember = () => {
                 }}>
                 수정
               </button>
-              {memberInfo.user_id === localStorage.getItem('userId') ? (
+              {memberInfo.groupware_only_yn === 'N' ? (
                 <></>
               ) : (
                 <button
