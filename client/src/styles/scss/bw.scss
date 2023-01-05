@@ -1,0 +1,987 @@
+@charset "UTF-8";
+@import './style';
+
+// 변수
+
+// 업무 관리
+// radio btn custom
+[type='radio'] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid $footerColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: $white;
+  padding: 0;
+}
+
+[type='radio']:checked {
+  background: url('image/check.svg');
+  border: 0;
+}
+
+[type='radio']:hover {
+  cursor: pointer;
+}
+
+[type='radio']:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+// checkbox custom btn
+[type='checkbox'] {
+  vertical-align: middle;
+  appearance: none;
+  border: 1px solid $footerColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  background-color: $white;
+  padding: 0;
+  transform: translateY(-2px);
+}
+
+[type='checkbox']:checked {
+  background: url('image/check.svg');
+  border: 0;
+}
+
+[type='checkbox']:hover {
+  cursor: pointer;
+}
+
+[type='checkbox']:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.container {
+  .content-wrap {
+    &.business {
+      width: 1060px;
+      .work-wrap {
+        padding: 40px 60px 24px 60px;
+        border: 1px solid $footerColor;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 16px;
+        margin-bottom: 50px;
+        &.project-work-wrap {
+          height: 720px;
+          .edit {
+            padding: 20px 0;
+            height: 430px;
+            .quill {
+              width: 100%;
+              height: 430px;
+              > .ql-container {
+                height: 346px;
+              }
+            }
+          }
+        }
+        .work-situation {
+          @include flex-style($justifyVal: flex-start);
+          padding: 12px 0;
+          border-top: 1px solid $footerColor;
+          border-bottom: 1px solid $footerColor;
+          > span {
+            margin-right: 16px;
+            font-size: 14px;
+            color: $gray01;
+          }
+          .work-bg {
+            @include flex-style();
+            padding: 6px 10px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            margin-right: 16px;
+            cursor: pointer;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+        .project-wrap,
+        .content,
+        .progress {
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+        }
+        .project-wrap {
+          @include flex-style($justifyVal: flex-start);
+          &.project-name {
+            > .project-list {
+              width: 100%;
+              @include flex-style($direction: row, $justifyVal: flex-start);
+              .pr-name {
+                width: 782px;
+              }
+            }
+          }
+          &.board-head {
+            > .project-list {
+              padding-left: 8px;
+            }
+          }
+          > div {
+            &.project-list {
+              margin-right: 16px;
+              &.list-detail {
+                width: 100%;
+                > .name-wrap {
+                  width: 782px;
+                }
+              }
+              > .selectBox {
+                position: relative;
+                > .selectVal {
+                  width: 100%;
+                  > span {
+                    width: 135px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: inline-block;
+                  }
+                }
+                > .selectOptGroup {
+                  top: 30px;
+                  left: 15px;
+                  width: 175px;
+                  > div {
+                    &.active {
+                      color: $mainColor;
+                    }
+                    &:hover {
+                      color: $mainColor;
+                    }
+                  }
+                }
+              }
+              > .detail {
+                width: 782px;
+              }
+            }
+            width: calc((100% / 3) - 14px);
+            position: relative;
+            margin-right: 25px;
+            @include flex-style($justifyVal: flex-start);
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+              width: 1px;
+              height: 36px;
+              background-color: $footerColor;
+            }
+            &:last-child {
+              margin-right: 0;
+              &::after {
+                display: none;
+              }
+            }
+            > span {
+              margin-right: 16px;
+              font-size: 14px;
+              color: $gray01;
+              &.pro {
+                margin-right: 10px;
+              }
+            }
+            > div {
+              @include flex-style($justifyVal: flex-start);
+              border-radius: 8px;
+              width: 175px;
+              padding: 6px 0 6px 12px;
+              background-color: $subBlue;
+              font-size: 14px;
+            }
+          }
+          &.title {
+            width: 100%;
+            padding-left: 10px;
+
+            > span {
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 21px;
+              margin-left: 6px;
+            }
+            > .title-input-wrap {
+              width: 782px;
+              > .input-read {
+                width: 100%;
+              }
+              label {
+                input {
+                  width: 782px;
+                  background-color: $subBlue;
+                  padding: 6px 0 6px 12px;
+                  border-radius: 8px;
+                  border: 1px solid transparent;
+                  &:focus {
+                    border: 1px solid $mainColor;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .content {
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          padding: 12px 0;
+
+          > .title,
+          .content-text {
+            width: 50%;
+            padding-left: 16px;
+            input {
+              width: 314px;
+              margin-left: 25px;
+              border-radius: 8px;
+              background-color: $subBlue;
+              padding: 6px 0 6px 16px;
+            }
+            > label {
+              > span {
+                font-size: 14px;
+                color: $gray01;
+              }
+            }
+          }
+          > .title {
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              width: 1px;
+              right: -6px;
+              height: 36px;
+              background-color: $footerColor;
+            }
+          }
+        }
+        .progress {
+          margin-bottom: 24px;
+          > span {
+            font-size: 14px;
+            color: $gray01;
+            margin-right: 16px;
+          }
+          > label {
+            padding: 6px 10px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            margin-right: 16px;
+            transform: translateY(-5px);
+            cursor: pointer;
+          }
+        }
+        .work-btn-wrap {
+          @include flex-style($justifyVal: center, $alignVal: flex-start);
+          .search-option {
+            @include flex-style();
+            .commonBtn {
+              &.search {
+                margin-right: 24px;
+                background-color: $gray02;
+                color: $white;
+              }
+              &.clear {
+                border: 1px solid $gray02;
+                color: $gray02;
+                background-color: $white;
+                padding: 8px 22px 8px 21px;
+              }
+            }
+          }
+        }
+      }
+      .work-table-wrap {
+        .check-work-head-wrap {
+          @include flex-style(
+            $justifyVal: space-between,
+            $alignVal: flex-start
+          );
+          margin-bottom: 38px;
+          .check-work-title {
+            @include flex-style($justifyVal: space-between, $alignVal: center);
+            border: 1px solid $mainColor;
+            padding: 0 20px;
+            border-radius: 20px;
+            width: 201px;
+            height: 43px;
+            h4 {
+              font-family: 'NotoSansR';
+              font-size: 16px;
+              color: $mainColor;
+            }
+            .rect-num {
+              @include flex-style();
+              font-family: 'NotoSansM';
+              width: 43px;
+              height: 23px;
+              color: $white;
+              background-color: $mainColor;
+              border-radius: 16px;
+            }
+          }
+          .create {
+            padding: 8px 28px;
+            cursor: pointer;
+          }
+        }
+        .check-work-wrap {
+          .check-tab-list {
+            @include flex-style($justifyVal: flex-start);
+            position: relative;
+            z-index: 1;
+            top: 1px;
+            > div {
+              @include flex-style($justifyVal: space-between);
+              padding: 0 24px;
+              width: 206px;
+              height: 48px;
+              border: 1px solid $footerColor;
+              border-top-left-radius: 8px;
+              border-top-right-radius: 8px;
+              margin-right: 8px;
+              border-bottom: 1px solid $gray05;
+              background: $gray05;
+              &.active {
+                color: $mainColor;
+                background-color: $white;
+                border-bottom: 1px solid $white;
+              }
+              .num {
+                display: none;
+                &.active {
+                  display: block;
+                  width: 40px;
+                  height: 20px;
+                  background-color: $mainColor;
+                  @include flex-style();
+                  color: $white;
+                  border-radius: 16px;
+                  line-height: 20px;
+                }
+              }
+              cursor: pointer;
+              span {
+                color: $gray01;
+                font-size: 16px;
+                &.active {
+                  color: $mainColor;
+                }
+              }
+            }
+            // > .my-check {
+            // }
+            // > .request-check {
+            // }
+            > .all-check {
+              margin-right: 0;
+            }
+          }
+          .table {
+            position: relative;
+            z-index: 0;
+            padding: 19px 16px 20px 16px;
+            // padding: 10px 24px;
+            // padding: 0 14px;
+            // padding: 19px 0 20px 0;
+            background-color: $white;
+            border: 1px solid $footerColor;
+            // box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+            border-radius: 8px;
+            margin-bottom: 56px;
+            > div {
+              background-color: $subBlue;
+              border-radius: 8px;
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                border-style: hidden;
+                thead {
+                  th {
+                    padding: 10px 14px;
+                    color: $gray01;
+                    font-size: 14px;
+                    &.title {
+                      width: 180px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      display: inline-block;
+                    }
+                    &.p-name {
+                      width: 140px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      display: inline-block;
+                    }
+                  }
+                }
+                tbody {
+                  tr {
+                    background-color: $tableColor;
+                    cursor: pointer;
+                    &:nth-child(2n) {
+                      background-color: $subTableColor;
+                    }
+                    &.table-row {
+                      td {
+                        &.red {
+                          color: #df0000;
+                        }
+                        &.gray {
+                          color: $gray02;
+                        }
+                        &.blue {
+                          color: $mainBlue;
+                        }
+                        &.title {
+                          width: 180px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                          display: inline-block;
+                        }
+                        &.p-name {
+                          width: 140px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                          display: inline-block;
+                        }
+                      }
+                    }
+                    td {
+                      text-align: center;
+                      padding: 18px 0;
+                      font-size: 14px;
+                      &.none-list {
+                        color: $gray02;
+                        font-size: 14px;
+                        font-family: 'NotoSansR';
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 인사 관리
+.container {
+  .content-wrap {
+    &.personnel {
+      width: 1060px;
+    }
+    .department-manage-wrap,
+    .member-manage-wrap {
+      > .head {
+        @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+        position: relative;
+        .rect {
+          @include flex-style();
+          width: 99px;
+          height: 41px;
+          color: $mainColor;
+          border: 1px solid $mainColor;
+          font-size: 16px;
+          font-family: 'NotoSansR';
+          border-radius: 20px;
+          position: relative;
+        }
+        .line {
+          width: calc(100% - 99px);
+          height: 1px;
+          background-color: $footerColor;
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          z-index: 1;
+        }
+      }
+    }
+    .department-manage-wrap {
+      > .no-img-wrap {
+        width: 100%;
+        @include flex-style($direction: column);
+        > span {
+          font-size: 16px;
+          font-family: 'NotoSansR';
+          color: $gray03;
+        }
+      }
+      > .card-wrap {
+        padding: 58px 0 52px 0;
+        @include flex-style($justifyVal: flex-start);
+        .card {
+          margin: 0 25px 25px 0;
+          // width: 310px;
+          cursor: pointer;
+          width: calc((100% / 3) - 18px);
+          height: 97px;
+          border: 1px solid $footerColor;
+          border-radius: 16px;
+          box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+          .date-num {
+            @include flex-style($justifyVal: space-between);
+            background-color: $subBlue;
+            padding: 12px 24px 10px 24px;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+          }
+          .team {
+            @include flex-style($justifyVal: flex-start);
+            padding: 16px 24px;
+          }
+        }
+      }
+      .page-wrap {
+        @include flex-style();
+        height: 47px;
+        margin-bottom: 40px;
+        .pagination {
+          margin-bottom: 0;
+        }
+        > .commonBtn {
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+    .member-manage-wrap {
+      .head {
+        margin-bottom: 40px;
+      }
+      .page-wrap {
+        @include flex-style();
+        height: 47px;
+        margin-bottom: 40px;
+        > .pagination {
+          margin-bottom: 0px;
+        }
+        > .commonBtn {
+          position: absolute;
+          right: 0;
+        }
+      }
+      > .table {
+        position: relative;
+        z-index: 0;
+        padding: 19px 16px 20px 16px;
+        background-color: $white;
+        border: 1px solid $footerColor;
+        // box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 8px;
+        margin-bottom: 56px;
+        > div {
+          background-color: $subBlue;
+          border-radius: 8px;
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            border-style: hidden;
+            thead {
+              th {
+                padding: 10px 24px;
+                color: $gray01;
+                font-size: 14px;
+              }
+            }
+            tbody {
+              tr {
+                background-color: $tableColor;
+                cursor: pointer;
+                &:nth-child(2n) {
+                  background-color: $subTableColor;
+                }
+                td {
+                  text-align: center;
+                  padding: 18px 0;
+                  font-size: 14px;
+                  &.none-list {
+                    color: $gray02;
+                    font-size: 14px;
+                    font-family: 'NotoSansR';
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.member {
+      width: 1060px;
+      .member-wrap {
+        padding: 40px 60px 24px 60px;
+        border: 1px solid $footerColor;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.04);
+        border-radius: 16px;
+        margin-bottom: 50px;
+        > .id-line {
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          border-top: 1px solid $footerColor;
+          border-bottom: 1px solid $footerColor;
+          padding: 12px 0;
+          > div {
+            position: relative;
+            @include flex-style();
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 23px;
+              &.red {
+                color: #df0000;
+                margin-left: 16px;
+              }
+              &.blue {
+                color: #5b84e3;
+                margin-left: 16px;
+              }
+            }
+            > input {
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 0 6px 12px;
+              width: 236px;
+              height: 32px;
+              margin-right: 8px;
+            }
+            > button {
+              @include flex-style();
+              padding: 0;
+              background-color: $white;
+              color: $mainColor;
+              border: 1px solid $mainColor;
+              font-size: 14px;
+              font-family: 'NotoSansR';
+              width: 76px;
+              height: 32px;
+            }
+          }
+        }
+        > .name-line {
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          border-bottom: 1px solid $footerColor;
+          padding: 12px 0;
+          > div {
+            // width: 320px;
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 1px;
+              height: 32px;
+              background-color: $footerColor;
+            }
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 23px;
+            }
+            > input {
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 0 6px 12px;
+              width: 236px;
+              height: 32px;
+            }
+            &.name {
+              padding-left: 0px;
+              padding-right: 16px;
+              span {
+                margin-right: 31px;
+              }
+              input {
+                width: 200px;
+              }
+            }
+            &:first-child {
+              span {
+                padding-left: 5px;
+              }
+            }
+            &.birth-date {
+              &::after {
+                display: none;
+              }
+              span {
+                margin-right: 12px;
+                padding-left: 16px;
+              }
+              input {
+                background-color: $subBlue;
+                padding: 6px 12px 6px 12px;
+                width: 200px;
+                height: 32px;
+                border-radius: 8px;
+              }
+            }
+          }
+
+          .gender-wrap {
+            width: 294px;
+            height: 32px;
+            padding-left: 29px;
+            @include flex-style($justifyVal: flex-start);
+            .gender-input-wrap {
+              width: auto;
+              @include flex-style(
+                $justifyVal: flex-start,
+                $alignVal: flex-start
+              );
+              > div {
+                @include flex-style();
+                padding: 6px 6px 6px 10px;
+                background-color: $subBlue;
+                border-radius: 8px;
+                margin-right: 16px;
+                &:last-child {
+                  margin-right: 0;
+                }
+                span {
+                  margin-right: 0;
+                }
+              }
+            }
+            span {
+              margin-right: 29px;
+            }
+          }
+        }
+        .affiliation-line {
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+          > div {
+            height: 32px;
+            position: relative;
+            &::after {
+              content: '';
+              position: absolute;
+              right: 0;
+              width: 1px;
+              height: 32px;
+              background-color: $footerColor;
+            }
+            > span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+            }
+
+            &.affiliation {
+              // width: 264px;
+              padding-left: 6px;
+              padding-right: 16px;
+              @include flex-style($justifyVal: flex-start);
+              span {
+                margin-right: 30px;
+              }
+              > .selectBox {
+                width: 200px;
+                // margin-right: 0;
+              }
+              .selectOptGroup {
+                width: 200px;
+              }
+            }
+
+            &.phone {
+              padding-right: 15px;
+              span {
+                padding-left: 16px;
+                margin-right: 12px;
+              }
+              input {
+                width: 200px;
+                background-color: $subBlue;
+                padding: 6px 6px 6px 6px;
+                border-radius: 8px;
+                height: 32px;
+              }
+            }
+            &.id {
+              &::after {
+                display: none;
+              }
+            }
+
+            &.password {
+              // width: 274px;
+              &::after {
+                display: none;
+              }
+              span {
+                padding-left: 16px;
+                margin-right: 12px;
+              }
+              input {
+                width: 200px;
+                background-color: $subBlue;
+                padding: 6px 6px 6px 6px;
+                border-radius: 8px;
+                height: 32px;
+              }
+            }
+          }
+        }
+        .email-line {
+          width: 860px;
+          @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+          padding: 12px 0;
+          border-bottom: 1px solid $footerColor;
+          > div {
+            position: relative;
+
+            span {
+              font-family: 'NotoSansR';
+              font-size: 14px;
+              color: $gray01;
+              margin-right: 23px;
+            }
+            input {
+              background-color: $subBlue;
+              padding: 6px 6px 6px 12px;
+              border-radius: 8px;
+              height: 32px;
+              width: 498px;
+              font-size: 14px;
+              font-family: 'NotoSansR';
+            }
+          }
+        }
+        .address-line {
+          @include flex-style($justifyVal: flex-start);
+          padding: 12px 0;
+          span {
+            font-family: 'NotoSansR';
+            font-size: 14px;
+            color: $gray01;
+            margin-right: 31px;
+            padding-left: 5px;
+          }
+          input {
+            background-color: $subBlue;
+            padding: 6px 6px 6px 12px;
+            border-radius: 8px;
+            height: 32px;
+            width: 498px;
+            margin-right: 16px;
+          }
+          > .commonBtn {
+            @include flex-style();
+            padding: 0;
+            width: 76px;
+            background-color: $white;
+            border: 1px solid $mainColor;
+            color: $mainColor;
+            height: 32px;
+            font-family: 'NotoSansR';
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.popup-bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  > .popup {
+    width: 437px;
+    height: 262px;
+    border-radius: 16px;
+    background-color: $white;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-45%, -50%);
+    > .head {
+      padding: 16px 0 16px 24px;
+      color: $gray02;
+      font-family: 'NotoSansR';
+      background-color: $subBlue;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    > .content-wrap {
+      margin-top: 40px;
+      .content {
+        @include flex-style();
+        margin-bottom: 40px;
+        > label {
+          span {
+            margin-right: 16px;
+            font-size: 14px;
+            font-family: 'NotoSansR';
+            color: $gray01;
+          }
+          input {
+            width: 296px;
+            height: 48px;
+            background-color: $subBlue;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            padding: 14px 0 14px 13px;
+            &:focus {
+              border: 1px solid $mainColor;
+            }
+          }
+        }
+      }
+      .btn-wrap {
+        @include flex-style($alignVal: flex-start);
+        .commonBtn {
+          margin-right: 24px;
+          &.close {
+            margin-right: 0;
+            background-color: $gray02;
+          }
+          &.delete {
+            border: 1px solid $gray02;
+            color: $gray02;
+            background-color: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 공지사항

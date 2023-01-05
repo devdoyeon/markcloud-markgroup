@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'NotoSansR', '맑은 고딕', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+}
+strong {
+  font-weight: bold;
+}
+select {
+  min-width: 83px;
+  appearance: none;
+  -webkit-appearance: none; /* 사파리, 크롬 하위버전용 */
+  -moz-appearance: none; /* 사파리, 크롬 하위버전용 */
+  background: url(../../image/selectArrow.svg) no-repeat 100%;
+}
+select::-ms-expand {
+  display: none;
+} /* 익스플로러용 */
+
+ul,
+dl,
+li,
+ol {
+  list-style: none;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-size: 22px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+select {
+  outline: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+}

@@ -177,10 +177,6 @@ def change_member(db, inbound_data, member_id):
 def remove_member(db,member_id):
     
     member_table = memberManageModel.MemberTable
-
-    try:
-        values = {'is_active': 0}
-        db.query(member_table).filter(member_table.id == member_id).update(values)
-    except:
-        raise HTTPException(status_code=500, detail='RemoveMbError')            
     
+    values = {'is_active': 0}
+    db.query(member_table).filter(member_table.id == member_id).update(values)

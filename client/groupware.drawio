@@ -1,0 +1,78 @@
+<mxfile host="65bd71144e">
+    <diagram id="d9FjvEYmB0gcEd-Dwakz" name="페이지-1">
+        <mxGraphModel dx="1337" dy="896" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="413" pageHeight="291" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="23" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="190" width="105.48" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="로그아웃 시 마크클라우드 메인 페이지로 이동" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=8;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="530.48" y="215" width="170" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="마이페이지로 이동 (role 확인 필요)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="535" y="235" width="125" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="&lt;h1&gt;SQL Column&lt;/h1&gt;&lt;p&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;department_code = 회사 코드&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;section = 소속 부서&lt;/b&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;&lt;br&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;groupware_only_yn =&lt;/b&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;&amp;nbsp;그룹웨어만&lt;br&gt;&lt;/b&gt;&lt;b style=&quot;font-size: 9px ; text-align: center&quot;&gt;사용 가능한지 여부&lt;/b&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=8;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="652" y="60" width="163" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="" style="endArrow=none;html=1;fontSize=8;fontColor=#FFFFFF;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="412" y="580" as="sourcePoint"/>
+                        <mxPoint x="412" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=none;html=1;fontSize=9;fontColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="37" target="41" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="237" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="&lt;b&gt;마크클라우드 로그인&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="47" y="150" width="210" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="151.57999999999993" y="220" as="sourcePoint"/>
+                        <mxPoint x="77" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="39" value="&lt;font color=&quot;#ffff00&quot;&gt;&lt;b&gt;localStorage.setItem&lt;/b&gt;&lt;br&gt;&lt;/font&gt;department_code&lt;br&gt;section&lt;br&gt;groupware_only_yn" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="267" y="155" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="groupware_only_yn === y&lt;br&gt;&lt;b&gt;그룹웨어 사용자일 경우&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 8px&quot;&gt;(그룹웨어의 인사관리 탭을 통해&lt;br&gt;회원가입이 된 사람)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="17" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="groupware_only_yn === n&lt;br&gt;&lt;b&gt;그룹웨어를 이용하는 회사의&lt;br&gt;대표일 경우&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="1. 마이페이지 전체 노출&lt;br&gt;2. 그룹웨어 사이드메뉴에서&lt;br&gt;인사관리, 마크뷰 노출" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="350" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="1. 마이페이지 문의 내역과&lt;br&gt;회원 정보만 노출&lt;br&gt;2. 비밀번호 변경만 노출&lt;br&gt;3. 회원 탈퇴 버튼도 비노출&lt;br&gt;4. 그룹웨어 사이드메뉴에서&lt;br&gt;인사관리, 마크뷰를 제외한&lt;br&gt;메뉴만 노출" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="17" y="350" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;font style=&quot;font-size: 30px&quot;&gt;&lt;b&gt;Flow&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="337" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" style="edgeStyle=none;html=1;fontSize=9;fontColor=#FFFFFF;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="46" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="365" y="290" as="targetPoint"/>
+                        <mxPoint x="150" y="220" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="46" value="&lt;b&gt;일반 사용자&lt;br&gt;(그룹웨어 X)&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="290" width="107" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="1. localStorage.setItem&lt;br&gt;생략 (회사코드 etc)&lt;br&gt;2. 마이페이지 전체 노출&lt;br&gt;3. 그룹웨어 접근 권한&lt;br&gt;block하기" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=9;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="350" width="107" height="107" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="&lt;h1&gt;그룹웨어 메인&lt;/h1&gt;&lt;p&gt;&lt;b&gt;&lt;u&gt;그룹웨어 바로가기 버튼 클릭했을 때 체크포인트 확인&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;i&gt;&lt;u&gt;로그인 되어 있지 않은 경우&lt;/u&gt;&lt;/i&gt; alert('로그인이 필요한 서비스입니다.')&lt;br&gt;&lt;i&gt;&lt;u&gt;로그인이 되어 있으면서 대표 계정인 경우 유료 결제가 되어 있지 않으면&lt;/u&gt;&lt;/i&gt;&lt;br&gt;alert('결제가 필요한 서비스입니다.')&lt;br&gt;&lt;i&gt;&lt;u&gt;유료 결제 회원이나 회사명 입력이 되어 있지 않을 경우&lt;/u&gt;&lt;/i&gt;&lt;br&gt;alert('그룹웨어를 사용하시려면 회사명 입력이 필요합니다.\n회원 정보 변경을 통해 회사명을 입력해 주세요') 노출 후 마이페이지로 이동&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="425" y="290" width="390" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="&lt;span style=&quot;font-size: 30px&quot;&gt;&lt;b&gt;Discription&lt;/b&gt;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;fontColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="475" y="10" width="60" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
