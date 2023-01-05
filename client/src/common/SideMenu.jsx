@@ -22,18 +22,29 @@ const SideMenu = () => {
   const checkUser = async () => {
     const result = await checkPoint();
     if (typeof result === 'object') {
+      if (result?.data?.data === 'none') {
+        setRender('block');
+        setAlert('needDepartmentName');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
+        );
+        return;
+      } else if (result?.data?.status?.code === 303) {
+        setRender('block');
+        setAlert('needPayment');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '유료 결제가 필요한 서비스입니다.'
+        );
+        return;
+      }
       localStorage.setItem('department', result?.data?.data);
       setRender('active');
-    } else if (result === 'paymentRequired') {
-      setAlert(result);
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '유료 결제가 필요한 서비스입니다.'
-      );
-      setRender('block');
-      return;
     } else if (result === 'serviceExpired') {
       setAlert(result);
       commonModalSetting(
@@ -161,8 +172,11 @@ const SideMenu = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'needLogin') return navigate('/gp/sign-in');
-            else if (alert === 'paymentRequired') return navigate('/gp/cost');
             else if (alert === 'serviceExpired') return navigate('/gp/');
+            else if (alert === 'needPayment') return navigate('/gp/cost/');
+            else if (alert === 'needDepartmentName')
+              return (window.location.href =
+                'https://markcloud.co.kr/mark-mypage');
             else if (alert === 'notAuthority') return navigate('/gp/business');
             else return;
           }}

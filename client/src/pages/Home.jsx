@@ -48,8 +48,8 @@ const Home = () => {
       const checkResult = await checkPoint();
       if (typeof checkResult === 'object') {
         if (
-          checkResult?.data?.status?.code === 301 ||
-          checkResult?.data?.status?.code === 201
+          checkResult?.data?.status?.code === 201 ||
+          checkResult?.data?.status?.code === 301
         ) {
           if (checkResult?.data?.data === 'none') {
             setAlert('needDepartmentName');
@@ -59,17 +59,26 @@ const Home = () => {
               'confirm',
               '회사명 입력이 필요합니다.<br/>회원 정보 변경 페이지로 이동하시겠습니까?'
             );
+            return;
           }
-          localStorage.setItem('yn', 'n');
-        } else if (checkResult?.data?.status?.code === 302)
-          localStorage.setItem('yn', 'y');
-        const userResult = await checkUserInfo();
-        if (typeof userResult === 'object') {
-          const { name, user_id } = userResult?.data?.data;
-          localStorage.setItem('userName', name);
-          localStorage.setItem('userId', user_id);
-          navigate('/gp/business');
-        } else return catchError(userResult, navigate, setAlertBox, setAlert);
+        } else if (checkResult?.data?.status?.code === 303) {
+          setAlert('needPayment');
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'confirm',
+            '유료 결제가 필요합니다.<br/>요금제 안내 페이지로 이동하시겠습니까?'
+          );
+          return;
+        } else {
+          const userResult = await checkUserInfo();
+          if (typeof userResult === 'object') {
+            const { name, user_id } = userResult?.data?.data;
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userId', user_id);
+            navigate('/gp/business');
+          } else return catchError(userResult, navigate, setAlertBox, setAlert);
+        }
       } else catchError(checkResult, navigate, setAlertBox, setAlert);
     }
   };
@@ -248,7 +257,7 @@ const Home = () => {
           okFn={() => {
             if (alert === 'needLogin') return navigate('/gp/sign-in');
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'paymentRequired') return navigate('/gp/cost');
+            else if (alert === 'needPayment') return navigate('/gp/cost');
             else if (alert === 'needDepartmentName')
               return (window.location.href =
                 'https://markcloud.co.kr/mark-mypage');
