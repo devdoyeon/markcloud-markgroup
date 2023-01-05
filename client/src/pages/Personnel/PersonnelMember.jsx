@@ -84,8 +84,10 @@ const PersonnelMember = () => {
       const { data, meta } = result?.data;
       setDepartmentList(data);
       setDepartmentMeta(meta);
-      for (let i = 0; i < data.length; i++) {
-        setDepartmentName(name => [...name, data[i].section]);
+      if (departmentName.length === 0) {
+        for (let i = 0; i < data.length; i++) {
+          setDepartmentName(name => [...name, data[i].section]);
+        }
       }
       setDepartmentPageInfo(prev => {
         const clone = { ...prev };
@@ -109,6 +111,7 @@ const PersonnelMember = () => {
       setContactValue(result?.data.section);
     }
   };
+
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //~ 사용자계정 생성 유효성 검사
@@ -167,6 +170,13 @@ const PersonnelMember = () => {
         true,
         'alert',
         '휴대전화번호를 입력하지 않았습니다.'
+      );
+    } else if (inputRef.current[3].value.length < 11) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '휴대전화번호를 확인해주세요.'
       );
     } else if (inputRef.current[4].value === '') {
       return commonModalSetting(
@@ -268,12 +278,7 @@ const PersonnelMember = () => {
     const result = await getMemberDelete(id);
     if (typeof result === 'object') {
       setAlert('apply');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '삭제가 완료되었습니다.'
-      );
+      return commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -532,14 +537,26 @@ const PersonnelMember = () => {
                 }}>
                 수정
               </button>
-              <button
-                className='commonBtn delete'
-                onClick={() => deleteMemberApi()}>
-                삭제
-              </button>
+              {memberInfo.user_id === localStorage.getItem('userId') ? (
+                <></>
+              ) : (
+                <button
+                  className='commonBtn delete'
+                  onClick={() => {
+                    setAlert('deleteConfirm');
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'confirm',
+                      '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                    );
+                  }}>
+                  삭제
+                </button>
+              )}
               <button
                 className='commonBtn list'
-                onClick={() => navigate(`/personnel`)}>
+                onClick={() => navigate(`/gp/personnel`)}>
                 목록
               </button>
             </div>
@@ -562,9 +579,11 @@ const PersonnelMember = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'cancel' || alert === 'apply') navigate(`/gp/personnel`);
+            if (alert === 'cancel' || alert === 'apply')
+              navigate(`/gp/personnel`);
             else if (alert === 'edit') navigate(`/gp/personnel/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
+            else if (alert === 'deleteConfirm') deleteMemberApi();
             else if (alert === 'tokenExpired') {
               removeCookie('myToken');
               removeCookie('rfToken');

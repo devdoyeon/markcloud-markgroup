@@ -231,9 +231,18 @@ const NewBoard = () => {
                     placeholder='제목을 입력해 주세요.'
                     className='title-input'
                     value={postInfo?.title}
-                    onChange={e =>
-                      changeState(setPostInfo, 'title', e.target.value)
-                    }
+                    onChange={e => {
+                      if (e.target.value.length > 30) {
+                        commonModalSetting(
+                          setAlertBox,
+                          true,
+                          'alert',
+                          '제목은 최대 30자까지 입력 가능합니다.'
+                        );
+                        return;
+                      }
+                      changeState(setPostInfo, 'title', e.target.value);
+                    }}
                   />
                 </div>
               </div>

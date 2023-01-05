@@ -189,9 +189,22 @@ const NewProject = () => {
                   type='text'
                   placeholder='제목을 입력해 주세요.'
                   value={projectInfo.project_name}
-                  onChange={e =>
-                    changeState(setProjectInfo, 'project_name', e.target.value)
-                  }
+                  onChange={e => {
+                    if (e.target.value.length > 30) {
+                      commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'alert',
+                        '프로젝트 제목은 최대 30자까지 입력하실 수 있습니다.'
+                      );
+                      return;
+                    } else
+                      changeState(
+                        setProjectInfo,
+                        'project_name',
+                        e.target.value
+                      );
+                  }}
                 />
               </div>
               <hr />
