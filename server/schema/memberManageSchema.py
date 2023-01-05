@@ -45,9 +45,27 @@ class Memberinfo(BaseModel):
     email:str
     address:str
     zip_code:str
+    groupware_only_yn:str
     
     class Config:
         orm_mode = True
+
+class MemberModDTO(BaseModel):
+    
+    id:int
+    user_id:str
+    name:str
+    gender:str
+    birthday:date
+    section:Optional[str]
+    phone:str
+    email:str
+    address:str
+    zip_code:str
+
+    class Config:
+        orm_mode = True
+
 
 class MemberIn(BaseModel):
     
