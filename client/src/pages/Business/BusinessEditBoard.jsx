@@ -16,6 +16,7 @@ import {
   createBusiness,
   deleteBusiness,
   getBusinessInfo,
+  getBusinessProjectRead,
   getBusinessRead,
   updateBusiness,
 } from 'js/groupwareApi';
@@ -116,7 +117,11 @@ const BusinessEditBoard = () => {
       setRequesterValue(request_id);
       setProgressValue(work_status);
 
-      const memberRead = await getBusinessRead(postInfo, pageInfo);
+      const memberRead = await getBusinessProjectRead(
+        project_name,
+        postInfo.status_filter,
+        pageInfo
+      );
       const { meta, data } = memberRead?.data;
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
@@ -181,7 +186,7 @@ const BusinessEditBoard = () => {
   useEffect(() => {
     if (getCookie('myToken')) {
       changeTitle('그룹웨어 > 업무 작성');
-      getBusinessProjectNameApi();
+
       if (id !== 'undefined' || id !== undefined) {
         getBusinessCurInfo();
       }
