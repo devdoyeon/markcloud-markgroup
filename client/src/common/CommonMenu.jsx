@@ -10,9 +10,11 @@ const CommonMenu = () => {
             onClick={() => {
               removeCookie('myToken', {
                 path: '/',
+                domain: 'markcloud.co.kr',
               });
               removeCookie('rfToken', {
                 path: '/',
+                domain: 'markcloud.co.kr',
               });
               localStorage.clear();
               window.location.reload();
