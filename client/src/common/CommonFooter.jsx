@@ -82,7 +82,7 @@ const CommonFooter = () => {
                 </li>
                 <li>
                   <a
-                    href='/gp/'
+                    href='https://markcloud.co.kr/mark-groupware'
                     rel='noopener noreferrer'
                     target='_self'
                     className='last'>
