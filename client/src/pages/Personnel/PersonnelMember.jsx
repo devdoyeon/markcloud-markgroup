@@ -116,7 +116,35 @@ const PersonnelMember = () => {
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //~ 사용자계정 생성 유효성 검사
-    if (
+    if (inputRef.current[0].value === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디를 입력하지 않았습니다.'
+      );
+    } else if (korean.test(inputRef.current[0].value)) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디에 한글을 포함할 수 없습니다.'
+      );
+    } else if (idCheck === undefined || idCheck === 'undefined') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디 중복체크를 하지 않았습니다.'
+      );
+    } else if (idCheck === false) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '중복된 아이디 입니다.'
+      );
+    } else if (
       inputRef.current[1].value === '' ||
       inputRef.current[1].value === undefined ||
       inputRef.current[1].value === 'undefined'
@@ -612,7 +640,7 @@ const PersonnelMember = () => {
                       setAlertBox,
                       true,
                       'confirm',
-                      '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                      '정말 계정을 삭제하시겠습니까?<br/>삭제된 계정은 복구할 수 없습니다.'
                     );
                   }}>
                   삭제
