@@ -36,7 +36,10 @@ def get_project_list(db: Session,
         from groupware_project p
         left join (
                 select project_code, count(project_code) as member_cnt
-                from groupware_project_members
+                from groupware_project_members as pm0
+                left join members 
+                on members.user_id = pm0.user_id
+                where members.is_active = 1
                 group by project_code) pm
         on p.project_code = pm.project_code
         where p.organ_code = "{user_info.department_code}"
@@ -116,7 +119,10 @@ def get_project(db: Session, project_id: int):
     
 def get_project_members(db: Session, project_code: str):
     try:
-        project_members = db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).all()
+        subquery = db.query(MemberTable.user_id).filter(MemberTable.is_active == 1)
+        project_members = db.query(ProjectMemberTable) \
+            .filter(ProjectMemberTable.user_id.in_(subquery)) \
+            .filter(ProjectMemberTable.project_code == project_code).all()
         return project_members
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
