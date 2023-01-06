@@ -16,7 +16,7 @@ import {
   deleteProjectMember,
   getProjectMember,
 } from 'js/groupwareApi';
-import { changeState, getKeyByValue } from 'js/commonUtils';
+import { changeState } from 'js/commonUtils';
 import { getCookie, removeCookie } from 'js/cookie';
 import deletePerson from 'image/deletePersonIcon.svg';
 
@@ -168,36 +168,30 @@ const ProjectDetail = () => {
                   <div className='row'>
                     {participation?.length === 0
                       ? '참여 인원을 추가해 주세요.'
-                      : participation?.reduce((acc, person) => {
-                          return (
-                            <>
-                              {acc}
-                              <span className='personBtn'>
-                                {getKeyByValue(memberObj, person) === undefined
-                                  ? `${
-                                      getKeyByValue(memberObj, person).split(
-                                        '('
-                                      )[0]
-                                    }(퇴사)`
-                                  : getKeyByValue(memberObj, person)}
-                                {localStorage.getItem('yn') === 'n' ||
-                                projectInfo?.created_id ===
-                                  localStorage.getItem('userName') ? (
-                                  <img
-                                    src={deletePerson}
-                                    alt={`${getKeyByValue(
-                                      memberObj,
-                                      person
-                                    )} 삭제 버튼`}
-                                    onClick={() => deleteMember(person)}
-                                  />
-                                ) : (
-                                  <></>
-                                )}
-                              </span>
-                            </>
-                          );
-                        }, <></>)}
+                      : participation?.reduce(
+                          (acc, { name, section, user_id }) => {
+                            return (
+                              <>
+                                {acc}
+                                <span className='personBtn'>
+                                  {`${name} (${section})`}
+                                  {localStorage.getItem('yn') === 'n' ||
+                                  projectInfo?.created_id ===
+                                    localStorage.getItem('userName') ? (
+                                    <img
+                                      src={deletePerson}
+                                      alt={`name 삭제 버튼`}
+                                      onClick={() => deleteMember(user_id)}
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </span>
+                              </>
+                            );
+                          },
+                          <></>
+                        )}
                   </div>
                 </div>
                 {localStorage.getItem('yn') === 'n' ||
