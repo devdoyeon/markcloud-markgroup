@@ -73,15 +73,9 @@ const SignIn = () => {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
       });
       setCookie('rfToken', refresh_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
       });
       const ipResult = await getIp();
       localStorage.setItem('loginIp', ipResult);
