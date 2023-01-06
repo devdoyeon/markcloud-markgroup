@@ -73,6 +73,7 @@ const PersonnelBusinessPopup = ({
       pageCon.page = 1;
       getPersonDepartmentApi(pageCon);
       changeState(setCurDepartment, 'section', '');
+      getPersonMemberApi();
       setAlert('delete');
       return commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
     }

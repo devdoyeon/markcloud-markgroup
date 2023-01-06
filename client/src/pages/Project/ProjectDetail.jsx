@@ -17,7 +17,7 @@ import {
   getProjectMember,
 } from 'js/groupwareApi';
 import { changeState, getKeyByValue } from 'js/commonUtils';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 import deletePerson from 'image/deletePersonIcon.svg';
 
 const ProjectDetail = () => {
@@ -244,11 +244,8 @@ const ProjectDetail = () => {
             if (alert === 'cancel' || alert === 'completeDelete')
               navigate('/gp/project');
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}

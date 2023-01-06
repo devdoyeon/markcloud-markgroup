@@ -6,7 +6,7 @@ import CommonSiteMap from 'common/CommonSiteMap';
 import SideMenuBtn from 'common/SideMenuBtn';
 import { changeTitle, commonModalSetting, catchError } from 'js/commonUtils';
 import { checkUserInfo, checkPoint } from 'js/groupwareApi';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 import mainBg from 'image/mainBg.png';
 import goIcon from 'image/goIcon.svg';
 import sub00 from 'image/groupware-main01.png';
@@ -260,11 +260,8 @@ const Home = () => {
             else if (alert === 'needDepartmentName')
               return (window.location.href =
                 'https://markcloud.co.kr/mark-mypage');
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}

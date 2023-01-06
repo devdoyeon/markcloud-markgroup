@@ -24,7 +24,7 @@ import {
   createNotice,
   deleteNotice,
 } from 'js/groupwareApi';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 
 const NewBoard = () => {
   const [alert, setAlert] = useState('');
@@ -230,7 +230,7 @@ const NewBoard = () => {
                     type='text'
                     placeholder='제목을 입력해 주세요.'
                     className='title-input'
-                    maxLength="30"
+                    maxLength='30'
                     value={postInfo?.title}
                     onChange={e => {
                       if (e.target.value.length > 30) {
@@ -314,11 +314,8 @@ const NewBoard = () => {
             else if (alert === 'edit' || alert === 'notAuthority')
               navigate(`/gp/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}

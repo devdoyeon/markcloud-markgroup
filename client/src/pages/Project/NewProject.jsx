@@ -18,7 +18,7 @@ import {
   editProject,
   deleteProject,
 } from 'js/groupwareApi';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 
 const NewProject = () => {
   const statusArr = ['시작 전', '진행 중', '종료'];
@@ -188,7 +188,7 @@ const NewProject = () => {
                 <input
                   type='text'
                   placeholder='제목을 입력해 주세요.'
-                  maxLength="30"
+                  maxLength='30'
                   value={projectInfo.project_name}
                   onChange={e => {
                     if (e.target.value.length > 30) {
@@ -315,11 +315,8 @@ const NewProject = () => {
               navigate(`/gp/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}

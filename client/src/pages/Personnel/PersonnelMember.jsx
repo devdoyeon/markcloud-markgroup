@@ -18,7 +18,7 @@ import {
   regularExpression,
 } from 'js/commonUtils';
 import PostCode from './PostCode';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 import axios from 'axios';
 
 const PersonnelMember = () => {
@@ -263,6 +263,79 @@ const PersonnelMember = () => {
   };
   //~~~~~~ 업데이트 ~~~~~~~
   const updateMemberApi = async () => {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    console.log(inputRef.current[3]);
+    //~ 사용자계정 생성 유효성 검사
+    if (
+      inputRef.current[1].value === '' ||
+      inputRef.current[1].value === undefined ||
+      inputRef.current[1].value === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성명을 입력하지 않았습니다.'
+      );
+    } else if (memberInfo.gender === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성별을 선택하지 않았습니다.'
+      );
+    } else if (
+      inputRef.current[2].value === '' ||
+      inputRef.current[2].value === undefined ||
+      inputRef.current[2].value === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '생년월일을 선택하지 않았습니다.'
+      );
+    } else if (memberInfo.section === '===') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '소속을 선택하지 않았습니다.'
+      );
+    } else if (memberInfo.phone === '') {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '휴대전화번호를 입력하지 않았습니다.'
+      );
+    } else if (memberInfo.length < 11) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '휴대전화번호를 확인해주세요.'
+      );
+    } else if (
+      inputRef.current[5].value === '' ||
+      inputRef.current[5].value === undefined ||
+      inputRef.current[5].value === 'undefined'
+    ) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일을 입력하지 않았습니다.'
+      );
+    } else if (!(await regularExpression('email', inputRef.current[5].value))) {
+      inputRef.current[5].focus();
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일의 형식이 맞지 않습니다.'
+      );
+    }
     const result = await getMemberUpdate(memberInfo);
     if (typeof result === 'object') {
       setAlert('apply');
@@ -505,7 +578,7 @@ const PersonnelMember = () => {
               <div>
                 <span>이메일</span>
                 <input
-                  type='text'
+                  type='email'
                   autoComplete='off'
                   placeholder='이메일을 입력해주세요.'
                   ref={el => (inputRef.current[5] = el)}
@@ -590,11 +663,8 @@ const PersonnelMember = () => {
             else if (alert === 'edit') navigate(`/gp/personnel/${id}`);
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'deleteConfirm') deleteMemberApi();
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}

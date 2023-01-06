@@ -158,7 +158,6 @@ const BusinessEditBoard = () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
-
     const result = await updateBusiness(obj, id);
     if (typeof result === 'object') {
       setAlert('edit');

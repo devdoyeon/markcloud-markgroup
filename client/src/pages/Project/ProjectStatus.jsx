@@ -6,7 +6,7 @@ import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
 import { changeTitle, changeState, catchError, enterFn } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
-import { getCookie, removeCookie } from 'js/cookie';
+import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
 
 const ProjectStatus = () => {
@@ -259,11 +259,8 @@ const ProjectStatus = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
-              navigate('/gp/');
-            } else return;
+            else if (alert === 'tokenExpired') navigate('/gp/');
+            else return;
           }}
         />
       )}
