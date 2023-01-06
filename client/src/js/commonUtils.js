@@ -52,11 +52,9 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     setAlert(result);
     removeCookie('myToken', {
       path: '/',
-      domain: 'markcloud.co.kr',
     });
     removeCookie('rfToken', {
       path: '/',
-      domain: 'markcloud.co.kr',
     });
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }

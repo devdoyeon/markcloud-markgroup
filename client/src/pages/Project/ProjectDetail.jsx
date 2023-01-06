@@ -245,11 +245,9 @@ const ProjectDetail = () => {
             else if (alert === 'tokenExpired') {
               removeCookie('myToken', {
                 path: '/',
-                domain: 'markcloud.co.kr',
               });
               removeCookie('rfToken', {
                 path: '/',
-                domain: 'markcloud.co.kr',
               });
               navigate('/gp/');
             } else return;
