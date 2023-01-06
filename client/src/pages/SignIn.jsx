@@ -77,7 +77,6 @@ const SignIn = () => {
         secure: true,
         sameSite: 'none',
       });
-      // test
       setCookie('rfToken', refresh_token, {
         path: '/',
         domain: 'markcloud.co.kr',
