@@ -57,7 +57,6 @@ const BusinessManagement = () => {
   const pathname = path.split('/')[2];
 
   let prevent = false;
-
   const getBusinessReadApi = async () => {
     if (prevent) return;
     prevent = true;
@@ -75,14 +74,12 @@ const BusinessManagement = () => {
       setMemberName(['선택', ...value]);
       setList(data);
       setMetaData(meta);
-      if (projectName.length === 1) {
-        setProjectName(prev => {
-          const clone = [...prev];
-          meta?.project_name.forEach(name => {
-            clone.push(name);
-          });
-          return clone;
+      let arr = ['선택'];
+      if (arr.length === 1) {
+        meta?.project_name.forEach(name => {
+          arr.push(name);
         });
+        setProjectName(arr);
       }
       setPageInfo(prev => {
         const clone = { ...prev };
@@ -96,7 +93,6 @@ const BusinessManagement = () => {
     // 여기 밑에서 api 요청
     await getBusinessReadApi();
   };
-
   const renderTable = () => {
     return list.length === 0 ? (
       <>
@@ -160,13 +156,21 @@ const BusinessManagement = () => {
 
   useEffect(() => {
     if (getCookie('myToken')) {
-      if (localStorage.getItem('yn') === 'y') {
-        getBusinessReadApi();
-      } else if (localStorage.getItem('yn') === 'n') {
-        getBusinessReadApi();
+      if (postInfo.status_filter === 'MyProject') {
+        setRequesterValue('선택');
+        setContactValue(localStorage.getItem('userName'));
+        changeState(setPostInfo, 'manager_id', '');
+      } else if (postInfo.status_filter === 'MyRequest') {
+        setContactValue('선택');
+        setRequesterValue(localStorage.getItem('userName'));
+        changeState(setPostInfo, 'request_id', '');
+      } else if (postInfo.status_filter === 'All') {
+        setContactValue('선택');
+        setRequesterValue('선택');
       }
+      getBusinessReadApi();
     }
-  }, [pageInfo.page, postInfo.project_name]);
+  }, [pageInfo.page, postInfo.status_filter]);
 
   useEffect(() => {
     if (getCookie('myToken')) {
@@ -188,21 +192,11 @@ const BusinessManagement = () => {
 
   useEffect(() => {
     if (getCookie('myToken')) {
-      if (postInfo.status_filter === 'MyProject') {
-        setRequesterValue('선택');
-        setContactValue(localStorage.getItem('userName'));
-        changeState(setPostInfo, 'manager_id', '');
-      } else if (postInfo.status_filter === 'MyRequest') {
-        setContactValue('선택');
-        setRequesterValue(localStorage.getItem('userName'));
-        changeState(setPostInfo, 'request_id', '');
-      } else if (postInfo.status_filter === 'All') {
-        setContactValue('선택');
-        setRequesterValue('선택');
+      if (projectName.length > 1) {
+        getBusinessReadApi();
       }
-      getBusinessReadApi();
     }
-  }, [postInfo.status_filter]);
+  }, [postInfo.project_name]);
 
   const handleChangeRadioButton = e => {
     changeState(setPostInfo, 'status_filter', e.target.value);
@@ -441,6 +435,7 @@ const BusinessManagement = () => {
                   <input
                     type='text'
                     placeholder='제목을 입력해 주세요.'
+                    maxLength='30'
                     onChange={e =>
                       changeState(setPostInfo, 'title', e.target.value)
                     }
@@ -453,6 +448,7 @@ const BusinessManagement = () => {
                   <input
                     type='text'
                     placeholder='내용을 입력해주세요.'
+                    maxLength='30'
                     onChange={e =>
                       changeState(setPostInfo, 'content', e.target.value)
                     }

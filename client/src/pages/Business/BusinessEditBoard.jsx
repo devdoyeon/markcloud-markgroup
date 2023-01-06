@@ -158,7 +158,6 @@ const BusinessEditBoard = () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
-
     const result = await updateBusiness(obj, id);
     if (typeof result === 'object') {
       setAlert('edit');
@@ -246,6 +245,7 @@ const BusinessEditBoard = () => {
                   <input
                     type='text'
                     placeholder='제목을 입력해 주세요.'
+                    maxLength='30'
                     onChange={e => handleChangeRadioButton(e, 'title')}
                     value={postInfo?.title}
                   />
@@ -283,7 +283,7 @@ const BusinessEditBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/business`);
+                navigate(`/gp/business`);
               }}>
               목록
             </button>

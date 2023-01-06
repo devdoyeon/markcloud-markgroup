@@ -241,6 +241,7 @@ const PersonnelManagement = () => {
           departmentList={departmentList}
           departmentPageInfo={departmentPageInfo}
           setDepartmentPageInfo={setDepartmentPageInfo}
+          getPersonMemberApi={getPersonMemberApi}
         />
       )}
     </>

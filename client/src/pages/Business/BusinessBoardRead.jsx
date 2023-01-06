@@ -51,12 +51,6 @@ const BusinessBoardRead = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (getCookie('myToken')) {
-      if (id?.length) getBusinessDetail();
-    }
-  }, []);
-
   const { manager_id, project_name, request_id, title, work_status } = info;
 
   return (
