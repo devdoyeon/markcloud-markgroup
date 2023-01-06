@@ -8,8 +8,8 @@ const CommonMenu = () => {
         {getCookie('myToken') ? (
           <button
             onClick={() => {
-              removeCookie('myToken', { path: '/' });
-              removeCookie('rfToken', { path: '/' });
+              removeCookie('myToken', { path: '/', domain: 'markcloud.co.kr' });
+              removeCookie('rfToken', { path: '/', domain: 'markcloud.co.kr' });
               localStorage.clear();
               window.location.reload();
               return;

@@ -145,8 +145,14 @@ const SideMenu = () => {
             <div
               className='logoutBtn'
               onClick={() => {
-                removeCookie('myToken', { path: '/' });
-                removeCookie('rfToken', { path: '/' });
+                removeCookie('myToken', {
+                  path: '/',
+                  domain: 'markcloud.co.kr',
+                });
+                removeCookie('rfToken', {
+                  path: '/',
+                  domain: 'markcloud.co.kr',
+                });
                 localStorage.clear();
                 navigate('/gp/');
               }}>

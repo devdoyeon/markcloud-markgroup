@@ -41,7 +41,7 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   } else if (result === 'duplicateLogin') {
     setAlert(result);
-    removeCookie('myToken');
+    removeCookie('myToken', { path: '/', domain: 'markcloud.co.kr' });
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   } else if (result === 'paymentRequired') {
     setAlert(result);
@@ -50,9 +50,10 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
   else if (result === 'DuplicatedDpError')
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   else if (result === 'tokenExpired') {
+    removeCookie('myToken', { path: '/', domain: 'markcloud.co.kr' });
+    removeCookie('rfToken', { path: '/', domain: 'markcloud.co.kr' });
     setAlert(result);
-    removeCookie('myToken');
-    removeCookie('rfToken');
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
 
