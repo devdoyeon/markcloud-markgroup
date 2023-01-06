@@ -157,6 +157,9 @@
   width: 80%;
 }
 .main .mainContent-wrap .service .service-explanation > div .column {
+  padding: 15px 10px;
+  border-radius: 16px;
+  box-shadow: 0 0 6px rgba(88, 88, 88, 0.2);
   justify-content: flex-start;
   width: 32%;
   height: 200px;
@@ -168,7 +171,8 @@
 .main .mainContent-wrap .service .service-explanation > div .column .row {
   width: 100%;
   justify-content: flex-start;
-  margin-bottom: 47px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 .main .mainContent-wrap .service .service-explanation > div .column .row img {
   margin-right: 16px;
@@ -176,6 +180,11 @@
 .main .mainContent-wrap .service .service-explanation > div .column .row span {
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   font-size: 20px;
+}
+.main .mainContent-wrap .service .service-explanation > div .column .info {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
 }
 .main .mainContent-wrap .service .service-explanation > div:first-child {
   margin-bottom: 70px;

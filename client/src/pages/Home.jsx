@@ -160,24 +160,35 @@ const Home = () => {
                     <img src={business} alt='업무 관리 아이콘' />
                     <span>업무 관리</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    업무 요청, 처리 결과, 업무 완료까지
+                    <br />
+                    그룹웨어를 통한 전반적인 관리가 가능합니다.
+                  </span>
                 </div>
                 <div className='column'>
                   <div className='row'>
                     <img src={project} alt='프로젝트 현황 아이콘' />
                     <span>프로젝트 현황</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    프로젝트 정보 공유로 업무 효율성이 증대되며,
+                    <br />
+                    축적된 데이터를 사내 통계 자료로
+                    <br />
+                    활용 가능합니다.
+                  </span>
                 </div>
                 <div className='column'>
                   <div className='row'>
                     <img src={report} alt='주간 업무 보고 아이콘' />
                     <span>주간 업무 보고</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    주간 업무 보고 및 확인으로 업무 진행도
+                    <br />
+                    파악에 따른 효율성 증대가 이루어집니다.
+                  </span>
                 </div>
               </div>
               <div className='row'>
@@ -186,24 +197,35 @@ const Home = () => {
                     <img src={notice} alt='공지사항 아이콘' />
                     <span>공지사항</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    모든 임직원에게 사내 공지사항을 통한
+                    <br />
+                    정보 전달이 가능합니다.
+                  </span>
                 </div>
                 <div className='column'>
                   <div className='row'>
                     <img src={board} alt='게시판 아이콘' />
                     <span>게시판</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    사내 게시판을 통한 사원들간의
+                    <br />
+                    정보 공유 및 활용이 가능합니다.
+                  </span>
                 </div>
                 <div className='column'>
                   <div className='row'>
                     <img src={personnel} alt='인사 관리 아이콘' />
                     <span>인사 관리</span>
                   </div>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
-                  <span>Lorem ipsum dolor sit amet consectetur.</span>
+                  <span className='info'>
+                    사원들의 인사 정보와 개인 정보를
+                    <br />
+                    웹으로 관리하여 정보 보안 및 수정에
+                    <br />
+                    용이합니다.
+                  </span>
                 </div>
               </div>
             </div>
