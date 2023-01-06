@@ -145,6 +145,7 @@ const SideMenu = () => {
             <div
               className='logoutBtn'
               onClick={() => {
+                localStorage.clear();
                 removeCookie('myToken', {
                   path: '/',
                   domain: 'markcloud.co.kr',
@@ -153,7 +154,6 @@ const SideMenu = () => {
                   path: '/',
                   domain: 'markcloud.co.kr',
                 });
-                localStorage.clear();
                 navigate('/gp/');
               }}>
               로그아웃
