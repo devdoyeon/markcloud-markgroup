@@ -116,35 +116,11 @@ const PersonnelMember = () => {
   const createMember = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     //~ 사용자계정 생성 유효성 검사
-    if (inputRef.current[0].value === '') {
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디를 입력하지 않았습니다.'
-      );
-    } else if (korean.test(inputRef.current[0].value)) {
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디에 한글을 포함할 수 없습니다.'
-      );
-    } else if (idCheck === undefined || idCheck === 'undefined') {
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디 중복체크를 하지 않았습니다.'
-      );
-    } else if (idCheck === false) {
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '중복된 아이디 입니다.'
-      );
-    } else if (inputRef.current[1].value === '') {
+    if (
+      inputRef.current[1].value === '' ||
+      inputRef.current[1].value === undefined ||
+      inputRef.current[1].value === 'undefined'
+    ) {
       return commonModalSetting(
         setAlertBox,
         true,
@@ -158,7 +134,11 @@ const PersonnelMember = () => {
         'alert',
         '성별을 선택하지 않았습니다.'
       );
-    } else if (inputRef.current[2].value === '') {
+    } else if (
+      inputRef.current[2].value === '' ||
+      inputRef.current[2].value === undefined ||
+      inputRef.current[2].value === 'undefined'
+    ) {
       return commonModalSetting(
         setAlertBox,
         true,
@@ -172,28 +152,25 @@ const PersonnelMember = () => {
         'alert',
         '소속을 선택하지 않았습니다.'
       );
-    } else if (inputRef.current[3].value === '') {
+    } else if (memberInfo.phone === '') {
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '휴대전화번호를 입력하지 않았습니다.'
       );
-    } else if (inputRef.current[3].value.length < 11) {
+    } else if (memberInfo.phone.length < 11) {
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '휴대전화번호를 확인해주세요.'
       );
-    } else if (inputRef.current[4].value === '') {
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '비밀번호를 입력하지 않았습니다.'
-      );
-    } else if (inputRef.current[5].value === '') {
+    } else if (
+      inputRef.current[5].value === '' ||
+      inputRef.current[5].value === undefined ||
+      inputRef.current[5].value === 'undefined'
+    ) {
       return commonModalSetting(
         setAlertBox,
         true,
@@ -271,7 +248,6 @@ const PersonnelMember = () => {
   //~~~~~~ 업데이트 ~~~~~~~
   const updateMemberApi = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    console.log(inputRef.current[3]);
     //~ 사용자계정 생성 유효성 검사
     if (
       inputRef.current[1].value === '' ||
@@ -316,7 +292,7 @@ const PersonnelMember = () => {
         'alert',
         '휴대전화번호를 입력하지 않았습니다.'
       );
-    } else if (memberInfo.length < 11) {
+    } else if (memberInfo.phone.length < 11) {
       return commonModalSetting(
         setAlertBox,
         true,
@@ -546,6 +522,7 @@ const PersonnelMember = () => {
                     type='text'
                     autoComplete='off'
                     maxLength='11'
+                    minLength='11'
                     placeholder='전화번호를 입력해주세요.'
                     onChange={phoneNumRegex}
                     value={memberInfo.phone}
@@ -555,6 +532,7 @@ const PersonnelMember = () => {
                     type='text'
                     autoComplete='off'
                     maxLength='11'
+                    minLength='11'
                     placeholder='전화번호를 입력해주세요.'
                     ref={el => (inputRef.current[3] = el)}
                     onChange={phoneNumRegex}
