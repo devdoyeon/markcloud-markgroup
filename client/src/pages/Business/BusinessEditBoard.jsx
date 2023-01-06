@@ -280,7 +280,7 @@ const BusinessEditBoard = () => {
                   setAlertBox,
                   true,
                   'confirm',
-                  '정말 계정을 삭제하시겠습니까?<br/>삭제된 계정은 복구할 수 없습니다.'
+                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
                 );
               }}>
               삭제
