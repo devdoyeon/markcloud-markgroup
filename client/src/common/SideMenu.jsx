@@ -148,10 +148,12 @@ const SideMenu = () => {
                 localStorage.clear();
                 removeCookie('myToken', {
                   path: '/',
-                });
+                domain: 'markcloud.co.kr',
+              });
                 removeCookie('rfToken', {
                   path: '/',
-                });
+                domain: 'markcloud.co.kr',
+              });
                 navigate('/gp/');
               }}>
               로그아웃
