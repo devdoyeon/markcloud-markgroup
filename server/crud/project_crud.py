@@ -116,7 +116,9 @@ def get_project(db: Session, project_id: int):
     
 def get_project_members(db: Session, project_code: str):
     try:
-        project_members = db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).all()
+        project_members = db.query(ProjectMemberTable.user_id, MemberTable.name, MemberTable.section) \
+            .join(MemberTable, MemberTable.user_id == ProjectMemberTable.user_id) \
+                .filter(ProjectMemberTable.project_code == project_code).all()
         return project_members
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
