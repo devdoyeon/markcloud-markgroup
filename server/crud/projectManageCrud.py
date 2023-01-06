@@ -14,22 +14,24 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
         if inbound_filter.project_name: # 프로젝트명이 들어왔을경우
             p_member_query = f'''SELECT id, name, section
             FROM members
-            WHERE is_active = 1
-            AND user_id = ANY(SELECT user_id 
+            WHERE user_id = ANY(SELECT user_id 
             FROM groupware_project_members
             WHERE project_code = (SELECT project_code
             FROM groupware_project
             WHERE project_name = "{inbound_filter.project_name}")) 
             '''
             project_member = db.execute(p_member_query).fetchall() 
+
         else: # 기본
             project_member = db.query(member_table.id,
                                 member_table.name,
-                                member_table.section
+                                member_table.section,
                                 ).filter(member_table.department_code == user_info.department_code
-                                ).filter(member_table.is_active == 1
                                 ).all()
 
+        if project_member == False:
+            return 0
+        
         project_member = {i[0]:i[1]+'('+str(i[2])+')' for i in project_member}
         return project_member
     
