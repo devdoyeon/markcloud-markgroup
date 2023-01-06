@@ -75,7 +75,6 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
-      // test
       setCookie('rfToken', refresh_token, {
         path: '/',
         secure: false,
