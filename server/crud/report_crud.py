@@ -18,10 +18,7 @@ def get_report_list(db: Session, filter_type: str, filter_val: str, offset: int,
             .filter(BusinessReportTable.organ_code == user_info.department_code) \
                 .join(MemberTable, BusinessReportTable.created_id == MemberTable.id).order_by(BusinessReportTable.id.desc())
                 
-        if user_info.groupware_only_yn == 'N':    
-            print("대표 계정")
-        else:
-            print("사용자 계정")
+        if user_info.groupware_only_yn == 'Y':    
             report_list = report_list.filter(BusinessReportTable.created_id == user_pk)
             
         if filter_type:

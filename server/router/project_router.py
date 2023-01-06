@@ -54,13 +54,12 @@ def project_detail(project_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail='ProjectDetailError')
     
 
-@router.get("/project_members") #, response_model=List[ProjectMemberListOut])
+@router.get("/project_members", response_model=List[ProjectMemberListOut])
 def project_member_list(project_id: int, db: Session = Depends(get_db)):
     try:
         db_project = project_crud.get_project(db, project_id)
         project_code = db_project.project_code
         members = project_crud.get_project_members(db, project_code)
-        members = [member.user_id for member in members]
         return members
     except:
         raise HTTPException(status_code=500, detail='ProjectMembersError')

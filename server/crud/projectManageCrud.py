@@ -21,11 +21,17 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
             WHERE project_name = "{inbound_filter.project_name}")) 
             '''
             project_member = db.execute(p_member_query).fetchall() 
+
         else: # 기본
             project_member = db.query(member_table.id,
-                                  member_table.name,
-                                  member_table.section).filter(member_table.department_code == user_info.department_code).all()
+                                member_table.name,
+                                member_table.section,
+                                ).filter(member_table.department_code == user_info.department_code
+                                ).all()
 
+        if project_member == False:
+            return 0
+        
         project_member = {i[0]:i[1]+'('+str(i[2])+')' for i in project_member}
         return project_member
     
