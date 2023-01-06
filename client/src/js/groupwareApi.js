@@ -67,7 +67,6 @@ const tokenReissue = async () => {
   };
   try {
     const result = await axios.get(`/api/users/self/token`, { headers });
-    removeCookie('myToken', { path: '/', domain: 'markcloud.co.kr' });
     setCookie('myToken', result?.data?.data?.access_token, {
       path: '/',
     });
@@ -265,6 +264,28 @@ export const getBusinessRead = async (
         header()
       );
     }
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+export const getBusinessProjectRead = async (
+  projectName,
+  status_filter,
+  { page, limit }
+) => {
+  try {
+    return await axios.post(
+      `/groupware/projects/read?limit=${limit}&page=${page}&status_filter=${status_filter}`,
+      {
+        project_name: projectName,
+        manager_id: '',
+        request_id: '',
+        title: '',
+        content: '',
+        progress_status: ['요청', '접수', '진행', '완료'],
+      },
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }

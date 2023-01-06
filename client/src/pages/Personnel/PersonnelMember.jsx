@@ -137,6 +137,13 @@ const PersonnelMember = () => {
         'alert',
         '아이디 중복체크를 하지 않았습니다.'
       );
+    } else if (idCheck === false) {
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '중복된 아이디 입니다.'
+      );
     } else if (inputRef.current[1].value === '') {
       return commonModalSetting(
         setAlertBox,
