@@ -29,26 +29,27 @@ def read_department_list(
     limit:int = 5,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N': 
-        try:
-            offset = (page - 1) * limit
-            
-            total_count, department_list = get_department_list(db, offset, limit, user_info)
-            total_page = total_count // limit
-            
-            if total_count % limit != 0:
-                total_page += 1
-            
-            return Response().metadata(
-            page=page,
-            totalPage=total_page,
-            offset=offset,
-            limit=limit).success_response(department_list)
-            
-        except:
-            raise HTTPException(status_code=500, detail='ReadDpError')
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        offset = (page - 1) * limit
+        
+        total_count, department_list = get_department_list(db, offset, limit, user_info)
+        total_page = total_count // limit
+        
+        if total_count % limit != 0:
+            total_page += 1
+        
+        return Response().metadata(
+        page=page,
+        totalPage=total_page,
+        offset=offset,
+        limit=limit).success_response(department_list)
+        
+    except:
+        raise HTTPException(status_code=500, detail='ReadDpError')
+
         
 
 # 부서 상세페이지
@@ -62,13 +63,14 @@ def read_department_info(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N': 
-        try:
-            return get_department_info(db, department_id,user_info)
-        except:
-            raise HTTPException(status_code=500, detail='ReadDpInfoError')
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        return get_department_info(db, department_id,user_info)
+    except:
+        raise HTTPException(status_code=500, detail='ReadDpInfoError')
+
         
 # 부서 등록
 @router_member.post('/department/create')
@@ -81,15 +83,17 @@ def create_department(
     user_info :str = None,
     db :Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            result = insert_department(db, inbound_data, user_info)
-        except:
-            raise HTTPException(status_code=500, detail='CreateDpError')
-        if result == 500:
-            raise HTTPException(status_code=500, detail='DuplicatedDpError')   
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        result = insert_department(db, inbound_data, user_info)
+    except:
+        raise HTTPException(status_code=500, detail='CreateDpError')
+    
+    if result == 500:
+        raise HTTPException(status_code=500, detail='DuplicatedDpError')   
+
             
 # 부서 수정
 @router_member.post('/department/update')
@@ -103,13 +107,14 @@ def update_department(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            change_department(db, inbound_data, department_id, user_info)
-        except:
-            raise HTTPException(status_code=500, detail='UpdateDpError')
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        change_department(db, inbound_data, department_id, user_info)
+    except:
+        raise HTTPException(status_code=500, detail='UpdateDpError')
+
     
 # 부서 삭제
 @router_member.post('/department/delete')
@@ -123,13 +128,14 @@ def delete_department(
     db: Session = Depends(get_db)
 
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            remove_department(db, department_id, user_info)
-        except:
-            raise HTTPException(status_code=500, detail='DeleteDpError')
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        remove_department(db, department_id, user_info)
+    except:
+        raise HTTPException(status_code=500, detail='DeleteDpError')
+
     
     
 ##################################직원 관리##################################
@@ -146,26 +152,26 @@ def read_member_list(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            offset = (page -1) * limit
-            
-            total_count, member_list = get_member_list(db,offset,limit,user_info)
-
-            total_page = total_count // limit
-            if total_count % limit != 0:
-                total_page += 1    
-
-            return Response().metadata(
-                page=page,
-                totalPage=total_page,
-                offset=offset,
-                limit=limit
-            ).success_response(member_list)
-        except:
-            raise HTTPException(status_code=500, detail='ReadMbError')
-    else:
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    try:
+        offset = (page -1) * limit
+        
+        total_count, member_list = get_member_list(db,offset,limit,user_info)
+
+        total_page = total_count // limit
+        if total_count % limit != 0:
+            total_page += 1    
+
+        return Response().metadata(
+            page=page,
+            totalPage=total_page,
+            offset=offset,
+            limit=limit
+        ).success_response(member_list)
+    except:
+        raise HTTPException(status_code=500, detail='ReadMbError')
+
 
 # 직원 상세페이지
 @router_member.get('/member/info',response_model= Memberinfo)
@@ -178,14 +184,13 @@ def read_member_info(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            return get_member_info(db, member_id)
-        except:
-            raise HTTPException(status_code=500, detail='ReadMbInfoError')
-
-    else:
-        raise HTTPException(status_code=422, detail='NotAdmin')        
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
+        raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        return get_member_info(db, member_id)
+    except:
+        raise HTTPException(status_code=500, detail='ReadMbInfoError')
 
 
 # 직원 등록
@@ -199,13 +204,14 @@ def create_member(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            insert_member(db,inbound_data,user_info)
-        except:
-            raise HTTPException(status_code=500, detail='CreateMbError')
-    else:
-        raise HTTPException(status_code=422, detail='NotAdmin')  
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
+        raise HTTPException(status_code=422, detail='NotAdmin')
+    
+    try:
+        insert_member(db,inbound_data,user_info)
+    except:
+        raise HTTPException(status_code=500, detail='CreateMbError')
+
 
 # 직원 수정
 @router_member.post('/member/update')
@@ -213,19 +219,19 @@ def create_member(
 @author_chk.user_chk
 def update_member(
     member_id:int,    
-    inboud_data: Memberinfo,
+    inboud_data: MemberModDTO,
     access_token:str = Header(None),
     user_pk:int = None,
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            change_member(db, inboud_data ,member_id)
-        except:
-            raise HTTPException(status_code=500, detail='UpdateMbError')
-    else:
-        raise HTTPException(status_code=422, detail='NotAdmin')  
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
+        raise HTTPException(status_code=422, detail='NotAdmin')
+    try:
+        change_member(db, inboud_data ,member_id)
+    except:
+        raise HTTPException(status_code=500, detail='UpdateMbError')
+
 
 # 직원 삭제
 @router_member.post('/member/delete')
@@ -238,10 +244,11 @@ def delete_member(
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
-    if user_info.groupware_only_yn == 'N':
-        try:
-            remove_member(db,member_id)
-        except:
-            raise HTTPException(status_code=500, detail='DeleteMbError')
-    else:
-        raise HTTPException(status_code=422, detail='NotAdmin')  
+    if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
+        raise HTTPException(status_code=422, detail='NotAdmin')
+
+    try:
+        remove_member(db,member_id) 
+    except:
+        raise HTTPException(status_code=500, detail='DeleteMbError')
+

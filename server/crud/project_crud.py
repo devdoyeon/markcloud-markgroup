@@ -105,7 +105,7 @@ def get_project_list(db: Session,
                 order by p.id desc
                 '''
     
-    project_list = db.execute(sql).all()        # limit 걸기 전에 total 구해야 하는데 ..
+    project_list = db.execute(sql).all()
     total = len(project_list)
     
     sql = sql + f'''
@@ -164,32 +164,37 @@ def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
     
     # 프로젝트 이름이 이미 있으면 생성하지 못하게 하기
     input_project_name = project_create.project_name
-    project = db.query(ProjectTable).filter(ProjectTable.project_name == input_project_name).first()
+    try:
+        project = db.query(ProjectTable).filter(ProjectTable.project_name == input_project_name).first()
+    except:
+        raise HTTPException(status_code=500, detail='GetProjectNameError')
+    
     if project:
         raise HTTPException(status_code=403, detail='AlreadyProjectName')
     
-    user_info = author_chk.get_user_info(db, user_pk)
-    # PRJ + 년월일 + Random 난수번호(5자리)
-    yymmdd = datetime.today().strftime("%y%m%d")
-    random_int = random.randint(10000,99999)
-    random_number = str(random_int)
-    project_code = "PRJ" + yymmdd + random_number
-    print(project_code)
-    print(project_create.project_status)
+    try:
+        user_info = author_chk.get_user_info(db, user_pk)
+        # PRJ + 년월일 + Random 난수번호(5자리)
+        yymmdd = datetime.today().strftime("%y%m%d")
+        random_int = random.randint(10000,99999)
+        random_number = str(random_int)
+        project_code = "PRJ" + yymmdd + random_number
 
-    db_project = ProjectTable(organ_code=user_info.department_code,
-                            project_code=project_code,
-                            project_name=project_create.project_name,
-                            project_description=project_create.project_description,
-                            project_start_date=project_create.project_start_date,
-                            project_end_date=project_create.project_end_date,
-                            project_status=project_create.project_status,
-                            created_at=datetime.now(),
-                            created_id=user_pk,
-                            updated_at=datetime.now(),
-                            updated_id=user_pk
-                            )
-    db.add(db_project)
+        db_project = ProjectTable(organ_code=user_info.department_code,
+                                project_code=project_code,
+                                project_name=project_create.project_name,
+                                project_description=project_create.project_description,
+                                project_start_date=project_create.project_start_date,
+                                project_end_date=project_create.project_end_date,
+                                project_status=project_create.project_status,
+                                created_at=datetime.now(),
+                                created_id=user_pk,
+                                updated_at=datetime.now(),
+                                updated_id=user_pk
+                                )
+        db.add(db_project)
+    except:
+        raise HTTPException(status_code=500, detail='InsertPjtError')
 
     
 def update_project(db: Session, project_update: ProjectUpdate, project_id: int, user_pk: int):
@@ -217,8 +222,10 @@ def update_project(db: Session, project_update: ProjectUpdate, project_id: int, 
 def get_organ_member(db: Session, user_pk: int):
     user_info = author_chk.get_user_info(db, user_pk)
     organ_code = user_info.department_code
-    member_list = db.query(MemberTable.user_id, MemberTable.name, MemberTable.section).filter(MemberTable.department_code == organ_code).all()
-    print(len(member_list))
+    member_list = db.query(MemberTable.user_id, MemberTable.name, MemberTable.section)\
+                            .filter(MemberTable.department_code == organ_code)\
+                            .filter(MemberTable.is_active == 1)\
+                            .all()
     return member_list
     
 
@@ -227,7 +234,6 @@ def add_project_member(db: Session,
                        new_member_id: str, 
                        user_pk: int):
     try:
-        
         db_project_member = ProjectMemberTable(
                     project_code=project_code,
                     user_id=new_member_id,
@@ -236,9 +242,7 @@ def add_project_member(db: Session,
                     updated_at=datetime.now(),
                     updated_id=user_pk
                 )
-        
         db.add(db_project_member)
-        db.commit()
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
@@ -256,7 +260,6 @@ def get_project_member(db: Session, project_code: str, member_id: str):
 def delete_project_member(db: Session, db_project_member: ProjectMemberTable):
     try:
         db.delete(db_project_member)
-        db.commit()
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
     
@@ -266,7 +269,6 @@ def delete_project_member(db: Session, db_project_member: ProjectMemberTable):
 def delete_project_members_all(db: Session, project_code: str):
     try:
         db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).delete()
-        db.commit()
     except:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
