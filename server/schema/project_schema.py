@@ -34,6 +34,8 @@ class ProjectOut(BaseModel):
 
 class ProjectMemberListOut(BaseModel):
     user_id: str
+    name: str
+    section: str
     
     class Config:
         orm_mode = True
