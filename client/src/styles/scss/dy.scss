@@ -125,6 +125,9 @@
         > div {
           width: 80%;
           .column {
+            padding: 15px 10px;
+            border-radius: 16px;
+            box-shadow: 0 0 6px rgba($color: $gray01, $alpha: 0.2);
             justify-content: flex-start;
             width: 32%;
             height: 200px;
@@ -135,14 +138,21 @@
             .row {
               width: 100%;
               justify-content: flex-start;
-              margin-bottom: 47px;
+              margin-top: 10px;
+              margin-bottom: 30px;
               img {
                 margin-right: 16px;
               }
               span {
                 font-family: $middleFont;
                 font-size: 20px;
+                
               }
+            }
+            .info {
+              display: inline-block;
+              width: 100%;
+              text-align: left;
             }
           }
           &:first-child {
