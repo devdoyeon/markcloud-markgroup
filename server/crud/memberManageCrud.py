@@ -202,5 +202,7 @@ def remove_member(db,member_id):
     
     member_table = memberManageModel.MemberTable
     
-    values = {'is_active': 0}
+    values = {'is_active': 0,
+              'section':'퇴사'}
+    
     db.query(member_table).filter(member_table.id == member_id).update(values)
