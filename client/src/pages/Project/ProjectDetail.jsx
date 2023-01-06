@@ -243,8 +243,14 @@ const ProjectDetail = () => {
               navigate('/gp/project');
             else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
             else if (alert === 'tokenExpired') {
-              removeCookie('myToken');
-              removeCookie('rfToken');
+              removeCookie('myToken', {
+                path: '/',
+                domain: 'markcloud.co.kr',
+              });
+              removeCookie('rfToken', {
+                path: '/',
+                domain: 'markcloud.co.kr',
+              });
               navigate('/gp/');
             } else return;
           }}

@@ -50,6 +50,14 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   else if (result === 'tokenExpired') {
     setAlert(result);
+    removeCookie('myToken', {
+      path: '/',
+      domain: 'markcloud.co.kr'
+    })
+    removeCookie('rfToken', {
+      path: '/',
+      domain: 'markcloud.co.kr'
+    })
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
