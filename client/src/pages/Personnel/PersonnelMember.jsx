@@ -248,7 +248,6 @@ const PersonnelMember = () => {
   //~~~~~~ 업데이트 ~~~~~~~
   const updateMemberApi = async () => {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    console.log(memberInfo.phone.length);
     //~ 사용자계정 생성 유효성 검사
     if (
       inputRef.current[1].value === '' ||
