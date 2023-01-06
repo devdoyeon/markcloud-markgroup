@@ -758,6 +758,11 @@ input {
   @include flex-style(column);
   transition: bottom 0.5s;
 
+  .middle {
+    font-family: $middleFont;
+    font-size: 12px;
+  }
+
   > div {
     @include position-style(relative);
     @include flex-style;
@@ -775,7 +780,7 @@ input {
       @include flex-style($alignVal: center, $justifyVal: center);
       width: 0;
       height: 70px;
-      padding: 10px 50px 0 20px;
+      padding: 0 30px 0 20px;
       background: -o-linear-gradient(355.3deg, #36d1dc 0%, #5b86e5 109.97%);
       background: linear-gradient(94.7deg, #36d1dc 0%, #5b86e5 109.97%);
       border-radius: 45px;
@@ -794,24 +799,17 @@ input {
       }
 
       span {
+        margin-top: 3px;
+        text-align: center;
         @include txt-style(12px, $white);
       }
 
       &.active {
-        width: 400px;
-        // width: 450px;
+        width: 450px;
         opacity: 1;
 
         li {
-          width: 67px;
           display: block;
-          span {
-            width: 100%;
-            font-family: $boldFont;
-          }
-          a {
-            @include flex-style(column);
-          }
         }
       }
     }
@@ -837,7 +835,8 @@ input {
 
     &.scroll-top-btn {
       margin-top: 10px;
-      background: url('image/scrollTopIcon.png') no-repeat center, $white;
+      background: url('image/scrollTopIcon.png') no-repeat center,
+        $white;
       -webkit-transform: translate3d(130px, 0, 0);
       transform: translate3d(130px, 0, 0);
     }

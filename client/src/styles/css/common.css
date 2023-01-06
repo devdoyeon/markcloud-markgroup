@@ -851,6 +851,10 @@ input {
   flex-wrap: wrap;
   transition: bottom 0.5s;
 }
+.side-home .middle {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 12px;
+}
 .side-home > div {
   position: relative;
   display: flex;
@@ -878,7 +882,7 @@ input {
   flex-wrap: wrap;
   width: 0;
   height: 70px;
-  padding: 10px 50px 0 20px;
+  padding: 0 30px 0 20px;
   background: -o-linear-gradient(355.3deg, #36d1dc 0%, #5b86e5 109.97%);
   background: linear-gradient(94.7deg, #36d1dc 0%, #5b86e5 109.97%);
   border-radius: 45px;
@@ -899,27 +903,17 @@ input {
   flex-wrap: wrap;
 }
 .side-home > div ul span {
+  margin-top: 3px;
+  text-align: center;
   font-size: 12px;
   color: #ffffff;
 }
 .side-home > div ul.active {
-  width: 400px;
+  width: 450px;
   opacity: 1;
 }
 .side-home > div ul.active li {
-  width: 67px;
   display: block;
-}
-.side-home > div ul.active li span {
-  width: 100%;
-  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
-}
-.side-home > div ul.active li a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 .side-home button {
   width: 70px;

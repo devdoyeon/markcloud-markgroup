@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import cloudIcon from 'image/sideBtnIcon01.png';
 import viewIcon from 'image/sideBtnIcon02.png';
 import tongIcon from 'image/sideBtnIcon03.png';
-// import linkIcon from 'image/sideBtnIcon04.png';
+import groupwareIcon from 'image/sideBtnIcon04.svg'
+// import linkIcon from 'image/sideBtnIcon05.png';
 
 const SideMenuBtn = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -74,6 +75,16 @@ const SideMenuBtn = () => {
               title='마크통으로 이동'>
               <img src={tongIcon} alt='마크통 아이콘' />
               <span className='middle'>MARKTONG</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href='https://markcloud.co.kr/mark-groupware'
+              rel='noopener noreferrer'
+              target='_self'
+              title='마크그룹웨어로 이동'>
+              <img src={groupwareIcon} alt='마크그룹웨어 아이콘' />
+              <span className='middle'>GROUPWARE</span>
             </a>
           </li>
           {/* <li>
