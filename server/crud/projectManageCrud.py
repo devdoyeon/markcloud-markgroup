@@ -176,7 +176,6 @@ def change_project(db,inbound_data, project_id, user_info):
     project_manage_table = projectManageModel.ProjectManageTable
     
     try:
-        
         base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
         
         values = {
@@ -190,9 +189,10 @@ def change_project(db,inbound_data, project_id, user_info):
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N':
+        # created_id, admin, inbound_data.request_id, inbound_data.manager_id 
+        if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N' \
+            or user_info.id == inbound_data.request_id or user_info.id == inbound_data.manager_id:
             db.query(project_manage_table).filter_by(id = project_id).update(values)
-            
         else:
             raise HTTPException(status_code=422, detail='InvalidClient')
     except:
