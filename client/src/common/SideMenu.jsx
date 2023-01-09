@@ -154,6 +154,7 @@ const SideMenu = () => {
                 removeCookie('rfToken', {
                   path: '/',
                 });
+                localStorage.removeItem('yn');
                 navigate('/mark-groupware/');
               }}>
               로그아웃

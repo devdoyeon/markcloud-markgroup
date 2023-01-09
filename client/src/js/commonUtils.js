@@ -57,6 +57,7 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
     removeCookie('rfToken', {
       path: '/',
     });
+    localStorage.removeItem('yn');
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };

@@ -252,6 +252,7 @@ const ProjectDetail = () => {
               removeCookie('rfToken', {
                 path: '/',
               });
+              localStorage.removeItem('yn');
               navigate('/mark-groupware/');
             } else return;
           }}

@@ -70,6 +70,12 @@ const Home = () => {
           checkResult?.data?.status?.code === 301 ||
           checkResult?.data?.status?.code === 302
         ) {
+          if (
+            checkResult?.data?.status?.code === 201 ||
+            checkResult?.data?.status?.code === 301
+          )
+            localStorage.setItem('yn', 'n');
+          else localStorage.setItem('yn', 'y');
           const userResult = await checkUserInfo();
           if (typeof userResult === 'object') {
             const { name, user_id } = userResult?.data?.data;
