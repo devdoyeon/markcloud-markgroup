@@ -310,12 +310,13 @@ const NewProject = () => {
               alert === 'completeDelete' ||
               alert === 'completeEdit'
             )
-              navigate('/gp/project');
+              navigate('/mark-groupware/project');
             else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
-              navigate(`/gp/project/${id}`);
+              navigate(`/mark-groupware/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
-            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') navigate('/gp/');
+            else if (alert === 'duplicateLogin')
+              return navigate('/mark-groupware/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
             else return;
           }}
         />

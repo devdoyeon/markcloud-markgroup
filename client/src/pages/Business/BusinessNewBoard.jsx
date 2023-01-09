@@ -294,11 +294,11 @@ const BusinessNewBoard = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply')
-              navigate(`/gp/${path.split('/')[2]}`);
+              navigate(`/mark-groupware/${path.split('/')[2]}`);
             else if (alert === 'edit')
-              navigate(`/gp/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/gp/sign-in');
+              return navigate('/mark-groupware/sign-in');
             else return;
           }}
         />

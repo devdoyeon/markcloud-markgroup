@@ -45,7 +45,8 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
   } else if (result === 'paymentRequired') {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
-  } else if (result === 'notFound') return navigate('/gp/not-found');
+  } else if (result === 'notFound')
+    return navigate('/mark-groupware/not-found');
   else if (result === 'DuplicatedDpError')
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   else if (result === 'tokenExpired') {
