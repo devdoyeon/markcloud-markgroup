@@ -28,9 +28,6 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
                                 member_table.section,
                                 ).filter(member_table.department_code == user_info.department_code
                                 ).all()
-
-        if project_member == False:
-            return 0
         
         project_member = {i[0]:i[1]+'('+str(i[2])+')' for i in project_member}
         return project_member
@@ -180,7 +177,7 @@ def change_project(db,inbound_data, project_id, user_info):
         base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
         
         values = {
-                'request_id':inbound_data.request_id,
+                # 'request_id':inbound_data.request_id,
                 'manager_id':inbound_data.manager_id,
                 'work_status':inbound_data.work_status,
                 'title':inbound_data.title,
@@ -190,7 +187,8 @@ def change_project(db,inbound_data, project_id, user_info):
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N':
+        if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N' \
+        or user_info.id == int(inbound_data.request_id) or user_info.id == int(inbound_data.manager_id):
             db.query(project_manage_table).filter_by(id = project_id).update(values)
             
         else:
