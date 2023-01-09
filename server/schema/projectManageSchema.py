@@ -53,6 +53,7 @@ class ProjectManageOut(BaseModel):
     manager_id:str # 담당자
     work_status:str #진행상태
     created_at:date # 작성일
+    created_id:str # 작성자
     work_end_date:Optional[date] # 완료일자
         
     class Config:

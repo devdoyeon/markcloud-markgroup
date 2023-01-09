@@ -93,9 +93,12 @@ def update_notice(
     db: Session = Depends(get_db)
 ):
     try:
-        return change_notice(db,inbound_data,notice_id,user_info)
+        result = change_notice(db,inbound_data,notice_id,user_info)
     except:
         raise HTTPException(status_code=500, detail='UpdateNtError')
+    
+    if result == 422:
+        raise HTTPException(status_code=422, detail='InvalidClient')
     
 # 공지 삭제
 @router_notice.post('/delete')
@@ -109,6 +112,9 @@ def delete_notice(
     db: Session = Depends(get_db)
 ):
     try:
-        return remove_notice(db,notice_id,user_info)
+        result = remove_notice(db,notice_id,user_info)
     except:
         raise HTTPException(status_code=500, detail='DeleteNtError')
+    
+    if result == 422:
+        raise HTTPException(status_code=422, detail='InvalidClient')

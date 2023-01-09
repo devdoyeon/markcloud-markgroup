@@ -102,7 +102,7 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        change_project(db,inbound_data,project_id,user_info)
+        change_project(db,inbound_data,project_id)
     except:
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     
@@ -118,6 +118,8 @@ def delete_project(
     db:Session = Depends(get_db)
 ):
     try:
-        remove_project(db,project_id,user_info)
+        result = remove_project(db,project_id,user_info)
     except:
         raise HTTPException(status_code=500, detail='DeletePjtError')
+    if result == 422:
+        raise HTTPException(status_code=422, detail='InvalidClient')
