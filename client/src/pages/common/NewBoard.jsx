@@ -309,12 +309,13 @@ const NewBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/gp/${path.split('/')[2]}`);
+              navigate(`/mark-groupware/${path.split('/')[2]}`);
             else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit' || alert === 'notAuthority')
-              navigate(`/gp/${path.split('/')[2]}/${id}`);
-            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') navigate('/gp/');
+              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
+            else if (alert === 'duplicateLogin')
+              return navigate('/mark-groupware/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
             else return;
           }}
         />

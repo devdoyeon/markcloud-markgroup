@@ -127,7 +127,9 @@ const ProjectDetail = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3 onClick={() => navigate('/gp/project')}>프로젝트 현황</h3>
+            <h3 onClick={() => navigate('/mark-groupware/project')}>
+              프로젝트 현황
+            </h3>
           </div>
           <div className='projectWrapper detail'>
             <div className='projectTitle'>{projectInfo?.project_name}</div>
@@ -220,7 +222,7 @@ const ProjectDetail = () => {
             projectInfo?.created_id === localStorage.getItem('userName') ? (
               <button
                 className='commonBtn editBtn'
-                onClick={() => navigate(`/gp/project/write/${id}`)}>
+                onClick={() => navigate(`/mark-groupware/project/write/${id}`)}>
                 수정
               </button>
             ) : (
@@ -228,7 +230,7 @@ const ProjectDetail = () => {
             )}
             <button
               className='commonBtn listBtn'
-              onClick={() => navigate('/gp/project')}>
+              onClick={() => navigate('/mark-groupware/project')}>
               목록
             </button>
           </div>
@@ -240,8 +242,9 @@ const ProjectDetail = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'completeDelete')
-              navigate('/gp/project');
-            else if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
+              navigate('/mark-groupware/project');
+            else if (alert === 'duplicateLogin')
+              return navigate('/mark-groupware/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken', {
                 path: '/',
@@ -251,7 +254,7 @@ const ProjectDetail = () => {
                 path: '/',
                 domain: 'markcloud.co.kr',
               });
-              navigate('/gp/');
+              navigate('/mark-groupware/');
             } else return;
           }}
         />

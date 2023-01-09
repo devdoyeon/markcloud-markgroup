@@ -48,7 +48,7 @@ const Cost = () => {
             '사용자 계정은 결제가 불가합니다.'
           );
         else
-          navigate('/gp/payment', {
+          navigate('/mark-groupware/payment', {
             state: {
               merchant_code: code,
               money: price,
@@ -112,7 +112,7 @@ const Cost = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') navigate('/gp/sign-in');
+            if (alert === 'needLogin') navigate('/mark-groupware/sign-in');
             else return;
           }}
         />

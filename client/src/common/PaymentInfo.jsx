@@ -114,7 +114,7 @@ const PaymentInfo = memo(({ curData }) => {
           const result = await checkPay(data);
           if (typeof result === 'object') {
             payResult = result?.data.data;
-            navigate('/gp/payment-success', {
+            navigate('/mark-groupware/payment-success', {
               state: {
                 payResult: payResult,
                 merchant_uid: rsp.merchant_uid,

@@ -98,7 +98,7 @@ const ProjectStatus = () => {
             {acc}
             <tr
               className={idx % 2 === 1 ? 'odd' : 'even'}
-              onClick={() => navigate(`/gp/project/${id}`)}>
+              onClick={() => navigate(`/mark-groupware/project/${id}`)}>
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
               <td>
@@ -221,7 +221,7 @@ const ProjectStatus = () => {
               </button>
               <button
                 className='commonBtn applyBtn'
-                onClick={() => navigate('/gp/project/write')}>
+                onClick={() => navigate('/mark-groupware/project/write')}>
                 등록
               </button>
             </div>
@@ -258,8 +258,9 @@ const ProjectStatus = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') navigate('/gp/');
+            if (alert === 'duplicateLogin')
+              return navigate('/mark-groupware/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
             else return;
           }}
         />
