@@ -59,6 +59,7 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
       path: '/',
       domain: 'markcloud.co.kr',
     });
+    localStorage.removeItem('yn');
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
