@@ -102,7 +102,7 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        change_project(db,inbound_data,project_id,user_info)
+        change_project(db,inbound_data,project_id)
     except:
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     

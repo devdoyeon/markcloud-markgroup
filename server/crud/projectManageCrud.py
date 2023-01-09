@@ -70,6 +70,7 @@ def get_project_list(db, offset, limit, user_info, *filter):
                     (SELECT concat(name,'(',section,')') from members where a.manager_id = members.id) as manager_id,
                     a.work_status,
                     a.created_at,
+                    a.created_id,
                     a.work_end_date
                     FROM groupware_work_management as a
                     INNER JOIN groupware_project as b
@@ -130,6 +131,7 @@ def get_project_info(db, project_id,user_info):
                     (SELECT CONCAT(name,'(',section,')') FROM members WHERE a.manager_id = members.id) AS manager_id,
                     a.work_status,
                     a.created_at,
+                    a.created_id,
                     a.work_end_date
                     FROM groupware_work_management as a
                     INNER JOIN groupware_project as b
@@ -168,14 +170,11 @@ def insert_project(db,inbound_data,user_info):
         raise HTTPException(status_code=500, detail='InsertPjtError')
     
 
-def change_project(db,inbound_data, project_id, user_info):
+def change_project(db,inbound_data, project_id):
     
     project_manage_table = projectManageModel.ProjectManageTable
     
     try:
-        
-        base_q = db.query(project_manage_table).filter(project_manage_table.id == project_id).first()
-        
         values = {
                 # 'request_id':inbound_data.request_id,
                 'manager_id':inbound_data.manager_id,
@@ -187,12 +186,8 @@ def change_project(db,inbound_data, project_id, user_info):
         if inbound_data.work_status == '완료':
             values['work_end_date'] = datetime.today()
         
-        if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N' \
-        or user_info.id == int(inbound_data.request_id) or user_info.id == int(inbound_data.manager_id):
-            db.query(project_manage_table).filter_by(id = project_id).update(values)
+        db.query(project_manage_table).filter_by(id = project_id).update(values)
             
-        else:
-            raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         raise HTTPException(status_code=500, detail='ChangePjtError')
     
