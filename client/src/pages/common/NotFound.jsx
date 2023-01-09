@@ -9,7 +9,7 @@ const NotFound = () => {
   useEffect(() => {
     document.title = 'Oops!';
     if (path === '/error') return;
-    else if (path !== '/not-found') navigate('/gp/not-found');
+    else if (path !== '/not-found') navigate('/mark-groupware/not-found');
   }, []);
 
   return (

@@ -85,44 +85,44 @@ const SideMenu = () => {
           <img
             src={mainLogo}
             alt='마크그룹 로고'
-            onClick={() => navigate('/gp/business')}
+            onClick={() => navigate('/mark-groupware/business')}
           />
           <ul>
             <li
               className='departmentName'
-              onClick={() => navigate('/gp/business')}>
+              onClick={() => navigate('/mark-groupware/business')}>
               {localStorage.getItem('department')}
             </li>
             <li
               className={path.includes('/business') ? 'active' : ''}
-              onClick={() => navigate('/gp/business')}>
+              onClick={() => navigate('/mark-groupware/business')}>
               업무 관리
             </li>
             <li
               className={path.includes('/project') ? 'active' : ''}
-              onClick={() => navigate('/gp/project')}>
+              onClick={() => navigate('/mark-groupware/project')}>
               프로젝트 현황
             </li>
             <li
               className={path.includes('/report') ? 'active' : ''}
-              onClick={() => navigate('/gp/report')}>
+              onClick={() => navigate('/mark-groupware/report')}>
               주간 업무 보고
             </li>
             <li
               className={path.includes('/notice') ? 'active' : ''}
-              onClick={() => navigate('/gp/notice')}>
+              onClick={() => navigate('/mark-groupware/notice')}>
               공지사항
             </li>
             <li
               className={path.includes('/board') ? 'active' : ''}
-              onClick={() => navigate('/gp/board')}>
+              onClick={() => navigate('/mark-groupware/board')}>
               게시판
             </li>
             {localStorage.getItem('yn') === 'n' ? (
               <>
                 <li
                   className={path.includes('/personnel') ? 'active' : ''}
-                  onClick={() => navigate('/gp/personnel')}>
+                  onClick={() => navigate('/mark-groupware/personnel')}>
                   인사 관리
                 </li>
                 <li>
@@ -139,7 +139,9 @@ const SideMenu = () => {
             )}
           </ul>
           <div className='column tools'>
-            <div className='go-home' onClick={() => navigate('/gp/')}>
+            <div
+              className='go-home'
+              onClick={() => navigate('/mark-groupware/')}>
               <img src={goHomeIcon} alt='홈으로 가기 아이콘' />
             </div>
             <div
@@ -152,9 +154,8 @@ const SideMenu = () => {
               });
                 removeCookie('rfToken', {
                   path: '/',
-                domain: 'markcloud.co.kr',
-              });
-                navigate('/gp/');
+                });
+                navigate('/mark-groupware/');
               }}>
               로그아웃
             </div>
@@ -177,13 +178,17 @@ const SideMenu = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin') return navigate('/gp/sign-in');
-            else if (alert === 'serviceExpired') return navigate('/gp/');
-            else if (alert === 'needPayment') return navigate('/gp/cost/');
+            if (alert === 'needLogin')
+              return navigate('/mark-groupware/sign-in');
+            else if (alert === 'serviceExpired')
+              return navigate('/mark-groupware/');
+            else if (alert === 'needPayment')
+              return navigate('/mark-groupware/cost/');
             else if (alert === 'needDepartmentName')
               return (window.location.href =
                 'https://markcloud.co.kr/mark-mypage');
-            else if (alert === 'notAuthority') return navigate('/gp/business');
+            else if (alert === 'notAuthority')
+              return navigate('/mark-groupware/business');
             else return;
           }}
         />

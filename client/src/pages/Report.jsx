@@ -77,8 +77,9 @@ const Report = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'duplicateLogin') return navigate('/gp/sign-in');
-            else if (alert === 'tokenExpired') navigate('/gp/');
+            if (alert === 'duplicateLogin')
+              return navigate('/mark-groupware/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
             else return;
           }}
         />

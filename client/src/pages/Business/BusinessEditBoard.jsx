@@ -64,33 +64,6 @@ const BusinessEditBoard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  let prevent = false;
-
-  const getBusinessProjectNameApi = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
-
-    const result = await getBusinessRead(postInfo, pageInfo);
-    if (typeof result === 'object') {
-      const { data, meta } = result?.data;
-      const key = Object.keys(meta?.project_member);
-      const value = Object.values(meta?.project_member);
-      setMemberKey(key);
-      setMemberName(value);
-      setMemberObj(meta?.project_member);
-      setList(data);
-      setMeta(meta);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.page = meta?.page;
-        clone.totalPage = meta?.totalPage;
-        return clone;
-      });
-    } else return catchError(result, navigate, setAlertBox, setAlert);
-  };
   const getBusinessCurInfo = async () => {
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
@@ -101,6 +74,7 @@ const BusinessEditBoard = () => {
         request_id,
         title,
         work_status,
+        created_id,
       } = result?.data[0];
       setPostInfo(prev => {
         const clone = { ...prev };
@@ -110,6 +84,7 @@ const BusinessEditBoard = () => {
         clone.manager_id = manager_id;
         clone.work_status = work_status;
         clone.title = title;
+        clone.created_id = created_id;
         return clone;
       });
       setProjectValue(project_name);
@@ -146,23 +121,12 @@ const BusinessEditBoard = () => {
       changeState(setPostInfo, 'title', e.target.value);
     }
   };
-  const createWorkBusiness = async () => {
-    const result = await createBusiness(postInfo);
-    if (typeof result === 'object') {
-      setAlert('apply');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '등록이 완료되었습니다.'
-      );
-    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
-  };
 
   const editPost = async () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
+
     const result = await updateBusiness(obj, id);
     if (typeof result === 'object') {
       setAlert('edit');
@@ -272,23 +236,29 @@ const BusinessEditBoard = () => {
               onClick={id?.length ? editPost : ''}>
               수정
             </button>
-            <button
-              className='commonBtn close'
-              onClick={() => {
-                setAlert('deleteConfirm');
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
-                );
-              }}>
-              삭제
-            </button>
+            {localStorage.getItem('yn') === 'n' ||
+            localStorage.getItem('userId') === postInfo.created_id ? (
+              <button
+                className='commonBtn close'
+                onClick={() => {
+                  setAlert('deleteConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '정말 삭제하시겠습니까?<br/>삭제된 글은 복구할 수 없습니다.'
+                  );
+                }}>
+                삭제
+              </button>
+            ) : (
+              <></>
+            )}
+
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/gp/business`);
+                navigate(`/mark-groupware/business`);
               }}>
               목록
             </button>
@@ -305,11 +275,11 @@ const BusinessEditBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/gp/${path.split('/')[2]}`);
+              navigate(`/mark-groupware/${path.split('/')[2]}`);
             else if (alert === 'edit')
-              navigate(`/gp/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/gp/sign-in');
+              return navigate('/mark-groupware/sign-in');
             else if (alert === 'deleteConfirm') deletePost();
             else return;
           }}
