@@ -21,9 +21,9 @@ class DepartmentTable(Base):
     id = Column(BigInteger, nullable = False, primary_key = True, autoincrement= True)
     organ_code = Column(VARCHAR(14), nullable = False)
     department_name = Column(VARCHAR(50), nullable = False)
-    created_at = Column(DateTime, default=datetime.today(),nullable = False)
+    created_at = Column(DateTime,nullable = False)
     created_id = Column(BigInteger, nullable = False)
-    updated_at = Column(DateTime, default=datetime.today(),nullable = False)
+    updated_at = Column(DateTime,nullable = False)
     updated_id = Column(BigInteger, default = created_id, nullable = False)
     
     
@@ -45,8 +45,8 @@ class MemberTable(Base):
     section = Column(VARCHAR(50))
     is_active = Column(Boolean, default=True, nullable=False)
     member_role = Column(Enum(roleEnum), default='guest', nullable=False)
-    created_at = Column(DateTime, default=datetime.today(), nullable=False)
-    updated_at = Column(DateTime, default=datetime.today(), nullable=False) 
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False) 
     last_login = Column(DateTime, default=datetime.today(), nullable=False) 
     login_ip = Column(VARCHAR(20), default=0, nullable=False) 
     login_count = Column(Integer,  default=0, nullable=False)

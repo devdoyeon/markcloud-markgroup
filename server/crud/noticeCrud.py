@@ -11,7 +11,6 @@ def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
     notice_table = noticeModel.NoticeTable
     member_table = memberManageModel.MemberTable
 
-
     query = db.query(notice_table.id,
                     notice_table.created_at,
                     member_table.name.label('created_id'),
@@ -19,7 +18,7 @@ def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
                     ).filter(notice_table.organ_code == user_info.department_code
                     ).join(member_table, notice_table.created_id == member_table.id
                     ).order_by(desc(notice_table.id))
-
+                    
     # 필터 O
     if filter_type:    
         if filter_type == 'title':
@@ -53,14 +52,19 @@ def insert_notice(db,inbound_data,user_info):
     
     notice_table = noticeModel.NoticeTable
     
-
     db_query = notice_table(
         title=inbound_data.title,
         organ_code = user_info.department_code,
         content=inbound_data.content,
-        created_id=user_info.id)
+        created_id=user_info.id,
+        created_at = datetime.today(),
+        updated_at =datetime.today()
+        )
     
-    db.add(db_query)
+    r = db.add(db_query)
+    db.flush()
+    
+    return r
 
 def change_notice(db,inbound_data,notice_id, user_info):
     

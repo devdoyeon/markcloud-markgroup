@@ -47,7 +47,9 @@ def insert_department(db, inbound_data, user_info):
         db_query = department_table(
         department_name=inbound_data.department_name,
         organ_code = user_info.department_code,
-        created_id = user_info.id)
+        created_id = user_info.id,
+        created_at = datetime.today(),
+        updated_at =datetime.today())
         
         db.add(db_query)
 
@@ -139,6 +141,8 @@ def insert_member(db,inbound_data,user_info):
         department = user_info.department,
         department_code = user_info.department_code,
         section = inbound_data.section,
+        created_at = datetime.today(),
+        updated_at =datetime.today(),
         groupware_only_yn = "Y")
 
     db.add(db_query)

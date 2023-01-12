@@ -147,6 +147,8 @@ def insert_project(db,inbound_data,user_info):
         manager_id=inbound_data.manager_id,
         content=inbound_data.content,
         work_status=inbound_data.work_status,
+        created_at = datetime.today(),
+        updated_at =datetime.today(),
         created_id=user_info.id)
     
     db.add(db_query)
@@ -171,9 +173,9 @@ def change_project(db,inbound_data, project_id):
 
 def remove_project(db, notice_id, user_info):
 
-    project_table = projectManageModel.ProjectManageTable
+    project_manage_table = projectManageModel.ProjectManageTable
     
-    base_q = db.query(project_table).filter(project_table.id == notice_id)
+    base_q = db.query(project_manage_table).filter(project_manage_table.id == notice_id)
     if user_info.id == int(base_q.first().created_id) or user_info.groupware_only_yn == 'N':
         base_q.delete()
     else:

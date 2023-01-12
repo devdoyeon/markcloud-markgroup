@@ -1,5 +1,5 @@
 # 공지사항
-from fastapi import APIRouter, Depends, Header
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.security import APIKeyHeader
 from typing import List
@@ -76,9 +76,12 @@ def create_notice(
     db: Session = Depends(get_db),
 ):
     try:
-        insert_notice(db,inbound_data,user_info)
-    except:
-        raise HTTPException(status_code=500, detail='CreateNtError')
+        result = insert_notice(db,inbound_data,user_info)
+        return result
+    
+    except Exception as e:
+        # print(e)
+        raise HTTPException(status_code=500, detail=e)
         
 # 공지 수정
 @router_notice.post('/update') 
