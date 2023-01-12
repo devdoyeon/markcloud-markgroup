@@ -16,7 +16,6 @@ const CommonMenu = () => {
                 path: '/',
                 domain: 'markcloud.co.kr',
               });
-              localStorage.removeItem('yn')
               localStorage.clear();
               window.location.reload();
               return;
