@@ -17,7 +17,7 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
         FROM groupware_project_members
         WHERE project_code = (SELECT project_code
         FROM groupware_project
-        WHERE project_name = "{inbound_filter.project_name}")) 
+        WHERE project_name = "{inbound_filter.project_name}"))
         '''
         project_member = db.execute(p_member_query).fetchall() 
 
@@ -38,7 +38,7 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
 
     # admin 계정일 경우 전체 프로젝트명 가져오기
     if user_info.groupware_only_yn == 'N': 
-        all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).all()
+        all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).order_by(desc(project_table.id)).all()
     
     else: 
         # 자신이 속한 프로젝트명 가져오기
@@ -46,6 +46,7 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
         SELECT project_name FROM groupware_project 
         WHERE project_code = ANY(SELECT project_code 
         FROM groupware_project_members WHERE user_id = "{user_info.user_id}")
+        ORDER BY id DESC
         '''
         all_pjt_name = db.execute(p_name_query).fetchall()
     all_pjt_name = [name for name, in all_pjt_name] 
