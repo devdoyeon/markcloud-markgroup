@@ -984,6 +984,11 @@
 }
 
 .popup-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -997,10 +1002,6 @@
   height: 262px;
   border-radius: 16px;
   background-color: #ffffff;
-  position: absolute;
-  top: 50%;
-  left: 45%;
-  transform: translate(-45%, -50%);
 }
 .popup-bg > .popup > .head {
   padding: 16px 0 16px 24px;
