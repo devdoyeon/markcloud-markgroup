@@ -254,6 +254,7 @@ const ProjectDetail = () => {
                 path: '/',
                 domain: 'markcloud.co.kr',
               });
+              localStorage.removeItem('yn');
               navigate('/mark-groupware/');
             } else return;
           }}
