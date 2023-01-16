@@ -71,6 +71,7 @@ def read_project_info(
 ):
     try:
         return get_project_info(db,project_id,user_info)
+    
     except:
         raise HTTPException(status_code=500, detail='ReadPjtInfoError')
     
@@ -86,7 +87,9 @@ def create_project(
     db: Session = Depends(get_db),
 ):
     try:
-        insert_project(db,inbound_data, user_info)
+        data = insert_project(db,inbound_data, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='CreatePjtError')
     
@@ -103,7 +106,9 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        change_project(db,inbound_data,project_id,user_info)
+        data = change_project(db,inbound_data,project_id,user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     
@@ -119,6 +124,10 @@ def delete_project(
     db:Session = Depends(get_db)
 ):
     try:
-        remove_project(db,project_id,user_info)
+        data = remove_project(db,project_id,user_info)
+        return Response().success_response(data)
+    
+    except customError.InvalidError:
+        raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         raise HTTPException(status_code=500, detail='DeletePjtError')

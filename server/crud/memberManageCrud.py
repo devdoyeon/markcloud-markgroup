@@ -3,6 +3,7 @@ from router import security
 
 from sqlalchemy import desc
 from datetime import datetime,date
+from crud import customError
     
 ##################################부서 관리##################################
 
@@ -39,9 +40,9 @@ def insert_department(db, inbound_data, user_info):
     department_table = memberManageModel.DepartmentTable
 
     dp_chk = db.query(department_table).filter(department_table.department_name == inbound_data.department_name).first() # 부서명 중복 체크
-    
     if dp_chk:
-        return 500
+        raise customError.DuplicatedError
+    
     else:
         db_query = department_table(
         department_name=inbound_data.department_name,
@@ -50,14 +51,14 @@ def insert_department(db, inbound_data, user_info):
         created_at = datetime.today(),
         updated_at =datetime.today())
         
-        db.add(db_query)
+        result = db.add(db_query)
+        return result
 
 
 def change_department(db, inboud_data, department_id, user_info):
     
     department_table = memberManageModel.DepartmentTable
     member_table = memberManageModel.MemberTable
-    
 
     values = {'department_name':inboud_data.department_name,
                 'updated_at':datetime.today()}
@@ -74,7 +75,8 @@ def change_department(db, inboud_data, department_id, user_info):
     values =  {'section':inboud_data.department_name,
                 'updated_at':datetime.today()}
     
-    db.query(member_table).filter(member_table.section == origin_dpname[0]).update(values)
+    result = db.query(member_table).filter(member_table.section == origin_dpname[0]).update(values)
+    return result
     
 def remove_department(db, department_id, user_info):
     
@@ -84,18 +86,17 @@ def remove_department(db, department_id, user_info):
         # department_id로 기존 부서명 가져오기 
     origin_dpname = db.query(department_table.department_name).filter(department_table.id == department_id).first()
     
-    db.query(department_table
+    result = db.query(department_table
             ).filter(department_table.id == department_id
             ).filter(department_table.organ_code == user_info.department_code
             ).delete()
-    
     
     # 부서 삭제시 member table의 section -> '무소속'으로 업데이트
     values =  {'section':'무소속',
         'updated_at':datetime.today()}
     
     db.query(member_table).filter(member_table.section == origin_dpname[0]).update(values)        
-
+    return result
 
 ##################################직원 관리##################################
 def get_member_list(db, offset,limit, user_info):
@@ -144,8 +145,8 @@ def insert_member(db,inbound_data,user_info):
         updated_at =datetime.today(),
         groupware_only_yn = "Y")
 
-    db.add(db_query)
-
+    result = db.add(db_query)
+    return result
 
 
 def change_member(db, inbound_data, member_id):
@@ -164,7 +165,8 @@ def change_member(db, inbound_data, member_id):
             'updated_at':datetime.today()
             }
     
-    db.query(member_table).filter_by(id = member_id).update(values)
+    result = db.query(member_table).filter_by(id = member_id).update(values)
+    return result
 
 def remove_member(db,member_id):
     
@@ -173,4 +175,5 @@ def remove_member(db,member_id):
     values = {'is_active': 0,
             'section':'퇴사'}
     
-    db.query(member_table).filter(member_table.id == member_id).update(values)
+    result = db.query(member_table).filter(member_table.id == member_id).update(values)
+    return result

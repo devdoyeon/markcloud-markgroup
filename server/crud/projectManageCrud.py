@@ -2,6 +2,7 @@
 from model import projectManageModel, memberManageModel
 from sqlalchemy import desc
 from datetime import datetime
+from crud import customError
 
 def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
     
@@ -149,7 +150,8 @@ def insert_project(db,inbound_data,user_info):
         updated_at =datetime.today(),
         created_id=user_info.id)
     
-    db.add(db_query)
+    result = db.add(db_query)
+    return result
 
 def change_project(db,inbound_data, project_id):
     
@@ -166,7 +168,8 @@ def change_project(db,inbound_data, project_id):
     if inbound_data.work_status == '완료':
         values['work_end_date'] = datetime.today()
     
-    db.query(project_manage_table).filter_by(id = project_id).update(values)
+    result = db.query(project_manage_table).filter_by(id = project_id).update(values)
+    return result
         
 
 def remove_project(db, notice_id, user_info):
@@ -175,6 +178,7 @@ def remove_project(db, notice_id, user_info):
     
     base_q = db.query(project_manage_table).filter(project_manage_table.id == notice_id)
     if user_info.id == int(base_q.first().created_id) or user_info.groupware_only_yn == 'N':
-        base_q.delete()
+        result = base_q.delete()
+        return result
     else:
-        return 422
+        raise customError.InvalidError

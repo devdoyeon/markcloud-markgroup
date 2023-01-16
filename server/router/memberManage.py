@@ -8,6 +8,7 @@ from crud.memberManageCrud import *
 from schema.memberManageSchema import *
 from schema.responseSchema import *
 from router import security
+from crud import customError
 
 
 router_member = APIRouter(
@@ -49,8 +50,6 @@ def read_department_list(
     except:
         raise HTTPException(status_code=500, detail='ReadDpError')
 
-        
-
 # 부서 상세페이지
 @router_member.get('/department/info', response_model = DepartmentOut)    
 @security.varify_access_token
@@ -70,7 +69,6 @@ def read_department_info(
     except:
         raise HTTPException(status_code=500, detail='ReadDpInfoError')
 
-        
 # 부서 등록
 @router_member.post('/department/create')
 @security.varify_access_token
@@ -86,14 +84,14 @@ def create_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        result = insert_department(db, inbound_data, user_info)
+        data = insert_department(db, inbound_data, user_info)
+        return Response().success_response(data)
+    
+    except customError.DuplicatedError: 
+        raise HTTPException(status_code=503, detail='DuplicatedDpError')
     except:
         raise HTTPException(status_code=500, detail='CreateDpError')
-    
-    if result == 500:
-        raise HTTPException(status_code=500, detail='DuplicatedDpError')   
 
-            
 # 부서 수정
 @router_member.post('/department/update')
 @security.varify_access_token
@@ -110,7 +108,9 @@ def update_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        change_department(db, inbound_data, department_id, user_info)
+        data = change_department(db, inbound_data, department_id, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdateDpError')
 
@@ -131,12 +131,12 @@ def delete_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        remove_department(db, department_id, user_info)
+        data = remove_department(db, department_id, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='DeleteDpError')
 
-    
-    
 ##################################직원 관리##################################
 
 # 직원 리스트
@@ -207,7 +207,8 @@ def create_member(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        insert_member(db,inbound_data,user_info)
+        data = insert_member(db,inbound_data,user_info)
+        return Response().success_response(data)
     except:
         raise HTTPException(status_code=500, detail='CreateMbError')
 
@@ -226,8 +227,11 @@ def update_member(
 ):
     if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
     try:
-        change_member(db, inboud_data ,member_id)
+        data = change_member(db, inboud_data ,member_id)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdateMbError')
 
@@ -247,7 +251,9 @@ def delete_member(
         raise HTTPException(status_code=422, detail='NotAdmin')
 
     try:
-        remove_member(db,member_id) 
+        data = remove_member(db,member_id) 
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='DeleteMbError')
 
