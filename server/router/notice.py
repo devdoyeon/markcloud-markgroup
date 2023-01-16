@@ -1,13 +1,13 @@
 # 공지사항
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, File, UploadFile
 from sqlalchemy.orm import Session
-from fastapi.security import APIKeyHeader
-from typing import List
+from typing import List, Union, Optional
+
 
 from database import *
 from crud.noticeCrud import *
 from schema.noticeSchema import *
-from schema.responseSchema import *
+from schema.responseSchema import * 
 from router import author_chk
 
 router_notice = APIRouter(
@@ -49,6 +49,7 @@ def read_notice_list(
 
 # 공지 상세페이지
 @router_notice.get('/info',response_model = NoticeInfo)
+# @router_notice.get('/info')
 @author_chk.varify_access_token
 @author_chk.user_chk
 def read_notice_info(
@@ -60,7 +61,20 @@ def read_notice_info(
 ):
     try:
         notice_info =  get_notice_info(db,notice_id, user_info)
-        return notice_info
+        
+        new_img_url = notice_info.img_url
+        img_url = new_img_url.split(',')
+        
+        outbound = NoticeInfo(
+                title = notice_info.title,
+                created_id = notice_info.created_id,
+                created_at = notice_info.created_at,
+                updated_at = notice_info.updated_at,
+                content = notice_info.content,
+                img_url = img_url
+        )
+        return outbound
+    
     except:
         raise HTTPException(status_code=500, detail='ReadNtInfoError')
 
@@ -69,39 +83,48 @@ def read_notice_info(
 @author_chk.varify_access_token
 @author_chk.user_chk
 def create_notice(
-    inbound_data: NoticeIn,
+    inbound_data: NoticeIn = Depends(),
+    # inbound_data: NoticeIn,
     access_token:str = Header(None),
     user_info:str = None,
+    file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     db: Session = Depends(get_db),
 ):
     try:
-        result = insert_notice(db,inbound_data,user_info)
-        return result
+        data = insert_notice(db,inbound_data,file,user_info)
+        return Response().success_response(data)
     
-    except Exception as e:
-        # print(e)
-        raise HTTPException(status_code=500, detail=e)
+    except custom_error.S3ConnError:
+        raise HTTPException(status_code=505, detail='S3ConnError')
+    
+    except Exception: 
+        raise HTTPException(status_code=500, detail='CreateNtError')
+    
         
 # 공지 수정
 @router_notice.post('/update') 
 @author_chk.varify_access_token
 @author_chk.user_chk
 def update_notice(
-    inbound_data: NoticeEditDTO,
     notice_id:int,
+    inbound_data: NoticeEditDTO = Depends(),
     access_token:str = Header(None),
+    file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
     try:
-        result = change_notice(db,inbound_data,notice_id,user_info)
+        data = change_notice(db,inbound_data,file,notice_id,user_info)
+        return Response().success_response(data)
+        
+    except custom_error.InvalidError:
+        raise HTTPException(status_code=422, detail = 'InvalidClient')    
+    except custom_error.S3ConnError:
+        raise HTTPException(status_code=505, detail = 'S3ConnError')
     except:
         raise HTTPException(status_code=500, detail='UpdateNtError')
-    
-    if result == 422:
-        raise HTTPException(status_code=422, detail='InvalidClient')
     
 # 공지 삭제
 @router_notice.post('/delete')
@@ -115,9 +138,10 @@ def delete_notice(
     db: Session = Depends(get_db)
 ):
     try:
-        result = remove_notice(db,notice_id,user_info)
+        data = remove_notice(db,notice_id,user_info)
+        return Response().success_response(data)
+    
+    except custom_error.InvalidError:
+        raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         raise HTTPException(status_code=500, detail='DeleteNtError')
-    
-    if result == 422:
-        raise HTTPException(status_code=422, detail='InvalidClient')
