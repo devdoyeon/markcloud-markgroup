@@ -1,7 +1,6 @@
 from model import memberManageModel
-from router import author_chk
+from router import security
 
-from fastapi import HTTPException
 from sqlalchemy import desc
 from datetime import datetime,date
     
@@ -126,7 +125,7 @@ def insert_member(db,inbound_data,user_info):
 
     member_table = memberManageModel.MemberTable
 
-    hashed_password = author_chk.get_hashed_password(inbound_data.password)
+    hashed_password = security.get_hashed_password(inbound_data.password)
     
     db_query = member_table(
         name = inbound_data.name,

@@ -5,10 +5,9 @@ from starlette import status
 from datetime import datetime, date
 import random
 
-from router import author_chk
 from model.projectManageModel import *
 from model.memberManageModel import *
-from router import author_chk
+from router import security
 from schema.project_schema import ProjectCreate, ProjectUpdate
 
 
@@ -22,7 +21,7 @@ def get_project_list(db: Session,
                      user_pk: int
                      ):
     
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     
     sql = f'''
         select
@@ -137,7 +136,7 @@ def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
         raise HTTPException(status_code=403, detail='AlreadyProjectName')
     
     try:
-        user_info = author_chk.get_user_info(db, user_pk)
+        user_info = security.get_user_info(db, user_pk)
         # PRJ + 년월일 + Random 난수번호(5자리)
         yymmdd = datetime.today().strftime("%y%m%d")
         random_int = random.randint(10000,99999)
@@ -163,7 +162,7 @@ def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
     
 def update_project(db: Session, project_update: ProjectUpdate, project_id: int, user_pk: int):
     
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     
     update_values = {
         "project_name": project_update.project_name,
@@ -184,7 +183,7 @@ def update_project(db: Session, project_update: ProjectUpdate, project_id: int, 
     
 
 def get_organ_member(db: Session, user_pk: int):
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     organ_code = user_info.department_code
     member_list = db.query(MemberTable.user_id, MemberTable.name, MemberTable.section)\
                             .filter(MemberTable.department_code == organ_code)\
@@ -238,7 +237,7 @@ def delete_project_members_all(db: Session, project_code: str):
 
 
 def delete_project(db: Session, project_id: int, user_pk: int):
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     
     db_project = db.query(ProjectTable).filter(ProjectTable.id == project_id).first()
     project_code = db_project.project_code

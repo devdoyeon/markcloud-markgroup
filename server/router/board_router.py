@@ -6,13 +6,13 @@ from database import get_db
 from schema.base_schema import Response, filterType
 from schema.board_schema import PostOut, BoardOut, PostCreate, PostUpdate
 from crud import board_crud
-from router import author_chk
+from router import security
 
 
 router = APIRouter(prefix="/board")
 
 @router.get("/list", response_model=Response[List[BoardOut]])
-@author_chk.varify_access_token
+@security.varify_access_token
 def post_list(
     access_token: str = Header(None),
     user_pk:int = None,
@@ -49,7 +49,7 @@ def post_detail(post_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/create")
-@author_chk.varify_access_token
+@security.varify_access_token
 def post_create(_post_create: PostCreate, 
                 access_token:str = Header(None),
                 user_pk: int = None,  
@@ -61,7 +61,7 @@ def post_create(_post_create: PostCreate,
     
 
 @router.post("/update")
-@author_chk.varify_access_token
+@security.varify_access_token
 def post_update(
     post_id: int, 
     _post_update: PostUpdate, 
@@ -75,7 +75,7 @@ def post_update(
     
 
 @router.post("/delete")
-@author_chk.varify_access_token
+@security.varify_access_token
 def post_delete(
     post_id: int,
     user_pk:int = None,

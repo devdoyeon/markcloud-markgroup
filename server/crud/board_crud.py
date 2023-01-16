@@ -8,7 +8,7 @@ from models import BoardTable
 from model.memberManageModel import *
 
 from schema.board_schema import PostCreate, PostUpdate
-from router import author_chk
+from router import security
 
 
 def get_post_list(db: Session, 
@@ -18,7 +18,7 @@ def get_post_list(db: Session,
                   limit: int, 
                   user_pk: int):
     try:  
-        user_info = author_chk.get_user_info(db, user_pk)
+        user_info = security.get_user_info(db, user_pk)
         post_list = db.query(BoardTable.id, BoardTable.created_at, MemberTable.name.label('created_id'), BoardTable.title) \
             .filter(BoardTable.organ_code == user_info.department_code) \
                 .join(MemberTable, BoardTable.created_id == MemberTable.id).order_by(BoardTable.id.desc())
@@ -51,7 +51,7 @@ def get_post(db: Session, post_id: int):
 
 def create_post(db: Session, user_pk: int, post_create: PostCreate):
     try: 
-        user_info = author_chk.get_user_info(db, user_pk)
+        user_info = security.get_user_info(db, user_pk)
         organ_code = user_info.department_code
         
         db_post = BoardTable(organ_code=organ_code,
@@ -73,7 +73,7 @@ def update_post(
     post_id: int,
     user_pk: int
     ):
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     
     update_values = {
         "title": post_update.title,
@@ -93,7 +93,7 @@ def update_post(
 
 def delete_post(db: Session, post_id: int, user_pk: int):
     
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
 
     db_post = db.query(BoardTable).filter(BoardTable.id == post_id)    
     

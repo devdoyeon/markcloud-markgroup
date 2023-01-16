@@ -1,7 +1,7 @@
 import boto3
 from io import BytesIO
 import os
-from crud import custom_error
+from crud import customError
 
 import datetime
 
@@ -33,7 +33,6 @@ def upload_img_s3(file, key):
     try:
         AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
         AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-        # bucket = 'markcloud-groupware'
         AWS_BUCKET = os.environ['AWS_BUCKET']
         bucket = AWS_BUCKET
         
@@ -47,4 +46,4 @@ def upload_img_s3(file, key):
         return bucket
     
     except Exception:
-        raise custom_error.S3ConnError
+        raise customError.S3ConnError

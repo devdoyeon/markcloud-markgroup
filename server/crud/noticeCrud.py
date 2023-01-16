@@ -1,7 +1,8 @@
 from model import noticeModel, memberManageModel
 from sqlalchemy import desc
 from datetime import datetime 
-from crud import utils, custom_error
+from crud import utils
+from crud import customError
 
 def get_notice_list(db, offset, limit, user_info, filter_type, filter_val):
     
@@ -93,7 +94,7 @@ def change_notice(db,inbound_data,file, notice_id, user_info):
         return result
         
     else:
-        raise custom_error.InvalidError
+        raise customError.InvalidError
 
 
 def remove_notice(db,notice_id, user_info):
@@ -105,4 +106,4 @@ def remove_notice(db,notice_id, user_info):
         result = base_q.delete()
         return result
     else:
-        raise custom_error.InvalidError
+        raise customError.InvalidError

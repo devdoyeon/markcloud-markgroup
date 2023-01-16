@@ -1,9 +1,6 @@
 # 업무 관리
 from model import projectManageModel, memberManageModel
-from router import author_chk
-
-from sqlalchemy import desc, distinct
-from fastapi import HTTPException
+from sqlalchemy import desc
 from datetime import datetime
 
 def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버

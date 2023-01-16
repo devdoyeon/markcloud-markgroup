@@ -8,7 +8,7 @@ from database import *
 from crud.noticeCrud import *
 from schema.noticeSchema import *
 from schema.responseSchema import * 
-from router import author_chk
+from router import security
 
 router_notice = APIRouter(
     prefix="/notice",
@@ -17,8 +17,8 @@ router_notice = APIRouter(
 
 # 공지 리스트
 @router_notice.get('/list', response_model= Response[List[NoticeOut]])
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_notice_list(
     access_token: str = Header(None),
     user_pk:int = None,
@@ -50,8 +50,8 @@ def read_notice_list(
 # 공지 상세페이지
 @router_notice.get('/info',response_model = NoticeInfo)
 # @router_notice.get('/info')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_notice_info(
     notice_id :int,
     access_token:str = Header(None),
@@ -80,8 +80,8 @@ def read_notice_info(
 
 # 공지 생성
 @router_notice.post('/create')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def create_notice(
     inbound_data: NoticeIn = Depends(),
     # inbound_data: NoticeIn,
@@ -95,7 +95,7 @@ def create_notice(
         data = insert_notice(db,inbound_data,file,user_info)
         return Response().success_response(data)
     
-    except custom_error.S3ConnError:
+    except customError.S3ConnError:
         raise HTTPException(status_code=505, detail='S3ConnError')
     
     except Exception: 
@@ -104,8 +104,8 @@ def create_notice(
         
 # 공지 수정
 @router_notice.post('/update') 
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def update_notice(
     notice_id:int,
     inbound_data: NoticeEditDTO = Depends(),
@@ -119,17 +119,17 @@ def update_notice(
         data = change_notice(db,inbound_data,file,notice_id,user_info)
         return Response().success_response(data)
         
-    except custom_error.InvalidError:
+    except customError.InvalidError:
         raise HTTPException(status_code=422, detail = 'InvalidClient')    
-    except custom_error.S3ConnError:
+    except customError.S3ConnError:
         raise HTTPException(status_code=505, detail = 'S3ConnError')
     except:
         raise HTTPException(status_code=500, detail='UpdateNtError')
     
 # 공지 삭제
 @router_notice.post('/delete')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def delete_notice(
     notice_id:int,
     user_pk:int = None,
@@ -141,7 +141,7 @@ def delete_notice(
         data = remove_notice(db,notice_id,user_info)
         return Response().success_response(data)
     
-    except custom_error.InvalidError:
+    except customError.InvalidError:
         raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         raise HTTPException(status_code=500, detail='DeleteNtError')
