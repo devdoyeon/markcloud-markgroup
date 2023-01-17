@@ -106,10 +106,11 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        data = change_project(db,inbound_data,project_id,user_info)
+        data = change_project(db,inbound_data,project_id)
         return Response().success_response(data)
     
-    except:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     
 # 프로젝트 삭제    
