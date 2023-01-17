@@ -190,6 +190,7 @@ const ProjectStatus = () => {
                 <input
                   type='date'
                   value={search.start_date}
+                  max='9999-12-31'
                   onChange={e =>
                     changeState(setSearch, 'start_date', e.target.value)
                   }
@@ -198,6 +199,7 @@ const ProjectStatus = () => {
                 <input
                   type='date'
                   value={search.end_date}
+                  max='9999-12-31'
                   onChange={e =>
                     changeState(setSearch, 'end_date', e.target.value)
                   }
