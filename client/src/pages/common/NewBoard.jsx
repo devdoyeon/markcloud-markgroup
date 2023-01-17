@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
@@ -42,6 +42,8 @@ const NewBoard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const cookie = getCookie('myToken');
+
+  const inputFile = useRef();
 
   const returnHeader = () => {
     switch (path.split('/')[2]) {
@@ -113,7 +115,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
-        result = await createNotice(postInfo);
+        result = await createNotice(postInfo, inputFile?.current?.files[0]);
         break;
       case 'board':
         result = await createBoard(postInfo);

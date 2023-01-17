@@ -12,7 +12,7 @@ class EditorComponent extends Component {
       //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      ['link', 'image'],
+      ['image'],
       [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
       ['clean'],
     ],
@@ -36,6 +36,8 @@ class EditorComponent extends Component {
     const { content, setContent, col } = this.props;
     return (
       <>
+        {/* {console.log(content)}
+        {console.log(editor.getContents)} */}
         <ReactQuill
           theme='snow'
           modules={this.modules}
@@ -45,6 +47,7 @@ class EditorComponent extends Component {
             setContent(prev => {
               const clone = { ...prev };
               clone[col] = editor.getHTML();
+
               return clone;
             })
           }
