@@ -42,7 +42,7 @@ def get_notice_info(db, notice_id, user_info):
                             notice_table.updated_at,
                             notice_table.content,
                             member_table.name.label('created_id'),
-                            notice_table.img_url
+                            # notice_table.img_url
                             ).filter(notice_table.id == notice_id
                             ).filter(notice_table.organ_code == user_info.department_code
                             ).join(member_table,notice_table.created_id == member_table.id
