@@ -58,6 +58,13 @@ input {
   background-color: white;
 }
 
+.ql-editor h1 * {
+  font-size: 32px;
+}
+.ql-editor h2 * {
+  font-size: 24px;
+}
+
 .selectBox {
   user-select: none;
   border: 1px solid #eeeeee;
