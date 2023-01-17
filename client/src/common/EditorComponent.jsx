@@ -9,7 +9,6 @@ class EditorComponent extends Component {
 
   modules = {
     toolbar: [
-      //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       ['link', 'image'],
