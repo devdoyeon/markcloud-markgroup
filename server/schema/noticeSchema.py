@@ -39,7 +39,7 @@ class NoticeInfo(BaseModel):
     created_at:date
     updated_at:date
     content:str
-    img_url:Union[str,list]
+    # img_url:Union[str,list]
     
     class Config:
         orm_mode = True
