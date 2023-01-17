@@ -15,9 +15,9 @@ class ProjectManageTable(Base):
     content = Column(TEXT, nullable = True)
     work_status = Column(VARCHAR(10), nullable = False)
     work_end_date = Column(DateTime, nullable = True)
-    created_at = Column(DateTime,default=datetime.today(), nullable = False)  
+    created_at = Column(DateTime, nullable = False)  
     created_id = Column(BigInteger, nullable = False)
-    updated_at = Column(DateTime,default=datetime.today(), nullable = False) 
+    updated_at = Column(DateTime, nullable = False) 
     updated_id = Column(BigInteger, default=created_id, nullable = False)
 
 

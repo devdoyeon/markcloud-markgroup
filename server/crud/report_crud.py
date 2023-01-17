@@ -5,14 +5,14 @@ from datetime import datetime
 
 from models import BusinessReportTable
 from model.memberManageModel import *
-from router import author_chk
+from router import security
 from schema.report_schema import ReportCreate, ReportUpdate
 
 
 def get_report_list(db: Session, filter_type: str, filter_val: str, offset: int, limit: int, user_pk: int):
     
     try:
-        user_info = author_chk.get_user_info(db, user_pk)
+        user_info = security.get_user_info(db, user_pk)
                                     
         report_list = db.query(BusinessReportTable.id, BusinessReportTable.created_at, MemberTable.name.label('created_id'), BusinessReportTable.title) \
             .filter(BusinessReportTable.organ_code == user_info.department_code) \
@@ -50,7 +50,7 @@ def get_report(db: Session, report_id: int):
 
 def create_report(db: Session, user_pk: int, report_create: ReportCreate):
     try:
-        user_info = author_chk.get_user_info(db, user_pk)
+        user_info = security.get_user_info(db, user_pk)
         
         db_report = BusinessReportTable(organ_code=user_info.department_code,
                                 title=report_create.title,
@@ -66,7 +66,7 @@ def create_report(db: Session, user_pk: int, report_create: ReportCreate):
 
     
 def update_report(db: Session, report_update: ReportUpdate, report_id: int, user_pk: int):
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
     
     update_values = {
         "title": report_update.title,
@@ -85,7 +85,7 @@ def update_report(db: Session, report_update: ReportUpdate, report_id: int, user
 
 def delete_report(db: Session, report_id: int, user_pk: int):
     
-    user_info = author_chk.get_user_info(db, user_pk)
+    user_info = security.get_user_info(db, user_pk)
 
     db_report = db.query(BusinessReportTable).filter(BusinessReportTable.id == report_id)    
     

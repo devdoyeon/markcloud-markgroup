@@ -9,14 +9,14 @@ from database import get_db
 from schema.base_schema import Response, projectStatusType
 from schema.project_schema import *
 from crud import project_crud
-from router import author_chk
+from router import security
 
 
 router = APIRouter(prefix="/project")
 
 
 @router.get("/list", response_model=Response[List[ProjectListOut]]) 
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_list(project_name: Optional[str] = None, 
                  project_status: Optional[projectStatusType] = None,
                  start_date: Optional[date] = None,
@@ -66,7 +66,7 @@ def project_member_list(project_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/create")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_create(project_create: ProjectCreate, 
                    access_token:str = Header(None),
                    user_pk:int = None,
@@ -75,7 +75,7 @@ def project_create(project_create: ProjectCreate,
     
 
 @router.post("/update")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_update(project_id: int, 
                    project_update: ProjectUpdate, 
                    access_token:str = Header(None),
@@ -88,7 +88,7 @@ def project_update(project_id: int,
     
 
 @router.get("/member")
-@author_chk.varify_access_token
+@security.varify_access_token
 def organ_member_list(access_token:str = Header(None),
                       user_pk:int = None,
                       db: Session = Depends(get_db)):
@@ -97,7 +97,7 @@ def organ_member_list(access_token:str = Header(None),
 
 
 @router.post("/member_add")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_member_add(project_id: int, 
                        project_member_add: ProjectMemberAdd, 
                        access_token:str = Header(None),
@@ -121,7 +121,7 @@ def project_member_add(project_id: int,
 
 
 @router.post("/member_delete")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_member_delete(project_id:int, 
                           project_member_delete: ProjectMemberDelete, 
                           access_token:str = Header(None),
@@ -141,7 +141,7 @@ def project_member_delete(project_id:int,
     
 # 프로젝트 삭제
 @router.post("/delete")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_delete(
     project_id: int,
     user_pk:int = None,

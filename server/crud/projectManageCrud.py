@@ -1,10 +1,8 @@
 # 업무 관리
 from model import projectManageModel, memberManageModel
-from router import author_chk
-
-from sqlalchemy import desc, distinct
-from fastapi import HTTPException
+from sqlalchemy import desc
 from datetime import datetime
+from crud import customError
 
 def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
     
@@ -17,7 +15,7 @@ def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
         FROM groupware_project_members
         WHERE project_code = (SELECT project_code
         FROM groupware_project
-        WHERE project_name = "{inbound_filter.project_name}")) 
+        WHERE project_name = "{inbound_filter.project_name}"))
         '''
         project_member = db.execute(p_member_query).fetchall() 
 
@@ -38,7 +36,7 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
 
     # admin 계정일 경우 전체 프로젝트명 가져오기
     if user_info.groupware_only_yn == 'N': 
-        all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).all()
+        all_pjt_name = db.query(project_table.project_name).filter(project_table.organ_code == user_info.department_code).order_by(desc(project_table.id)).all()
     
     else: 
         # 자신이 속한 프로젝트명 가져오기
@@ -46,6 +44,7 @@ def get_project_name(db, user_info): # 처음 렌더링할때 뿌려줘야하는
         SELECT project_name FROM groupware_project 
         WHERE project_code = ANY(SELECT project_code 
         FROM groupware_project_members WHERE user_id = "{user_info.user_id}")
+        ORDER BY id DESC
         '''
         all_pjt_name = db.execute(p_name_query).fetchall()
     all_pjt_name = [name for name, in all_pjt_name] 
@@ -147,9 +146,12 @@ def insert_project(db,inbound_data,user_info):
         manager_id=inbound_data.manager_id,
         content=inbound_data.content,
         work_status=inbound_data.work_status,
+        created_at = datetime.today(),
+        updated_at =datetime.today(),
         created_id=user_info.id)
     
-    db.add(db_query)
+    result = db.add(db_query)
+    return result
 
 def change_project(db,inbound_data, project_id):
     
@@ -166,15 +168,17 @@ def change_project(db,inbound_data, project_id):
     if inbound_data.work_status == '완료':
         values['work_end_date'] = datetime.today()
     
-    db.query(project_manage_table).filter_by(id = project_id).update(values)
+    result = db.query(project_manage_table).filter_by(id = project_id).update(values)
+    return result
         
 
 def remove_project(db, notice_id, user_info):
 
-    project_table = projectManageModel.ProjectManageTable
+    project_manage_table = projectManageModel.ProjectManageTable
     
-    base_q = db.query(project_table).filter(project_table.id == notice_id)
+    base_q = db.query(project_manage_table).filter(project_manage_table.id == notice_id)
     if user_info.id == int(base_q.first().created_id) or user_info.groupware_only_yn == 'N':
-        base_q.delete()
+        result = base_q.delete()
+        return result
     else:
-        return 422
+        raise customError.InvalidError

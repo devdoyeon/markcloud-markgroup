@@ -1,5 +1,5 @@
 # 업무관리
-from fastapi import APIRouter, Depends,Header
+from fastapi import APIRouter, Depends,Header, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional,List
 
@@ -8,6 +8,7 @@ from database import *
 from crud.projectManageCrud import *
 from schema.projectManageSchema import *
 from schema.responseSchema import *
+from router import security
 
 router_project = APIRouter(
     prefix="/projects",
@@ -16,8 +17,8 @@ router_project = APIRouter(
 
 # 프로젝트 관련 데이터
 @router_project.post('/read',response_model = Response[List[ProjectManageOut]])
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_projects(
     access_token: str = Header(None),
     inbound_filter: Optional[ProjectManageFilter] = None,
@@ -59,8 +60,8 @@ def read_projects(
 
 # 프로젝트 상세페이지
 @router_project.get('/info', response_model = List[ProjectManageOut])
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_project_info(
     project_id:int,
     access_token:str = Header(None),
@@ -70,13 +71,14 @@ def read_project_info(
 ):
     try:
         return get_project_info(db,project_id,user_info)
+    
     except:
         raise HTTPException(status_code=500, detail='ReadPjtInfoError')
     
 # 프로젝트 생성
 @router_project.post('/create')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def create_project(
     inbound_data: ProjectManageIn,
     access_token: str = Header(None),
@@ -85,14 +87,16 @@ def create_project(
     db: Session = Depends(get_db),
 ):
     try:
-        insert_project(db,inbound_data, user_info)
+        data = insert_project(db,inbound_data, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='CreatePjtError')
     
 # 프로젝트 수정
 @router_project.post('/update')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def update_project(
     inbound_data:ProjectManageEditDTO,
     project_id:int,
@@ -102,14 +106,16 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        change_project(db,inbound_data,project_id)
+        data = change_project(db,inbound_data,project_id,user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     
 # 프로젝트 삭제    
 @router_project.post('/delete')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def delete_project(
     project_id:int,
     access_token: str = Header(None),
@@ -118,8 +124,10 @@ def delete_project(
     db:Session = Depends(get_db)
 ):
     try:
-        result = remove_project(db,project_id,user_info)
+        data = remove_project(db,project_id,user_info)
+        return Response().success_response(data)
+    
+    except customError.InvalidError:
+        raise HTTPException(status_code=422, detail='InvalidClient')
     except:
         raise HTTPException(status_code=500, detail='DeletePjtError')
-    if result == 422:
-        raise HTTPException(status_code=422, detail='InvalidClient')

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Union
 from datetime import datetime, date
 from enum import Enum
 
@@ -19,7 +19,7 @@ class NoticeFilter(str, Enum):
     
 class NoticeEditDTO(BaseModel):
     
-    title:str    
+    title:str
     content:str
     
 class NoticeOut(BaseModel):
@@ -39,6 +39,7 @@ class NoticeInfo(BaseModel):
     created_at:date
     updated_at:date
     content:str
+    img_url:Union[str,list]
     
     class Config:
         orm_mode = True

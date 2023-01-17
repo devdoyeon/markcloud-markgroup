@@ -6,14 +6,14 @@ from database import get_db
 from schema.base_schema import Response, filterType
 from schema.report_schema import ReportListOut, ReportOut, ReportCreate, ReportUpdate
 from crud import report_crud
-from router import author_chk
+from router import security
 
 
 router = APIRouter(prefix="/report")
 
 
 @router.get("/list", response_model=Response[List[ReportListOut]])
-@author_chk.varify_access_token
+@security.varify_access_token
 def report_list(
     access_token: str = Header(None),
     user_pk:int = None,
@@ -50,7 +50,7 @@ def report_detail(report_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/create")
-@author_chk.varify_access_token
+@security.varify_access_token
 def report_create(_report_create: ReportCreate,
                   access_token:str = Header(None),
                   user_pk:int = None, 
@@ -61,7 +61,7 @@ def report_create(_report_create: ReportCreate,
         raise HTTPException(status_code=500, detail='ReportCreateError')
 
 @router.post("/update")
-@author_chk.varify_access_token
+@security.varify_access_token
 def report_update(report_id: int, 
                   _report_update: ReportUpdate, 
                   access_token:str = Header(None),
@@ -74,7 +74,7 @@ def report_update(report_id: int,
     
     
 @router.post("/delete")
-@author_chk.varify_access_token
+@security.varify_access_token
 def report_delete(report_id: int,
                   access_token:str = Header(None),
                   user_pk:int = None,
