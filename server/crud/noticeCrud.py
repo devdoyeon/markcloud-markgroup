@@ -42,46 +42,21 @@ def get_notice_info(db, notice_id, user_info):
                             notice_table.updated_at,
                             notice_table.content,
                             member_table.name.label('created_id'),
-                            # notice_table.img_url
+                            notice_table.img_url
                             ).filter(notice_table.id == notice_id
                             ).filter(notice_table.organ_code == user_info.department_code
                             ).join(member_table,notice_table.created_id == member_table.id
                             ).first()
-
     return notice_info
 
-# def insert_notice(db,inbound_data,file, user_info):
-    
-#     notice_table = noticeModel.NoticeTable
-
-#     if file:
-#         img_url = utils.get_s3_url(file, 'notice')
-#     else:
-#         img_url = ''
-
-#     db_query = notice_table(
-#         title=inbound_data.title,
-#         organ_code = user_info.department_code,
-#         content=inbound_data.content,
-#         created_id=user_info.id,
-#         created_at = datetime.today(),
-#         updated_at =datetime.today(),
-#         img_url = img_url
-#         )
-    
-#     db.add(db_query)
-#     db.flush()
-    
-#     return img_url
-
-def insert_notice(db,inbound_data, user_info):
+def insert_notice(db,inbound_data,file, user_info):
     
     notice_table = noticeModel.NoticeTable
 
-    # if file:
-    #     img_url = utils.get_s3_url(file, 'notice')
-    # else:
-    #     img_url = ''
+    if file:
+        img_url = utils.get_s3_url(file, 'notice')
+    else:
+        img_url = None
 
     db_query = notice_table(
         title=inbound_data.title,
@@ -89,36 +64,39 @@ def insert_notice(db,inbound_data, user_info):
         content=inbound_data.content,
         created_id=user_info.id,
         created_at = datetime.today(),
-        updated_at =datetime.today()
+        updated_at =datetime.today(),
+        img_url = img_url
         )
     
-    result = db.add(db_query)
+    db.add(db_query)
     db.flush()
     
-    return result
-    
-# def change_notice(db,inbound_data,file, notice_id, user_info):
+    return img_url
+
+# def insert_notice(db,inbound_data, user_info):
     
 #     notice_table = noticeModel.NoticeTable
-    
-#     base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
-#     if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N':
-        
-#         values = {'title':inbound_data.title,
-#                 'content':inbound_data.content,
-#                 'updated_at':datetime.today()
-#                 }
-#         if file:
-#             img_url = utils.get_s3_url(file, 'notice')
-#             values['img_url'] = img_url
-            
-#         result = db.query(notice_table).filter_by(id = notice_id).update(values)
-#         return result
-        
-#     else:
-#         raise customError.InvalidError
 
-def change_notice(db,inbound_data, notice_id, user_info):
+#     # if file:
+#     #     img_url = utils.get_s3_url(file, 'notice')
+#     # else:
+#     #     img_url = ''
+
+#     db_query = notice_table(
+#         title=inbound_data.title,
+#         organ_code = user_info.department_code,
+#         content=inbound_data.content,
+#         created_id=user_info.id,
+#         created_at = datetime.today(),
+#         updated_at =datetime.today()
+#         )
+    
+#     result = db.add(db_query)
+#     db.flush()
+    
+#     return result
+    
+def change_notice(db,inbound_data,file, notice_id, user_info):
     
     notice_table = noticeModel.NoticeTable
     
@@ -129,15 +107,36 @@ def change_notice(db,inbound_data, notice_id, user_info):
                 'content':inbound_data.content,
                 'updated_at':datetime.today()
                 }
-        # if file:
-        #     img_url = utils.get_s3_url(file, 'notice')
-        #     values['img_url'] = img_url
+        if file:
+            img_url = utils.get_s3_url(file, 'notice')
+            values['img_url'] = img_url
             
         result = db.query(notice_table).filter_by(id = notice_id).update(values)
         return result
         
     else:
         raise customError.InvalidError
+
+# def change_notice(db,inbound_data, notice_id, user_info):
+    
+#     notice_table = noticeModel.NoticeTable
+    
+#     base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
+#     if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N':
+        
+#         values = {'title':inbound_data.title,
+#                 'content':inbound_data.content,
+#                 'updated_at':datetime.today()
+#                 }
+#         # if file:
+#         #     img_url = utils.get_s3_url(file, 'notice')
+#         #     values['img_url'] = img_url
+            
+#         result = db.query(notice_table).filter_by(id = notice_id).update(values)
+#         return result
+        
+#     else:
+#         raise customError.InvalidError
 
 
 def remove_notice(db,notice_id, user_info):
