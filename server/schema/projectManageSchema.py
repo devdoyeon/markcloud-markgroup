@@ -13,6 +13,7 @@ class ProjectManageIn(BaseModel):
     request_id:str # 요청자
     manager_id:str # 담당자
     
+    
     class Config:
         orm_mode = True
 
@@ -37,7 +38,6 @@ class ProjectManageFilter(BaseModel):
     
 class ProjectManageEditDTO(BaseModel):
     
-    request_id:str
     manager_id:str
     work_status:str
     title:str
@@ -55,6 +55,7 @@ class ProjectManageOut(BaseModel):
     created_at:date # 작성일
     created_id:str # 작성자
     work_end_date:Optional[date] # 완료일자
+    img_url: Optional[list]
         
     class Config:
         orm_mode = True

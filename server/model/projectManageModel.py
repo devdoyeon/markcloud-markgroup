@@ -19,7 +19,7 @@ class ProjectManageTable(Base):
     created_id = Column(BigInteger, nullable = False)
     updated_at = Column(DateTime, nullable = False) 
     updated_id = Column(BigInteger, default=created_id, nullable = False)
-
+    img_url = Column(VARCHAR(255))
 
 class ProjectTable(Base):
     __tablename__ = "groupware_project"

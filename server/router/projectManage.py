@@ -1,5 +1,5 @@
 # 업무관리
-from fastapi import APIRouter, Depends,Header, HTTPException
+from fastapi import APIRouter, Depends,Header, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 from typing import Optional,List
 
@@ -59,7 +59,7 @@ def read_projects(
         raise HTTPException(status_code=500, detail='ReadPjtError')
 
 # 프로젝트 상세페이지
-@router_project.get('/info', response_model = List[ProjectManageOut])
+@router_project.get('/info', response_model = ProjectManageOut)
 @security.varify_access_token
 @security.user_chk
 def read_project_info(
@@ -70,7 +70,30 @@ def read_project_info(
     db: Session = Depends(get_db)
 ):
     try:
-        return get_project_info(db,project_id,user_info)
+        
+        project_info = get_project_info(db,project_id,user_info)
+        
+        if project_info.img_url:
+            new_img_url = project_info.img_url
+            img_url = new_img_url.split(',')
+            
+        else:
+            img_url = None 
+        
+        outbound = ProjectManageOut(
+                    id = project_info.id,
+                    title = project_info.title,
+                    content = project_info.content,
+                    project_name = project_info.project_name,
+                    request_id = project_info.request_id,
+                    manager_id = project_info.manager_id,
+                    work_status = project_info.work_status,
+                    created_at = project_info.created_at,
+                    created_id = project_info.created_id,
+                    work_end_date = project_info.work_end_date,
+                    img_url = img_url)
+
+        return outbound
     
     except:
         raise HTTPException(status_code=500, detail='ReadPjtInfoError')
@@ -80,14 +103,15 @@ def read_project_info(
 @security.varify_access_token
 @security.user_chk
 def create_project(
-    inbound_data: ProjectManageIn,
+    file: Union[List[UploadFile],None],
+    inbound_data: ProjectManageIn = Depends(),
     access_token: str = Header(None),
     user_pk:int = None,
     user_info:str = None,
     db: Session = Depends(get_db),
 ):
     try:
-        data = insert_project(db,inbound_data, user_info)
+        data = insert_project(db,inbound_data, file, user_info)
         return Response().success_response(data)
     
     except:
@@ -98,8 +122,9 @@ def create_project(
 @security.varify_access_token
 @security.user_chk
 def update_project(
-    inbound_data:ProjectManageEditDTO,
+    file: Union[List[UploadFile],None],
     project_id:int,
+    inbound_data:ProjectManageEditDTO = Depends(),
     access_token: str = Header(None),
     user_pk:int = None,
     user_info:str = None,
@@ -109,8 +134,7 @@ def update_project(
         data = change_project(db,inbound_data,project_id)
         return Response().success_response(data)
     
-    except Exception as e:
-        print(e)
+    except:
         raise HTTPException(status_code=500, detail='UpdatePjtError')
     
 # 프로젝트 삭제    

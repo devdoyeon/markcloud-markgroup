@@ -87,11 +87,11 @@ def read_notice_info(
 @security.varify_access_token
 @security.user_chk
 def create_notice(
+    file: Union[List[UploadFile],None],
     inbound_data: NoticeIn = Depends(), # parameter
     # inbound_data: NoticeIn, # body
     access_token:str = Header(None),
     user_info:str = None,
-    file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     db: Session = Depends(get_db),
 ):
@@ -113,11 +113,11 @@ def create_notice(
 @security.varify_access_token
 @security.user_chk
 def update_notice(
+    file: Union[List[UploadFile],None],
     notice_id:int,
     inbound_data: NoticeEditDTO = Depends(),#parameter
     # inbound_data: NoticeEditDTO, #body
     access_token:str = Header(None),
-    file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     user_info:str = None,
     db: Session = Depends(get_db)
