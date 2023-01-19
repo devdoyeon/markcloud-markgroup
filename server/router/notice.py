@@ -1,8 +1,7 @@
 # 공지사항
-from fastapi import APIRouter, Depends, Header, HTTPException, File, UploadFile
+from fastapi import APIRouter, Depends, Header, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
 from typing import List, Union, Optional
-
 
 from database import *
 from crud.noticeCrud import *
@@ -87,7 +86,7 @@ def read_notice_info(
 @security.varify_access_token
 @security.user_chk
 def create_notice(
-    file: Union[List[UploadFile],None],
+    file : Union[List[UploadFile],None] = None,
     inbound_data: NoticeIn = Depends(), # parameter
     # inbound_data: NoticeIn, # body
     access_token:str = Header(None),
@@ -96,15 +95,14 @@ def create_notice(
     db: Session = Depends(get_db),
 ):
     try:
+
         data = insert_notice(db,inbound_data,file,user_info)
-        
-        # data = insert_notice(db,inbound_data,user_info)
         return Response().success_response(data)
     
     except customError.S3ConnError:
         raise HTTPException(status_code=505, detail='S3ConnError')
     
-    except Exception: 
+    except:
         raise HTTPException(status_code=500, detail='CreateNtError')
     
         
@@ -113,8 +111,8 @@ def create_notice(
 @security.varify_access_token
 @security.user_chk
 def update_notice(
-    file: Union[List[UploadFile],None],
     notice_id:int,
+    file: Union[List[UploadFile],None] = None,
     inbound_data: NoticeEditDTO = Depends(),#parameter
     # inbound_data: NoticeEditDTO, #body
     access_token:str = Header(None),

@@ -103,7 +103,7 @@ def read_project_info(
 @security.varify_access_token
 @security.user_chk
 def create_project(
-    file: Union[List[UploadFile],None],
+    file: Union[List[UploadFile],None] = None,
     inbound_data: ProjectManageIn = Depends(),
     access_token: str = Header(None),
     user_pk:int = None,
@@ -122,8 +122,8 @@ def create_project(
 @security.varify_access_token
 @security.user_chk
 def update_project(
-    file: Union[List[UploadFile],None],
     project_id:int,
+    file: Union[List[UploadFile],None] = None,
     inbound_data:ProjectManageEditDTO = Depends(),
     access_token: str = Header(None),
     user_pk:int = None,

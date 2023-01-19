@@ -10,19 +10,19 @@ def get_s3_url(files, service_name):
     image_urls = []
     cnt = 0
     today = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-
+    
     for file in files:
         c_type = file.content_type.split('/')[1]
         file = file.file.read()
-        
         file = BytesIO(file)  
-        # 타입확인하고
 
         key = f'{service_name}_{today}_{cnt}.{c_type}'
         bucket = upload_img_s3(file, key) # s3 이미지 업로드
         
         image_urls.append(f'https://{bucket}.s3.ap-northeast-2.amazonaws.com/{key}')
         cnt += 1
+        
+    print(f" - - 이미지 {cnt}장 업로드 완료 - - ")
 
     image_url = ','.join(image_urls)
     return image_url
@@ -42,7 +42,6 @@ def upload_img_s3(file, key):
                             aws_secret_access_key=AWS_SECRET_ACCESS_KEY
     )       
         s3_client.upload_fileobj(file, bucket, key, ExtraArgs={'ACL': 'public-read'})
-        print("--image uploaded--")
         return bucket
     
     except Exception:
