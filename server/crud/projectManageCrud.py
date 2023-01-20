@@ -175,13 +175,18 @@ def change_project(db,inbound_data, file, project_id):
     if inbound_data.work_status == '완료':
         values['work_end_date'] = datetime.today()
   
-    if inbound_data.url:
+    if inbound_data.url and file: #이미지 url, 파일 둘 다
+        origin_url = ','.join(inbound_data.url)
+        img_url = utils.get_s3_url(file, 'work') 
+        values['img_url'] = origin_url + ',' +img_url
+
+    elif inbound_data.url: # 이미지 url
         origin_url = ','.join(inbound_data.url)
         values['img_url'] = origin_url
-            
-    if file:
-        img_url = utils.get_s3_url(file, 'notice') 
-        values['img_url'] = origin_url + ',' +img_url  
+        
+    elif file: # 파일
+        img_url = utils.get_s3_url(file, 'work') 
+        values['img_url'] = img_url
 
     result = db.query(project_manage_table).filter_by(id = project_id).update(values)
     return result
