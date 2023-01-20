@@ -21,6 +21,7 @@ class NoticeEditDTO(BaseModel):
     
     title:str
     content:str
+    url:Optional[list]
     
 class NoticeOut(BaseModel):
 

@@ -95,7 +95,6 @@ def create_notice(
     db: Session = Depends(get_db),
 ):
     try:
-
         data = insert_notice(db,inbound_data,file,user_info)
         return Response().success_response(data)
     

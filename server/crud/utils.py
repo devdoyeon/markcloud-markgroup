@@ -12,6 +12,7 @@ def get_s3_url(files, service_name):
     today = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     
     for file in files:
+        print(file.content_type)
         c_type = file.content_type.split('/')[1]
         file = file.file.read()
         file = BytesIO(file)  

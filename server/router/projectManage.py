@@ -131,7 +131,7 @@ def update_project(
     db:Session = Depends(get_db)
 ):
     try:
-        data = change_project(db,inbound_data,project_id)
+        data = change_project(db,inbound_data,file,project_id)
         return Response().success_response(data)
     
     except:

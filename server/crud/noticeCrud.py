@@ -58,6 +58,7 @@ def insert_notice(db,inbound_data,file, user_info):
     else:
         img_url = None
 
+
     db_query = notice_table(
         title=inbound_data.title,
         organ_code = user_info.department_code,
@@ -101,19 +102,30 @@ def change_notice(db,inbound_data,file, notice_id, user_info):
     notice_table = noticeModel.NoticeTable
     
     base_q = db.query(notice_table).filter(notice_table.id == notice_id).first()
+
     if user_info.id == base_q.created_id or user_info.groupware_only_yn == 'N':
         
         values = {'title':inbound_data.title,
                 'content':inbound_data.content,
                 'updated_at':datetime.today()
-                }
-        if file:
-            img_url = utils.get_s3_url(file, 'notice')
-            values['img_url'] = img_url
+                } 
             
+        if inbound_data.url and file: #이미지 url, 파일 둘 다
+            origin_url = ','.join(inbound_data.url)
+            img_url = utils.get_s3_url(file, 'notice') 
+            values['img_url'] = origin_url + ',' +img_url
+
+        elif inbound_data.url: # 이미지 url
+            origin_url = ','.join(inbound_data.url)
+            values['img_url'] = origin_url
+            
+        elif file: # 파일
+            img_url = utils.get_s3_url(file, 'notice') 
+            values['img_url'] = img_url
+                
         result = db.query(notice_table).filter_by(id = notice_id).update(values)
         return result
-        
+            
     else:
         raise customError.InvalidError
 

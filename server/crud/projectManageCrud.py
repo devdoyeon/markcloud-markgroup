@@ -160,7 +160,7 @@ def insert_project(db,inbound_data,file, user_info):
     result = db.add(db_query)
     return result
 
-def change_project(db,inbound_data, project_id):
+def change_project(db,inbound_data, file, project_id):
     
     project_manage_table = projectManageModel.ProjectManageTable
     
@@ -174,7 +174,15 @@ def change_project(db,inbound_data, project_id):
     
     if inbound_data.work_status == '완료':
         values['work_end_date'] = datetime.today()
-    
+  
+    if inbound_data.url:
+        origin_url = ','.join(inbound_data.url)
+        values['img_url'] = origin_url
+            
+    if file:
+        img_url = utils.get_s3_url(file, 'notice') 
+        values['img_url'] = origin_url + ',' +img_url  
+
     result = db.query(project_manage_table).filter_by(id = project_id).update(values)
     return result
         

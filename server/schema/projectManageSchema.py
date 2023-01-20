@@ -42,6 +42,7 @@ class ProjectManageEditDTO(BaseModel):
     work_status:str
     title:str
     content:str
+    url:Optional[list]
 
 class ProjectManageOut(BaseModel):
     
