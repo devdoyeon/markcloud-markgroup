@@ -10,17 +10,20 @@ from model.memberManageModel import *
 from router import security
 from schema.project_schema import ProjectCreate, ProjectUpdate
 
+from crud import utils
+from crud import customError
 
-def get_project_list(db: Session, 
-                     project_name: str, 
-                     project_status: str, 
-                     start_date: date, 
-                     end_date: date, 
-                     offset: int,
-                     limit: int,
-                     user_pk: int
-                     ):
-    
+
+def get_project_list(
+    db: Session, 
+    project_name: str, 
+    project_status: str, 
+    start_date: date, 
+    end_date: date, 
+    offset: int,
+    limit: int,
+    user_pk: int
+):
     user_info = security.get_user_info(db, user_pk)
     
     sql = f'''
@@ -87,30 +90,25 @@ def get_project_list(db: Session,
     sql = sql + f'''
                 limit {limit}
                 offset {offset}
-    '''
-    try:
-        project_list = db.execute(sql).all()
-        return total, project_list
-    except:
-        raise HTTPException(status_code=500, detail='GetPjtListError')
+                '''
+    project_list = db.execute(sql).all()
+    return total, project_list
 
 
 def get_project(db: Session, project_id: int):
-    try:
-        project = db.query(ProjectTable.id, 
-                           ProjectTable.project_code,
-                           ProjectTable.project_name,
-                           ProjectTable.project_description,
-                           ProjectTable.project_start_date,
-                           ProjectTable.project_end_date,
-                           ProjectTable.project_status,
-                           ProjectTable.created_at,
-                           MemberTable.name.label('created_id')
-                           ).join(MemberTable, MemberTable.id == ProjectTable.created_id) \
-                               .filter(ProjectTable.id == project_id).first()
-        return project
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+    project = db.query(ProjectTable.id, 
+                        ProjectTable.project_code,
+                        ProjectTable.project_name,
+                        ProjectTable.project_description,
+                        ProjectTable.project_start_date,
+                        ProjectTable.project_end_date,
+                        ProjectTable.project_status,
+                        ProjectTable.created_at,
+                        MemberTable.name.label('created_id'),
+                        ProjectTable.img_url
+                        ).join(MemberTable, MemberTable.id == ProjectTable.created_id) \
+                            .filter(ProjectTable.id == project_id).first()
+    return project
     
     
 def get_project_members(db: Session, project_code: str):
@@ -123,7 +121,7 @@ def get_project_members(db: Session, project_code: str):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
 
 
-def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
+def create_project(db: Session, user_pk: int, project_create: ProjectCreate, file):
     
     # 프로젝트 이름이 이미 있으면 생성하지 못하게 하기
     input_project_name = project_create.project_name
@@ -134,7 +132,6 @@ def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
     
     if project:
         raise HTTPException(status_code=403, detail='AlreadyProjectName')
-    
     try:
         user_info = security.get_user_info(db, user_pk)
         # PRJ + 년월일 + Random 난수번호(5자리)
@@ -142,42 +139,75 @@ def create_project(db: Session, user_pk: int, project_create: ProjectCreate):
         random_int = random.randint(10000,99999)
         random_number = str(random_int)
         project_code = "PRJ" + yymmdd + random_number
+            
+        if file:
+            print(file)
+            img_url = utils.get_s3_url(file, 'project')
+        else:
+            img_url = None
 
-        db_project = ProjectTable(organ_code=user_info.department_code,
-                                project_code=project_code,
-                                project_name=project_create.project_name,
-                                project_description=project_create.project_description,
-                                project_start_date=project_create.project_start_date,
-                                project_end_date=project_create.project_end_date,
-                                project_status=project_create.project_status,
-                                created_at=datetime.now(),
-                                created_id=user_pk,
-                                updated_at=datetime.now(),
-                                updated_id=user_pk
-                                )
+        db_project = ProjectTable(
+            organ_code=user_info.department_code,
+            project_code=project_code,
+            project_name=project_create.project_name,
+            project_description=project_create.project_description,
+            project_start_date=project_create.project_start_date,
+            project_end_date=project_create.project_end_date,
+            project_status=project_create.project_status,
+            created_at=datetime.now(),
+            created_id=user_pk,
+            img_url=img_url
+        )
         db.add(db_project)
+        db.flush()
+        
     except:
         raise HTTPException(status_code=500, detail='InsertPjtError')
 
     
-def update_project(db: Session, project_update: ProjectUpdate, project_id: int, user_pk: int):
-    
-    user_info = security.get_user_info(db, user_pk)
-    
-    update_values = {
-        "project_name": project_update.project_name,
-        "project_description": project_update.project_description,
-        "project_start_date": project_update.project_start_date,
-        "project_end_date": project_update.project_end_date,
-        "project_status": project_update.project_status,
-        "updated_at": datetime.now(),
-        "updated_id": user_pk
-    }
-    
+def update_project(
+    db: Session, 
+    project_id: int, 
+    project_update: ProjectUpdate, 
+    file,
+    user_info
+):    
     db_project = db.query(ProjectTable).filter(ProjectTable.id == project_id).first()
     
-    if user_pk == int(db_project.created_id) or user_info.groupware_only_yn == 'N':
-        db.query(ProjectTable).filter_by(id = project_id).update(update_values)
+    if user_info.id == int(db_project.created_id) or user_info.groupware_only_yn == 'N':
+        
+        update_values = {
+            "project_name": project_update.project_name,
+            "project_description": project_update.project_description,
+            "project_start_date": project_update.project_start_date,
+            "project_end_date": project_update.project_end_date,
+            "project_status": project_update.project_status,
+            "updated_at": datetime.now(),
+            "updated_id": user_info.id
+        }
+        
+        print("웅?")
+        print(project_update)
+        print("project_update")
+        
+        if project_update.url and file:
+            print("1+1")
+            origin_url = ','.join(project_update.url)
+            img_url = utils.get_s3_url(file, 'project')
+            update_values['img_url'] = origin_url + ',' + img_url
+            
+        elif project_update.url:
+            print("1+0")
+            origin_url = ','.join(project_update.url)
+            update_values['img_url'] = origin_url
+            
+        elif file:
+            print("0+1")
+            img_url = utils.get_s3_url(file, 'project')
+            update_values['img_url'] = img_url
+        
+        result = db.query(ProjectTable).filter_by(id = project_id).update(update_values)
+        return result
     else:
         raise HTTPException(status_code=422, detail='InvalidClient')
     
@@ -192,57 +222,47 @@ def get_organ_member(db: Session, user_pk: int):
     return member_list
     
 
-def add_project_member(db: Session,
-                       project_code: str,
-                       new_member_id: str, 
-                       user_pk: int):
-    try:
-        db_project_member = ProjectMemberTable(
-                    project_code=project_code,
-                    user_id=new_member_id,
-                    created_at=datetime.now(),
-                    created_id=user_pk,
-                    updated_at=datetime.now(),
-                    updated_id=user_pk
-                )
-        db.add(db_project_member)
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+def add_project_member(
+    db: Session,
+    project_code: str,
+    new_member_id: str, 
+    user_pk: int
+):
+    db_project_member = ProjectMemberTable(
+                project_code=project_code,
+                user_id=new_member_id,
+                created_at=datetime.now(),
+                created_id=user_pk,
+                updated_at=datetime.now(),
+                updated_id=user_pk
+            )
+    db.add(db_project_member)
 
 
 def get_project_member(db: Session, project_code: str, member_id: str):
-    try:
-        project_member = db.query(ProjectMemberTable).filter(ProjectMemberTable.user_id == member_id, 
-                                                              ProjectMemberTable.project_code == project_code).first()
-        return project_member
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+    project_member = db.query(ProjectMemberTable).filter(ProjectMemberTable.user_id == member_id, 
+                                                            ProjectMemberTable.project_code == project_code).first()
+    return project_member
 
 
 # 프로젝트 수정에서 인원 한 명씩 삭제
 def delete_project_member(db: Session, db_project_member: ProjectMemberTable):
-    try:
-        db.delete(db_project_member)
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
-    
+    db.delete(db_project_member)
     
 
 # 프로젝트 삭제에서 해당 프로젝트 참여 인원 전체 삭제
 def delete_project_members_all(db: Session, project_code: str):
-    try:
-        db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).delete()
-    except:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="DB ERROR")
+    db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).delete()
 
 
-def delete_project(db: Session, project_id: int, user_pk: int):
-    user_info = security.get_user_info(db, user_pk)
+# def delete_project(db: Session, project_id: int, user_pk: int):
+def delete_project(db: Session, project_id: int, user_info: str):
+    # user_info = security.get_user_info(db, user_pk)
     
     db_project = db.query(ProjectTable).filter(ProjectTable.id == project_id).first()
     project_code = db_project.project_code
     
-    if user_pk == int(db_project.created_id) or user_info.groupware_only_yn == 'N':
+    if user_info.id == int(db_project.created_id) or user_info.groupware_only_yn == 'N':
         
         # groupware_work_management 테이블에 있는 프로젝트는 삭제하면 안됨.
         q = db.query(ProjectManageTable).filter(ProjectManageTable.project_code == project_code).first()
@@ -254,4 +274,4 @@ def delete_project(db: Session, project_id: int, user_pk: int):
         # 프로젝트 삭제
         db.delete(db_project)
     else:
-        raise HTTPException(status_code=422, detail='InvalidClient')
+        raise customError.InvalidError
