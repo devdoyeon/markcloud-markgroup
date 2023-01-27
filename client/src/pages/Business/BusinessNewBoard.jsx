@@ -151,11 +151,9 @@ const BusinessNewBoard = () => {
       const editor = document.querySelector('.ql-editor');
       const img = editor.querySelectorAll('img');
       const formData = makeFormData();
-      const content = andPlusReplaceFn('post', editor.innerHTML);
-      obj.title = andPlusReplaceFn('post', obj.title);
       const result = await createBusiness(
         obj,
-        content,
+        editor.innerHTML,
         img.length ? formData : null
       );
       if (typeof result === 'object') {

@@ -71,15 +71,16 @@ const ProjectDetail = () => {
       prevent = false;
     }, []);
     const result = await getProjectDetail(id);
-
     if (typeof result === 'object') {
-      setProjectInfo(result?.data);
       const str = str2img(
         result?.data?.img_url,
         result?.data?.project_description
       );
       text2html('.content', andPlusReplaceFn('view', str));
       getMember();
+      const obj = { ...result?.data };
+      obj.project_name = andPlusReplaceFn('view', obj.project_name);
+      setProjectInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 

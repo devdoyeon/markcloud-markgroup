@@ -64,7 +64,19 @@ const BusinessEditBoard = () => {
     if (typeof result === 'object') {
       const { manager_id, project_name, request_id, work_status } =
         result?.data;
-      setPostInfo(result?.data);
+      const obj = { ...result?.data };
+      let content = obj.content;
+      if (result?.data?.img_url?.length)
+        for (let i = 0; i < result?.data?.img_url.length; i++) {
+          content = content.replace(
+            `UploadedImage${i}`,
+            `<img src=${result?.data?.img_url[i]}></img>`
+          );
+        }
+      content = andPlusReplaceFn('view', content);
+      obj.content = content;
+      obj.title = andPlusReplaceFn('view', obj.title);
+      setPostInfo(obj);
       setContactValue(manager_id);
       setRequesterValue(request_id);
       setProgressValue(work_status);
@@ -102,14 +114,12 @@ const BusinessEditBoard = () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
-    obj.title = andPlusReplaceFn('post', obj.title)
     const editor = document.querySelector('.ql-editor');
     const img = editor.querySelectorAll('img');
     const formData = makeFormData();
-    const content = andPlusReplaceFn('view', editor.innerHTML);
     const result = await updateBusiness(
       obj,
-      content,
+      editor.innerHTML,
       img.length ? formData : null,
       id
     );

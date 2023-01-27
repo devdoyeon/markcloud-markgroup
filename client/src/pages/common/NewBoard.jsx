@@ -126,26 +126,25 @@ const NewBoard = () => {
     const editor = document.querySelector('.ql-editor');
     const img = editor.querySelectorAll('img');
     const formData = makeFormData();
-    const title = andPlusReplaceFn('post', postInfo.title);
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
         result = await createNotice(
-          title,
+          postInfo.title,
           editor.innerHTML,
           img.length ? formData : null
         );
         break;
       case 'board':
         result = await createBoard(
-          title,
+          postInfo.title,
           editor.innerHTML,
           img.length ? formData : null
         );
         break;
       case 'report':
         result = await createReport(
-          title,
+          postInfo.title,
           editor.innerHTML,
           img.length ? formData : null
         );
@@ -205,30 +204,28 @@ const NewBoard = () => {
     const editor = document.querySelector('.ql-editor');
     const imgArr = editor.querySelectorAll('img');
     const formData = makeFormData();
-    const content = andPlusReplaceFn('post', editor.innerHTML);
-    const title = andPlusReplaceFn('post', postInfo.title);
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
         result = await editNotice(
-          title,
-          content,
+          postInfo.title,
+          editor.innerHTML,
           imgArr.length ? formData : null,
           id
         );
         break;
       case 'board':
         result = await editBoard(
-          title,
-          content,
+          postInfo.title,
+          editor.innerHTML,
           imgArr.length ? formData : null,
           id
         );
         break;
       case 'report':
         result = await editReport(
-          title,
-          content,
+          postInfo.title,
+          editor.innerHTML,
           imgArr.length ? formData : null,
           id
         );

@@ -73,12 +73,9 @@ const NewProject = () => {
       const editor = document.querySelector('.ql-editor');
       const imgArr = editor.querySelectorAll('img');
       const formData = makeFormData();
-      const content = andPlusReplaceFn('post', editor.innerHTML);
-      const obj = { ...projectInfo };
-      obj.project_name = andPlusReplaceFn('post', obj.project_name);
       const result = await editProject(
-        obj,
-        content,
+        projectInfo,
+        editor.innerHTML,
         imgArr.length ? formData : null,
         id
       );
@@ -149,11 +146,9 @@ const NewProject = () => {
       const editor = document.querySelector('.ql-editor');
       const img = editor.querySelectorAll('img');
       const formData = makeFormData();
-      const content = andPlusReplaceFn('post', editor.innerHTML);
-      obj.project_name = andPlusReplaceFn('post', obj.project_name);
       const result = await createProject(
         obj,
-        content,
+        editor.innerHTML,
         img.length ? formData : null
       );
       if (typeof result === 'object') {

@@ -167,16 +167,18 @@ export const str2img = (img_url, content) => {
   return str;
 };
 
+//& &, + <=> and, plus
 export const andPlusReplaceFn = (opt, str) => {
   let target = str;
   if (opt === 'view') {
-    target = target.replaceAll('and', '&');
-    target = target.replaceAll('plus', '+');
+    target = target.replaceAll('gwAnd', '&');
+    target = target.replaceAll('gwPlus', '+');
   } else if (opt === 'post') {
-    target = target.replaceAll('&amp;', 'and');
-    target = target.replaceAll('+', 'plus');
+    if (target.includes('&amp;')) target = target.replaceAll('&amp;', 'gwAnd');
+    else target = target.replaceAll('&', 'gwAnd');
+    target = target.replaceAll('+', 'gwPlus');
   }
-  return target
+  return target;
 };
 
 // ================================== BW ==================================
