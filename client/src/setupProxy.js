@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.use(
     '/groupware',
     createProxyMiddleware({
-      target: 'http://192.168.0.38:3001/',
+      target: 'http://192.168.0.44:8000/',
       changeOrigin: true,
       pathRewrite: {
         '^/groupware': '',

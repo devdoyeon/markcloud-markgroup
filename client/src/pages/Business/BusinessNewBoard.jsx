@@ -7,6 +7,7 @@ import {
   commonModalSetting,
   catchError,
   changeTitle,
+  makeFormData,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
@@ -16,7 +17,6 @@ import { getCookie } from 'js/cookie';
 
 const BusinessNewBoard = () => {
   const [alert, setAlert] = useState('');
-  const [list, setList] = useState([]);
   const [meta, setMeta] = useState({});
   const [postInfo, setPostInfo] = useState({
     project_name: '',
@@ -65,12 +65,11 @@ const BusinessNewBoard = () => {
 
     const result = await getBusinessRead(postInfo, pageInfo);
     if (typeof result === 'object') {
-      const { data, meta } = result?.data;
+      const { meta } = result?.data;
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
       setMemberKey(key);
       setMemberName(value);
-      setList(data);
       setMeta(meta);
       setPageInfo(prev => {
         const clone = { ...prev };
@@ -146,17 +145,25 @@ const BusinessNewBoard = () => {
         'alert',
         '내용을 입력해주세요.'
       );
-    }
-    const result = await createBusiness(postInfo);
-    if (typeof result === 'object') {
-      setAlert('apply');
-      return commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '등록이 완료되었습니다.'
+    } else {
+      const editor = document.querySelector('.ql-editor');
+      const img = editor.querySelectorAll('img');
+      const formData = makeFormData();
+      const result = await createBusiness(
+        postInfo,
+        editor.innerHTML,
+        img.length ? formData : null
       );
-    } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+      if (typeof result === 'object') {
+        setAlert('apply');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '등록이 완료되었습니다.'
+        );
+      } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
+    }
   };
 
   useEffect(() => {
@@ -202,7 +209,6 @@ const BusinessNewBoard = () => {
           <div className='header'>
             <h3>업무 관리</h3>
           </div>
-
           <div className='work-wrap project-work-wrap'>
             <div className='project-wrap project-name'>
               <div className='project-list'>

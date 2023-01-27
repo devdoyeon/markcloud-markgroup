@@ -77,8 +77,12 @@
   height: 720px;
 }
 .container .content-wrap.business .work-wrap.project-work-wrap .edit {
+  overflow-y: auto;
   padding: 20px 0;
   height: 430px;
+}
+.container .content-wrap.business .work-wrap.project-work-wrap .edit img {
+  max-width: 100%;
 }
 .container .content-wrap.business .work-wrap.project-work-wrap .edit .quill {
   width: 100%;

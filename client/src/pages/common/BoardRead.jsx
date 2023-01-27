@@ -9,6 +9,7 @@ import {
   getReportDetail,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
+import { str2img } from '../../js/commonUtils';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -50,7 +51,8 @@ const BoardRead = () => {
     }
     if (typeof result === 'object') {
       setInfo(result?.data);
-      text2html('.content', result?.data?.content);
+      const str = str2img(result?.data?.img_url, result?.data?.content);
+      text2html('.content', str);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 

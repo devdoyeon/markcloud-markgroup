@@ -241,6 +241,9 @@ input {
           margin: 24px 0;
         }
         .content {
+          img {
+            max-width: 100%;
+          }
           overflow-y: auto;
           height: 430px;
           padding: 0 10px;

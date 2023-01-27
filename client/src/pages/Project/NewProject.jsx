@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import $ from 'jquery';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
 import CommonModal from 'common/CommonModal';
@@ -11,6 +12,7 @@ import {
   catchError,
   emptyCheck,
   addZero,
+  makeFormData,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -45,41 +47,72 @@ const NewProject = () => {
   const navigate = useNavigate();
 
   const updateProject = async () => {
-    const result = await editProject(id, projectInfo);
-    if (typeof result === 'object') {
-      setAlert('completeEdit');
-      commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
-    } else return catchError(result, navigate, setAlertBox, setAlert);
+    if (!emptyCheck(projectInfo.project_name))
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '프로젝트명을 입력해 주세요.'
+      );
+    else if (!emptyCheck(projectInfo.project_description))
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '프로젝트 내용을 입력해 주세요.'
+      );
+    else if (projectInfo.project_status === '선택')
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '프로젝트 상태를 선택해 주세요.'
+      );
+    else {
+      const editor = document.querySelector('.ql-editor');
+      const imgArr = editor.querySelectorAll('img');
+      const formData = makeFormData();
+      const result = await editProject(
+        projectInfo,
+        editor.innerHTML,
+        imgArr.length ? formData : null,
+        id
+      );
+      if (typeof result === 'object') {
+        setAlert('completeEdit');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '수정이 완료되었습니다.'
+        );
+      } else return catchError(result, navigate, setAlertBox, setAlert);
+    }
   };
 
   //= 수정일 때 기존 디테일 불러오기
   const getOrigin = async () => {
     const result = await getProjectDetail(id);
     if (typeof result === 'object') {
-      const {
-        project_name,
-        project_description,
-        project_start_date,
-        project_end_date,
-        project_status,
-        created_id,
-      } = result?.data;
       if (
         localStorage.getItem('yn') === 'y' &&
-        created_id !== localStorage.getItem('userName')
+        result?.data?.created_id !== localStorage.getItem('userName')
       ) {
         setAlert('notAuthority');
         commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
       }
-      setProjectInfo(prev => {
-        const clone = { ...prev };
-        clone.project_name = project_name;
-        clone.project_description = project_description;
-        clone.project_start_date = project_start_date;
-        clone.project_end_date = project_end_date;
-        return clone;
-      });
-      setSelectVal(project_status);
+      const obj = { ...result?.data };
+      let str = obj.project_description;
+      if (result?.data?.img_url?.length)
+        for (let i = 0; i < result?.data?.img_url.length; i++) {
+          str = str.replace(
+            `UploadedImage${i}`,
+            `<img src=${result?.data?.img_url[i]}></img>`
+          );
+        }
+      obj.project_description = str;
+      setProjectInfo(obj);
+      setSelectVal(result?.data?.project_status);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -107,7 +140,14 @@ const NewProject = () => {
         '프로젝트 상태를 선택해 주세요.'
       );
     else {
-      const result = await createProject(projectInfo);
+      const editor = document.querySelector('.ql-editor');
+      const img = editor.querySelectorAll('img');
+      const formData = makeFormData();
+      const result = await createProject(
+        projectInfo,
+        editor.innerHTML,
+        img.length ? formData : null
+      );
       if (typeof result === 'object') {
         setAlert('completePost');
         commonModalSetting(
