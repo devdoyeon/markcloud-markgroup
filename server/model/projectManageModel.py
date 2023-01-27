@@ -34,9 +34,10 @@ class ProjectTable(Base):
     project_status = Column(VARCHAR(10), nullable = False)
     created_at = Column(DateTime, nullable = False)
     created_id = Column(BigInteger, nullable = False)
-    updated_at = Column(DateTime, nullable = False)
-    updated_id = Column(BigInteger, nullable = False)
-    
+    updated_at = Column(DateTime, default=created_at, nullable = False)
+    updated_id = Column(BigInteger, default=created_id, nullable = False)
+    img_url = Column(LONGTEXT)
+
     
 class ProjectMemberTable(Base):
     __tablename__ = "groupware_project_members"
