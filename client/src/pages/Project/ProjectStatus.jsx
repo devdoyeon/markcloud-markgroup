@@ -4,7 +4,13 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
-import { changeTitle, changeState, catchError, enterFn } from 'js/commonUtils';
+import {
+  changeTitle,
+  changeState,
+  catchError,
+  enterFn,
+  andPlusReplaceFn,
+} from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
@@ -102,9 +108,9 @@ const ProjectStatus = () => {
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
               <td>
-                {project_name.length > 20
-                  ? `${project_name.slice(0, 20)}...`
-                  : project_name}
+                {andPlusReplaceFn('view', project_name).length > 20
+                  ? `${andPlusReplaceFn('view', project_name).slice(0, 20)}...`
+                  : andPlusReplaceFn('view', project_name)}
               </td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>

@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
-import { catchError, changeTitle, text2html, str2img } from 'js/commonUtils';
+import {
+  catchError,
+  changeTitle,
+  text2html,
+  str2img,
+  andPlusReplaceFn,
+} from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import { getBusinessInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
@@ -25,7 +31,8 @@ const BusinessBoardRead = () => {
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
       setInfo(result?.data);
-      const str = str2img(result?.data?.img_url, result?.data?.content);
+      let str = str2img(result?.data?.img_url, result?.data?.content);
+      str = andPlusReplaceFn('view', str);
       text2html('.edit', str);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };

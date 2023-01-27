@@ -9,6 +9,7 @@ import {
   changeTitle,
   emptyCheck,
   makeFormData,
+  andPlusReplaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
@@ -91,15 +92,17 @@ const NewBoard = () => {
         commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
       }
       const obj = { ...result?.data };
-      let str = obj.content;
+      let content = obj.content;
       if (result?.data?.img_url?.length)
         for (let i = 0; i < result?.data?.img_url.length; i++) {
-          str = str.replace(
+          content = content.replace(
             `UploadedImage${i}`,
             `<img src=${result?.data?.img_url[i]}></img>`
           );
         }
-      obj.content = str;
+      content = andPlusReplaceFn('view', content);
+      obj.content = content;
+      obj.title = andPlusReplaceFn('view', obj.title);
       setPostInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
@@ -123,25 +126,26 @@ const NewBoard = () => {
     const editor = document.querySelector('.ql-editor');
     const img = editor.querySelectorAll('img');
     const formData = makeFormData();
+    const title = andPlusReplaceFn('post', postInfo.title);
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
         result = await createNotice(
-          postInfo.title,
+          title,
           editor.innerHTML,
           img.length ? formData : null
         );
         break;
       case 'board':
         result = await createBoard(
-          postInfo.title,
+          title,
           editor.innerHTML,
           img.length ? formData : null
         );
         break;
       case 'report':
         result = await createReport(
-          postInfo.title,
+          title,
           editor.innerHTML,
           img.length ? formData : null
         );
@@ -201,28 +205,30 @@ const NewBoard = () => {
     const editor = document.querySelector('.ql-editor');
     const imgArr = editor.querySelectorAll('img');
     const formData = makeFormData();
+    const content = andPlusReplaceFn('post', editor.innerHTML);
+    const title = andPlusReplaceFn('post', postInfo.title);
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
         result = await editNotice(
-          postInfo.title,
-          editor.innerHTML,
+          title,
+          content,
           imgArr.length ? formData : null,
           id
         );
         break;
       case 'board':
         result = await editBoard(
-          postInfo.title,
-          editor.innerHTML,
+          title,
+          content,
           imgArr.length ? formData : null,
           id
         );
         break;
       case 'report':
         result = await editReport(
-          postInfo.title,
-          editor.innerHTML,
+          title,
+          content,
           imgArr.length ? formData : null,
           id
         );
