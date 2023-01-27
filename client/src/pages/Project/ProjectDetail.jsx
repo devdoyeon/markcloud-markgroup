@@ -8,6 +8,7 @@ import {
   changeTitle,
   catchError,
   text2html,
+  str2img,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -72,7 +73,11 @@ const ProjectDetail = () => {
 
     if (typeof result === 'object') {
       setProjectInfo(result?.data);
-      text2html('.content', result?.data?.project_description);
+      const str = str2img(
+        result?.data?.img_url,
+        result?.data?.project_description
+      );
+      text2html('.content', str);
       getMember();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };

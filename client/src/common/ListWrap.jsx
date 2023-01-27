@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { addZero } from 'js/commonUtils';
 import noneImg from 'image/noneList.svg';
 
 const ListWrap = ({ list }) => {
@@ -17,9 +18,9 @@ const ListWrap = ({ list }) => {
             }>
             <div className='row postInfo'>
               <span className='date'>{created_at.replaceAll('-', '.')}</span>
-              {`${today.getFullYear()}-${
+              {`${today.getFullYear()}-${addZero(
                 today.getMonth() + 1
-              }-${today.getDate()}` === created_at ? (
+              )}-${addZero(today.getDate())}` === created_at ? (
                 <span className='alertNew'>NEW</span>
               ) : (
                 <></>

@@ -8,6 +8,7 @@ import {
   catchError,
   changeTitle,
   emptyCheck,
+  makeFormData,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import {
@@ -41,7 +42,6 @@ const NewBoard = () => {
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
-  const cookie = getCookie('myToken');
 
   const returnHeader = () => {
     switch (path.split('/')[2]) {
@@ -90,7 +90,17 @@ const NewBoard = () => {
         setAlert('notAuthority');
         commonModalSetting(setAlertBox, true, 'alert', '접근 권한이 없습니다.');
       }
-      setPostInfo(result?.data);
+      const obj = { ...result?.data };
+      let str = obj.content;
+      if (result?.data?.img_url?.length)
+        for (let i = 0; i < result?.data?.img_url.length; i++) {
+          str = str.replace(
+            `UploadedImage${i}`,
+            `<img src=${result?.data?.img_url[i]}></img>`
+          );
+        }
+      obj.content = str;
+      setPostInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert); // 에러 처리
   };
 
@@ -110,16 +120,31 @@ const NewBoard = () => {
         'alert',
         '내용을 입력해 주세요.'
       );
+    const editor = document.querySelector('.ql-editor');
+    const img = editor.querySelectorAll('img');
+    const formData = makeFormData();
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
-        result = await createNotice(postInfo);
+        result = await createNotice(
+          postInfo.title,
+          editor.innerHTML,
+          img.length ? formData : null
+        );
         break;
       case 'board':
-        result = await createBoard(postInfo);
+        result = await createBoard(
+          postInfo.title,
+          editor.innerHTML,
+          img.length ? formData : null
+        );
         break;
       case 'report':
-        result = await createReport(postInfo);
+        result = await createReport(
+          postInfo.title,
+          editor.innerHTML,
+          img.length ? formData : null
+        );
         break;
       default:
         return;
@@ -140,7 +165,7 @@ const NewBoard = () => {
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
-        result = await deleteNotice(id, cookie);
+        result = await deleteNotice(id);
         break;
       case 'board':
         result = await deleteBoard(id);
@@ -173,16 +198,34 @@ const NewBoard = () => {
         'alert',
         '내용을 입력해 주세요.'
       );
+    const editor = document.querySelector('.ql-editor');
+    const imgArr = editor.querySelectorAll('img');
+    const formData = makeFormData();
     let result;
     switch (path.split('/')[2]) {
       case 'notice':
-        result = await editNotice(postInfo, id);
+        result = await editNotice(
+          postInfo.title,
+          editor.innerHTML,
+          imgArr.length ? formData : null,
+          id
+        );
         break;
       case 'board':
-        result = await editBoard(postInfo, id);
+        result = await editBoard(
+          postInfo.title,
+          editor.innerHTML,
+          imgArr.length ? formData : null,
+          id
+        );
         break;
       case 'report':
-        result = await editReport(postInfo, id);
+        result = await editReport(
+          postInfo.title,
+          editor.innerHTML,
+          imgArr.length ? formData : null,
+          id
+        );
         break;
       default:
         return;

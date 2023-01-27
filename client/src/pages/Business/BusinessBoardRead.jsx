@@ -1,31 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
-import { catchError, changeTitle } from 'js/commonUtils';
+import { catchError, changeTitle, text2html, str2img } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import { getBusinessInfo } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 
 const BusinessBoardRead = () => {
   const [alert, setAlert] = useState('');
-  const [list, setList] = useState([]);
-  const [meta, setMeta] = useState({});
-  const [postInfo, setPostInfo] = useState({
-    project_name: '==',
-    title: '',
-    content: '',
-    work_status: '==',
-    request_id: '==',
-    manager_id: '==',
-  });
   const [alertBox, setAlertBox] = useState({
     mode: '',
     content: '',
     bool: false,
   });
   const [info, setInfo] = useState({});
-
-  const progressArr = ['요청', '접수', '진행', '완료'];
 
   const path = useLocation().pathname;
   const { id } = useParams();
@@ -36,12 +24,9 @@ const BusinessBoardRead = () => {
     if (pathName !== 'business') return;
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
-      setInfo(result?.data[0]);
-      document.querySelector('.edit').innerHTML =
-        new DOMParser().parseFromString(
-          result?.data[0]?.content,
-          'text/html'
-        ).body.innerHTML;
+      setInfo(result?.data);
+      const str = str2img(result?.data?.img_url, result?.data?.content);
+      text2html('.edit', str);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
   useEffect(() => {
@@ -50,8 +35,6 @@ const BusinessBoardRead = () => {
       if (id?.length) getBusinessDetail();
     }
   }, []);
-
-  const { manager_id, project_name, request_id, title, work_status } = info;
 
   return (
     <>
@@ -66,39 +49,33 @@ const BusinessBoardRead = () => {
             <div className='project-wrap project-name'>
               <div className='project-list'>
                 <span className='pro'>프로젝트</span>
-                <div className='pr-name'>{project_name}</div>
+                <div className='pr-name'>{info?.project_name}</div>
               </div>
             </div>
             <div className='project-wrap board-head'>
               {/* ============================= */}
               <div className='project-list'>
                 <span>요청자</span>
-                <div>{request_id}</div>
+                <div>{info?.request_id}</div>
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>담당자</span>
-                <div>{manager_id}</div>
+                <div>{info?.manager_id}</div>
               </div>
               {/* ============================= */}
               <div className='project-list'>
                 <span>진행상태</span>
-                <div>{work_status}</div>
+                <div>{info?.work_status}</div>
               </div>
             </div>
             <div className='project-wrap title'>
               <span>제목</span>
               <div className='title-input-wrap'>
-                <div className='input-read'>{title}</div>
+                <div className='input-read'>{info?.title}</div>
               </div>
             </div>
-            <div className='edit'>
-              {/* <EditorComponent
-                content={postInfo.content}
-                setContent={setPostInfo}
-                col='content'
-              /> */}
-            </div>
+            <div className='edit'></div>
           </div>
           <div className='btn-wrap'>
             <button
