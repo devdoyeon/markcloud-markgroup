@@ -9,6 +9,7 @@ import {
   catchError,
   text2html,
   str2img,
+  andPlusReplaceFn,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -77,7 +78,7 @@ const ProjectDetail = () => {
         result?.data?.img_url,
         result?.data?.project_description
       );
-      text2html('.content', str);
+      text2html('.content', andPlusReplaceFn('view', str));
       getMember();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };

@@ -9,6 +9,7 @@ import {
   changeTitle,
   getKeyByValue,
   makeFormData,
+  andPlusReplaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
@@ -101,12 +102,14 @@ const BusinessEditBoard = () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
+    obj.title = andPlusReplaceFn('post', obj.title)
     const editor = document.querySelector('.ql-editor');
     const img = editor.querySelectorAll('img');
     const formData = makeFormData();
+    const content = andPlusReplaceFn('view', editor.innerHTML);
     const result = await updateBusiness(
       obj,
-      editor.innerHTML,
+      content,
       img.length ? formData : null,
       id
     );

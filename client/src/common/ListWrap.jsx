@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { addZero } from 'js/commonUtils';
+import { addZero, andPlusReplaceFn } from 'js/commonUtils';
 import noneImg from 'image/noneList.svg';
 
 const ListWrap = ({ list }) => {
@@ -26,7 +26,7 @@ const ListWrap = ({ list }) => {
                 <></>
               )}
             </div>
-            <div className='postTitle'>{title}</div>
+            <div className='postTitle'>{andPlusReplaceFn('view', title)}</div>
             <hr />
             <div className='postWriter'>{created_id}</div>
           </li>

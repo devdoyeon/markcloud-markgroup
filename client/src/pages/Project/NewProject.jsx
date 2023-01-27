@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import $ from 'jquery';
 import SideMenu from 'common/SideMenu';
 import EditorComponent from 'common/EditorComponent';
 import CommonModal from 'common/CommonModal';
@@ -13,6 +12,7 @@ import {
   emptyCheck,
   addZero,
   makeFormData,
+  andPlusReplaceFn,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -46,6 +46,7 @@ const NewProject = () => {
   });
   const navigate = useNavigate();
 
+  //= 프로젝트 수정
   const updateProject = async () => {
     if (!emptyCheck(projectInfo.project_name))
       commonModalSetting(
@@ -72,9 +73,12 @@ const NewProject = () => {
       const editor = document.querySelector('.ql-editor');
       const imgArr = editor.querySelectorAll('img');
       const formData = makeFormData();
+      const content = andPlusReplaceFn('post', editor.innerHTML);
+      const obj = { ...projectInfo };
+      obj.project_name = andPlusReplaceFn('post', obj.project_name);
       const result = await editProject(
-        projectInfo,
-        editor.innerHTML,
+        obj,
+        content,
         imgArr.length ? formData : null,
         id
       );
@@ -110,7 +114,8 @@ const NewProject = () => {
             `<img src=${result?.data?.img_url[i]}></img>`
           );
         }
-      obj.project_description = str;
+      obj.project_description = andPlusReplaceFn('view', str);
+      obj.project_name = andPlusReplaceFn('view', obj.project_name);
       setProjectInfo(obj);
       setSelectVal(result?.data?.project_status);
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -140,12 +145,15 @@ const NewProject = () => {
         '프로젝트 상태를 선택해 주세요.'
       );
     else {
+      const obj = { ...projectInfo };
       const editor = document.querySelector('.ql-editor');
       const img = editor.querySelectorAll('img');
       const formData = makeFormData();
+      const content = andPlusReplaceFn('post', editor.innerHTML);
+      obj.project_name = andPlusReplaceFn('post', obj.project_name);
       const result = await createProject(
-        projectInfo,
-        editor.innerHTML,
+        obj,
+        content,
         img.length ? formData : null
       );
       if (typeof result === 'object') {

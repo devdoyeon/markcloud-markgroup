@@ -8,6 +8,7 @@ import {
   catchError,
   changeTitle,
   makeFormData,
+  andPlusReplaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
@@ -146,12 +147,15 @@ const BusinessNewBoard = () => {
         '내용을 입력해주세요.'
       );
     } else {
+      const obj = { ...postInfo };
       const editor = document.querySelector('.ql-editor');
       const img = editor.querySelectorAll('img');
       const formData = makeFormData();
+      const content = andPlusReplaceFn('post', editor.innerHTML);
+      obj.title = andPlusReplaceFn('post', obj.title);
       const result = await createBusiness(
-        postInfo,
-        editor.innerHTML,
+        obj,
+        content,
         img.length ? formData : null
       );
       if (typeof result === 'object') {

@@ -167,6 +167,18 @@ export const str2img = (img_url, content) => {
   return str;
 };
 
+export const andPlusReplaceFn = (opt, str) => {
+  let target = str;
+  if (opt === 'view') {
+    target = target.replaceAll('and', '&');
+    target = target.replaceAll('plus', '+');
+  } else if (opt === 'post') {
+    target = target.replaceAll('&amp;', 'and');
+    target = target.replaceAll('+', 'plus');
+  }
+  return target
+};
+
 // ================================== BW ==================================
 
 export const numberWithCommas = x => {
