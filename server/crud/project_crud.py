@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from starlette import status
+from sqlalchemy import func
 
 from datetime import datetime, date
 import random
@@ -14,6 +15,87 @@ from crud import utils
 from crud import customError
 
 
+# def get_project_list(
+#     db: Session, 
+#     project_name: str, 
+#     project_status: str, 
+#     start_date: date, 
+#     end_date: date, 
+#     offset: int,
+#     limit: int,
+#     user_pk: int
+# ):
+#     user_info = security.get_user_info(db, user_pk)
+    
+#     sql = f'''
+#         select
+#             p.id,
+#             p.project_status,
+#             p.project_name,
+#             p.project_start_date,
+#             p.project_end_date,
+#             p.project_code,
+#             ifnull(pm.member_cnt, 0) as member_cnt
+#         from groupware_project p
+#         left join (
+#                 select project_code, count(project_code) as member_cnt
+#                 from groupware_project_members
+#                 group by project_code) pm
+#         on p.project_code = pm.project_code
+#         where p.organ_code = "{user_info.department_code}"
+#     '''
+    
+#     # 사용자 계정 : 본인이 참여한 프로젝트 리스트만
+#     if user_info.groupware_only_yn == 'Y':
+#         sql = sql + f'''
+#         and p.project_code in (
+# 							select project_code
+# 							from groupware_project_members 
+# 							where user_id = "{user_info.user_id}"
+#                             union
+#                             select project_code
+#                             from groupware_project
+#                             where created_id = "{user_pk}"
+#        )
+#         '''
+    
+#     # 검색
+#     if project_name:
+#         search = f'%%{project_name}%%'
+#         sql = sql + f''' and p.project_name like "{search}" '''    
+
+#     if project_status == "before":
+#         sql = sql + f''' and p.project_status = "before" '''
+#     elif project_status == "progress":
+#         sql = sql + f''' and p.project_status = "progress" '''
+#     elif project_status == "complete":
+#         sql = sql + f''' and p.project_status = "complete" '''
+        
+        
+#     if start_date:
+#         sql = sql + f'''
+#                     and p.project_start_date >= "{start_date}"
+#                     '''    
+#     if end_date:
+#         sql = sql + f'''
+#                     and p.project_end_date <= "{end_date}"
+#                     '''
+
+#     sql = sql + '''
+#                 order by p.id desc
+#                 '''
+    
+#     project_list = db.execute(sql).all()
+#     total = len(project_list)
+    
+#     sql = sql + f'''
+#                 limit {limit}
+#                 offset {offset}
+#                 '''
+#     project_list = db.execute(sql).all()
+#     return total, project_list
+
+
 def get_project_list(
     db: Session, 
     project_name: str, 
@@ -22,78 +104,45 @@ def get_project_list(
     end_date: date, 
     offset: int,
     limit: int,
-    user_pk: int
+    user_info: str
 ):
-    user_info = security.get_user_info(db, user_pk)
+    subquery = db.query(ProjectMemberTable.project_code, 
+                        func.count(ProjectMemberTable.project_code).label('member_cnt')
+                        ).group_by(ProjectMemberTable.project_code).subquery()
     
-    sql = f'''
-        select
-            p.id,
-            p.project_status,
-            p.project_name,
-            p.project_start_date,
-            p.project_end_date,
-            p.project_code,
-            ifnull(pm.member_cnt, 0) as member_cnt
-        from groupware_project p
-        left join (
-                select project_code, count(project_code) as member_cnt
-                from groupware_project_members
-                group by project_code) pm
-        on p.project_code = pm.project_code
-        where p.organ_code = "{user_info.department_code}"
-    '''
+    project_list = db.query(ProjectTable.id, 
+                             ProjectTable.project_status,
+                             ProjectTable.project_name,
+                             ProjectTable.project_start_date,
+                             ProjectTable.project_end_date,
+                             ProjectTable.project_code,
+                             func.ifnull(subquery.c.member_cnt, 0).label('member_cnt')
+                             ).outerjoin(subquery, subquery.c.project_code == ProjectTable.project_code
+                                         ).filter(ProjectTable.organ_code == user_info.department_code)
     
     # 사용자 계정 : 본인이 참여한 프로젝트 리스트만
-    if user_info.groupware_only_yn == 'Y':
-        sql = sql + f'''
-        and p.project_code in (
-							select project_code
-							from groupware_project_members 
-							where user_id = "{user_info.user_id}"
-                            union
-                            select project_code
-                            from groupware_project
-                            where created_id = "{user_pk}"
-       )
-        '''
+    if user_info.groupware_only_yn == 'Y':    
+        subquery_my_project = db.query(ProjectMemberTable.project_code) \
+                                .filter(ProjectMemberTable.user_id == user_info.user_id)
+        subquery_project_made_by_me = db.query(ProjectTable.project_code).filter(ProjectTable.created_id == user_info.id)
+        q = subquery_my_project.union(subquery_project_made_by_me)
+        project_list = project_list.filter(ProjectTable.project_code.in_(q))
     
-    # 검색
     if project_name:
         search = f'%%{project_name}%%'
-        sql = sql + f''' and p.project_name like "{search}" '''    
-
-    if project_status == "before":
-        sql = sql + f''' and p.project_status = "before" '''
-    elif project_status == "progress":
-        sql = sql + f''' and p.project_status = "progress" '''
-    elif project_status == "complete":
-        sql = sql + f''' and p.project_status = "complete" '''
-        
-        
+        project_list = project_list.filter(ProjectTable.project_name.ilike(search))
+    if project_status != "all":
+        project_list = project_list.filter(ProjectTable.project_status == project_status)
     if start_date:
-        sql = sql + f'''
-                    and p.project_start_date >= "{start_date}"
-                    '''    
+        project_list = project_list.filter(ProjectTable.project_start_date >= start_date)
     if end_date:
-        sql = sql + f'''
-                    and p.project_end_date <= "{end_date}"
-                    '''
-
-    sql = sql + '''
-                order by p.id desc
-                '''
+        project_list = project_list.filter(ProjectTable.project_end_date <= end_date)
     
-    project_list = db.execute(sql).all()
-    total = len(project_list)
+    total = project_list.count()
+    project_list = project_list.order_by(ProjectTable.id.desc()).offset(offset).limit(limit).all()
     
-    sql = sql + f'''
-                limit {limit}
-                offset {offset}
-                '''
-    project_list = db.execute(sql).all()
     return total, project_list
-
+    
 
 def get_project(db: Session, project_id: int):
     project = db.query(ProjectTable.id, 
@@ -186,9 +235,11 @@ def update_project(
             "updated_id": user_info.id
         }
         
-        print("웅?")
-        print(project_update)
-        print("project_update")
+        url = project_update.url
+        print("url:", url)
+        if url:
+            print("  len:",len(url))
+        print("file:",file)
         
         if project_update.url and file:
             print("1+1")
@@ -255,10 +306,7 @@ def delete_project_members_all(db: Session, project_code: str):
     db.query(ProjectMemberTable).filter(ProjectMemberTable.project_code == project_code).delete()
 
 
-# def delete_project(db: Session, project_id: int, user_pk: int):
 def delete_project(db: Session, project_id: int, user_info: str):
-    # user_info = security.get_user_info(db, user_pk)
-    
     db_project = db.query(ProjectTable).filter(ProjectTable.id == project_id).first()
     project_code = db_project.project_code
     

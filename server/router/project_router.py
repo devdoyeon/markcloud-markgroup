@@ -35,7 +35,7 @@ def project_list(
     try:
         offset = (page - 1) * limit
             
-        total, _project_list = project_crud.get_project_list(db, project_name, project_status, start_date, end_date, offset, limit, user_pk)
+        total, _project_list = project_crud.get_project_list(db, project_name, project_status, start_date, end_date, offset, limit, user_info)
 
         totalPage = total // limit
         if total % limit != 0:
@@ -59,7 +59,6 @@ def project_detail(
 ):
     try:
         db_project = project_crud.get_project(db, project_id)
-        # db_project = project_crud.get_project(db, project_id, user_info)
         
         if db_project.img_url:
             new_img_url = db_project.img_url
