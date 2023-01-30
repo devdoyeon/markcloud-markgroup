@@ -21,6 +21,7 @@ class NoticeEditDTO(BaseModel):
     
     title:str
     content:str
+    url:Optional[list]
     
 class NoticeOut(BaseModel):
 
@@ -39,7 +40,7 @@ class NoticeInfo(BaseModel):
     created_at:date
     updated_at:date
     content:str
-    # img_url:Union[str,list]
+    img_url: Optional[list]
     
     class Config:
         orm_mode = True

@@ -27,6 +27,7 @@ class ProjectOut(BaseModel):
     project_status: str
     created_at: date
     created_id: str
+    img_url: Optional[list]
     
     class Config:
         orm_mode = True
@@ -50,7 +51,7 @@ class ProjectMemberListOut2(BaseModel):
 
 class ProjectCreate(BaseModel):
     project_name: str
-    project_description: Optional[str] = None
+    project_description: str
     project_start_date: date
     project_end_date: date
     project_status: str
@@ -61,10 +62,11 @@ class ProjectCreate(BaseModel):
         
 class ProjectUpdate(BaseModel):
     project_name: str
-    project_description: Optional[str] = None
+    project_description: str
     project_start_date: date
     project_end_date: date
     project_status: str
+    url: Optional[list]
     
     class Config:
         orm_mode = True

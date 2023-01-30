@@ -1,8 +1,7 @@
 # 공지사항
-from fastapi import APIRouter, Depends, Header, HTTPException, File, UploadFile
+from fastapi import APIRouter, Depends, Header, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
 from typing import List, Union, Optional
-
 
 from database import *
 from crud.noticeCrud import *
@@ -61,19 +60,23 @@ def read_notice_info(
 ):
     try:
         notice_info =  get_notice_info(db,notice_id, user_info)
-        
-        # new_img_url = notice_info.img_url
-        # img_url = new_img_url.split(',')
-        
-        # outbound = NoticeInfo(
-        #         title = notice_info.title,
-        #         created_id = notice_info.created_id,
-        #         created_at = notice_info.created_at,
-        #         updated_at = notice_info.updated_at,
-        #         content = notice_info.content,
-        #         img_url = img_url
-        # )
-        return notice_info
+    
+        if notice_info.img_url:
+            new_img_url = notice_info.img_url
+            img_url = new_img_url.split(',')
+        else:
+            img_url = None 
+
+        outbound = NoticeInfo(
+                title = notice_info.title,
+                created_id = notice_info.created_id,
+                created_at = notice_info.created_at,
+                updated_at = notice_info.updated_at,
+                content = notice_info.content,
+                img_url = img_url
+        )
+        # return notice_info
+        return outbound
     
     except:
         raise HTTPException(status_code=500, detail='ReadNtInfoError')
@@ -83,24 +86,22 @@ def read_notice_info(
 @security.varify_access_token
 @security.user_chk
 def create_notice(
-    # inbound_data: NoticeIn = Depends(),
-    inbound_data: NoticeIn,
+    file : Union[List[UploadFile],None] = None,
+    inbound_data: NoticeIn = Depends(), # parameter
+    # inbound_data: NoticeIn, # body
     access_token:str = Header(None),
     user_info:str = None,
-    # file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     db: Session = Depends(get_db),
 ):
     try:
-        # data = insert_notice(db,inbound_data,file,user_info)
-        
-        data = insert_notice(db,inbound_data,user_info)
+        data = insert_notice(db,inbound_data,file,user_info)
         return Response().success_response(data)
     
     except customError.S3ConnError:
         raise HTTPException(status_code=505, detail='S3ConnError')
     
-    except Exception: 
+    except:
         raise HTTPException(status_code=500, detail='CreateNtError')
     
         
@@ -110,17 +111,17 @@ def create_notice(
 @security.user_chk
 def update_notice(
     notice_id:int,
-    # inbound_data: NoticeEditDTO = Depends(),
-    inbound_data: NoticeEditDTO,
+    file: Union[List[UploadFile],None] = None,
+    inbound_data: NoticeEditDTO = Depends(),#parameter
+    # inbound_data: NoticeEditDTO, #body
     access_token:str = Header(None),
-    # file: Union[List[UploadFile],None] = None,
     user_pk:int = None,
     user_info:str = None,
     db: Session = Depends(get_db)
 ):
     try:
-        # data = change_notice(db,inbound_data,file,notice_id,user_info)
-        data = change_notice(db,inbound_data,notice_id,user_info)
+        data = change_notice(db,inbound_data,file,notice_id,user_info)
+        # data = change_notice(db,inbound_data,notice_id,user_info)
         return Response().success_response(data)
         
     except customError.InvalidError:

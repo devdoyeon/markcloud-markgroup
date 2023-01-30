@@ -21,6 +21,7 @@ class PostOut(BaseModel):
     created_id: str
     updated_at: Optional[date] = None
     user_pk: int
+    img_url: Optional[list]
     
     class Config:
         orm_mode = True
@@ -34,3 +35,4 @@ class PostCreate(BaseModel):
 class PostUpdate(BaseModel):
     title: str
     content: str
+    url: Optional[list]

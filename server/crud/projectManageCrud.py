@@ -2,7 +2,7 @@
 from model import projectManageModel, memberManageModel
 from sqlalchemy import desc
 from datetime import datetime
-from crud import customError
+from crud import customError, utils
 
 def get_project_member(db, user_info, inbound_filter): # 프로젝트 멤버
     
@@ -118,7 +118,8 @@ def get_project_info(db, project_id,user_info):
                 a.work_status,
                 a.created_at,
                 c.user_id as created_id,
-                a.work_end_date
+                a.work_end_date,
+                a.img_url
                 FROM groupware_work_management as a
                 INNER JOIN groupware_project as b
                 ON a.project_code = b.project_code
@@ -127,16 +128,21 @@ def get_project_info(db, project_id,user_info):
                 WHERE b.organ_code = "{user_info.department_code}"
                 AND a.id = {project_id}
                 '''
-    project_info = db.execute(query).fetchall()
+    project_info = db.execute(query).fetchone()
     return project_info
 
 
-def insert_project(db,inbound_data,user_info):
+def insert_project(db,inbound_data,file, user_info):
     
     project_manage_table = projectManageModel.ProjectManageTable
     project_table = projectManageModel.ProjectTable
 
     project_code = db.query(project_table.project_code).filter(project_table.project_name == inbound_data.project_name).first()
+    
+    if file:
+        img_url = utils.get_s3_url(file, 'work')
+    else:
+        img_url = None
     
     db_query = project_manage_table(
         organ_code=user_info.department_code,
@@ -148,12 +154,13 @@ def insert_project(db,inbound_data,user_info):
         work_status=inbound_data.work_status,
         created_at = datetime.today(),
         updated_at =datetime.today(),
-        created_id=user_info.id)
+        created_id=user_info.id,
+        img_url = img_url )
     
     result = db.add(db_query)
     return result
 
-def change_project(db,inbound_data, project_id):
+def change_project(db,inbound_data, file, project_id):
     
     project_manage_table = projectManageModel.ProjectManageTable
     
@@ -167,7 +174,20 @@ def change_project(db,inbound_data, project_id):
     
     if inbound_data.work_status == '완료':
         values['work_end_date'] = datetime.today()
-    
+  
+    if inbound_data.url and file: #이미지 url, 파일 둘 다
+        origin_url = ','.join(inbound_data.url)
+        img_url = utils.get_s3_url(file, 'work') 
+        values['img_url'] = origin_url + ',' +img_url
+
+    elif inbound_data.url: # 이미지 url
+        origin_url = ','.join(inbound_data.url)
+        values['img_url'] = origin_url
+        
+    elif file: # 파일
+        img_url = utils.get_s3_url(file, 'work') 
+        values['img_url'] = img_url
+
     result = db.query(project_manage_table).filter_by(id = project_id).update(values)
     return result
         
