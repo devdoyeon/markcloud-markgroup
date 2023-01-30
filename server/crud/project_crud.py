@@ -221,6 +221,16 @@ def update_project(
     file,
     user_info
 ):    
+    # 이미 있는 프로젝트 이름으로 변경하지 못하게 막기
+    input_project_name = project_update.project_name
+    try:
+        project = db.query(ProjectTable).filter(ProjectTable.project_name == input_project_name).first()
+    except:
+        raise HTTPException(status_code=500, detail='GetProjectNameError')
+    
+    if project:
+        raise HTTPException(status_code=403, detail='AlreadyProjectName')
+    
     db_project = db.query(ProjectTable).filter(ProjectTable.id == project_id).first()
     
     if user_info.id == int(db_project.created_id) or user_info.groupware_only_yn == 'N':

@@ -135,8 +135,8 @@ def project_update(
         raise HTTPException(status_code=422, detail='InvalidClient')
     except customError.S3ConnError:
         raise HTTPException(status_code=505, detail='S3ConnError')
-    except:
-        raise HTTPException(status_code=500, detail='ProjectUpdateError')
+    # except:
+    #     raise HTTPException(status_code=500, detail='ProjectUpdateError')
 
 
 @router.get("/member")
