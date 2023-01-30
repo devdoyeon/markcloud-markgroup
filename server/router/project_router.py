@@ -155,21 +155,18 @@ def project_member_add(project_id: int,
                        access_token:str = Header(None),
                        user_pk:int = None,
                        db: Session = Depends(get_db)):
-    try:
-        new_member_id = project_member_add.new_member_id
-        db_project = project_crud.get_project(db, project_id)
-        project_code = db_project.project_code
+    new_member_id = project_member_add.new_member_id
+    db_project = project_crud.get_project(db, project_id)
+    project_code = db_project.project_code
+    
+    # 이미 참여중인 멤버를 또 추가하면 에러 반환.
+    if project_crud.get_project_member(db, project_code, new_member_id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="AlreadyMember")
         
-        # 이미 참여중인 멤버를 또 추가하면 에러 반환.
-        if project_crud.get_project_member(db, project_code, new_member_id):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="AlreadyMember")
-            
-        # groupware_project_members 테이블에 insert.
-        db_project = project_crud.get_project(db, project_id)
-        project_code = db_project.project_code
-        project_crud.add_project_member(db, project_code, new_member_id, user_pk)
-    except:
-        raise HTTPException(status_code=500, detail='ProjectMemberAddError')
+    # groupware_project_members 테이블에 insert.
+    db_project = project_crud.get_project(db, project_id)
+    project_code = db_project.project_code
+    project_crud.add_project_member(db, project_code, new_member_id, user_pk)
 
 
 @router.post("/member_delete")
