@@ -1086,6 +1086,9 @@
   overflow-y: auto;
   padding: 10px 60px;
 }
+.projectWrapper.detail .projectInfo .content img {
+  max-width: 100%;
+}
 .projectWrapper .projectInfo {
   margin-bottom: 32px;
   width: 100%;

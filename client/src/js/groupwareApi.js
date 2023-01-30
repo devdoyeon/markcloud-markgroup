@@ -1,9 +1,17 @@
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
+import { andPlusReplaceFn } from './commonUtils';
 
 const header = () => ({
   headers: {
     'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+  },
+});
+
+const fileHeader = () => ({
+  headers: {
+    'Content-Type': 'multipart/form-data',
     'access-token': getCookie('myToken'),
   },
 });
@@ -181,32 +189,30 @@ export const getNoticeInfo = async id => {
   }
 };
 
-export const createNotice = async ({ title, content, created_id }) => {
+export const createNotice = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/notice/create`,
-      {
-        title: title,
-        content: content,
-        created_id: created_id,
-      },
-      header()
+      `/groupware/notice/create?title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
-export const editNotice = async ({ title, content, created_id }, id) => {
+export const editNotice = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/notice/update?notice_id=${id}`,
-      {
-        title: title,
-        content: content,
-        created_id: created_id,
-      },
-      header()
+      `/groupware/notice/update?notice_id=${id}&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -309,26 +315,22 @@ export const getBusinessInfo = async id => {
   }
 };
 
-export const createBusiness = async ({
-  project_name,
-  title,
+export const createBusiness = async (
+  { project_name, title, work_status, request_id, manager_id },
   content,
-  work_status,
-  request_id,
-  manager_id,
-}) => {
+  formData
+) => {
   try {
     return await axios.post(
-      `/groupware/projects/create`,
-      {
-        project_name: project_name,
-        title: title,
-        content: content,
-        work_status: work_status,
-        request_id: request_id,
-        manager_id: manager_id,
-      },
-      header()
+      `/groupware/projects/create?project_name=${project_name}&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn(
+        'post',
+        content
+      )}&work_status=${work_status}&request_id=${request_id}&manager_id=${manager_id}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -336,25 +338,20 @@ export const createBusiness = async ({
 };
 
 export const updateBusiness = async (
-  { request_id, manager_id, work_status, title, content },
+  { manager_id, work_status, title },
+  content,
+  formData,
   id
 ) => {
   try {
     return await axios.post(
-      `/groupware/projects/update?project_id=${id}`,
-      {
-        request_id:
-          request_id === 'undefined' || request_id === undefined
-            ? ''
-            : request_id,
-        manager_id:
-          manager_id === 'undefined' || manager_id === undefined
-            ? ''
-            : manager_id,
-        work_status: work_status,
-        title: title,
-        content: content,
-      },
+      `/groupware/projects/update?project_id=${id}&manager_id=${
+        manager_id === 'undefined' || manager_id === undefined ? '' : manager_id
+      }&work_status=${work_status}&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
       header()
     );
   } catch (error) {
@@ -567,26 +564,22 @@ export const getBoardList = async ({ page, limit = 9 }, type, value) => {
 //& 게시판 상세내역 불러오기
 export const getBoardDetail = async id => {
   try {
-    return await axios.get(
-      `/groupware/board/detail?post_id=${id}`,
-      null,
-      header()
-    );
+    return await axios.get(`/groupware/board/detail?post_id=${id}`, header());
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
 //& 게시글 작성
-export const createBoard = async ({ title, content }) => {
+export const createBoard = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/board/create`,
-      {
-        title: title,
-        content: content,
-      },
-      header()
+      `/groupware/board/create?title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -594,15 +587,15 @@ export const createBoard = async ({ title, content }) => {
 };
 
 //& 게시글 수정
-export const editBoard = async ({ title, content }, id) => {
+export const editBoard = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/board/update?post_id=${id}`,
-      {
-        title: title,
-        content: content,
-      },
-      header()
+      `/groupware/board/update?post_id=${id}&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -651,15 +644,15 @@ export const getReportDetail = async id => {
 };
 
 //& 주간 업무 보고 등록
-export const createReport = async ({ title, content }) => {
+export const createReport = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/report/create`,
-      {
-        title: title,
-        content: content,
-      },
-      header()
+      `/groupware/report/create?&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -667,15 +660,15 @@ export const createReport = async ({ title, content }) => {
 };
 
 //& 주간 업무 보고 수정
-export const editReport = async ({ title, content }, id) => {
+export const editReport = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/report/update?report_id=${id}`,
-      {
-        title: title,
-        content: content,
-      },
-      header()
+      `/groupware/report/update?report_id=${id}&title=${andPlusReplaceFn(
+        'post',
+        title
+      )}&content=${andPlusReplaceFn('post', content)}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
@@ -731,21 +724,46 @@ export const getProjectDetail = async id => {
 };
 
 //& 프로젝트 생성
-export const createProject = async projectInfo => {
+export const createProject = async (
+  { project_name, project_start_date, project_end_date, project_status },
+  project_description,
+  formData
+) => {
   try {
-    return await axios.post(`/groupware/project/create`, projectInfo, header());
+    return await axios.post(
+      `/groupware/project/create?project_name=${andPlusReplaceFn(
+        'post',
+        project_name
+      )}&project_description=${andPlusReplaceFn(
+        'post',
+        project_description
+      )}&project_start_date=${project_start_date}&project_end_date=${project_end_date}&project_status=${project_status}`,
+      formData,
+      formData ? fileHeader() : header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
 };
 
 //& 프로젝트 수정
-export const editProject = async (id, projectInfo) => {
+export const editProject = async (
+  { project_name, project_start_date, project_end_date, project_status },
+  project_description,
+  formData,
+  id
+) => {
   try {
     return await axios.post(
-      `/groupware/project/update?project_id=${id}`,
-      projectInfo,
-      header()
+      `/groupware/project/update?project_id=${id}&project_name=${andPlusReplaceFn(
+        'post',
+        project_name
+      )}&project_description=${andPlusReplaceFn(
+        'post',
+        project_description
+      )}&project_start_date=${project_start_date}&project_end_date=${project_end_date}&project_status=${project_status}`,
+      formData,
+      formData ? fileHeader() : header()
     );
   } catch (error) {
     return apiErrorHandling(error);
