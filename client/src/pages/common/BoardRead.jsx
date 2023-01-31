@@ -14,7 +14,7 @@ import {
   getReportDetail,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import { str2img } from '../../js/commonUtils';
+import { str2img } from 'js/commonUtils';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
