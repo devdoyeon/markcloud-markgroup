@@ -12,7 +12,7 @@ import {
   emptyCheck,
   addZero,
   makeFormData,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -111,8 +111,8 @@ const NewProject = () => {
             `<img src=${result?.data?.img_url[i]}></img>`
           );
         }
-      obj.project_description = andPlusReplaceFn('view', str);
-      obj.project_name = andPlusReplaceFn('view', obj.project_name);
+      obj.project_description = replaceFn('view', str);
+      obj.project_name = replaceFn('view', obj.project_name);
       setProjectInfo(obj);
       setSelectVal(result?.data?.project_status);
     } else return catchError(result, navigate, setAlertBox, setAlert);

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import cloudIcon from 'image/sideBtnIcon01.png';
 import viewIcon from 'image/sideBtnIcon02.png';
 import tongIcon from 'image/sideBtnIcon03.png';
-import groupwareIcon from 'image/sideBtnIcon04.svg'
+import groupwareIcon from 'image/sideBtnIcon04.svg';
 // import linkIcon from 'image/sideBtnIcon05.png';
 
 const SideMenuBtn = () => {
@@ -69,7 +69,7 @@ const SideMenuBtn = () => {
           </li>
           <li>
             <a
-              href={`https://play.google.com/store/apps/details?id=com.marktong.marktong&referrer=utm_source%3Dmarkcloud_mainpage%26utm_medium%3Dtag%26anid%3Dadmob`}
+              href={`https://markcloud.co.kr/mark-tong`}
               rel='noopener noreferrer'
               target='_blank'
               title='마크통으로 이동'>

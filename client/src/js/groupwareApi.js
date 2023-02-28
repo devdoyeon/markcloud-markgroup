@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from './cookie';
-import { andPlusReplaceFn } from './commonUtils';
+import { replaceFn } from './commonUtils';
 
 const header = () => ({
   headers: {
@@ -192,10 +192,10 @@ export const getNoticeInfo = async id => {
 export const createNotice = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/notice/create?title=${andPlusReplaceFn(
+      `/groupware/notice/create?title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -207,10 +207,10 @@ export const createNotice = async (title, content, formData) => {
 export const editNotice = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/notice/update?notice_id=${id}&title=${andPlusReplaceFn(
+      `/groupware/notice/update?notice_id=${id}&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -322,10 +322,10 @@ export const createBusiness = async (
 ) => {
   try {
     return await axios.post(
-      `/groupware/projects/create?project_name=${project_name}&title=${andPlusReplaceFn(
+      `/groupware/projects/create?project_name=${project_name}&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn(
+      )}&content=${replaceFn(
         'post',
         content
       )}&work_status=${work_status}&request_id=${request_id}&manager_id=${manager_id}`,
@@ -347,10 +347,10 @@ export const updateBusiness = async (
     return await axios.post(
       `/groupware/projects/update?project_id=${id}&manager_id=${
         manager_id === 'undefined' || manager_id === undefined ? '' : manager_id
-      }&work_status=${work_status}&title=${andPlusReplaceFn(
+      }&work_status=${work_status}&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       header()
     );
@@ -574,10 +574,10 @@ export const getBoardDetail = async id => {
 export const createBoard = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/board/create?title=${andPlusReplaceFn(
+      `/groupware/board/create?title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -590,10 +590,10 @@ export const createBoard = async (title, content, formData) => {
 export const editBoard = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/board/update?post_id=${id}&title=${andPlusReplaceFn(
+      `/groupware/board/update?post_id=${id}&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -647,10 +647,10 @@ export const getReportDetail = async id => {
 export const createReport = async (title, content, formData) => {
   try {
     return await axios.post(
-      `/groupware/report/create?&title=${andPlusReplaceFn(
+      `/groupware/report/create?&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -663,10 +663,10 @@ export const createReport = async (title, content, formData) => {
 export const editReport = async (title, content, formData, id) => {
   try {
     return await axios.post(
-      `/groupware/report/update?report_id=${id}&title=${andPlusReplaceFn(
+      `/groupware/report/update?report_id=${id}&title=${replaceFn(
         'post',
         title
-      )}&content=${andPlusReplaceFn('post', content)}`,
+      )}&content=${replaceFn('post', content)}`,
       formData,
       formData ? fileHeader() : header()
     );
@@ -731,10 +731,10 @@ export const createProject = async (
 ) => {
   try {
     return await axios.post(
-      `/groupware/project/create?project_name=${andPlusReplaceFn(
+      `/groupware/project/create?project_name=${replaceFn(
         'post',
         project_name
-      )}&project_description=${andPlusReplaceFn(
+      )}&project_description=${replaceFn(
         'post',
         project_description
       )}&project_start_date=${project_start_date}&project_end_date=${project_end_date}&project_status=${project_status}`,
@@ -755,10 +755,10 @@ export const editProject = async (
 ) => {
   try {
     return await axios.post(
-      `/groupware/project/update?project_id=${id}&project_name=${andPlusReplaceFn(
+      `/groupware/project/update?project_id=${id}&project_name=${replaceFn(
         'post',
         project_name
-      )}&project_description=${andPlusReplaceFn(
+      )}&project_description=${replaceFn(
         'post',
         project_description
       )}&project_start_date=${project_start_date}&project_end_date=${project_end_date}&project_status=${project_status}`,

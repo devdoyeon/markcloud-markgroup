@@ -170,15 +170,57 @@ export const str2img = (img_url, content) => {
 };
 
 //& &, + <=> and, plus
-export const andPlusReplaceFn = (opt, str) => {
+export const replaceFn = (opt, str) => {
   let target = str;
   if (opt === 'view') {
+    target = target.replaceAll('gwBackTick', '`');
+    target = target.replaceAll('gwExclamation', '!');
+    target = target.replaceAll('gwAt', '@');
+    target = target.replaceAll('gwHash', '#');
+    target = target.replaceAll('gwDollar', '$');
+    target = target.replaceAll('gwPercent', '%');
+    target = target.replaceAll('gwCaret', '^');
     target = target.replaceAll('gwAnd', '&');
+    target = target.replaceAll('gwAster', '*');
+    target = target.replaceAll('gwParenthesesLeft', '(');
+    target = target.replaceAll('gwParenthesesRight', ')');
+    target = target.replaceAll('gwMinus', '-');
+    target = target.replaceAll('gwUnderBar', '_');
     target = target.replaceAll('gwPlus', '+');
+    target = target.replaceAll('gwEqual', '=');
+    target = target.replaceAll('gwBracesLeft', '{');
+    target = target.replaceAll('gwBracesRight', '}');
+    target = target.replaceAll('gwBracketsLeft', '[');
+    target = target.replaceAll('gwBracketsRight', ']');
+    target = target.replaceAll('gwGreaterThan', '<');
+    target = target.replaceAll('gwLessThan', '>');
+    target = target.replaceAll(`gwBackSlash`, '\\');
+    target = target.replaceAll(`gwOrMark`, '|');
   } else if (opt === 'post') {
+    target = target.replaceAll('`', 'gwBackTick');
+    target = target.replaceAll('!', 'gwExclamation');
+    target = target.replaceAll('@', 'gwAt');
+    target = target.replaceAll('#', 'gwHash');
+    target = target.replaceAll('$', 'gwDollar');
+    target = target.replaceAll('%', 'gwPercent');
+    target = target.replaceAll('^', 'gwCaret');
     if (target.includes('&amp;')) target = target.replaceAll('&amp;', 'gwAnd');
     else target = target.replaceAll('&', 'gwAnd');
+    target = target.replaceAll('*', 'gwAster');
+    target = target.replaceAll('(', 'gwParenthesesLeft');
+    target = target.replaceAll(')', 'gwParenthesesRight');
+    target = target.replaceAll('-', 'gwMinus');
+    target = target.replaceAll('_', 'gwUnderBar');
     target = target.replaceAll('+', 'gwPlus');
+    target = target.replaceAll('=', 'gwEqual');
+    target = target.replaceAll('{', 'gwBracesLeft');
+    target = target.replaceAll('}', 'gwBracesRight');
+    target = target.replaceAll('[', 'gwBracketsLeft');
+    target = target.replaceAll(']', 'gwBracketsRight');
+    target = target.replaceAll('<', 'gwGreaterThan');
+    target = target.replaceAll('>', 'gwLessThan');
+    target = target.replaceAll(`\\`, 'gwBackSlash');
+    target = target.replaceAll(`|`, 'gwOrMark');
   }
   return target;
 };

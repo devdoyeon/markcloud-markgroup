@@ -9,7 +9,7 @@ import {
   catchError,
   text2html,
   str2img,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import {
   getProjectDetail,
@@ -76,10 +76,10 @@ const ProjectDetail = () => {
         result?.data?.img_url,
         result?.data?.project_description
       );
-      text2html('.content', andPlusReplaceFn('view', str));
+      text2html('.content', replaceFn('view', str));
       getMember();
       const obj = { ...result?.data };
-      obj.project_name = andPlusReplaceFn('view', obj.project_name);
+      obj.project_name = replaceFn('view', obj.project_name);
       setProjectInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
