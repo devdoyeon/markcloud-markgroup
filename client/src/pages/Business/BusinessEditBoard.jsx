@@ -9,7 +9,7 @@ import {
   changeTitle,
   getKeyByValue,
   makeFormData,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
@@ -73,9 +73,9 @@ const BusinessEditBoard = () => {
             `<img src=${result?.data?.img_url[i]}></img>`
           );
         }
-      content = andPlusReplaceFn('view', content);
+      content = replaceFn('view', content);
       obj.content = content;
-      obj.title = andPlusReplaceFn('view', obj.title);
+      obj.title = replaceFn('view', obj.title);
       setPostInfo(obj);
       setContactValue(manager_id);
       setRequesterValue(request_id);

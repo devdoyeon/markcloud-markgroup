@@ -8,7 +8,7 @@ import {
   catchError,
   changeTitle,
   makeFormData,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';

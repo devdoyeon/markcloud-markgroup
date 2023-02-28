@@ -6,7 +6,7 @@ import {
   changeTitle,
   text2html,
   str2img,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import { getBusinessInfo } from 'js/groupwareApi';
@@ -32,7 +32,7 @@ const BusinessBoardRead = () => {
     if (typeof result === 'object') {
       setInfo(result?.data);
       let str = str2img(result?.data?.img_url, result?.data?.content);
-      str = andPlusReplaceFn('view', str);
+      str = replaceFn('view', str);
       text2html('.edit', str);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
