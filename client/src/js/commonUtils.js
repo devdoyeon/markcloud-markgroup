@@ -29,21 +29,7 @@ export const errorList = {
 
 //& API 통신 결과 에러 반환일 때 ErrorHandling Fn
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
-  if (
-    result === 'serverError' ||
-    result === 'accessDenied' ||
-    result === 'NotAuthority' ||
-    result === 'loginExceeded' ||
-    result === 'serviceExpired' ||
-    result === 'alreadyProjectName' ||
-    result === 'alreadyUsedProject'
-  ) {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'duplicateLogin') {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'paymentRequired') {
+  if (result === 'paymentRequired') {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
   } else if (result === 'notFound')
@@ -61,6 +47,9 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
       domain: 'markcloud.co.kr',
     });
     localStorage.removeItem('yn');
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+  } else {
+    setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
@@ -170,15 +159,57 @@ export const str2img = (img_url, content) => {
 };
 
 //& &, + <=> and, plus
-export const andPlusReplaceFn = (opt, str) => {
+export const replaceFn = (opt, str) => {
   let target = str;
   if (opt === 'view') {
+    target = target.replaceAll('gwBackTick', '`');
+    target = target.replaceAll('gwExclamation', '!');
+    target = target.replaceAll('gwAt', '@');
+    target = target.replaceAll('gwHash', '#');
+    target = target.replaceAll('gwDollar', '$');
+    target = target.replaceAll('gwPercent', '%');
+    target = target.replaceAll('gwCaret', '^');
     target = target.replaceAll('gwAnd', '&');
+    target = target.replaceAll('gwAster', '*');
+    target = target.replaceAll('gwParenthesesLeft', '(');
+    target = target.replaceAll('gwParenthesesRight', ')');
+    target = target.replaceAll('gwMinus', '-');
+    target = target.replaceAll('gwUnderBar', '_');
     target = target.replaceAll('gwPlus', '+');
+    target = target.replaceAll('gwEqual', '=');
+    target = target.replaceAll('gwBracesLeft', '{');
+    target = target.replaceAll('gwBracesRight', '}');
+    target = target.replaceAll('gwBracketsLeft', '[');
+    target = target.replaceAll('gwBracketsRight', ']');
+    target = target.replaceAll('gwGreaterThan', '<');
+    target = target.replaceAll('gwLessThan', '>');
+    target = target.replaceAll(`gwBackSlash`, '\\');
+    target = target.replaceAll(`gwOrMark`, '|');
   } else if (opt === 'post') {
+    target = target.replaceAll('`', 'gwBackTick');
+    target = target.replaceAll('!', 'gwExclamation');
+    target = target.replaceAll('@', 'gwAt');
+    target = target.replaceAll('#', 'gwHash');
+    target = target.replaceAll('$', 'gwDollar');
+    target = target.replaceAll('%', 'gwPercent');
+    target = target.replaceAll('^', 'gwCaret');
     if (target.includes('&amp;')) target = target.replaceAll('&amp;', 'gwAnd');
     else target = target.replaceAll('&', 'gwAnd');
+    target = target.replaceAll('*', 'gwAster');
+    target = target.replaceAll('(', 'gwParenthesesLeft');
+    target = target.replaceAll(')', 'gwParenthesesRight');
+    target = target.replaceAll('-', 'gwMinus');
+    target = target.replaceAll('_', 'gwUnderBar');
     target = target.replaceAll('+', 'gwPlus');
+    target = target.replaceAll('=', 'gwEqual');
+    target = target.replaceAll('{', 'gwBracesLeft');
+    target = target.replaceAll('}', 'gwBracesRight');
+    target = target.replaceAll('[', 'gwBracketsLeft');
+    target = target.replaceAll(']', 'gwBracketsRight');
+    target = target.replaceAll('<', 'gwGreaterThan');
+    target = target.replaceAll('>', 'gwLessThan');
+    target = target.replaceAll(`\\`, 'gwBackSlash');
+    target = target.replaceAll(`|`, 'gwOrMark');
   }
   return target;
 };

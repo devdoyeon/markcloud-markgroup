@@ -9,7 +9,7 @@ import {
   changeState,
   catchError,
   enterFn,
-  andPlusReplaceFn,
+  replaceFn,
 } from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
@@ -108,9 +108,9 @@ const ProjectStatus = () => {
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
               <td>
-                {andPlusReplaceFn('view', project_name).length > 20
-                  ? `${andPlusReplaceFn('view', project_name).slice(0, 20)}...`
-                  : andPlusReplaceFn('view', project_name)}
+                {replaceFn('view', project_name).length > 20
+                  ? `${replaceFn('view', project_name).slice(0, 20)}...`
+                  : replaceFn('view', project_name)}
               </td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>

@@ -2,19 +2,14 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import {
-  andPlusReplaceFn,
-  catchError,
-  changeTitle,
-  text2html,
-} from 'js/commonUtils';
+import { replaceFn, catchError, changeTitle, text2html } from 'js/commonUtils';
 import {
   getBoardDetail,
   getNoticeInfo,
   getReportDetail,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import { str2img } from '../../js/commonUtils';
+import { str2img } from 'js/commonUtils';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -56,10 +51,10 @@ const BoardRead = () => {
     }
     if (typeof result === 'object') {
       let str = str2img(result?.data?.img_url, result?.data?.content);
-      str = andPlusReplaceFn('view', str);
+      str = replaceFn('view', str);
       text2html('.content', str);
       let obj = { ...result?.data };
-      const title = andPlusReplaceFn('view', result?.data?.title);
+      const title = replaceFn('view', result?.data?.title);
       obj.title = title;
       setInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert);
