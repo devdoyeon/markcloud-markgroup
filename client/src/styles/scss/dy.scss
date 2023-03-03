@@ -354,12 +354,14 @@
           font-size: 13px;
           line-height: 22px;
           transition: 0.5s;
+          margin-bottom: 12px;
           span {
             font-size: 16px;
             line-height: 23px;
           }
           &.premium {
             line-height: 18px;
+            margin-bottom: 4px;
           }
         }
 
@@ -367,7 +369,6 @@
           @include flex-style();
           width: 142px;
           height: 36px;
-          margin-top: 17px;
           background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
           border-radius: 8px;
           color: $white;
