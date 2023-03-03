@@ -146,7 +146,6 @@
               span {
                 font-family: $middleFont;
                 font-size: 20px;
-                
               }
             }
             .info {
@@ -255,7 +254,6 @@
       width: 220px;
       height: 330px;
       margin-right: 40px;
-      padding: 16px;
       background-color: $white;
       border-radius: 8px;
       box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16),
@@ -283,7 +281,7 @@
         border-radius: 8px;
 
         strong {
-          @include txt-style(28px, #797979);
+          @include txt-style(24px, #797979);
           transition: 0.5s;
         }
 
@@ -344,16 +342,25 @@
 
         .cost-dashed {
           width: 100%;
-          margin: 16px 0 25px;
+          margin: 16px 0 8px;
           border: 1px dashed #cecece;
           transition: 0.3s;
         }
 
         .cost-desc {
+          width: 134px;
           color: #484848;
-          text-align: center;
-          line-height: 23px;
+          text-align: left;
+          font-size: 13px;
+          line-height: 22px;
           transition: 0.5s;
+          span {
+            font-size: 16px;
+            line-height: 23px;
+          }
+          &.premium {
+            line-height: 18px;
+          }
         }
 
         button {
@@ -385,8 +392,9 @@
       &:hover,
       &:active {
         width: 284px;
-        height: 380px;
-        height: var(--costContainer);
+        height: 400px;
+        // height: var(--costContainer);
+        padding: 16px;
         background: $mainColor;
 
         &::after {
@@ -423,12 +431,6 @@
 
           .cost-dashed {
             width: 210px;
-            margin: 26px 0 16px;
-          }
-
-          .cost-desc {
-            font-size: 20px;
-            line-height: 29px;
           }
 
           a {

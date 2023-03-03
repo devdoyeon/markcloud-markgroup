@@ -69,16 +69,16 @@ const Cost = () => {
           <div className='row'>
             <div>
               <div>
-                <strong className='bold'>180일권</strong>
+                <strong className='bold'>Standard</strong>
                 <p className='cost-money bold'>
                   <span>20%</span>1,500,000원
                 </p>
                 <span className='cost-discount bold'>1,200,000원</span>
                 <div className='cost-dashed'></div>
                 <p className='cost-desc'>
-                  마크그룹웨어 서비스
-                  <br />
-                  180일 이용권
+                  <span>MarkGroup 서비스</span>
+                  <br />+ 사용자 무제한
+                  <br />+ 데이터 용량 무제한
                 </p>
                 <button onClick={() => checkUser('MV180', 1500000, 180)}>
                   구매하기
@@ -87,16 +87,17 @@ const Cost = () => {
             </div>
             <div>
               <div>
-                <strong className='bold'>365일권</strong>
+                <strong className='bold'>Premium</strong>
                 <p className='cost-money bold'>
                   <span>20%</span>2,500,000원
                 </p>
                 <span className='cost-discount bold'>2,000,000원</span>
                 <div className='cost-dashed'></div>
-                <p className='cost-desc'>
-                  마크그룹웨어 서비스
-                  <br />
-                  365일 이용권
+                <p className='cost-desc premium'>
+                  <span>MarkGroup 서비스</span>
+                  <br />+ 사용자 무제한
+                  <br />+ 데이터 용량 무제한
+                  <br />+ 지식재산 관리
                 </p>
                 <button onClick={() => checkUser('MV365', 2500000, 365)}>
                   구매하기
