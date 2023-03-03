@@ -71,7 +71,7 @@ const SideMenuBtn = () => {
             <a
               href={`https://markcloud.co.kr/mark-tong`}
               rel='noopener noreferrer'
-              target='_blank'
+              target='_self'
               title='마크통으로 이동'>
               <img src={tongIcon} alt='마크통 아이콘' />
               <span className='middle'>MARKTONG</span>
