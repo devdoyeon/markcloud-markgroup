@@ -29,21 +29,7 @@ export const errorList = {
 
 //& API 통신 결과 에러 반환일 때 ErrorHandling Fn
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
-  if (
-    result === 'serverError' ||
-    result === 'accessDenied' ||
-    result === 'NotAuthority' ||
-    result === 'loginExceeded' ||
-    result === 'serviceExpired' ||
-    result === 'alreadyProjectName' ||
-    result === 'alreadyUsedProject'
-  ) {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'duplicateLogin') {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'paymentRequired') {
+  if (result === 'paymentRequired') {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
   } else if (result === 'notFound')
@@ -59,6 +45,9 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
       path: '/',
     });
     localStorage.removeItem('yn');
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+  } else {
+    setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
