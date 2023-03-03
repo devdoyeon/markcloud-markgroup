@@ -76,7 +76,7 @@ const CommonFooter = () => {
                   <a
                     href={`https://markcloud.co.kr/mark-tong`}
                     rel='noopener noreferrer'
-                    target='_blank'>
+                    target='_self'>
                     마크통
                   </a>
                 </li>
