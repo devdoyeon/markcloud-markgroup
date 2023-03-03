@@ -290,7 +290,6 @@
   width: 220px;
   height: 330px;
   margin-right: 40px;
-  padding: 16px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16), 4px 4px 4px rgba(0, 0, 0, 0.16);
@@ -321,7 +320,7 @@
   border-radius: 8px;
 }
 .cost > .row > div > div strong {
-  font-size: 28px;
+  font-size: 24px;
   color: #797979;
   transition: 0.5s;
 }
@@ -386,15 +385,24 @@
 }
 .cost > .row > div > div .cost-dashed {
   width: 100%;
-  margin: 16px 0 25px;
+  margin: 16px 0 8px;
   border: 1px dashed #cecece;
   transition: 0.3s;
 }
 .cost > .row > div > div .cost-desc {
+  width: 134px;
   color: #484848;
-  text-align: center;
-  line-height: 23px;
+  text-align: left;
+  font-size: 13px;
+  line-height: 22px;
   transition: 0.5s;
+}
+.cost > .row > div > div .cost-desc span {
+  font-size: 16px;
+  line-height: 23px;
+}
+.cost > .row > div > div .cost-desc.premium {
+  line-height: 18px;
 }
 .cost > .row > div > div button {
   display: flex;
@@ -418,8 +426,8 @@
 }
 .cost > .row > div:hover, .cost > .row > div:active {
   width: 284px;
-  height: 380px;
-  height: var(--costContainer);
+  height: 400px;
+  padding: 16px;
   background: #5850cc;
 }
 .cost > .row > div:hover::after, .cost > .row > div:active::after {
@@ -453,11 +461,6 @@
 }
 .cost > .row > div:hover > div .cost-dashed, .cost > .row > div:active > div .cost-dashed {
   width: 210px;
-  margin: 26px 0 16px;
-}
-.cost > .row > div:hover > div .cost-desc, .cost > .row > div:active > div .cost-desc {
-  font-size: 20px;
-  line-height: 29px;
 }
 .cost > .row > div:hover > div a, .cost > .row > div:active > div a {
   width: 142px;
