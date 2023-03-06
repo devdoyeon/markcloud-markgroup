@@ -73,7 +73,7 @@ const PaymentInfo = memo(({ curData }) => {
     const result = await createMID(data);
     if (typeof result === 'object') {
       paymentParams = result?.data?.data;
-      paymentParams.name = paymentParams.name.replace('마크뷰', '마크그룹웨어');
+      paymentParams.name = paymentParams.name.replace('마크뷰', '마크그룹');
       bool = true;
       if (bool) requestPay();
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -150,7 +150,7 @@ const PaymentInfo = memo(({ curData }) => {
             </thead>
             <tbody>
               <tr>
-                <td>마크그룹웨어 {useDay}일권</td>
+                <td>마크그룹 {useDay}일권</td>
                 <td>{culDate(0, useDay)}</td>
                 <td className='mobile-none'>{addComma(money)}원</td>
               </tr>

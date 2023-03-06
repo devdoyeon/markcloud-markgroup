@@ -7,7 +7,7 @@ import SideMenuBtn from 'common/SideMenuBtn';
 import { commonModalSetting, catchError } from 'js/commonUtils';
 import { checkPoint } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import costBg from 'image/costBg.png';
+import costBg from 'image/costBg.svg';
 
 const Cost = () => {
   const [alert, setAlert] = useState('');
