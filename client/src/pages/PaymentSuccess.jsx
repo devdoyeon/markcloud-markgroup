@@ -68,7 +68,9 @@ const PaymentSuccess = () => {
                 <div>
                   <h3>
                     <br />
-                    <span className='highlight'>{name.replaceAll('마크뷰', '마크그룹웨어')}</span>
+                    <span className='highlight'>
+                      {name.replaceAll('마크뷰', '마크그룹')}
+                    </span>
                   </h3>
                   <h4>
                     총 결제금액&nbsp;

@@ -86,7 +86,7 @@ const CommonFooter = () => {
                     rel='noopener noreferrer'
                     target='_self'
                     className='last'>
-                    마크그룹웨어
+                    마크그룹
                   </a>
                 </li>
               </ul>
