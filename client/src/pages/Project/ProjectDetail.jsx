@@ -134,7 +134,7 @@ const ProjectDetail = () => {
         <SideMenu />
         <div className='content-wrap project'>
           <div className='header'>
-            <h3 onClick={() => navigate('/mark-groupware/project')}>
+            <h3 onClick={() => navigate('/mark-group/project')}>
               프로젝트 현황
             </h3>
           </div>
@@ -229,7 +229,7 @@ const ProjectDetail = () => {
             projectInfo?.created_id === localStorage.getItem('userName') ? (
               <button
                 className='commonBtn editBtn'
-                onClick={() => navigate(`/mark-groupware/project/write/${id}`)}>
+                onClick={() => navigate(`/mark-group/project/write/${id}`)}>
                 수정
               </button>
             ) : (
@@ -237,7 +237,7 @@ const ProjectDetail = () => {
             )}
             <button
               className='commonBtn listBtn'
-              onClick={() => navigate('/mark-groupware/project')}>
+              onClick={() => navigate('/mark-group/project')}>
               목록
             </button>
           </div>
@@ -249,9 +249,9 @@ const ProjectDetail = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'completeDelete')
-              navigate('/mark-groupware/project');
+              navigate('/mark-group/project');
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'tokenExpired') {
               removeCookie('myToken', {
                 path: '/',
@@ -262,7 +262,7 @@ const ProjectDetail = () => {
                 domain: 'markcloud.co.kr',
               });
               localStorage.removeItem('yn');
-              navigate('/mark-groupware/');
+              navigate('/mark-group/');
             } else return;
           }}
         />

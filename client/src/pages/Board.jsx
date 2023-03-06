@@ -78,8 +78,8 @@ const Board = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

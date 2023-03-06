@@ -77,7 +77,7 @@ const Notice = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
           }}
         />
       )}

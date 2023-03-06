@@ -88,14 +88,14 @@ const BusinessBoardRead = () => {
             <button
               className='commonBtn applyBtn'
               onClick={() => {
-                navigate(`/mark-groupware/business/write/${id}`);
+                navigate(`/mark-group/business/write/${id}`);
               }}>
               수정
             </button>
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate('/mark-groupware/business');
+                navigate('/mark-group/business');
               }}>
               목록
             </button>
@@ -108,11 +108,11 @@ const BusinessBoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply')
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'edit')
-              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-group/${path.split('/')[2]}/${id}`);
             else return;
           }}
         />

@@ -258,7 +258,7 @@ const BusinessEditBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/mark-groupware/business`);
+                navigate(`/mark-group/business`);
               }}>
               목록
             </button>
@@ -275,11 +275,11 @@ const BusinessEditBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'edit')
-              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-group/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'deleteConfirm') deletePost();
             else return;
           }}

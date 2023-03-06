@@ -100,7 +100,7 @@ const BoardRead = () => {
               <button
                 className='commonBtn'
                 onClick={() =>
-                  navigate(`/mark-groupware/${path.split('/')[2]}/write/${id}`)
+                  navigate(`/mark-group/${path.split('/')[2]}/write/${id}`)
                 }>
                 수정
               </button>
@@ -109,7 +109,7 @@ const BoardRead = () => {
             )}
             <button
               className='commonBtn list'
-              onClick={() => navigate(`/mark-groupware/${path.split('/')[2]}`)}>
+              onClick={() => navigate(`/mark-group/${path.split('/')[2]}`)}>
               목록
             </button>
           </div>
@@ -121,10 +121,10 @@ const BoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'deleteAlert')
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

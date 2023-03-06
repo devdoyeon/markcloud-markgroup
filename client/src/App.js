@@ -41,126 +41,102 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (pathname === '/') navigate('/mark-groupware');
+    if (pathname === '/') navigate('/mark-group');
     window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
     <div className='App'>
       <Routes>
-        <Route exact path='/mark-groupware' element={<Home />} />
-        <Route exact path='/mark-groupware/sign-in' element={<SignIn />} />
-        <Route exact path='/mark-groupware/cost' element={<Cost />} />
-        <Route exact path='/mark-groupware/payment' element={<Payment />} />
+        <Route exact path='/mark-group' element={<Home />} />
+        <Route exact path='/mark-group/sign-in' element={<SignIn />} />
+        <Route exact path='/mark-group/cost' element={<Cost />} />
+        <Route exact path='/mark-group/payment' element={<Payment />} />
         <Route
           exact
-          path='/mark-groupware/payment-success'
+          path='/mark-group/payment-success'
           element={<PaymentSuccess />}
         />
+        <Route exact path='/mark-group/project' element={<ProjectStatus />} />
+        <Route exact path='/mark-group/report' element={<Report />} />
+        <Route exact path='/mark-group/board' element={<Board />} />
         <Route
           exact
-          path='/mark-groupware/project'
-          element={<ProjectStatus />}
-        />
-        <Route exact path='/mark-groupware/report' element={<Report />} />
-        <Route exact path='/mark-groupware/board' element={<Board />} />
-        <Route
-          exact
-          path='/mark-groupware/business'
+          path='/mark-group/business'
           element={<BusinessManagement />}
         />
         <Route
           exact
-          path='/mark-groupware/personnel'
+          path='/mark-group/personnel'
           element={<PersonnelManagement />}
         />
-        <Route exact path='/mark-groupware/notice' element={<Notice />} />
+        <Route exact path='/mark-group/notice' element={<Notice />} />
         {/* => 주간 업무 보고, 공지사항, 게시판 상세 보기 Route */}
         <Route
           exact
-          path='/mark-groupware/project/:id'
+          path='/mark-group/project/:id'
           element={<ProjectDetail />}
         />
+        <Route exact path='/mark-group/report/:id' element={<BoardRead />} />
+        <Route exact path='/mark-group/board/:id' element={<BoardRead />} />
+        <Route exact path='/mark-group/notice/:id' element={<BoardRead />} />
         <Route
           exact
-          path='/mark-groupware/report/:id'
-          element={<BoardRead />}
-        />
-        <Route exact path='/mark-groupware/board/:id' element={<BoardRead />} />
-        <Route
-          exact
-          path='/mark-groupware/notice/:id'
-          element={<BoardRead />}
-        />
-        <Route
-          exact
-          path='/mark-groupware/business/:id'
+          path='/mark-group/business/:id'
           element={<BusinessBoardRead />}
         />
         {/* => 주간 업무 보고, 공지사항, 게시판 작성, 프로젝트 현황 작성 Route */}
         <Route
           exact
-          path='/mark-groupware/project/write'
+          path='/mark-group/project/write'
           element={<NewProject />}
         />
+        <Route exact path='/mark-group/report/write' element={<NewBoard />} />
+        <Route exact path='/mark-group/board/write' element={<NewBoard />} />
+        <Route exact path='/mark-group/notice/write' element={<NewBoard />} />
         <Route
           exact
-          path='/mark-groupware/report/write'
-          element={<NewBoard />}
-        />
-        <Route
-          exact
-          path='/mark-groupware/board/write'
-          element={<NewBoard />}
-        />
-        <Route
-          exact
-          path='/mark-groupware/notice/write'
-          element={<NewBoard />}
-        />
-        <Route
-          exact
-          path='/mark-groupware/business/write'
+          path='/mark-group/business/write'
           element={<BusinessNewBoard />}
         />
         <Route
           exact
-          path='/mark-groupware/personnel/write'
+          path='/mark-group/personnel/write'
           element={<PersonnelMember />}
         />
         {/* => 주간 업무 보고, 공지사항, 게시판 수정, 프로젝트 현황 수정 Route */}
         <Route
           exact
-          path='/mark-groupware/project/write/:id'
+          path='/mark-group/project/write/:id'
           element={<NewProject />}
         />
         <Route
           exact
-          path='/mark-groupware/report/write/:id'
+          path='/mark-group/report/write/:id'
           element={<NewBoard />}
         />
         <Route
           exact
-          path='/mark-groupware/board/write/:id'
+          path='/mark-group/board/write/:id'
           element={<NewBoard />}
         />
         <Route
           exact
-          path='/mark-groupware/notice/write/:id'
+          path='/mark-group/notice/write/:id'
           element={<NewBoard />}
         />
         <Route
           exact
-          path='/mark-groupware/business/write/:id'
+          path='/mark-group/business/write/:id'
           element={<BusinessEditBoard />}
         />
         <Route
           exact
-          path='/mark-groupware/personnel/write/:id'
+          path='/mark-group/personnel/write/:id'
           element={<PersonnelMember />}
         />
         {/* -------------------------------------------------- */}
-        <Route path='/mark-groupware/*' element={<NotFound />} />
+        <Route path='/mark-group/*' element={<NotFound />} />
       </Routes>
     </div>
   );
