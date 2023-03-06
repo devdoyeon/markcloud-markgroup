@@ -13,9 +13,7 @@ const ListWrap = ({ list }) => {
         <>
           {acc}
           <li
-            onClick={() =>
-              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`)
-            }>
+            onClick={() => navigate(`/mark-group/${path.split('/')[2]}/${id}`)}>
             <div className='row postInfo'>
               <span className='date'>{created_at.replaceAll('-', '.')}</span>
               {`${today.getFullYear()}-${addZero(

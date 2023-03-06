@@ -355,13 +355,13 @@ const NewBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'deleteConfirm') deletePost();
             else if (alert === 'edit' || alert === 'notAuthority')
-              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-group/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />
