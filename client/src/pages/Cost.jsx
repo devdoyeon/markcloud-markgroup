@@ -31,17 +31,17 @@ const Cost = () => {
     } else {
       const result = await checkPoint();
       if (typeof result === 'object') {
-        // if (
-        //   result?.data?.status?.code === 201 ||
-        //   result?.data?.status?.code === 301
-        // )
-        //   commonModalSetting(
-        //     setAlertBox,
-        //     true,
-        //     'alert',
-        //     '이미 사용 중인 그룹웨어 이용권이 있습니다.'
-        //   );
-         if (result?.data?.status?.code === 302)
+        if (
+          result?.data?.status?.code === 201 ||
+          result?.data?.status?.code === 301
+        )
+          commonModalSetting(
+            setAlertBox,
+            true,
+            'alert',
+            '이미 사용 중인 그룹웨어 이용권이 있습니다.'
+          );
+        else if (result?.data?.status?.code === 302)
           commonModalSetting(
             setAlertBox,
             true,
