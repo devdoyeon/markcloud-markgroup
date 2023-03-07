@@ -224,7 +224,8 @@ def update_project(
     # 이미 있는 프로젝트 이름으로 변경하지 못하게 막기
     input_project_name = project_update.project_name
     try:
-        project = db.query(ProjectTable).filter(ProjectTable.project_name == input_project_name).first()
+        project = db.query(ProjectTable).filter(ProjectTable.project_name == input_project_name,
+                                                ProjectTable.id != project_id).first()
     except:
         raise HTTPException(status_code=500, detail='GetProjectNameError')
     
@@ -252,18 +253,15 @@ def update_project(
         print("file:",file)
         
         if project_update.url and file:
-            print("1+1")
             origin_url = ','.join(project_update.url)
             img_url = utils.get_s3_url(file, 'project')
             update_values['img_url'] = origin_url + ',' + img_url
             
         elif project_update.url:
-            print("1+0")
             origin_url = ','.join(project_update.url)
             update_values['img_url'] = origin_url
             
         elif file:
-            print("0+1")
             img_url = utils.get_s3_url(file, 'project')
             update_values['img_url'] = img_url
         
