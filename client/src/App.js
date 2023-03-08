@@ -29,6 +29,9 @@ import NotFound from 'pages/common/NotFound';
 import BusinessBoardRead from 'pages/Business/BusinessBoardRead';
 import PersonnelMember from 'pages/Personnel/PersonnelMember';
 import BusinessEditBoard from 'pages/Business/BusinessEditBoard';
+import ManageMark from 'pages/ManageMark';
+import AddMark from 'pages/AddMark';
+import MarkDetail from './pages/MarkDetail';
 
 function App() {
   const { pathname } = useLocation();
@@ -135,6 +138,10 @@ function App() {
           path='/mark-group/personnel/write/:id'
           element={<PersonnelMember />}
         />
+        <Route exact path='/mark-group/manage-mark' element={<ManageMark />} />
+        <Route exact path='/mark-group/manage-mark/add' element={<AddMark />} />
+        <Route exact path='/mark-group/manage-mark/:id' element={<MarkDetail />} />
+        <Route exact path='/mark-group/manage-mark/edit/:id' element={<AddMark />} />
         {/* -------------------------------------------------- */}
         <Route path='/mark-group/*' element={<NotFound />} />
       </Routes>

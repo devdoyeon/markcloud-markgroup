@@ -462,6 +462,9 @@ input {
   width: 24px;
   height: 24px;
 }
+.container .content-wrap.manageMark .search, .container .content-wrap.addMark .search {
+  display: none;
+}
 
 .common-header {
   position: absolute;

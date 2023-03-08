@@ -119,21 +119,28 @@ const SideMenu = () => {
               게시판
             </li>
             {localStorage.getItem('yn') === 'n' ? (
-              <>
-                <li
-                  className={path.includes('/personnel') ? 'active' : ''}
-                  onClick={() => navigate('/mark-group/personnel')}>
-                  인사 관리
-                </li>
-                <li>
-                  <a
-                    href='https://markcloud.co.kr/mark-view'
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    MarkView
-                  </a>
-                </li>
-              </>
+              <li
+                className={path.includes('/personnel') ? 'active' : ''}
+                onClick={() => navigate('/mark-group/personnel')}>
+                인사 관리
+              </li>
+            ) : (
+              <></>
+            )}
+            <li
+              className={path.includes('/manage-mark') ? 'active' : ''}
+              onClick={() => navigate('/mark-group/manage-mark')}>
+              지식재산 관리
+            </li>
+            {localStorage.getItem('yn') === 'n' ? (
+              <li>
+                <a
+                  href='https://markcloud.co.kr/mark-view'
+                  target='_blank'
+                  rel='noopener noreferrer'>
+                  MarkView
+                </a>
+              </li>
             ) : (
               <></>
             )}
