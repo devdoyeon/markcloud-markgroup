@@ -79,11 +79,11 @@ const SideMenuBtn = () => {
           </li>
           <li>
             <a
-              href='https://markcloud.co.kr/mark-groupware'
+              href='https://markcloud.co.kr/mark-group'
               rel='noopener noreferrer'
               target='_self'
-              title='마크그룹웨어로 이동'>
-              <img src={groupwareIcon} alt='마크그룹웨어 아이콘' />
+              title='마크그룹로 이동'>
+              <img src={groupwareIcon} alt='마크그룹 아이콘' />
               <span className='middle'>GROUPWARE</span>
             </a>
           </li>
@@ -95,7 +95,7 @@ const SideMenuBtn = () => {
               title='마크링크로 이동'>
               <img src={linkIcon} alt='마크링크 아이콘' />
               <span className='middle'>MARK LINK</span>
-            </a>
+          </a>
           </li> */}
           <li></li>
         </ul>

@@ -120,7 +120,7 @@ const BusinessManagement = () => {
             <>
               {acc}
               <tr
-                onClick={() => navigate(`/mark-groupware/business/${id}`)}
+                onClick={() => navigate(`/mark-group/business/${id}`)}
                 className='table-row'>
                 <td>{(pageInfo.page - 1) * 10 + idx + 1}</td>
                 <td>{title}</td>
@@ -528,7 +528,7 @@ const BusinessManagement = () => {
               </div>
               <div
                 className='commonBtn create'
-                onClick={() => navigate(`/mark-groupware/business/write`)}>
+                onClick={() => navigate(`/mark-group/business/write`)}>
                 등록
               </div>
             </div>
@@ -563,7 +563,7 @@ const BusinessManagement = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
           }}
         />
       )}

@@ -353,13 +353,13 @@ const NewProject = () => {
               alert === 'completeDelete' ||
               alert === 'completeEdit'
             )
-              navigate('/mark-groupware/project');
+              navigate('/mark-group/project');
             else if (alert === 'notAuthority' || alert === 'alreadyUsedProject')
-              navigate(`/mark-groupware/project/${id}`);
+              navigate(`/mark-group/project/${id}`);
             else if (alert === 'confirmDelete') deleteCurProject();
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

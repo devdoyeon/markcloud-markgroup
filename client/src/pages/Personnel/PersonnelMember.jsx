@@ -648,7 +648,7 @@ const PersonnelMember = () => {
               )}
               <button
                 className='commonBtn list'
-                onClick={() => navigate(`/mark-groupware/personnel`)}>
+                onClick={() => navigate(`/mark-group/personnel`)}>
                 목록
               </button>
             </div>
@@ -659,7 +659,7 @@ const PersonnelMember = () => {
               </button>
               <button
                 className='commonBtn list'
-                onClick={() => navigate('/mark-groupware/personnel')}>
+                onClick={() => navigate('/mark-group/personnel')}>
                 목록
               </button>
             </div>
@@ -672,13 +672,12 @@ const PersonnelMember = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'cancel' || alert === 'apply')
-              navigate(`/mark-groupware/personnel`);
-            else if (alert === 'edit')
-              navigate(`/mark-groupware/personnel/${id}`);
+              navigate(`/mark-group/personnel`);
+            else if (alert === 'edit') navigate(`/mark-group/personnel/${id}`);
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'deleteConfirm') deleteMemberApi();
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

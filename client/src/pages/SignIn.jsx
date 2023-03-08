@@ -86,7 +86,7 @@ const SignIn = () => {
       const ipResult = await getIp();
       localStorage.setItem('loginIp', ipResult);
       checkUser();
-      navigate('/mark-groupware');
+      navigate('/mark-group');
     } else {
       //@ Error Handling
       if (result === 'wrongId' || result === 'wrongPw') checkForm(result, true);
@@ -95,7 +95,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (getCookie('myToken')) navigate('/mark-groupware/');
+    if (getCookie('myToken')) navigate('/mark-group/');
     changeTitle('그룹웨어 > 로그인');
   }, []);
 
@@ -167,7 +167,7 @@ const SignIn = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else return;
           }}
         />

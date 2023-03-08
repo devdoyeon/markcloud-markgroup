@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaMinusCircle, FaPauseCircle } from 'react-icons/fa';
+import { FaMinusCircle, FaPauseCircle, FaPlusCircle } from 'react-icons/fa';
 import CommonModal from './CommonModal';
 import { catchError, commonModalSetting, addComma } from 'js/commonUtils';
 import { createMID, checkPay } from 'js/groupwareApi';
@@ -73,7 +73,7 @@ const PaymentInfo = memo(({ curData }) => {
     const result = await createMID(data);
     if (typeof result === 'object') {
       paymentParams = result?.data?.data;
-      paymentParams.name = paymentParams.name.replace('마크뷰', '마크그룹웨어');
+      paymentParams.name = paymentParams.name.replace('마크뷰', '마크그룹');
       bool = true;
       if (bool) requestPay();
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -91,7 +91,7 @@ const PaymentInfo = memo(({ curData }) => {
         pay_method: payMethod, //결제수단
         merchant_uid: paymentParams.merchant_uid, //주문번호(yyyymmdd시간)
         name: paymentParams.name, //상품명
-        amount: paymentParams.amount, //상품금액
+        amount: paymentParams.amount + paymentParams.amount / 10, //상품금액
         buyer_email: paymentParams.buyer_email, //구매자 이메일
         buyer_name: paymentParams.buyer_name, //구매자 이름
         buyer_tel: paymentParams.buyer_tel, //구매자 연락처(필수 입력-미설정 시 이니시스 결제창에서 오류 발생 가능)
@@ -114,7 +114,7 @@ const PaymentInfo = memo(({ curData }) => {
           const result = await checkPay(data);
           if (typeof result === 'object') {
             payResult = result?.data.data;
-            navigate('/mark-groupware/payment-success', {
+            navigate('/mark-group/payment-success', {
               state: {
                 payResult: payResult,
                 merchant_uid: rsp.merchant_uid,
@@ -150,7 +150,7 @@ const PaymentInfo = memo(({ curData }) => {
             </thead>
             <tbody>
               <tr>
-                <td>마크그룹웨어 {useDay}일권</td>
+                <td>마크그룹 {useDay}일권</td>
                 <td>{culDate(0, useDay)}</td>
                 <td className='mobile-none'>{addComma(money)}원</td>
               </tr>
@@ -175,12 +175,22 @@ const PaymentInfo = memo(({ curData }) => {
               </strong>
             </li>
             <li>
+              <FaPlusCircle />
+            </li>
+            <li>
+              <p>VAT</p>
+              <strong>
+                {addComma(totalMoney / 10)}
+                <span>원</span>
+              </strong>
+            </li>
+            <li>
               <FaPauseCircle className='fa-pause-circle' />
             </li>
             <li>
               <p>총 결제예정금액</p>
               <strong className='highlight red'>
-                {addComma(totalMoney)}
+                {addComma(totalMoney + totalMoney / 10)}
                 <span>원</span>
               </strong>
             </li>

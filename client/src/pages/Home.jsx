@@ -81,7 +81,7 @@ const Home = () => {
             const { name, user_id } = userResult?.data?.data;
             localStorage.setItem('userName', name);
             localStorage.setItem('userId', user_id);
-            navigate('/mark-groupware/business');
+            navigate('/mark-group/business');
           } else return catchError(userResult, navigate, setAlertBox, setAlert);
         }
       } else catchError(checkResult, navigate, setAlertBox, setAlert);
@@ -282,16 +282,15 @@ const Home = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'needLogin')
-              return navigate('/mark-groupware/sign-in');
+            if (alert === 'needLogin') return navigate('/mark-group/sign-in');
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'needPayment')
-              return navigate('/mark-groupware/cost');
+              return navigate('/mark-group/cost');
             else if (alert === 'needDepartmentName')
               return (window.location.href =
                 'https://markcloud.co.kr/mark-mypage');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

@@ -242,13 +242,24 @@
   background-color: white;
   width: 100%;
   height: 1200px;
-  > img {
+  .costBg {
+    position: relative;
+    @include flex-style(column, center, center);
     transform: translateY(100px);
     width: 100%;
+    .bg {
+      width: 100%;
+      @include position-style($top: 0);
+    }
+  }
+  .costGraphic {
+    width: 47%;
+    z-index: 1;
+    margin-top: 40px;
   }
   > .row {
     width: 100%;
-    @include position-style($bottom: 110px);
+    transform: translateY(140px);
     > div {
       @include position-style(relative);
       width: 220px;
@@ -288,7 +299,7 @@
         .cost-money {
           @include position-style(relative);
           @include flex-style($alignVal: center, $justifyVal: flex-start);
-          margin: 22px 0 27px;
+          margin: 22px 0 18px;
           transform: translateX(15px);
           font-family: $middleFont;
           @include txt-style(18px, #cecece);
@@ -304,7 +315,7 @@
             border-radius: 50%;
             font-family: $middleFont;
             @include txt-style(13px, $white);
-            transition: 0.3s;
+            transition: 0.5s;
           }
 
           &::before {
@@ -327,7 +338,7 @@
               $top: calc(50% - 2.15px)
             );
             width: 30px;
-            height: 43px;
+            height: 35px;
             background: url('image/discountArrow.svg') no-repeat right top;
             background-size: contain;
             transition: 0.5s;
@@ -342,32 +353,42 @@
 
         .cost-dashed {
           width: 100%;
-          margin: 16px 0 8px;
+          margin: 10px 0 8px;
+          margin-left: -5px;
           border: 1px dashed #cecece;
           transition: 0.3s;
         }
 
         .cost-desc {
-          width: 134px;
+          width: 180px;
           color: #484848;
           text-align: left;
-          font-size: 13px;
+          font-size: 12px;
           line-height: 22px;
           transition: 0.5s;
-          margin-bottom: 12px;
+          margin-bottom: 19px;
+          margin-left: 48px;
           span {
-            font-size: 16px;
+            margin-left: -28px;
+            transition: 0.5s;
+            font-size: 14px;
             line-height: 23px;
           }
           &.premium {
             line-height: 18px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
           }
+        }
+
+        .vat {
+          font-size: 12px;
+          color: #484848;
+          transition: 0.5s;
         }
 
         button {
           @include flex-style();
-          width: 142px;
+          width: 112px;
           height: 36px;
           background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
           border-radius: 8px;
@@ -403,14 +424,19 @@
         }
 
         > div {
-          padding: 16px 0;
+          padding: 12px 0;
           strong {
             @include txt-style(32px, #484848);
             font-family: $boldFont;
           }
 
+          .vat {
+            font-size: 14px;
+            transition: 0.5s;
+          }
+
           .cost-money {
-            margin: 25px 0 35px;
+            margin: 15px 0 17px;
             font-size: 22px;
 
             span {
@@ -434,11 +460,28 @@
             width: 210px;
           }
 
+          .cost-desc {
+            width: 207px;
+            font-size: 13px;
+            transition: 0.5s;
+            span {
+              transition: 0.5s;
+              font-size: 16px;
+            }
+            &.premium {
+              font-size: 12px;
+            }
+          }
+
           a {
             width: 142px;
             height: 50px;
             font-size: 19.35px;
             transition: all 0.5s;
+          }
+          button {
+            width: 132px;
+            height: 46px;
           }
         }
 
