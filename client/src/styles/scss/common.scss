@@ -38,6 +38,19 @@ input {
   background-color: white;
 }
 
+.ql-editor {
+  h1 {
+    * {
+      font-size: 32px;
+    }
+  }
+  h2 {
+    * {
+      font-size: 24px;
+    }
+  }
+}
+
 .selectBox {
   user-select: none;
   border: 1px solid $footerColor;
@@ -228,6 +241,9 @@ input {
           margin: 24px 0;
         }
         .content {
+          img {
+            max-width: 100%;
+          }
           overflow-y: auto;
           height: 430px;
           padding: 0 10px;
@@ -835,8 +851,7 @@ input {
 
     &.scroll-top-btn {
       margin-top: 10px;
-      background: url('image/scrollTopIcon.png') no-repeat center,
-        $white;
+      background: url('image/scrollTopIcon.png') no-repeat center, $white;
       -webkit-transform: translate3d(130px, 0, 0);
       transform: translate3d(130px, 0, 0);
     }

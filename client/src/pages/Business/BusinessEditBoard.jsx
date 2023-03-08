@@ -8,25 +8,22 @@ import {
   catchError,
   changeTitle,
   getKeyByValue,
+  makeFormData,
+  replaceFn,
 } from 'js/commonUtils';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import BusinessProjectSelect from './BusinessCommonSelect';
 import {
-  createBusiness,
   deleteBusiness,
   getBusinessInfo,
   getBusinessProjectRead,
-  getBusinessRead,
   updateBusiness,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
-import { post } from 'jquery';
 
 const BusinessEditBoard = () => {
   const [alert, setAlert] = useState('');
-  const [list, setList] = useState([]);
-  const [meta, setMeta] = useState({});
   const [postInfo, setPostInfo] = useState({
     project_name: '',
     status_filter: 'MyProject',
@@ -42,13 +39,12 @@ const BusinessEditBoard = () => {
     content: '',
     bool: false,
   });
-  const [pageInfo, setPageInfo] = useState({
+  const pageInfo = {
     page: 1,
     totalPage: 0,
     limit: 5,
-  });
+  };
 
-  const [projectValue, setProjectValue] = useState('선택');
   const [requesterValue, setRequesterValue] = useState('');
   const [contactValue, setContactValue] = useState('');
   const [progressValue, setProgressValue] = useState('선택');
@@ -56,7 +52,6 @@ const BusinessEditBoard = () => {
   const [memberKey, setMemberKey] = useState([]);
   const [memberName, setMemberName] = useState([]);
   const [memberObj, setMemberObj] = useState({});
-  const [memberCurKey, setMemberCurKey] = useState();
 
   const progressArr = ['요청', '접수', '진행', '완료'];
 
@@ -67,37 +62,30 @@ const BusinessEditBoard = () => {
   const getBusinessCurInfo = async () => {
     const result = await getBusinessInfo(id);
     if (typeof result === 'object') {
-      const {
-        content,
-        manager_id,
-        project_name,
-        request_id,
-        title,
-        work_status,
-        created_id,
-      } = result?.data[0];
-      setPostInfo(prev => {
-        const clone = { ...prev };
-        clone.content = content;
-        clone.project_name = project_name;
-        clone.request_id = request_id;
-        clone.manager_id = manager_id;
-        clone.work_status = work_status;
-        clone.title = title;
-        clone.created_id = created_id;
-        return clone;
-      });
-      setProjectValue(project_name);
+      const { manager_id, project_name, request_id, work_status } =
+        result?.data;
+      const obj = { ...result?.data };
+      let content = obj.content;
+      if (result?.data?.img_url?.length)
+        for (let i = 0; i < result?.data?.img_url.length; i++) {
+          content = content.replace(
+            `UploadedImage${i}`,
+            `<img src=${result?.data?.img_url[i]}></img>`
+          );
+        }
+      content = replaceFn('view', content);
+      obj.content = content;
+      obj.title = replaceFn('view', obj.title);
+      setPostInfo(obj);
       setContactValue(manager_id);
       setRequesterValue(request_id);
       setProgressValue(work_status);
-
       const memberRead = await getBusinessProjectRead(
         project_name,
-        postInfo.status_filter,
+        'MyProject',
         pageInfo
       );
-      const { meta, data } = memberRead?.data;
+      const { meta } = memberRead?.data;
       const key = Object.keys(meta?.project_member);
       const value = Object.values(meta?.project_member);
       setMemberKey(key);
@@ -126,8 +114,15 @@ const BusinessEditBoard = () => {
     const obj = { ...postInfo };
     obj.manager_id = getKeyByValue(memberObj, contactValue);
     obj.request_id = getKeyByValue(memberObj, requesterValue);
-
-    const result = await updateBusiness(obj, id);
+    const editor = document.querySelector('.ql-editor');
+    const img = editor.querySelectorAll('img');
+    const formData = makeFormData();
+    const result = await updateBusiness(
+      obj,
+      editor.innerHTML,
+      img.length ? formData : null,
+      id
+    );
     if (typeof result === 'object') {
       setAlert('edit');
       return commonModalSetting(
@@ -162,6 +157,11 @@ const BusinessEditBoard = () => {
       changeState(setPostInfo, 'work_status', progressValue);
     }
   }, [progressValue]);
+
+  useEffect(() => {
+    console.log(contactValue);
+  }, [contactValue]);
+
   return (
     <>
       <div className='container'>
@@ -191,7 +191,7 @@ const BusinessEditBoard = () => {
                   opt={memberName}
                   selectVal={contactValue}
                   nameKey={memberKey}
-                  setMemberCurKey={setMemberCurKey}
+                  // setMemberCurKey={setMemberCurKey}
                   setSelectVal={setContactValue}
                   postInfo={postInfo}
                   setPostInfo={setPostInfo}
@@ -258,7 +258,7 @@ const BusinessEditBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/mark-groupware/business`);
+                navigate(`/mark-group/business`);
               }}>
               목록
             </button>
@@ -275,11 +275,11 @@ const BusinessEditBoard = () => {
               alert === 'apply' ||
               alert === 'deleteAlert'
             )
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'edit')
-              navigate(`/mark-groupware/${path.split('/')[2]}/${id}`);
+              navigate(`/mark-group/${path.split('/')[2]}/${id}`);
             else if (alert === 'duplicateLogin' || alert === 'tokenExpired')
-              return navigate('/mark-groupware/sign-in');
+              return navigate('/mark-group/sign-in');
             else if (alert === 'deleteConfirm') deletePost();
             else return;
           }}

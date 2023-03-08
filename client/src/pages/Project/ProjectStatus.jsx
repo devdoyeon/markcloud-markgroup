@@ -4,7 +4,13 @@ import SideMenu from 'common/SideMenu';
 import CommonModal from 'common/CommonModal';
 import CommonSelect from 'common/CommonSelect';
 import Pagination from 'common/Pagination';
-import { changeTitle, changeState, catchError, enterFn } from 'js/commonUtils';
+import {
+  changeTitle,
+  changeState,
+  catchError,
+  enterFn,
+  replaceFn,
+} from 'js/commonUtils';
 import { getProjectList } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
 import noneList from 'image/noneList.svg';
@@ -98,13 +104,13 @@ const ProjectStatus = () => {
             {acc}
             <tr
               className={idx % 2 === 1 ? 'odd' : 'even'}
-              onClick={() => navigate(`/mark-groupware/project/${id}`)}>
+              onClick={() => navigate(`/mark-group/project/${id}`)}>
               <td>{pageInfo.page * 10 - 9 + idx}</td>
               <td>{eng2kor(project_status)}</td>
               <td>
-                {project_name.length > 20
-                  ? `${project_name.slice(0, 20)}...`
-                  : project_name}
+                {replaceFn('view', project_name).length > 20
+                  ? `${replaceFn('view', project_name).slice(0, 20)}...`
+                  : replaceFn('view', project_name)}
               </td>
               <td>{project_start_date}</td>
               <td>{project_end_date}</td>
@@ -190,6 +196,7 @@ const ProjectStatus = () => {
                 <input
                   type='date'
                   value={search.start_date}
+                  max='9999-12-31'
                   onChange={e =>
                     changeState(setSearch, 'start_date', e.target.value)
                   }
@@ -198,6 +205,7 @@ const ProjectStatus = () => {
                 <input
                   type='date'
                   value={search.end_date}
+                  max='9999-12-31'
                   onChange={e =>
                     changeState(setSearch, 'end_date', e.target.value)
                   }
@@ -221,7 +229,7 @@ const ProjectStatus = () => {
               </button>
               <button
                 className='commonBtn applyBtn'
-                onClick={() => navigate('/mark-groupware/project/write')}>
+                onClick={() => navigate('/mark-group/project/write')}>
                 등록
               </button>
             </div>
@@ -259,8 +267,8 @@ const ProjectStatus = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />

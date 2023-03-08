@@ -58,6 +58,13 @@ input {
   background-color: white;
 }
 
+.ql-editor h1 * {
+  font-size: 32px;
+}
+.ql-editor h2 * {
+  font-size: 24px;
+}
+
 .selectBox {
   user-select: none;
   border: 1px solid #eeeeee;
@@ -296,6 +303,9 @@ input {
   padding: 0 10px;
   margin-bottom: 24px;
   white-space: normal;
+}
+.container .content-wrap .board-wrap > .body-wrap .content img {
+  max-width: 100%;
 }
 .container .content-wrap .board-wrap > .body-wrap .content .quill {
   width: 100%;

@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-class EditorComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  modules = {
+const EditorComponent = ({ content, setContent, col }) => {
+  const modules = {
     toolbar: [
-      //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       ['image'],
@@ -18,7 +12,7 @@ class EditorComponent extends Component {
     ],
   };
 
-  formats = [
+  const formats = [
     'header',
     'bold',
     'italic',
@@ -32,28 +26,22 @@ class EditorComponent extends Component {
     'background',
   ];
 
-  render() {
-    const { content, setContent, col } = this.props;
-    return (
-      <>
-        {/* {console.log(content)}
-        {console.log(editor.getContents)} */}
-        <ReactQuill
-          theme='snow'
-          modules={this.modules}
-          formats={this.formats}
-          value={content}
-          onChange={(c, d, s, editor) =>
-            setContent(prev => {
-              const clone = { ...prev };
-              clone[col] = editor.getHTML();
-
-              return clone;
-            })
-          }
-        />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <ReactQuill
+        theme='snow'
+        modules={modules}
+        formats={formats}
+        value={content}
+        onChange={(c, d, s, editor) =>
+          setContent(prev => {
+            const clone = { ...prev };
+            clone[col] = editor.getHTML();
+            return clone;
+          })
+        }
+      />
+    </>
+  );
+};
 export default EditorComponent;

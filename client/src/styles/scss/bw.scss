@@ -74,8 +74,12 @@
         &.project-work-wrap {
           height: 720px;
           .edit {
+            overflow-y: auto;
             padding: 20px 0;
             height: 430px;
+            img {
+              max-width: 100%;
+            }
             .quill {
               width: 100%;
               height: 430px;
@@ -916,6 +920,7 @@
 }
 
 .popup-bg {
+  @include flex-style();
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -928,10 +933,6 @@
     height: 262px;
     border-radius: 16px;
     background-color: $white;
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translate(-45%, -50%);
     > .head {
       padding: 16px 0 16px 24px;
       color: $gray02;

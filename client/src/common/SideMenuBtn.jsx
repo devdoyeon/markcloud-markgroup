@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import cloudIcon from 'image/sideBtnIcon01.png';
 import viewIcon from 'image/sideBtnIcon02.png';
 import tongIcon from 'image/sideBtnIcon03.png';
-import groupwareIcon from 'image/sideBtnIcon04.svg'
+import groupwareIcon from 'image/sideBtnIcon04.svg';
 // import linkIcon from 'image/sideBtnIcon05.png';
 
 const SideMenuBtn = () => {
@@ -69,9 +69,9 @@ const SideMenuBtn = () => {
           </li>
           <li>
             <a
-              href={`https://play.google.com/store/apps/details?id=com.marktong.marktong&referrer=utm_source%3Dmarkcloud_mainpage%26utm_medium%3Dtag%26anid%3Dadmob`}
+              href={`https://markcloud.co.kr/mark-tong`}
               rel='noopener noreferrer'
-              target='_blank'
+              target='_self'
               title='마크통으로 이동'>
               <img src={tongIcon} alt='마크통 아이콘' />
               <span className='middle'>MARKTONG</span>
@@ -79,11 +79,11 @@ const SideMenuBtn = () => {
           </li>
           <li>
             <a
-              href='https://markcloud.co.kr/mark-groupware'
+              href='https://markcloud.co.kr/mark-group'
               rel='noopener noreferrer'
               target='_self'
-              title='마크그룹웨어로 이동'>
-              <img src={groupwareIcon} alt='마크그룹웨어 아이콘' />
+              title='마크그룹로 이동'>
+              <img src={groupwareIcon} alt='마크그룹 아이콘' />
               <span className='middle'>GROUPWARE</span>
             </a>
           </li>
@@ -95,7 +95,7 @@ const SideMenuBtn = () => {
               title='마크링크로 이동'>
               <img src={linkIcon} alt='마크링크 아이콘' />
               <span className='middle'>MARK LINK</span>
-            </a>
+          </a>
           </li> */}
           <li></li>
         </ul>

@@ -74,19 +74,19 @@ const CommonFooter = () => {
                 </li>
                 <li>
                   <a
-                    href={`https://play.google.com/store/apps/details?id=com.marktong.marktong&referrer=utm_source%3Dmarkcloud_mainpage%26utm_medium%3Dtag%26anid%3Dadmob`}
+                    href={`https://markcloud.co.kr/mark-tong`}
                     rel='noopener noreferrer'
-                    target='_blank'>
+                    target='_self'>
                     마크통
                   </a>
                 </li>
                 <li>
                   <a
-                    href='https://markcloud.co.kr/mark-groupware'
+                    href='https://markcloud.co.kr/mark-group'
                     rel='noopener noreferrer'
                     target='_self'
                     className='last'>
-                    마크그룹웨어
+                    마크그룹
                   </a>
                 </li>
               </ul>

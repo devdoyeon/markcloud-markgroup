@@ -22,7 +22,7 @@ const CommonMenu = () => {
             로그아웃
           </button>
         ) : (
-          <Link to='/mark-groupware/sign-in'>로그인</Link>
+          <Link to='/mark-group/sign-in'>로그인</Link>
         )}
       </li>
       <li>

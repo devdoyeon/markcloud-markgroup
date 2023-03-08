@@ -1,4 +1,5 @@
 import { removeCookie } from './cookie';
+import $ from 'jquery';
 
 // ================================== DY ==================================
 
@@ -28,25 +29,10 @@ export const errorList = {
 
 //& API 통신 결과 에러 반환일 때 ErrorHandling Fn
 export const catchError = async (result, navigate, setAlertBox, setAlert) => {
-  if (
-    result === 'serverError' ||
-    result === 'accessDenied' ||
-    result === 'NotAuthority' ||
-    result === 'loginExceeded' ||
-    result === 'serviceExpired' ||
-    result === 'alreadyProjectName' ||
-    result === 'alreadyUsedProject'
-  ) {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'duplicateLogin') {
-    setAlert(result);
-    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
-  } else if (result === 'paymentRequired') {
+  if (result === 'paymentRequired') {
     setAlert(result);
     return commonModalSetting(setAlertBox, true, 'confirm', errorList[result]);
-  } else if (result === 'notFound')
-    return navigate('/mark-groupware/not-found');
+  } else if (result === 'notFound') return navigate('/mark-group/not-found');
   else if (result === 'DuplicatedDpError')
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   else if (result === 'tokenExpired') {
@@ -58,6 +44,9 @@ export const catchError = async (result, navigate, setAlertBox, setAlert) => {
       path: '/',
     });
     localStorage.removeItem('yn');
+    return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
+  } else {
+    setAlert(result);
     return commonModalSetting(setAlertBox, true, 'alert', errorList[result]);
   }
 };
@@ -127,6 +116,99 @@ export const text2html = (c, str) => {
     str,
     'text/html'
   ).body.innerHTML;
+};
+
+//& base64 -> file -> return formData
+export const makeFormData = () => {
+  const editor = document.querySelector('.ql-editor');
+  const imgArr = editor.querySelectorAll('img');
+  const fileList = [];
+  let file;
+  const formData = new FormData();
+  if (imgArr.length) {
+    for (let img of imgArr) {
+      if (img.currentSrc.includes('base64')) {
+        const arr = img.currentSrc.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) u8arr[n] = bstr.charCodeAt(n);
+        file = new File([u8arr], { type: mime });
+        fileList.push(file);
+      } else formData.append('url', img.currentSrc);
+    }
+    for (let i = 0; i < imgArr.length; i++)
+      $(imgArr[i]).replaceWith(`UploadedImage${i}`);
+    for (let file of fileList) formData.append('file', file);
+  }
+  return formData;
+};
+
+//& img url Arr -> img src
+export const str2img = (img_url, content) => {
+  let str = content;
+  if (img_url?.length)
+    for (let i = 0; i < img_url.length; i++) {
+      str = str.replace(`UploadedImage${i}`, `<img src=${img_url[i]}></img>`);
+    }
+  return str;
+};
+
+//& &, + <=> and, plus
+export const replaceFn = (opt, str) => {
+  let target = str;
+  if (opt === 'view') {
+    target = target.replaceAll('gwBackTick', '`');
+    target = target.replaceAll('gwExclamation', '!');
+    target = target.replaceAll('gwAt', '@');
+    target = target.replaceAll('gwHash', '#');
+    target = target.replaceAll('gwDollar', '$');
+    target = target.replaceAll('gwPercent', '%');
+    target = target.replaceAll('gwCaret', '^');
+    target = target.replaceAll('gwAnd', '&');
+    target = target.replaceAll('gwAster', '*');
+    target = target.replaceAll('gwParenthesesLeft', '(');
+    target = target.replaceAll('gwParenthesesRight', ')');
+    target = target.replaceAll('gwMinus', '-');
+    target = target.replaceAll('gwUnderBar', '_');
+    target = target.replaceAll('gwPlus', '+');
+    target = target.replaceAll('gwEqual', '=');
+    target = target.replaceAll('gwBracesLeft', '{');
+    target = target.replaceAll('gwBracesRight', '}');
+    target = target.replaceAll('gwBracketsLeft', '[');
+    target = target.replaceAll('gwBracketsRight', ']');
+    target = target.replaceAll('gwGreaterThan', '<');
+    target = target.replaceAll('gwLessThan', '>');
+    target = target.replaceAll(`gwBackSlash`, '\\');
+    target = target.replaceAll(`gwOrMark`, '|');
+  } else if (opt === 'post') {
+    target = target.replaceAll('`', 'gwBackTick');
+    target = target.replaceAll('!', 'gwExclamation');
+    target = target.replaceAll('@', 'gwAt');
+    target = target.replaceAll('#', 'gwHash');
+    target = target.replaceAll('$', 'gwDollar');
+    target = target.replaceAll('%', 'gwPercent');
+    target = target.replaceAll('^', 'gwCaret');
+    if (target.includes('&amp;')) target = target.replaceAll('&amp;', 'gwAnd');
+    else target = target.replaceAll('&', 'gwAnd');
+    target = target.replaceAll('*', 'gwAster');
+    target = target.replaceAll('(', 'gwParenthesesLeft');
+    target = target.replaceAll(')', 'gwParenthesesRight');
+    target = target.replaceAll('-', 'gwMinus');
+    target = target.replaceAll('_', 'gwUnderBar');
+    target = target.replaceAll('+', 'gwPlus');
+    target = target.replaceAll('=', 'gwEqual');
+    target = target.replaceAll('{', 'gwBracesLeft');
+    target = target.replaceAll('}', 'gwBracesRight');
+    target = target.replaceAll('[', 'gwBracketsLeft');
+    target = target.replaceAll(']', 'gwBracketsRight');
+    target = target.replaceAll('<', 'gwGreaterThan');
+    target = target.replaceAll('>', 'gwLessThan');
+    target = target.replaceAll(`\\`, 'gwBackSlash');
+    target = target.replaceAll(`|`, 'gwOrMark');
+  }
+  return target;
 };
 
 // ================================== BW ==================================

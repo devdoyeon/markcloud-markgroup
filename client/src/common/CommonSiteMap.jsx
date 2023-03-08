@@ -44,10 +44,10 @@ const CommonSiteMap = ({ color }) => {
         <nav>
           <ul>
             <li>
-              <Link to='/mark-groupware/' className='main-move' />
+              <Link to='/mark-group/' className='main-move' />
             </li>
             <li>
-              <Link to='/mark-groupware/cost'>요금제 안내</Link>
+              <Link to='/mark-group/cost'>요금제 안내</Link>
             </li>
             <li>
               <a

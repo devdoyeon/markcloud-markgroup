@@ -146,7 +146,6 @@
               span {
                 font-family: $middleFont;
                 font-size: 20px;
-                
               }
             }
             .info {
@@ -243,19 +242,29 @@
   background-color: white;
   width: 100%;
   height: 1200px;
-  > img {
+  .costBg {
+    position: relative;
+    @include flex-style(column, center, center);
     transform: translateY(100px);
     width: 100%;
+    .bg {
+      width: 100%;
+      @include position-style($top: 0);
+    }
+  }
+  .costGraphic {
+    width: 47%;
+    z-index: 1;
+    margin-top: 40px;
   }
   > .row {
     width: 100%;
-    @include position-style($bottom: 110px);
+    transform: translateY(140px);
     > div {
       @include position-style(relative);
       width: 220px;
       height: 330px;
       margin-right: 40px;
-      padding: 16px;
       background-color: $white;
       border-radius: 8px;
       box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16),
@@ -283,14 +292,14 @@
         border-radius: 8px;
 
         strong {
-          @include txt-style(28px, #797979);
+          @include txt-style(24px, #797979);
           transition: 0.5s;
         }
 
         .cost-money {
           @include position-style(relative);
           @include flex-style($alignVal: center, $justifyVal: flex-start);
-          margin: 22px 0 27px;
+          margin: 22px 0 18px;
           transform: translateX(15px);
           font-family: $middleFont;
           @include txt-style(18px, #cecece);
@@ -306,7 +315,7 @@
             border-radius: 50%;
             font-family: $middleFont;
             @include txt-style(13px, $white);
-            transition: 0.3s;
+            transition: 0.5s;
           }
 
           &::before {
@@ -329,7 +338,7 @@
               $top: calc(50% - 2.15px)
             );
             width: 30px;
-            height: 43px;
+            height: 35px;
             background: url('image/discountArrow.svg') no-repeat right top;
             background-size: contain;
             transition: 0.5s;
@@ -344,23 +353,43 @@
 
         .cost-dashed {
           width: 100%;
-          margin: 16px 0 25px;
+          margin: 10px 0 8px;
+          margin-left: -5px;
           border: 1px dashed #cecece;
           transition: 0.3s;
         }
 
         .cost-desc {
+          width: 180px;
           color: #484848;
-          text-align: center;
-          line-height: 23px;
+          text-align: left;
+          font-size: 12px;
+          line-height: 22px;
+          transition: 0.5s;
+          margin-bottom: 19px;
+          margin-left: 48px;
+          span {
+            margin-left: -28px;
+            transition: 0.5s;
+            font-size: 14px;
+            line-height: 23px;
+          }
+          &.premium {
+            line-height: 18px;
+            margin-bottom: 8px;
+          }
+        }
+
+        .vat {
+          font-size: 12px;
+          color: #484848;
           transition: 0.5s;
         }
 
         button {
           @include flex-style();
-          width: 142px;
+          width: 112px;
           height: 36px;
-          margin-top: 17px;
           background: linear-gradient(90deg, #b993d6 0%, #5a88e5 99.99%);
           border-radius: 8px;
           color: $white;
@@ -385,8 +414,9 @@
       &:hover,
       &:active {
         width: 284px;
-        height: 380px;
-        height: var(--costContainer);
+        height: 400px;
+        // height: var(--costContainer);
+        padding: 16px;
         background: $mainColor;
 
         &::after {
@@ -394,14 +424,19 @@
         }
 
         > div {
-          padding: 16px 0;
+          padding: 12px 0;
           strong {
             @include txt-style(32px, #484848);
             font-family: $boldFont;
           }
 
+          .vat {
+            font-size: 14px;
+            transition: 0.5s;
+          }
+
           .cost-money {
-            margin: 25px 0 35px;
+            margin: 15px 0 17px;
             font-size: 22px;
 
             span {
@@ -423,12 +458,19 @@
 
           .cost-dashed {
             width: 210px;
-            margin: 26px 0 16px;
           }
 
           .cost-desc {
-            font-size: 20px;
-            line-height: 29px;
+            width: 207px;
+            font-size: 13px;
+            transition: 0.5s;
+            span {
+              transition: 0.5s;
+              font-size: 16px;
+            }
+            &.premium {
+              font-size: 12px;
+            }
           }
 
           a {
@@ -436,6 +478,10 @@
             height: 50px;
             font-size: 19.35px;
             transition: all 0.5s;
+          }
+          button {
+            width: 132px;
+            height: 46px;
           }
         }
 
@@ -1085,6 +1131,9 @@
         max-height: 250px;
         overflow-y: auto;
         padding: 10px 60px;
+        img {
+          max-width: 100%;
+        }
       }
     }
   }

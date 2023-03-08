@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import SideMenu from 'common/SideMenu';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import CommonModal from 'common/CommonModal';
-import { catchError, changeTitle, text2html } from 'js/commonUtils';
+import { replaceFn, catchError, changeTitle, text2html } from 'js/commonUtils';
 import {
   getBoardDetail,
   getNoticeInfo,
   getReportDetail,
 } from 'js/groupwareApi';
 import { getCookie } from 'js/cookie';
+import { str2img } from 'js/commonUtils';
 
 const BoardRead = () => {
   const path = useLocation().pathname;
@@ -49,8 +50,13 @@ const BoardRead = () => {
         result = '';
     }
     if (typeof result === 'object') {
-      setInfo(result?.data);
-      text2html('.content', result?.data?.content);
+      let str = str2img(result?.data?.img_url, result?.data?.content);
+      str = replaceFn('view', str);
+      text2html('.content', str);
+      let obj = { ...result?.data };
+      const title = replaceFn('view', result?.data?.title);
+      obj.title = title;
+      setInfo(obj);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -94,7 +100,7 @@ const BoardRead = () => {
               <button
                 className='commonBtn'
                 onClick={() =>
-                  navigate(`/mark-groupware/${path.split('/')[2]}/write/${id}`)
+                  navigate(`/mark-group/${path.split('/')[2]}/write/${id}`)
                 }>
                 수정
               </button>
@@ -103,7 +109,7 @@ const BoardRead = () => {
             )}
             <button
               className='commonBtn list'
-              onClick={() => navigate(`/mark-groupware/${path.split('/')[2]}`)}>
+              onClick={() => navigate(`/mark-group/${path.split('/')[2]}`)}>
               목록
             </button>
           </div>
@@ -115,10 +121,10 @@ const BoardRead = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'deleteAlert')
-              navigate(`/mark-groupware/${path.split('/')[2]}`);
+              navigate(`/mark-group/${path.split('/')[2]}`);
             else if (alert === 'duplicateLogin')
-              return navigate('/mark-groupware/sign-in');
-            else if (alert === 'tokenExpired') navigate('/mark-groupware/');
+              return navigate('/mark-group/sign-in');
+            else if (alert === 'tokenExpired') navigate('/mark-group/');
             else return;
           }}
         />
