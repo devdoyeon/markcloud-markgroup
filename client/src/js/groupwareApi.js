@@ -8,8 +8,6 @@ const header = () => ({
   },
 });
 
-
-
 //# API 통신 중 발생하는 에러 핸들링 함수
 export const apiErrorHandling = async error => {
   const { status } = error?.response;
@@ -183,12 +181,13 @@ export const createNotice = async ({ title, content, created_id }, file) => {
   console.log(file);
   try {
     return await axios.post(
-      `/groupware/notice/create?title=${title}&content=${content}`,
+      // `/groupware/notice/create?title=${title}&content=${content}`,
+      `/groupware/notice/create`,
       {
-        // title: title,
-        // content: content,
-        // created_id: created_id,
-        file: file === undefined ? null : file,
+        title: title,
+        content: content,
+        created_id: created_id,
+        // file: file === undefined ? null : file,
       },
       header()
     );
