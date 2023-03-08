@@ -23,6 +23,22 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
         return '진행 중';
       case 'complete':
         return '종료';
+      case 'none':
+        return '선택';
+      case 'patent':
+        return '특허';
+      case 'design':
+        return '디자인';
+      case 'mark':
+        return '상표';
+      case 'application':
+        return '출원';
+      case 'decide':
+        return '심사중';
+      case 'opinionNotice':
+        return '의견제출통지';
+      case 'apply':
+        return '등록';
       default:
         return selectVal;
     }
