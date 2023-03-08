@@ -48,9 +48,12 @@ const AddMark = () => {
 
   const rightArr = ['선택', '특허', '디자인', '상표'];
   const statusArr = ['선택', '출원', '심사중', '의견제출통지', '등록'];
+  const onlyNumberRegExp = /[0-9]/g;
 
   const applyOrEditMark = async () => {
     const arr = Object.values(markData);
+    const numRegExp = /^[0-9]{13}$/;
+    return console.log(numRegExp.test(markData?.application_number));
     for (let value of arr) {
       if (
         value.trim() === '' ||
@@ -205,10 +208,11 @@ const AddMark = () => {
                     changeState(
                       setMarkData,
                       'application_number',
-                      e.target.value
+                      e.target.value.replace(/[^-0-9]/g, '')
                     )
                   }
                   value={markData?.application_number}
+                  maxLength={13}
                 />
               </div>
             </div>
@@ -297,10 +301,11 @@ const AddMark = () => {
                     changeState(
                       setMarkData,
                       'registration_number',
-                      e.target.value
+                      e.target.value.replace(/[^-0-9]/g, '')
                     )
                   }
                   value={markData?.registration_number}
+                  maxLength={13}
                 />
               </div>
             </div>
