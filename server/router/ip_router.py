@@ -55,7 +55,6 @@ def ip_detail(
     try:
         db_ip = ip_crud.get_ip(db, ip_id)        
         outbound = IPOut(
-            id = ip_id,
             rights = db_ip.rights,
             application_date = db_ip.application_date,
             application_number = db_ip.application_number,
@@ -65,7 +64,10 @@ def ip_detail(
             name_eng = db_ip.name_eng,
             product_code = db_ip.product_code,
             registration_date = db_ip.registration_date,
-            registration_number = db_ip.registration_number
+            registration_number = db_ip.registration_number,
+            created_id = db_ip.created_id,
+            created_at = db_ip.created_at,
+            user_pk = user_pk
         )
         return outbound
     except HTTPException as e:
@@ -83,7 +85,7 @@ def ip_create(
     db: Session = Depends(get_db)
 ):
     try:
-        data = ip_crud.create_ip(db, user_pk, ip_create)
+        data = ip_crud.create_ip(db, user_info, ip_create)
         return Response().success_response(data)
     except HTTPException as e:
         raise HTTPException(status_code=e.status_code, detail=e.detail)
