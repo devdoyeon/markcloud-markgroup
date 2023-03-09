@@ -48,17 +48,17 @@ const AddMark = () => {
 
   const rightArr = ['선택', '특허', '디자인', '상표'];
   const statusArr = ['선택', '출원', '심사중', '의견제출통지', '등록'];
-  const onlyNumberRegExp = /[0-9]/g;
 
   const applyOrEditMark = async () => {
     const arr = Object.values(markData);
-    const numRegExp = /^[0-9]{13}$/;
-    return console.log(numRegExp.test(markData?.application_number));
+    console.log(markData)
     for (let value of arr) {
       if (
         value.trim() === '' ||
         rightFilter === 'none' ||
-        statusFilter === 'none'
+        statusFilter === 'none' ||
+        markData?.application_number?.length !== 13 ||
+        markData?.registration_number?.length !== 13
       ) {
         setAlert('emptyValue');
         return commonModalSetting(
@@ -81,7 +81,7 @@ const AddMark = () => {
         setAlertBox,
         true,
         'alert',
-        `정상적으로 ${id.length ? '수정' : '등록'} 되었습니다.`
+        `정상적으로 ${id?.length ? '수정' : '등록'} 되었습니다.`
       );
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
