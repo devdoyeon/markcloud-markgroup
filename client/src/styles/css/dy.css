@@ -1288,6 +1288,9 @@
 .addMark .input-wrap .selectBox .selectOptGroup {
   width: 172px;
 }
+.addMark .input-wrap .selectBox .selectVal > span {
+  width: auto;
+}
 .addMark .input-wrap > .row {
   justify-content: flex-start;
   width: 100%;

@@ -1286,6 +1286,9 @@
       .selectOptGroup {
         width: 172px;
       }
+      .selectVal > span {
+        width: auto;
+      }
     }
 
     > .row {
