@@ -241,3 +241,7 @@ export const regularExpression = async (type, str) => {
   }
   return regExp.test(str.trim());
 };
+
+export const makeQuery = data => {
+  
+}

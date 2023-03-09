@@ -879,3 +879,55 @@ export const deleteMark = async id => {
     return apiErrorHandling(error);
   }
 };
+
+//& 지식재산 검색
+export const searchMark = async data => {
+  const {
+    rights,
+    application_number,
+    application_start_date,
+    application_end_date,
+    applicant,
+    name_kor,
+    product_code,
+    registration_number,
+    registration_start_date,
+    registartion_end_date,
+  } = data;
+
+  try {
+    console.log(rights, application_number);
+    return await axios.get(
+      `/groupware/ip/list?rights=${rights}${
+        application_number?.length
+          ? `&application_number=${application_number}`
+          : ''
+      }${
+        application_start_date?.length
+          ? `&application_start_date=${application_start_date}`
+          : ''
+      }${
+        application_end_date?.length
+          ? `&application_end_date=${application_end_date}`
+          : ''
+      }${applicant?.length ? `&applicant=${applicant}` : ''}${
+        name_kor?.length ? `&name_kor=${name_kor}` : ''
+      }${product_code?.length ? `&product_code=${product_code}` : ''}${
+        registration_number?.length
+          ? `&registration_number=${registration_number}`
+          : ''
+      }${
+        registration_start_date?.length
+          ? `&registration_start_date=${registration_start_date}`
+          : ''
+      }${
+        registartion_end_date?.length
+          ? `&registration_end_date=${registartion_end_date}`
+          : ''
+      }`,
+      header()
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};

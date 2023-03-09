@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import Pagination from 'common/Pagination';
-import { changeTitle, catchError } from 'js/commonUtils';
-import { getMarkList } from 'js/groupwareApi';
+import {
+  changeTitle,
+  catchError,
+  changeState,
+  makeQuery,
+} from 'js/commonUtils';
+import { getMarkList, searchMark } from 'js/groupwareApi';
 import noneList from 'image/noneList.svg';
 import CommonModal from 'common/CommonModal';
+import CommonSelect from 'common/CommonSelect';
 
 const ManageMark = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -24,10 +30,108 @@ const ManageMark = () => {
   // const arr = [{status: '진행중'}]
   const navigate = useNavigate();
   let prevent = false;
+  const [rights2, setRights2] = useState('전체');
+  const [appInput1, setAppInput1] = useState('');
+  const [appInput2, setAppInput2] = useState('');
+  const [appInput3, setAppInput3] = useState('');
+  const [regInput1, setRegInput1] = useState('');
+  const [regInput2, setRegInput2] = useState('');
+  const [regInput3, setRegInput3] = useState('');
+  const rights = ['전체', '특허', '디자인', '상표'];
+
+  const [inputData, setInputData] = useState({
+    rights: 'all',
+    application_number: '',
+    application_start_date: '',
+    application_end_date: '',
+    applicant: '',
+    name_kor: '',
+    product_code: '',
+    registration_number: '',
+    registration_start_date: '',
+    registration_end_date: '',
+  });
 
   useEffect(() => {
     changeTitle('그룹웨어 > 지식재산권 관리');
   }, []);
+
+  useEffect(() => {
+    if (rights2 === '전체') changeState(setInputData, 'rights', 'all');
+    else if (rights2 === '특허') changeState(setInputData, 'rights', 'patent');
+    else if (rights2 === '디자인')
+      changeState(setInputData, 'rights', 'design');
+    else if (rights2 === '상표') changeState(setInputData, 'rights', 'mark');
+  }, [rights2]);
+
+  useEffect(() => {
+    if (
+      appInput1.length === 2 &&
+      appInput2.length === 4 &&
+      appInput3.length === 7
+    ) {
+      let appInput = appInput1 + appInput2 + appInput3;
+
+      changeState(setInputData, 'application_number', appInput);
+    }
+    if (
+      regInput1.length === 2 &&
+      regInput2.length === 4 &&
+      regInput3.length === 7
+    ) {
+      let regInput = regInput1 + regInput2 + regInput3;
+      changeState(setInputData, 'registration_number', regInput);
+    }
+  }, [appInput3, regInput3, appInput1, appInput2, regInput1, regInput2]);
+
+  const searchFunc = async () => {
+    const result = await searchMark(inputData);
+    if (typeof result === 'object') {
+      console.log(result);
+      setList(result?.data?.data);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.totalPage = result?.data?.meta?.totalPage;
+        return clone;
+      });
+    } else {
+      return catchError(result, navigate, setAlertBox, setAlert);
+    }
+  };
+  const clearFunc = async () => {
+    setAppInput1('');
+    setAppInput2('');
+    setAppInput3('');
+    setRegInput1('');
+    setRegInput2('');
+    setRegInput3('');
+    setInputData({
+      rights: 'all',
+      application_number: '',
+      application_start_date: '',
+      application_end_date: '',
+      applicant: '',
+      name_kor: '',
+      product_code: '',
+      registration_number: '',
+      registration_start_date: '',
+      registration_end_date: '',
+    });
+    setPageInfo({
+      page: 1,
+      totalPage: 0,
+      limit: 10,
+    });
+    const result = await getMarkList(pageInfo);
+    if (typeof result === 'object') {
+      setList(result?.data?.data);
+      setPageInfo(prev => {
+        const clone = { ...prev };
+        clone.totalPage = result?.data?.meta?.totalPage;
+        return clone;
+      });
+    } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   const renderTable = () => {
     return list?.reduce(
@@ -112,7 +216,6 @@ const ManageMark = () => {
   useEffect(() => {
     getList();
   }, [pageInfo?.page]);
-
   return (
     <>
       <div className='container'>
@@ -125,28 +228,255 @@ const ManageMark = () => {
               <span>등록된 지식재산이 없습니다.</span>
             </div>
           ) : (
-            <div className='table-wrap'>
-              <div className='table'>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>NO</th>
-                      <th>권리</th>
-                      <th>국문</th>
-                      <th>출원번호</th>
-                      <th>출원일</th>
-                      <th>출원인</th>
-                      <th>상태</th>
-                      <th>상품류</th>
-                      <th>등록번호</th>
-                      <th>등록일</th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderTable()}</tbody>
-                </table>
+            <>
+              <div className='manage-search-wrap'>
+                <ul className='search-form'>
+                  <li>
+                    <div className='after-div'>
+                      <span>권리</span>
+                      <CommonSelect
+                        opt={rights}
+                        selectVal={rights2}
+                        setSelectVal={setRights2}
+                      />
+                    </div>
+                    <div>
+                      <span>출원번호</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='text'
+                          className='appNum-input'
+                          placeholder='00'
+                          maxLength='2'
+                          value={appInput1}
+                          onChange={e => {
+                            setAppInput1(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='appNum-input'
+                          maxLength='4'
+                          placeholder='0000'
+                          value={appInput2}
+                          onChange={e => {
+                            setAppInput2(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='appNum-input'
+                          maxLength='7'
+                          placeholder='0000000'
+                          value={appInput3}
+                          onChange={e => {
+                            setAppInput3(e.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className='after-div'>
+                      <span>출원일</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='date'
+                          className='date-input first'
+                          max='9999-12-31'
+                          value={inputData?.application_start_date}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'application_start_date',
+                              e.target.value
+                            );
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='date'
+                          className='date-input last'
+                          max='9999-12-31'
+                          value={inputData?.application_end_date}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'application_end_date',
+                              e.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <span>출원인</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='text'
+                          placeholder='성명을 입력해주세요.'
+                          className='default'
+                          value={inputData?.applicant}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'applicant',
+                              e.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span>국문명칭</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='text'
+                          placeholder='국문명칭을 입력해주세요.'
+                          className='kr-name'
+                          value={inputData?.name_kor}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'name_kor',
+                              e.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span>상품류</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='text'
+                          placeholder='상품류를 입력해주세요.'
+                          className='default'
+                          value={inputData?.product_code}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'product_code',
+                              e.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className='after-div'>
+                      <span>등록일</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='date'
+                          className='date-input first'
+                          max='9999-12-31'
+                          value={inputData?.registration_start_date}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'registration_start_date',
+                              e.target.value
+                            );
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='date'
+                          className='date-input last'
+                          max='9999-12-31'
+                          value={inputData?.registration_end_date}
+                          onChange={e => {
+                            changeState(
+                              setInputData,
+                              'registration_end_date',
+                              e.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <span>등록번호</span>
+                      <div className='input-wrap'>
+                        <input
+                          type='text'
+                          className='reg-input'
+                          placeholder='00'
+                          maxLength='2'
+                          value={regInput1}
+                          onChange={e => {
+                            setRegInput1(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='reg-input'
+                          placeholder='0000'
+                          maxLength='4'
+                          value={regInput2}
+                          onChange={e => {
+                            setRegInput2(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='reg-input'
+                          placeholder='0000000'
+                          maxLength='7'
+                          value={regInput3}
+                          onChange={e => {
+                            setRegInput3(e.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div className='btn-wrap'>
+                  <button
+                    className='commonBtn applyBtn'
+                    onClick={() => searchFunc()}>
+                    검색
+                  </button>
+                  <button
+                    className='commonBtn clear'
+                    onClick={() => clearFunc()}>
+                    초기화
+                  </button>
+                </div>
               </div>
-              {/* )} */}
-            </div>
+              <div className='table-wrap'>
+                <div className='table'>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>NO</th>
+                        <th>권리</th>
+                        <th>국문</th>
+                        <th>출원번호</th>
+                        <th>출원일</th>
+                        <th>출원인</th>
+                        <th>상태</th>
+                        <th>상품류</th>
+                        <th>등록번호</th>
+                        <th>등록일</th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderTable()}</tbody>
+                  </table>
+                </div>
+              </div>
+            </>
           )}
           <div className='bottom-wrap'>
             <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
