@@ -51,7 +51,6 @@ const AddMark = () => {
 
   const applyOrEditMark = async () => {
     const arr = Object.values(markData);
-    console.log(markData)
     for (let value of arr) {
       if (
         value.trim() === '' ||
