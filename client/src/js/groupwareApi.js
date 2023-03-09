@@ -829,3 +829,57 @@ export const deleteProjectMember = async (id, memberId) => {
     return apiErrorHandling(error);
   }
 };
+
+// ================================ 지식재산권 관리 ================================
+
+//& 지식재산권 목록 불러오기
+export const getMarkList = async ({ page, limit }) => {
+  try {
+    return await axios.get(
+      `/groupware/ip/list?page=${page}&limit=${limit}`,
+      header()
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 지식재산 등록
+export const makeMarkData = async query => {
+  try {
+    return await axios.post(`/groupware/ip/create`, query, header());
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 지식재산 상세 보기
+export const getMarkDetail = async id => {
+  try {
+    return await axios.get(`/groupware/ip/detail?ip_id=${id}`, header());
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 지식재산 수정
+export const editMark = async (id, query) => {
+  try {
+    return await axios.post(
+      `/groupware/ip/update?ip_id=${id}`,
+      query,
+      header()
+    );
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
+
+//& 지식재산 삭제
+export const deleteMark = async id => {
+  try {
+    return await axios.post(`/groupware/ip/delete?ip_id=${id}`, null, header());
+  } catch (error) {
+    return apiErrorHandling(error);
+  }
+};
