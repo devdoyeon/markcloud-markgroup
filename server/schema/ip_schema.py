@@ -35,7 +35,7 @@ class IPListOut(BaseModel):
         
         
 class IPOut(BaseModel):
-    id: str
+    # id: str
     rights: str
     application_date: date
     application_number: str
@@ -46,6 +46,9 @@ class IPOut(BaseModel):
     product_code: str
     registration_date: date
     registration_number: str
+    created_id: str
+    created_at: date
+    user_pk: int
     
     class Config:
         orm_mode = True

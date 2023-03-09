@@ -18,5 +18,7 @@ class IntellectualPropertyTable(Base):
     product_code = Column(VARCHAR(10), nullable=False)
     registration_date = Column(DateTime, nullable=False)
     registration_number = Column(VARCHAR(20), nullable=False)
-
-    
+    created_at = Column(DateTime, nullable=False)
+    created_id = Column(BigInteger, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+    updated_id = Column(BigInteger, default=created_id, nullable=False)
