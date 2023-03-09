@@ -1239,3 +1239,158 @@
 .commonFooter {
   cursor: pointer;
 }
+
+.manageMark {
+  .table-wrap {
+    margin: 65px 0 56px;
+  }
+  .bottom-wrap {
+    width: 980px;
+    position: relative;
+    padding-bottom: 100px;
+    @include flex-style();
+    .pagination {
+      margin-bottom: 0;
+    }
+    .commonBtn {
+      @include position-style($right: 0);
+    }
+  }
+  .noneList {
+    width: 1140px;
+    height: 625px;
+    color: $gray03;
+  }
+}
+
+.addMark {
+  .input-wrap {
+    position: relative;
+    align-items: flex-start;
+    width: 980px;
+    padding: 0 60px;
+    border-radius: 16px;
+    height: 514px;
+    border: 1px solid $footerColor;
+    hr {
+      margin: 12px 0;
+      border: none;
+      width: 100%;
+      height: 1px;
+      background-color: $footerColor;
+    }
+
+    .selectBox {
+      width: 172px;
+      padding: 4px 10px;
+      .selectOptGroup {
+        width: 172px;
+      }
+      .selectVal > span {
+        width: auto;
+      }
+    }
+
+    > .row {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .inputBox {
+      width: 280px;
+      justify-content: flex-start;
+      border-right: 1px solid $footerColor;
+      margin-left: 25px;
+      &.first {
+        margin-left: 0;
+      }
+      &.last {
+        width: 240px;
+        border-right: none;
+      }
+      &.single {
+        margin-left: 0;
+        border-right: none;
+        width: 240px;
+      }
+    }
+
+    input {
+      width: 172px;
+      border-radius: 8px;
+      background-color: $subBlue;
+      height: 32px;
+      padding: 6px 16px;
+    }
+    input[type='file'] {
+      display: none;
+    }
+    span {
+      text-align: center;
+      width: 52px;
+      height: 20px;
+      font-size: 14px;
+      color: #585858;
+      margin-right: 16px;
+    }
+    .lang {
+      position: relative;
+      .langSpan {
+        @include flex-style();
+        line-height: 14px;
+        @include position-style($left: 16px);
+        color: black;
+        padding-right: 10px;
+        height: 14px;
+        border-right: 1px solid $gray03;
+      }
+      .langInput {
+        width: 790px;
+        padding-left: 85px;
+      }
+      &:first-child {
+        margin-bottom: 12px;
+      }
+    }
+    .fileUpload {
+      width: 96px;
+      height: 32px;
+      padding: 6px 10px;
+      background-color: $subBlue;
+      border-radius: 8px;
+      color: black;
+      cursor: pointer;
+      img {
+        margin-left: 4px;
+      }
+    }
+    .fileName {
+      background-color: $gray05;
+      border-radius: 8px;
+      color: black;
+      width: auto;
+      height: auto;
+      padding: 6px 10px;
+      img {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+    .btnWrap {
+      width: 100%;
+      justify-content: flex-end;
+      margin-top: 12px;
+      .deleteBtn {
+        border: 1px solid $gray02;
+        color: $gray02;
+        background-color: white;
+        margin-left: 24px;
+      }
+      .listBtn {
+        background-color: $gray02;
+        color: white;
+        margin-left: 24px;
+      }
+    }
+  }
+}
