@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException, Header, UploadFile
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import List, Optional, Union
 from enum import Enum
 from starlette import status
 from datetime import date
@@ -9,27 +9,33 @@ from database import get_db
 from schema.base_schema import Response, projectStatusType
 from schema.project_schema import *
 from crud import project_crud
-from router import author_chk
+from router import security
+
+from crud import customError
 
 
 router = APIRouter(prefix="/project")
 
 
 @router.get("/list", response_model=Response[List[ProjectListOut]]) 
-@author_chk.varify_access_token
-def project_list(project_name: Optional[str] = None, 
-                 project_status: Optional[projectStatusType] = None,
-                 start_date: Optional[date] = None,
-                 end_date: Optional[date] = None,
-                 page: int = 1,
-                 limit: int = 10,
-                 access_token: str = Header(None),
-                 user_pk:int = None,
-                 db: Session = Depends(get_db)):
+@security.varify_access_token
+@security.user_chk
+def project_list(
+    project_name: Optional[str] = None, 
+    project_status: Optional[projectStatusType] = None,
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
+    page: int = 1,
+    limit: int = 10,
+    access_token: str = Header(None),
+    user_pk:int = None,
+    user_info: str = None,
+    db: Session = Depends(get_db)
+):
     try:
         offset = (page - 1) * limit
             
-        total, _project_list = project_crud.get_project_list(db, project_name, project_status, start_date, end_date, offset, limit, user_pk)
+        total, _project_list = project_crud.get_project_list(db, project_name, project_status, start_date, end_date, offset, limit, user_info)
 
         totalPage = total // limit
         if total % limit != 0:
@@ -46,10 +52,34 @@ def project_list(project_name: Optional[str] = None,
 
 
 @router.get("/detail", response_model=ProjectOut)
-def project_detail(project_id: int, db: Session = Depends(get_db)):
+def project_detail(
+    project_id: int, 
+    user_info:str = None,
+    db: Session = Depends(get_db)
+):
     try:
         db_project = project_crud.get_project(db, project_id)
-        return db_project
+        
+        if db_project.img_url:
+            new_img_url = db_project.img_url
+            img_url = new_img_url.split(',')
+        else:
+            img_url = None
+        
+        outbound = ProjectOut(
+            id = project_id,
+            project_code = db_project.project_code,
+            project_name = db_project.project_name,
+            project_description = db_project.project_description,
+            project_start_date = db_project.project_start_date,
+            project_end_date = db_project.project_end_date,
+            project_status = db_project.project_status,
+            created_at = db_project.created_at,
+            created_id = db_project.created_id,
+            img_url = img_url
+        )
+        
+        return outbound
     except:
         raise HTTPException(status_code=500, detail='ProjectDetailError')
     
@@ -66,29 +96,51 @@ def project_member_list(project_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/create")
-@author_chk.varify_access_token
-def project_create(project_create: ProjectCreate, 
-                   access_token:str = Header(None),
-                   user_pk:int = None,
-                   db: Session = Depends(get_db)):
-    project_crud.create_project(db, user_pk, project_create)
+@security.varify_access_token
+@security.user_chk
+def project_create(
+    file: Union[List[UploadFile], None] = None,
+    project_create: ProjectCreate = Depends(),
+    access_token:str = Header(None),
+    user_pk:int = None,
+    user_info: str = None,
+    db: Session = Depends(get_db)
+):
+    print(project_create)
+    print("==============")
+    try:
+        data = project_crud.create_project(db, user_pk, project_create, file)
+        return Response().success_response(data)
+    except customError.S3ConnError:
+        raise HTTPException(status_code=505, detail='S3ConnError')
     
 
 @router.post("/update")
-@author_chk.varify_access_token
-def project_update(project_id: int, 
-                   project_update: ProjectUpdate, 
-                   access_token:str = Header(None),
-                   user_pk:int = None,
-                   db: Session = Depends(get_db)):
+@security.varify_access_token
+@security.user_chk
+def project_update(
+    project_id: int, 
+    file: Union[List[UploadFile], None] = None,
+    project_update: ProjectUpdate = Depends(), 
+    access_token:str = Header(None),
+    user_info: str = None,
+    user_pk:int = None,
+    db: Session = Depends(get_db)
+):
     try:
-        project_crud.update_project(db, project_update, project_id, user_pk)
-    except:
-        raise HTTPException(status_code=500, detail='ProjectUpdateError')
-    
+        data = project_crud.update_project(db, project_id, project_update, file, user_info)
+        print("data:",data)
+        return Response().success_response(data)
+    except customError.InvalidError:
+        raise HTTPException(status_code=422, detail='InvalidClient')
+    except customError.S3ConnError:
+        raise HTTPException(status_code=505, detail='S3ConnError')
+    # except:
+    #     raise HTTPException(status_code=500, detail='ProjectUpdateError')
+
 
 @router.get("/member")
-@author_chk.varify_access_token
+@security.varify_access_token
 def organ_member_list(access_token:str = Header(None),
                       user_pk:int = None,
                       db: Session = Depends(get_db)):
@@ -97,31 +149,28 @@ def organ_member_list(access_token:str = Header(None),
 
 
 @router.post("/member_add")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_member_add(project_id: int, 
                        project_member_add: ProjectMemberAdd, 
                        access_token:str = Header(None),
                        user_pk:int = None,
                        db: Session = Depends(get_db)):
-    try:
-        new_member_id = project_member_add.new_member_id
-        db_project = project_crud.get_project(db, project_id)
-        project_code = db_project.project_code
+    new_member_id = project_member_add.new_member_id
+    db_project = project_crud.get_project(db, project_id)
+    project_code = db_project.project_code
+    
+    # 이미 참여중인 멤버를 또 추가하면 에러 반환.
+    if project_crud.get_project_member(db, project_code, new_member_id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="AlreadyMember")
         
-        # 이미 참여중인 멤버를 또 추가하면 에러 반환.
-        if project_crud.get_project_member(db, project_code, new_member_id):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="AlreadyMember")
-            
-        # groupware_project_members 테이블에 insert.
-        db_project = project_crud.get_project(db, project_id)
-        project_code = db_project.project_code
-        project_crud.add_project_member(db, project_code, new_member_id, user_pk)
-    except:
-        raise HTTPException(status_code=500, detail='ProjectMemberAddError')
+    # groupware_project_members 테이블에 insert.
+    db_project = project_crud.get_project(db, project_id)
+    project_code = db_project.project_code
+    project_crud.add_project_member(db, project_code, new_member_id, user_pk)
 
 
 @router.post("/member_delete")
-@author_chk.varify_access_token
+@security.varify_access_token
 def project_member_delete(project_id:int, 
                           project_member_delete: ProjectMemberDelete, 
                           access_token:str = Header(None),
@@ -141,11 +190,19 @@ def project_member_delete(project_id:int,
     
 # 프로젝트 삭제
 @router.post("/delete")
-@author_chk.varify_access_token
+@security.varify_access_token
+@security.user_chk
 def project_delete(
     project_id: int,
     user_pk:int = None,
+    user_info: str = None,
     access_token:str = Header(None),
     db: Session = Depends(get_db)):
     
-    project_crud.delete_project(db, project_id, user_pk)
+    try:
+        data = project_crud.delete_project(db, project_id, user_info)
+        return Response().success_response(data)
+    except customError.InvalidError:
+        raise HTTPException(status_code=422, detail='InvalidClient')
+    except:
+        raise HTTPException(status_code=500, detail='ProjectDeleteError')

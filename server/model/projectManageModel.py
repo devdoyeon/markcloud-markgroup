@@ -1,6 +1,6 @@
 from sqlalchemy import Column,BigInteger,VARCHAR,DateTime, TEXT
+from sqlalchemy.dialects.mysql import LONGTEXT
 from database import Base
-from datetime import datetime
 
 
 class ProjectManageTable(Base):
@@ -12,14 +12,14 @@ class ProjectManageTable(Base):
     title = Column(VARCHAR(50), nullable = False)
     request_id = Column(VARCHAR(30), nullable = False)
     manager_id = Column(VARCHAR(30), nullable = False)
-    content = Column(TEXT, nullable = True)
+    content = Column(LONGTEXT, nullable = True)
     work_status = Column(VARCHAR(10), nullable = False)
     work_end_date = Column(DateTime, nullable = True)
-    created_at = Column(DateTime,default=datetime.today(), nullable = False)  
+    created_at = Column(DateTime, nullable = False)  
     created_id = Column(BigInteger, nullable = False)
-    updated_at = Column(DateTime,default=datetime.today(), nullable = False) 
+    updated_at = Column(DateTime, nullable = False) 
     updated_id = Column(BigInteger, default=created_id, nullable = False)
-
+    img_url = Column(LONGTEXT)
 
 class ProjectTable(Base):
     __tablename__ = "groupware_project"
@@ -34,9 +34,10 @@ class ProjectTable(Base):
     project_status = Column(VARCHAR(10), nullable = False)
     created_at = Column(DateTime, nullable = False)
     created_id = Column(BigInteger, nullable = False)
-    updated_at = Column(DateTime, nullable = False)
-    updated_id = Column(BigInteger, nullable = False)
-    
+    updated_at = Column(DateTime, default=created_at, nullable = False)
+    updated_id = Column(BigInteger, default=created_id, nullable = False)
+    img_url = Column(LONGTEXT)
+
     
 class ProjectMemberTable(Base):
     __tablename__ = "groupware_project_members"

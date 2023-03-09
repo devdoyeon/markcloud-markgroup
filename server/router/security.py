@@ -5,11 +5,10 @@ import jwt
 import os
 from model import memberManageModel
 from passlib.context import CryptContext
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto") 
-
 
 load_dotenv()
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto") 
 SECRET_KEY = os.environ['SECRET_KEY']
 SECURITY_ALGORITHM = os.environ['SECURITY_ALGORITHM']
 

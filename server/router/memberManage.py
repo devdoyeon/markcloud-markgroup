@@ -2,13 +2,13 @@
 from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-import time
 
 from database import *
 from crud.memberManageCrud import *
 from schema.memberManageSchema import *
 from schema.responseSchema import *
-from router.author_chk import *
+from router import security
+from crud import customError
 
 
 router_member = APIRouter(
@@ -19,8 +19,8 @@ router_member = APIRouter(
 ##################################부서 관리##################################
 # 부서 리스트
 @router_member.get('/department/list', response_model= Response[List[DepartmentOut]])
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_department_list(
     access_token: str = Header(None),
     user_pk:int = None,
@@ -50,12 +50,10 @@ def read_department_list(
     except:
         raise HTTPException(status_code=500, detail='ReadDpError')
 
-        
-
 # 부서 상세페이지
 @router_member.get('/department/info', response_model = DepartmentOut)    
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_department_info(
     department_id:int,
     access_token:str = Header(None),
@@ -71,11 +69,10 @@ def read_department_info(
     except:
         raise HTTPException(status_code=500, detail='ReadDpInfoError')
 
-        
 # 부서 등록
 @router_member.post('/department/create')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def create_department(
     inbound_data:DepartmentIn,
     access_token: str = Header(None),
@@ -87,18 +84,18 @@ def create_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        result = insert_department(db, inbound_data, user_info)
+        data = insert_department(db, inbound_data, user_info)
+        return Response().success_response(data)
+    
+    except customError.DuplicatedError: 
+        raise HTTPException(status_code=503, detail='DuplicatedDpError')
     except:
         raise HTTPException(status_code=500, detail='CreateDpError')
-    
-    if result == 500:
-        raise HTTPException(status_code=500, detail='DuplicatedDpError')   
 
-            
 # 부서 수정
 @router_member.post('/department/update')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def update_department(
     inbound_data:DepartmentIn,
     department_id:int,
@@ -111,15 +108,17 @@ def update_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        change_department(db, inbound_data, department_id, user_info)
+        data = change_department(db, inbound_data, department_id, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdateDpError')
 
     
 # 부서 삭제
 @router_member.post('/department/delete')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def delete_department(
     department_id:int,
     access_token:str = Header(None),
@@ -132,18 +131,18 @@ def delete_department(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        remove_department(db, department_id, user_info)
+        data = remove_department(db, department_id, user_info)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='DeleteDpError')
 
-    
-    
 ##################################직원 관리##################################
 
 # 직원 리스트
 @router_member.get('/member/list', response_model= Response[List[MemberOut]])
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_member_list(
     access_token: str = Header(None),
     page:int = 1,
@@ -175,8 +174,8 @@ def read_member_list(
 
 # 직원 상세페이지
 @router_member.get('/member/info',response_model= Memberinfo)
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def read_member_info(
     member_id:int,
     access_token:str = Header(None),
@@ -195,8 +194,8 @@ def read_member_info(
 
 # 직원 등록
 @router_member.post('/member/create')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def create_member(
     inbound_data: MemberIn,
     access_token: str = Header(None),
@@ -208,15 +207,16 @@ def create_member(
         raise HTTPException(status_code=422, detail='NotAdmin')
     
     try:
-        insert_member(db,inbound_data,user_info)
+        data = insert_member(db,inbound_data,user_info)
+        return Response().success_response(data)
     except:
         raise HTTPException(status_code=500, detail='CreateMbError')
 
 
 # 직원 수정
 @router_member.post('/member/update')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def update_member(
     member_id:int,    
     inboud_data: MemberModDTO,
@@ -227,16 +227,19 @@ def update_member(
 ):
     if user_info.groupware_only_yn == 'Y': # admin 이 아닌경우
         raise HTTPException(status_code=422, detail='NotAdmin')
+    
     try:
-        change_member(db, inboud_data ,member_id)
+        data = change_member(db, inboud_data ,member_id)
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='UpdateMbError')
 
 
 # 직원 삭제
 @router_member.post('/member/delete')
-@author_chk.varify_access_token
-@author_chk.user_chk
+@security.varify_access_token
+@security.user_chk
 def delete_member(
     member_id:str,
     access_token:str = Header(None),
@@ -248,7 +251,9 @@ def delete_member(
         raise HTTPException(status_code=422, detail='NotAdmin')
 
     try:
-        remove_member(db,member_id) 
+        data = remove_member(db,member_id) 
+        return Response().success_response(data)
+    
     except:
         raise HTTPException(status_code=500, detail='DeleteMbError')
 

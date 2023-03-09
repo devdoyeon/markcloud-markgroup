@@ -34,6 +34,7 @@ class ReportOut(BaseModel):
     created_at: date
     created_id: str
     updated_at: date
+    img_url: Optional[list]
     
     class Config:
         orm_mode = True
@@ -47,3 +48,4 @@ class ReportCreate(BaseModel):
 class ReportUpdate(BaseModel):
     title: str
     content: str
+    url: Optional[list]

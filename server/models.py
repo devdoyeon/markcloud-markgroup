@@ -1,4 +1,5 @@
 from sqlalchemy import Column, BIGINT, String, Text, DateTime
+from sqlalchemy.dialects.mysql import LONGTEXT
 from database import Base
 
 
@@ -12,7 +13,8 @@ class BoardTable(Base):
     created_at = Column(DateTime, nullable=False)
     created_id = Column(BIGINT, nullable=False)
     updated_at = Column(DateTime, nullable=False)
-    updated_id = Column(BIGINT, nullable=False)
+    updated_id = Column(BIGINT, default=created_id, nullable=False)
+    img_url = Column(LONGTEXT)
 
 
 class BusinessReportTable(Base):
@@ -25,7 +27,8 @@ class BusinessReportTable(Base):
     created_at = Column(DateTime, nullable=False)
     created_id = Column(BIGINT, nullable=False)
     updated_at = Column(DateTime, nullable=False)
-    updated_id = Column(BIGINT, nullable=False)
+    updated_id = Column(BIGINT, default=created_id, nullable=False)
+    img_url = Column(LONGTEXT)
     
     
 class OrganizationTable(Base):
