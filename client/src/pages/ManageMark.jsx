@@ -36,7 +36,6 @@ const ManageMark = () => {
   const [appInput3, setAppInput3] = useState('');
   const [regInput1, setRegInput1] = useState('');
   const [regInput2, setRegInput2] = useState('');
-  const [regInput3, setRegInput3] = useState('');
   const rights = ['전체', '특허', '디자인', '상표'];
 
   const [inputData, setInputData] = useState({
@@ -74,15 +73,11 @@ const ManageMark = () => {
 
       changeState(setInputData, 'application_number', appInput);
     }
-    if (
-      regInput1.length === 2 &&
-      regInput2.length === 4 &&
-      regInput3.length === 7
-    ) {
-      let regInput = regInput1 + regInput2 + regInput3;
+    if (regInput1.length === 2 && regInput2.length === 4) {
+      let regInput = regInput1 + regInput2;
       changeState(setInputData, 'registration_number', regInput);
     }
-  }, [appInput3, regInput3, appInput1, appInput2, regInput1, regInput2]);
+  }, [appInput3, appInput1, appInput2, regInput1, regInput2]);
 
   const searchFunc = async () => {
     const result = await searchMark(inputData);
@@ -104,7 +99,6 @@ const ManageMark = () => {
     setAppInput3('');
     setRegInput1('');
     setRegInput2('');
-    setRegInput3('');
     setInputData({
       rights: 'all',
       application_number: '',
@@ -420,22 +414,11 @@ const ManageMark = () => {
                         <input
                           type='text'
                           className='reg-input'
-                          placeholder='0000'
-                          maxLength='4'
+                          placeholder='0000000'
+                          maxLength='7'
                           value={regInput2}
                           onChange={e => {
                             setRegInput2(e.target.value);
-                          }}
-                        />
-                        {' - '}
-                        <input
-                          type='text'
-                          className='reg-input'
-                          placeholder='0000000'
-                          maxLength='7'
-                          value={regInput3}
-                          onChange={e => {
-                            setRegInput3(e.target.value);
                           }}
                         />
                       </div>

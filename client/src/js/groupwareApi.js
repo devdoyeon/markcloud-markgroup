@@ -841,9 +841,42 @@ export const getMarkList = async ({ page, limit }) => {
 };
 
 //& 지식재산 등록
-export const makeMarkData = async query => {
+export const makeMarkData = async ({
+  applicant,
+  application_date,
+  application_number,
+  name_eng,
+  name_kor,
+  product_code,
+  registration_date,
+  registration_number,
+  rights,
+  status,
+}) => {
   try {
-    return await axios.post(`/groupware/ip/create`, query, header());
+    return await axios.post(
+      `/groupware/ip/create?rights=${rights}${
+        application_number?.length
+          ? `&application_number=${application_number}`
+          : ''
+      }${applicant?.length ? `&applicant=${applicant}` : ''}${
+        name_kor?.length ? `&name_kor=${name_kor}` : ''
+      }${
+        application_date?.length ? `&application_date=${application_date}` : ''
+      }${name_eng?.length ? `&name_eng=${name_eng}` : ''}${
+        product_code?.length ? `&product_code=${product_code}` : ''
+      }${
+        registration_date?.length
+          ? `&registration_date=${registration_date}`
+          : ''
+      }${
+        registration_number?.length
+          ? `&registration_number=${registration_number}`
+          : ''
+      }${status === 'none' ? '' : `&ip_status=${status}`}`,
+      null,
+      header()
+    );
   } catch (error) {
     return apiErrorHandling(error);
   }
@@ -859,11 +892,43 @@ export const getMarkDetail = async id => {
 };
 
 //& 지식재산 수정
-export const editMark = async (id, query) => {
+export const editMark = async (
+  id,
+  {
+    applicant,
+    application_date,
+    application_number,
+    name_eng,
+    name_kor,
+    product_code,
+    registration_date,
+    registration_number,
+    rights,
+    status,
+  }
+) => {
   try {
     return await axios.post(
-      `/groupware/ip/update?ip_id=${id}`,
-      query,
+      `/groupware/ip/update?ip_id=${id}&rights=${rights}${
+        application_number?.length
+          ? `&application_number=${application_number}`
+          : ''
+      }${applicant?.length ? `&applicant=${applicant}` : ''}${
+        name_kor?.length ? `&name_kor=${name_kor}` : ''
+      }${
+        application_date?.length ? `&application_date=${application_date}` : ''
+      }${name_eng?.length ? `&name_eng=${name_eng}` : ''}${
+        product_code?.length ? `&product_code=${product_code}` : ''
+      }${
+        registration_date?.length
+          ? `&registration_date=${registration_date}`
+          : ''
+      }${
+        registration_number?.length
+          ? `&registration_number=${registration_number}`
+          : ''
+      }${status === 'none' ? '' : `&ip_status=${status}`}`,
+      null,
       header()
     );
   } catch (error) {

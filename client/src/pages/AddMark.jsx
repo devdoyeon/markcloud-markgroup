@@ -40,9 +40,13 @@ const AddMark = () => {
     registration_date: '',
     registration_number: '',
   });
-  const [appInpu1,setInpput1] = useState('');
-  const [appInpu2,setInpput2] = useState('');
-  const [appInpu3,setInpput3] = useState('');
+  const [appInpu1, setAppInpput1] = useState('');
+  const [appInpu2, setAppInpput2] = useState('');
+  const [appInpu3, setAppInpput3] = useState('');
+  const [regInput1, setRegInput1] = useState('');
+  const [regInput2, setRegInput2] = useState('');
+  let appInput = '';
+  let regInput = '';
 
   const navigate = useNavigate();
   let prevent = false;
@@ -56,25 +60,48 @@ const AddMark = () => {
   const applyOrEditMark = async () => {
     const arr = Object.values(markData);
     for (let value of arr) {
-      if (
-        value.trim() === '' ||
-        rightFilter === 'none' ||
-        statusFilter === 'none' ||
-        markData?.application_number?.length !== 13 ||
-        markData?.registration_number?.length !== 13
-      ) {
-        setAlert('emptyValue');
+      // if (
+      //   value.trim() === '' ||
+      //   rightFilter === 'none' ||
+      //   statusFilter === 'none' ||
+      //   markData?.application_number?.length !== 13 ||
+      //   markData?.registration_number?.length !== 9
+      // ) {
+      //   setAlert('emptyValue');
+      //   return commonModalSetting(
+      //     setAlertBox,
+      //     true,
+      //     'alert',
+      //     '양식이 모두 입력되지 않았습니다.<br/>정확하게 입력해 주세요.'
+      //   );
+      // }
+      if(rightFilter === 'none') {
+          setAlert('emptyValue');
         return commonModalSetting(
           setAlertBox,
           true,
           'alert',
-          '양식이 모두 입력되지 않았습니다.<br/>정확하게 입력해 주세요.'
+          '권리를 선택되지 않았습니다. 권리를 선택해주세요.'
         );
       }
+     if(rightFilter === 'mark')  {
+      if(markData?.product_code?.length === 0) {
+          setAlert('emptyValue');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '권리가 상표인 경우 상품류가 필수 값 입니다. 상품류를 입력해주세요.'
+        );
+      }
+     }
     }
+
     const query = { ...markData };
     query.rights = rightFilter;
     query.status = statusFilter;
+    query.application_number = appInput;
+    query.registration_number = regInput;
     let result;
     if (id?.length) result = editMark(id, query);
     else result = await makeMarkData(query);
@@ -159,6 +186,15 @@ const AddMark = () => {
     }
   }, [statusFilter]);
 
+  useEffect(() => {
+    if (appInpu1?.length && appInpu2?.length && appInpu3?.length) {
+      appInput = appInpu1 + appInpu2 + appInpu3;
+    }
+    if (regInput1?.length && regInput2?.length) {
+      regInput = regInput1 + regInput2;
+    }
+  }, [appInpu1, appInpu2, appInpu3, regInput1, regInput2]);
+
   const fileNameSettingFn = () => {
     if (file?.length)
       for (let { name } of file) {
@@ -175,10 +211,6 @@ const AddMark = () => {
     changeTitle('그룹웨어 > 지식재산권 등록');
     if (id?.length) getOrigin();
   }, []);
-
-  // useEffect(()=> {
-
-  // },[appInpu1,appInpu2,appInpu3])
 
   return (
     <>
@@ -212,42 +244,27 @@ const AddMark = () => {
                 <input
                   type='text'
                   onChange={e =>
-                    // changeState(
-                    //   setMarkData,
-                    //   'application_number',
-                    //   e.target.value.replace(/[^-0-9]/g, '')
-                    // )
-                    setInpput1(e.target.value)
+                    setAppInpput1(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.application_number}
+                  value={appInpu1}
                   maxLength={2}
                 />
                 {' - '}
                 <input
                   type='text'
                   onChange={e =>
-                    // changeState(
-                    //   setMarkData,
-                    //   'application_number',
-                    //   e.target.value.replace(/[^-0-9]/g, '')
-                    // )
-                    setInpput2(e.target.value)
+                    setAppInpput2(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.application_number}
+                  value={appInpu2}
                   maxLength={4}
                 />
                 {' - '}
                 <input
                   type='text'
                   onChange={e =>
-                    // changeState(
-                    //   setMarkData,
-                    //   'application_number',
-                    //   e.target.value.replace(/[^-0-9]/g, '')
-                    // )
-                    setInpput3(e.target.value)
+                    setAppInpput3(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.application_number}
+                  value={appInpu3}
                   maxLength={7}
                 />
               </div>
@@ -334,40 +351,19 @@ const AddMark = () => {
                 <input
                   type='text'
                   onChange={e =>
-                    changeState(
-                      setMarkData,
-                      'registration_number',
-                      e.target.value.replace(/[^-0-9]/g, '')
-                    )
+                    setRegInput1(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.registration_number}
-                  maxLength={13}
+                  value={regInput1}
+                  maxLength={2}
                 />
-                {" - "}
+                {' - '}
                 <input
                   type='text'
                   onChange={e =>
-                    changeState(
-                      setMarkData,
-                      'registration_number',
-                      e.target.value.replace(/[^-0-9]/g, '')
-                    )
+                    setRegInput2(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.registration_number}
-                  maxLength={13}
-                />
-                {" - "}
-                <input
-                  type='text'
-                  onChange={e =>
-                    changeState(
-                      setMarkData,
-                      'registration_number',
-                      e.target.value.replace(/[^-0-9]/g, '')
-                    )
-                  }
-                  value={markData?.registration_number}
-                  maxLength={13}
+                  value={regInput2}
+                  maxLength={7}
                 />
               </div>
             </div>
