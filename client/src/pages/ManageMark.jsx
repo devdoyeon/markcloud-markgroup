@@ -87,7 +87,6 @@ const ManageMark = () => {
   const searchFunc = async () => {
     const result = await searchMark(inputData);
     if (typeof result === 'object') {
-      console.log(result);
       setList(result?.data?.data);
       setPageInfo(prev => {
         const clone = { ...prev };

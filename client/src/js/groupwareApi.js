@@ -896,7 +896,6 @@ export const searchMark = async data => {
   } = data;
 
   try {
-    console.log(rights, application_number);
     return await axios.get(
       `/groupware/ip/list?rights=${rights}${
         application_number?.length
