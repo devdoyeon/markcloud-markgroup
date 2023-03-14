@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 from enum import Enum
+from typing import Optional
 
 
 class rightsEnum(str, Enum):
@@ -17,18 +18,33 @@ class legalStatusEnum(str, Enum):
     apply = "apply"   # 등록
     
     
+class IPListIn(BaseModel):
+    rights: Optional[rightsEnum]
+    application_number: Optional[str]
+    application_start_date: Optional[date]
+    application_end_date: Optional[date]
+    applicant: Optional[str]
+    name_kor: Optional[str]
+    product_code: Optional[str]
+    registration_number: Optional[str]
+    registration_start_date: Optional[date]
+    registration_end_date: Optional[date]
+    
+    class Config:
+        orm_mode = True
+
+
 class IPListOut(BaseModel):
     id: str
-    rights: str
-    application_date: date
-    application_number: str
-    applicant: str
-    status: str
-    name_kor: str
-    # name_eng: str
-    product_code: str
-    registration_date: date
-    registration_number: str
+    rights: Optional[str]
+    application_date: Optional[date]
+    application_number: Optional[str]
+    applicant: Optional[str]
+    ip_status: Optional[str]
+    name_kor: Optional[str]
+    product_code: Optional[str]
+    registration_date: Optional[date]
+    registration_number: Optional[str]
     
     class Config:
         orm_mode = True
@@ -36,51 +52,35 @@ class IPListOut(BaseModel):
         
 class IPOut(BaseModel):
     # id: str
-    rights: str
-    application_date: date
-    application_number: str
-    applicant: str
-    status: str
-    name_kor: str
-    name_eng: str
-    product_code: str
-    registration_date: date
-    registration_number: str
+    rights: Optional[str]
+    application_date: Optional[date]
+    application_number: Optional[str]
+    applicant: Optional[str]
+    ip_status: Optional[str]
+    name_kor: Optional[str]
+    name_eng: Optional[str]
+    product_code: Optional[str]
+    registration_date: Optional[date]
+    registration_number: Optional[str]
     created_id: str
     created_at: date
     user_pk: int
     
     class Config:
         orm_mode = True
-
-
-class IPCreate(BaseModel):
-    rights: str
-    application_date: date
-    application_number: str
-    applicant: str
-    status: str
-    name_kor: str
-    name_eng: str
-    product_code: str
-    registration_date: date
-    registration_number: str
-    
-    class Config:
-        orm_mode = True
         
 
-class IPUpdate(BaseModel):
-    rights: str
-    application_date: date
-    application_number: str
-    applicant: str
-    status: str
-    name_kor: str
-    name_eng: str
-    product_code: str
-    registration_date: date
-    registration_number: str
+class IPInput(BaseModel):
+    rights: Optional[rightsEnum]
+    application_date: Optional[date]
+    application_number: Optional[str]
+    applicant: Optional[str]
+    ip_status: Optional[str]
+    name_kor: Optional[str]
+    name_eng: Optional[str]
+    product_code: Optional[str]
+    registration_date: Optional[date]
+    registration_number: Optional[str]
     
     class Config:
         orm_mode = True
