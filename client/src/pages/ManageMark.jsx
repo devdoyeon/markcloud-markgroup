@@ -7,7 +7,6 @@ import {
   changeTitle,
   catchError,
   changeState,
-  makeQuery,
 } from 'js/commonUtils';
 import { getMarkList, searchMark } from 'js/groupwareApi';
 import noneList from 'image/noneList.svg';
@@ -27,7 +26,6 @@ const ManageMark = () => {
     bool: false,
   });
   const [list, setList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  // const arr = [{status: '진행중'}]
   const navigate = useNavigate();
   let prevent = false;
   const [rights2, setRights2] = useState('전체');
@@ -83,14 +81,8 @@ const ManageMark = () => {
     const result = await searchMark(inputData);
     if (typeof result === 'object') {
       setList(result?.data?.data);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.totalPage = result?.data?.meta?.totalPage;
-        return clone;
-      });
-    } else {
-      return catchError(result, navigate, setAlertBox, setAlert);
-    }
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
   const clearFunc = async () => {
     setAppInput1('');
@@ -137,14 +129,14 @@ const ManageMark = () => {
           application_number,
           application_date,
           applicant,
-          status,
+          ip_status,
           product_code,
           registration_number,
           registration_date,
         },
         idx
       ) => {
-        const eng2Kor = txt => {
+        const eng2kor = txt => {
           switch (txt) {
             case 'patent':
               return '특허';
@@ -172,12 +164,12 @@ const ManageMark = () => {
               className={idx % 2 === 1 ? 'odd' : 'even'}
               onClick={() => navigate(`/mark-group/manage-mark/${id}`)}>
               <td>{idx + 1}</td>
-              <td>{eng2Kor(rights)}</td>
+              <td>{eng2kor(rights)}</td>
               <td>{name_kor}</td>
               <td>{application_number}</td>
               <td>{application_date}</td>
               <td>{applicant}</td>
-              <td>{eng2Kor(status)}</td>
+              <td>{eng2kor(ip_status)}</td>
               <td>{product_code}</td>
               <td>{registration_number}</td>
               <td>{registration_date}</td>

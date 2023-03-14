@@ -40,9 +40,9 @@ const AddMark = () => {
     registration_date: '',
     registration_number: '',
   });
-  const [appInpu1, setAppInpput1] = useState('');
-  const [appInpu2, setAppInpput2] = useState('');
-  const [appInpu3, setAppInpput3] = useState('');
+  const [appInput1, setAppInput1] = useState('');
+  const [appInput2, setAppInput2] = useState('');
+  const [appInput3, setAppInput3] = useState('');
   const [regInput1, setRegInput1] = useState('');
   const [regInput2, setRegInput2] = useState('');
   let appInput = '';
@@ -58,50 +58,36 @@ const AddMark = () => {
   const statusArr = ['선택', '출원', '심사중', '의견제출통지', '등록'];
 
   const applyOrEditMark = async () => {
-    const arr = Object.values(markData);
-    for (let value of arr) {
-      // if (
-      //   value.trim() === '' ||
-      //   rightFilter === 'none' ||
-      //   statusFilter === 'none' ||
-      //   markData?.application_number?.length !== 13 ||
-      //   markData?.registration_number?.length !== 9
-      // ) {
-      //   setAlert('emptyValue');
-      //   return commonModalSetting(
-      //     setAlertBox,
-      //     true,
-      //     'alert',
-      //     '양식이 모두 입력되지 않았습니다.<br/>정확하게 입력해 주세요.'
-      //   );
-      // }
-      if(rightFilter === 'none') {
-          setAlert('emptyValue');
+    if (rightFilter === 'none') {
+      setAlert('emptyValue');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '권리가 선택되지 않았습니다.<br/>권리를 선택해 주세요.'
+      );
+    }
+    if (rightFilter === 'mark') {
+      if (markData?.product_code?.length === 0) {
+        setAlert('emptyValue');
         return commonModalSetting(
           setAlertBox,
           true,
           'alert',
-          '권리를 선택되지 않았습니다. 권리를 선택해주세요.'
+          '권리가 상표인 경우 상품류가 필수값입니다.<br/>상품류를 입력해 주세요.'
         );
       }
-     if(rightFilter === 'mark')  {
-      if(markData?.product_code?.length === 0) {
-          setAlert('emptyValue');
-        return commonModalSetting(
-          setAlertBox,
-          true,
-          'alert',
-          '권리가 상표인 경우 상품류가 필수 값 입니다. 상품류를 입력해주세요.'
-        );
-      }
-     }
     }
 
     const query = { ...markData };
     query.rights = rightFilter;
     query.status = statusFilter;
-    query.application_number = appInput;
-    query.registration_number = regInput;
+    query.application_number = appInput?.length
+      ? appInput
+      : markData?.application_number;
+    query.registration_number = regInput?.length
+      ? regInput
+      : markData?.registration_number;
     let result;
     if (id?.length) result = editMark(id, query);
     else result = await makeMarkData(query);
@@ -139,7 +125,12 @@ const AddMark = () => {
     if (typeof result === 'object') {
       setMarkData(result?.data);
       setRightFilter(result?.data?.rights);
-      setStatusFilter(result?.data?.status);
+      setStatusFilter(result?.data?.ip_status);
+      setAppInput1(result?.data?.application_number?.slice(0, 2));
+      setAppInput2(result?.data?.application_number?.slice(2, 6));
+      setAppInput3(result?.data?.application_number?.slice(6));
+      setRegInput1(result?.data?.registration_number?.slice(0, 2));
+      setRegInput2(result?.data?.registration_number?.slice(2));
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -187,13 +178,13 @@ const AddMark = () => {
   }, [statusFilter]);
 
   useEffect(() => {
-    if (appInpu1?.length && appInpu2?.length && appInpu3?.length) {
-      appInput = appInpu1 + appInpu2 + appInpu3;
+    if (appInput1?.length && appInput2?.length && appInput3?.length) {
+      appInput = appInput1 + appInput2 + appInput3;
     }
     if (regInput1?.length && regInput2?.length) {
       regInput = regInput1 + regInput2;
     }
-  }, [appInpu1, appInpu2, appInpu3, regInput1, regInput2]);
+  }, [appInput1, appInput2, appInput3, regInput1, regInput2]);
 
   const fileNameSettingFn = () => {
     if (file?.length)
@@ -244,27 +235,27 @@ const AddMark = () => {
                 <input
                   type='text'
                   onChange={e =>
-                    setAppInpput1(e.target.value.replace(/[^-0-9]/g, ''))
+                    setAppInput1(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={appInpu1}
+                  value={appInput1}
                   maxLength={2}
                 />
                 {' - '}
                 <input
                   type='text'
                   onChange={e =>
-                    setAppInpput2(e.target.value.replace(/[^-0-9]/g, ''))
+                    setAppInput2(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={appInpu2}
+                  value={appInput2}
                   maxLength={4}
                 />
                 {' - '}
                 <input
                   type='text'
                   onChange={e =>
-                    setAppInpput3(e.target.value.replace(/[^-0-9]/g, ''))
+                    setAppInput3(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={appInpu3}
+                  value={appInput3}
                   maxLength={7}
                 />
               </div>
@@ -328,6 +319,7 @@ const AddMark = () => {
                   changeState(setMarkData, 'product_code', e.target.value)
                 }
                 value={markData?.product_code}
+                maxLength={9}
               />
             </div>
             <hr />
