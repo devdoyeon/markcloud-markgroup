@@ -158,10 +158,6 @@ const BusinessEditBoard = () => {
     }
   }, [progressValue]);
 
-  useEffect(() => {
-    console.log(contactValue);
-  }, [contactValue]);
-
   return (
     <>
       <div className='container'>

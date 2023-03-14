@@ -39,6 +39,12 @@ const CommonSelect = ({ opt, selectVal, setSelectVal }) => {
         return '의견제출통지';
       case 'apply':
         return '등록';
+      case 'patent':
+        return '특허';
+      case 'design':
+        return '디자인';
+      case 'mark':
+        return '상표';
       default:
         return selectVal;
     }
