@@ -87,7 +87,7 @@ const MarkDetail = () => {
               </div>
               <div className='row inputBox last'>
                 <span>상태</span>
-                <input type='text' readOnly value={eng2Kor(info?.status)} />
+                <input type='text' readOnly value={eng2Kor(info?.ip_status)} />
               </div>
             </div>
             <hr />

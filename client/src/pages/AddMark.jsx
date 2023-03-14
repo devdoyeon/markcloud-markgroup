@@ -40,6 +40,14 @@ const AddMark = () => {
     registration_date: '',
     registration_number: '',
   });
+  const [appInput1, setAppInput1] = useState('');
+  const [appInput2, setAppInput2] = useState('');
+  const [appInput3, setAppInput3] = useState('');
+  const [regInput1, setRegInput1] = useState('');
+  const [regInput2, setRegInput2] = useState('');
+  let appInput = '';
+  let regInput = '';
+
   const navigate = useNavigate();
   let prevent = false;
   const { id } = useParams();
@@ -50,28 +58,36 @@ const AddMark = () => {
   const statusArr = ['선택', '출원', '심사중', '의견제출통지', '등록'];
 
   const applyOrEditMark = async () => {
-    const arr = Object.values(markData);
-    console.log(markData)
-    for (let value of arr) {
-      if (
-        value.trim() === '' ||
-        rightFilter === 'none' ||
-        statusFilter === 'none' ||
-        markData?.application_number?.length !== 13 ||
-        markData?.registration_number?.length !== 13
-      ) {
+    if (rightFilter === 'none') {
+      setAlert('emptyValue');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '권리가 선택되지 않았습니다.<br/>권리를 선택해 주세요.'
+      );
+    }
+    if (rightFilter === 'mark') {
+      if (markData?.product_code?.length === 0) {
         setAlert('emptyValue');
         return commonModalSetting(
           setAlertBox,
           true,
           'alert',
-          '양식이 모두 입력되지 않았습니다.<br/>정확하게 입력해 주세요.'
+          '권리가 상표인 경우 상품류가 필수값입니다.<br/>상품류를 입력해 주세요.'
         );
       }
     }
+
     const query = { ...markData };
     query.rights = rightFilter;
     query.status = statusFilter;
+    query.application_number = appInput?.length
+      ? appInput
+      : markData?.application_number;
+    query.registration_number = regInput?.length
+      ? regInput
+      : markData?.registration_number;
     let result;
     if (id?.length) result = editMark(id, query);
     else result = await makeMarkData(query);
@@ -109,7 +125,12 @@ const AddMark = () => {
     if (typeof result === 'object') {
       setMarkData(result?.data);
       setRightFilter(result?.data?.rights);
-      setStatusFilter(result?.data?.status);
+      setStatusFilter(result?.data?.ip_status);
+      setAppInput1(result?.data?.application_number?.slice(0, 2));
+      setAppInput2(result?.data?.application_number?.slice(2, 6));
+      setAppInput3(result?.data?.application_number?.slice(6));
+      setRegInput1(result?.data?.registration_number?.slice(0, 2));
+      setRegInput2(result?.data?.registration_number?.slice(2));
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -155,6 +176,15 @@ const AddMark = () => {
         return;
     }
   }, [statusFilter]);
+
+  useEffect(() => {
+    if (appInput1?.length && appInput2?.length && appInput3?.length) {
+      appInput = appInput1 + appInput2 + appInput3;
+    }
+    if (regInput1?.length && regInput2?.length) {
+      regInput = regInput1 + regInput2;
+    }
+  }, [appInput1, appInput2, appInput3, regInput1, regInput2]);
 
   const fileNameSettingFn = () => {
     if (file?.length)
@@ -205,14 +235,28 @@ const AddMark = () => {
                 <input
                   type='text'
                   onChange={e =>
-                    changeState(
-                      setMarkData,
-                      'application_number',
-                      e.target.value.replace(/[^-0-9]/g, '')
-                    )
+                    setAppInput1(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.application_number}
-                  maxLength={13}
+                  value={appInput1}
+                  maxLength={2}
+                />
+                {' - '}
+                <input
+                  type='text'
+                  onChange={e =>
+                    setAppInput2(e.target.value.replace(/[^-0-9]/g, ''))
+                  }
+                  value={appInput2}
+                  maxLength={4}
+                />
+                {' - '}
+                <input
+                  type='text'
+                  onChange={e =>
+                    setAppInput3(e.target.value.replace(/[^-0-9]/g, ''))
+                  }
+                  value={appInput3}
+                  maxLength={7}
                 />
               </div>
             </div>
@@ -275,6 +319,7 @@ const AddMark = () => {
                   changeState(setMarkData, 'product_code', e.target.value)
                 }
                 value={markData?.product_code}
+                maxLength={9}
               />
             </div>
             <hr />
@@ -298,14 +343,19 @@ const AddMark = () => {
                 <input
                   type='text'
                   onChange={e =>
-                    changeState(
-                      setMarkData,
-                      'registration_number',
-                      e.target.value.replace(/[^-0-9]/g, '')
-                    )
+                    setRegInput1(e.target.value.replace(/[^-0-9]/g, ''))
                   }
-                  value={markData?.registration_number}
-                  maxLength={13}
+                  value={regInput1}
+                  maxLength={2}
+                />
+                {' - '}
+                <input
+                  type='text'
+                  onChange={e =>
+                    setRegInput2(e.target.value.replace(/[^-0-9]/g, ''))
+                  }
+                  value={regInput2}
+                  maxLength={7}
                 />
               </div>
             </div>
@@ -339,11 +389,26 @@ const AddMark = () => {
             <hr />
             <div className='btnWrap row'>
               {path?.includes('add') ? (
-                <button
-                  className='commonBtn applyBtn'
-                  onClick={applyOrEditMark}>
-                  등록
-                </button>
+                <>
+                  <button
+                    className='commonBtn applyBtn'
+                    onClick={applyOrEditMark}>
+                    등록
+                  </button>
+                  <button
+                    className='commonBtn closeBtn'
+                    onClick={() => {
+                      setAlert('cancel');
+                      commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'confirm',
+                        `작성을 취소하시겠습니까? 작성이 취소된 글은 복구할 수 없습니다.`
+                      );
+                    }}>
+                    취소
+                  </button>
+                </>
               ) : (
                 <>
                   <button
@@ -386,6 +451,7 @@ const AddMark = () => {
             else if (alert === 'successApply' || alert === 'deleteSuccess')
               navigate('/mark-group/manage-mark/');
             else if (alert === 'confirmDelete') removeMark();
+            else if (alert === 'cancel') navigate('/mark-group/manage-mark');
             else return;
           }}
         />
