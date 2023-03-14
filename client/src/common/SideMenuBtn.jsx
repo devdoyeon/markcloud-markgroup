@@ -84,7 +84,7 @@ const SideMenuBtn = () => {
               target='_self'
               title='마크그룹로 이동'>
               <img src={groupwareIcon} alt='마크그룹 아이콘' />
-              <span className='middle'>GROUPWARE</span>
+              <span className='middle'>MARKGROUP</span>
             </a>
           </li>
           {/* <li>

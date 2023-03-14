@@ -1241,6 +1241,114 @@
 }
 
 .manageMark {
+  .manage-search-wrap {
+    width: 980px;
+    height: 413px;
+    border: 1px solid $footerColor;
+    padding: 40px 60px 24px;
+    border-radius: 16px;
+    .search-form {
+      width: 860px;
+      > li {
+        &:first-child {
+          border-top: 1px solid $footerColor;
+          > div {
+            > .selectBox {
+              width: 172px;
+              height: 32px;
+              margin-left: 16px;
+              .selectOptGroup {
+                width: 172px;
+                > .selectOpt {
+                }
+              }
+            }
+          }
+        }
+        border-bottom: 1px solid $footerColor;
+        padding: 12px 0;
+        @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+        > div {
+          @include flex-style($justifyVal: flex-start, $alignVal: center);
+          height: 32px;
+          &.after-div {
+            position: relative;
+            margin-right: 40px;
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              right: -20px;
+              width: 1px;
+              height: 32px;
+              background-color: #eee;
+            }
+          }
+          span {
+            color: $gray01;
+            font-size: 14px;
+            font-family: $regularFont;
+            width: 52px;
+            text-align: center;
+          }
+          > .input-wrap {
+            margin-left: 16px;
+            > .appNum-input {
+              width: 76px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+            }
+            > .date-input {
+              width: 172px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+              cursor: text;
+            }
+            > .default {
+              width: 172px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+            }
+            > .kr-name {
+              width: 792px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+            }
+            > .reg-input {
+              width: 76px;
+              height: 32px;
+              background-color: $subBlue;
+              text-align: center;
+              border-radius: 8px;
+            }
+          }
+        }
+      }
+    }
+    .btn-wrap {
+      width: 860px;
+      margin-top: 24px;
+      > .commonBtn {
+        &.clear {
+          color: #eeeeee;
+          background-color: $gray02;
+          font-size: 14px;
+          font-family: $regularFont;
+        }
+      }
+    }
+  }
   .table-wrap {
     margin: 65px 0 56px;
   }
@@ -1297,16 +1405,19 @@
     }
 
     .inputBox {
-      width: 280px;
+      width: 260px;
       justify-content: flex-start;
       border-right: 1px solid $footerColor;
-      margin-left: 25px;
+      margin-left: 10px;
       &.first {
         margin-left: 0;
       }
       &.last {
-        width: 240px;
+        width: 318px;
         border-right: none;
+        > input {
+          width: 76px;
+        }
       }
       &.single {
         margin-left: 0;
@@ -1389,6 +1500,11 @@
       .listBtn {
         background-color: $gray02;
         color: white;
+        margin-left: 24px;
+      }
+      .closeBtn {
+        color: $footerColor;
+        background-color: $gray02;
         margin-left: 24px;
       }
     }
