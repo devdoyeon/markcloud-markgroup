@@ -289,7 +289,7 @@ const BusinessNewBoard = () => {
             <button
               className='commonBtn list'
               onClick={() => {
-                navigate(`/business`);
+                navigate(`/mark-group/business`);
               }}>
               목록
             </button>
