@@ -1238,3 +1238,278 @@
 .commonFooter {
   cursor: pointer;
 }
+
+.manageMark .manage-search-wrap {
+  width: 980px;
+  height: 413px;
+  border: 1px solid #eeeeee;
+  padding: 40px 60px 24px;
+  border-radius: 16px;
+}
+.manageMark .manage-search-wrap .search-form {
+  width: 860px;
+}
+.manageMark .manage-search-wrap .search-form > li {
+  border-bottom: 1px solid #eeeeee;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.manageMark .manage-search-wrap .search-form > li:first-child {
+  border-top: 1px solid #eeeeee;
+}
+.manageMark .manage-search-wrap .search-form > li:first-child > div > .selectBox {
+  width: 172px;
+  height: 32px;
+  margin-left: 16px;
+}
+.manageMark .manage-search-wrap .search-form > li:first-child > div > .selectBox .selectOptGroup {
+  width: 172px;
+}
+.manageMark .manage-search-wrap .search-form > li > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: 32px;
+}
+.manageMark .manage-search-wrap .search-form > li > div.after-div {
+  position: relative;
+  margin-right: 40px;
+}
+.manageMark .manage-search-wrap .search-form > li > div.after-div::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -20px;
+  width: 1px;
+  height: 32px;
+  background-color: #eee;
+}
+.manageMark .manage-search-wrap .search-form > li > div span {
+  color: #585858;
+  font-size: 14px;
+  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
+  width: 52px;
+  text-align: center;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap {
+  margin-left: 16px;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap > .appNum-input {
+  width: 76px;
+  height: 32px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 10px;
+  text-align: center;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap > .date-input {
+  width: 172px;
+  height: 32px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 10px;
+  text-align: center;
+  cursor: text;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap > .default {
+  width: 172px;
+  height: 32px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 10px;
+  text-align: center;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap > .kr-name {
+  width: 792px;
+  height: 32px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.manageMark .manage-search-wrap .search-form > li > div > .input-wrap > .reg-input {
+  width: 76px;
+  height: 32px;
+  background-color: #eeeefa;
+  text-align: center;
+  border-radius: 8px;
+}
+.manageMark .manage-search-wrap .btn-wrap {
+  width: 860px;
+  margin-top: 24px;
+}
+.manageMark .manage-search-wrap .btn-wrap > .commonBtn.clear {
+  color: #eeeeee;
+  background-color: #858585;
+  font-size: 14px;
+  font-family: "NotoSansR", "맑은 고딕", "sans-serif";
+}
+.manageMark .table-wrap {
+  margin: 65px 0 56px;
+}
+.manageMark .bottom-wrap {
+  width: 980px;
+  position: relative;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.manageMark .bottom-wrap .pagination {
+  margin-bottom: 0;
+}
+.manageMark .bottom-wrap .commonBtn {
+  position: absolute;
+  right: 0;
+}
+.manageMark .noneList {
+  width: 1140px;
+  height: 625px;
+  color: #cdcdcd;
+}
+
+.addMark .input-wrap {
+  position: relative;
+  align-items: flex-start;
+  width: 980px;
+  padding: 0 60px;
+  border-radius: 16px;
+  height: 514px;
+  border: 1px solid #eeeeee;
+}
+.addMark .input-wrap hr {
+  margin: 12px 0;
+  border: none;
+  width: 100%;
+  height: 1px;
+  background-color: #eeeeee;
+}
+.addMark .input-wrap .selectBox {
+  width: 172px;
+  padding: 4px 10px;
+}
+.addMark .input-wrap .selectBox .selectOptGroup {
+  width: 172px;
+}
+.addMark .input-wrap .selectBox .selectVal > span {
+  width: auto;
+}
+.addMark .input-wrap > .row {
+  justify-content: flex-start;
+  width: 100%;
+}
+.addMark .input-wrap .inputBox {
+  width: 260px;
+  justify-content: flex-start;
+  border-right: 1px solid #eeeeee;
+  margin-left: 10px;
+}
+.addMark .input-wrap .inputBox.first {
+  margin-left: 0;
+}
+.addMark .input-wrap .inputBox.last {
+  width: 318px;
+  border-right: none;
+}
+.addMark .input-wrap .inputBox.last > input {
+  width: 76px;
+}
+.addMark .input-wrap .inputBox.single {
+  margin-left: 0;
+  border-right: none;
+  width: 240px;
+}
+.addMark .input-wrap input {
+  width: 172px;
+  border-radius: 8px;
+  background-color: #eeeefa;
+  height: 32px;
+  padding: 6px 16px;
+}
+.addMark .input-wrap input[type=file] {
+  display: none;
+}
+.addMark .input-wrap span {
+  text-align: center;
+  width: 52px;
+  height: 20px;
+  font-size: 14px;
+  color: #585858;
+  margin-right: 16px;
+}
+.addMark .input-wrap .lang {
+  position: relative;
+}
+.addMark .input-wrap .lang .langSpan {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 14px;
+  position: absolute;
+  left: 16px;
+  color: black;
+  padding-right: 10px;
+  height: 14px;
+  border-right: 1px solid #cdcdcd;
+}
+.addMark .input-wrap .lang .langInput {
+  width: 790px;
+  padding-left: 85px;
+}
+.addMark .input-wrap .lang:first-child {
+  margin-bottom: 12px;
+}
+.addMark .input-wrap .fileUpload {
+  width: 96px;
+  height: 32px;
+  padding: 6px 10px;
+  background-color: #eeeefa;
+  border-radius: 8px;
+  color: black;
+  cursor: pointer;
+}
+.addMark .input-wrap .fileUpload img {
+  margin-left: 4px;
+}
+.addMark .input-wrap .fileName {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  color: black;
+  width: auto;
+  height: auto;
+  padding: 6px 10px;
+}
+.addMark .input-wrap .fileName img {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.addMark .input-wrap .btnWrap {
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.addMark .input-wrap .btnWrap .deleteBtn {
+  border: 1px solid #858585;
+  color: #858585;
+  background-color: white;
+  margin-left: 24px;
+}
+.addMark .input-wrap .btnWrap .listBtn {
+  background-color: #858585;
+  color: white;
+  margin-left: 24px;
+}
+.addMark .input-wrap .btnWrap .closeBtn {
+  color: #eeeeee;
+  background-color: #858585;
+  margin-left: 24px;
+}

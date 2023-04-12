@@ -25,6 +25,8 @@ const CommonHeader = ({
         return '주간 업무 보고';
       case 'project':
         return '프로젝트 현황';
+      case 'manage-mark':
+        return '지식재산 관리'
       default:
         return '';
     }

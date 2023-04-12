@@ -1239,3 +1239,274 @@
 .commonFooter {
   cursor: pointer;
 }
+
+.manageMark {
+  .manage-search-wrap {
+    width: 980px;
+    height: 413px;
+    border: 1px solid $footerColor;
+    padding: 40px 60px 24px;
+    border-radius: 16px;
+    .search-form {
+      width: 860px;
+      > li {
+        &:first-child {
+          border-top: 1px solid $footerColor;
+          > div {
+            > .selectBox {
+              width: 172px;
+              height: 32px;
+              margin-left: 16px;
+              .selectOptGroup {
+                width: 172px;
+                > .selectOpt {
+                }
+              }
+            }
+          }
+        }
+        border-bottom: 1px solid $footerColor;
+        padding: 12px 0;
+        @include flex-style($justifyVal: flex-start, $alignVal: flex-start);
+        > div {
+          @include flex-style($justifyVal: flex-start, $alignVal: center);
+          height: 32px;
+          &.after-div {
+            position: relative;
+            margin-right: 40px;
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              right: -20px;
+              width: 1px;
+              height: 32px;
+              background-color: #eee;
+            }
+          }
+          span {
+            color: $gray01;
+            font-size: 14px;
+            font-family: $regularFont;
+            width: 52px;
+            text-align: center;
+          }
+          > .input-wrap {
+            margin-left: 16px;
+            > .appNum-input {
+              width: 76px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+            }
+            > .date-input {
+              width: 172px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+              cursor: text;
+            }
+            > .default {
+              width: 172px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+              text-align: center;
+            }
+            > .kr-name {
+              width: 792px;
+              height: 32px;
+              background-color: $subBlue;
+              border-radius: 8px;
+              padding: 6px 10px;
+            }
+            > .reg-input {
+              width: 76px;
+              height: 32px;
+              background-color: $subBlue;
+              text-align: center;
+              border-radius: 8px;
+            }
+          }
+        }
+      }
+    }
+    .btn-wrap {
+      width: 860px;
+      margin-top: 24px;
+      > .commonBtn {
+        &.clear {
+          color: #eeeeee;
+          background-color: $gray02;
+          font-size: 14px;
+          font-family: $regularFont;
+        }
+      }
+    }
+  }
+  .table-wrap {
+    margin: 65px 0 56px;
+  }
+  .bottom-wrap {
+    width: 980px;
+    position: relative;
+    padding-bottom: 100px;
+    @include flex-style();
+    .pagination {
+      margin-bottom: 0;
+    }
+    .commonBtn {
+      @include position-style($right: 0);
+    }
+  }
+  .noneList {
+    width: 1140px;
+    height: 625px;
+    color: $gray03;
+  }
+}
+
+.addMark {
+  .input-wrap {
+    position: relative;
+    align-items: flex-start;
+    width: 980px;
+    padding: 0 60px;
+    border-radius: 16px;
+    height: 514px;
+    border: 1px solid $footerColor;
+    hr {
+      margin: 12px 0;
+      border: none;
+      width: 100%;
+      height: 1px;
+      background-color: $footerColor;
+    }
+
+    .selectBox {
+      width: 172px;
+      padding: 4px 10px;
+      .selectOptGroup {
+        width: 172px;
+      }
+      .selectVal > span {
+        width: auto;
+      }
+    }
+
+    > .row {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .inputBox {
+      width: 260px;
+      justify-content: flex-start;
+      border-right: 1px solid $footerColor;
+      margin-left: 10px;
+      &.first {
+        margin-left: 0;
+      }
+      &.last {
+        width: 318px;
+        border-right: none;
+        > input {
+          width: 76px;
+        }
+      }
+      &.single {
+        margin-left: 0;
+        border-right: none;
+        width: 240px;
+      }
+    }
+
+    input {
+      width: 172px;
+      border-radius: 8px;
+      background-color: $subBlue;
+      height: 32px;
+      padding: 6px 16px;
+    }
+    input[type='file'] {
+      display: none;
+    }
+    span {
+      text-align: center;
+      width: 52px;
+      height: 20px;
+      font-size: 14px;
+      color: #585858;
+      margin-right: 16px;
+    }
+    .lang {
+      position: relative;
+      .langSpan {
+        @include flex-style();
+        line-height: 14px;
+        @include position-style($left: 16px);
+        color: black;
+        padding-right: 10px;
+        height: 14px;
+        border-right: 1px solid $gray03;
+      }
+      .langInput {
+        width: 790px;
+        padding-left: 85px;
+      }
+      &:first-child {
+        margin-bottom: 12px;
+      }
+    }
+    .fileUpload {
+      width: 96px;
+      height: 32px;
+      padding: 6px 10px;
+      background-color: $subBlue;
+      border-radius: 8px;
+      color: black;
+      cursor: pointer;
+      img {
+        margin-left: 4px;
+      }
+    }
+    .fileName {
+      background-color: $gray05;
+      border-radius: 8px;
+      color: black;
+      width: auto;
+      height: auto;
+      padding: 6px 10px;
+      img {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+    .btnWrap {
+      width: 100%;
+      justify-content: flex-end;
+      margin-top: 12px;
+      .deleteBtn {
+        border: 1px solid $gray02;
+        color: $gray02;
+        background-color: white;
+        margin-left: 24px;
+      }
+      .listBtn {
+        background-color: $gray02;
+        color: white;
+        margin-left: 24px;
+      }
+      .closeBtn {
+        color: $footerColor;
+        background-color: $gray02;
+        margin-left: 24px;
+      }
+    }
+  }
+}

@@ -387,6 +387,11 @@ input {
         }
       }
     }
+    &.manageMark, &.addMark {
+      .search {
+        display: none;
+      }
+    }
   }
 }
 
