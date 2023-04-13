@@ -16,6 +16,7 @@ router = APIRouter(prefix="/ip")
 @security.varify_access_token
 @security.user_chk
 def ip_list(
+    ip_list_in: IPListIn = Depends(),
     page: int = 1,
     limit: int = 10,
     access_token: str = Header(None),
@@ -25,12 +26,11 @@ def ip_list(
 ):
     try:
         offset = (page-1)*limit
-        total, _ip_list = ip_crud.get_ip_list(db, offset, limit, user_info)
+        total, _ip_list = ip_crud.get_ip_list(db, ip_list_in, offset, limit, user_info)
         
         totalPage = total // limit
         if total % limit != 0:
             totalPage +=1
-        print(total)
         
         return Response().metadata(
             page=page,
@@ -55,17 +55,19 @@ def ip_detail(
     try:
         db_ip = ip_crud.get_ip(db, ip_id)        
         outbound = IPOut(
-            id = ip_id,
             rights = db_ip.rights,
             application_date = db_ip.application_date,
             application_number = db_ip.application_number,
             applicant = db_ip.applicant,
-            status = db_ip.status,
+            ip_status = db_ip.ip_status,
             name_kor = db_ip.name_kor,
             name_eng = db_ip.name_eng,
             product_code = db_ip.product_code,
             registration_date = db_ip.registration_date,
-            registration_number = db_ip.registration_number
+            registration_number = db_ip.registration_number,
+            created_id = db_ip.created_id,
+            created_at = db_ip.created_at,
+            user_pk = user_pk
         )
         return outbound
     except HTTPException as e:
@@ -76,14 +78,14 @@ def ip_detail(
 @security.varify_access_token
 @security.user_chk
 def ip_create(
-    ip_create: IPCreate,
-    access_token: str = Header(None),
+    ip_create: IPInput = Depends(),
     user_pk: int = None,
     user_info: str = None,
+    access_token: str = Header(None),
     db: Session = Depends(get_db)
 ):
     try:
-        data = ip_crud.create_ip(db, user_pk, ip_create)
+        data = ip_crud.create_ip(db, user_info, ip_create)
         return Response().success_response(data)
     except HTTPException as e:
         raise HTTPException(status_code=e.status_code, detail=e.detail)
@@ -94,14 +96,14 @@ def ip_create(
 @security.user_chk
 def ip_update(
     ip_id: int,
-    ip_update: IPUpdate,
+    ip_update: IPInput = Depends(),
     user_pk: int = None,
     user_info: str = None,
     access_token: str = Header(None),
     db: Session = Depends(get_db)
 ):
     try:
-        data = ip_crud.update_ip(db, ip_id, ip_update, user_info)
+        data = ip_crud.update_ip(db, ip_id, user_info, ip_update)
         return Response().success_response(data)
     except HTTPException as e:
         raise HTTPException(status_code=e.status_code, detail=e.detail)
