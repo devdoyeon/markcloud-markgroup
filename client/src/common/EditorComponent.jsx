@@ -6,7 +6,7 @@ const EditorComponent = ({ content, setContent, col }) => {
     toolbar: [
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      ['link', 'image'],
+      ['image'],
       [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
       ['clean'],
     ],
