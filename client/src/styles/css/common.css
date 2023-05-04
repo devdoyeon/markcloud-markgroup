@@ -533,6 +533,16 @@ input {
   justify-content: center;
   flex-wrap: wrap;
 }
+.common-header .header-container nav > ul.sns-nav {
+  margin-left: auto;
+  margin-right: 30px;
+}
+.common-header .header-container nav > ul.sns-nav > li {
+  margin-right: 10px;
+}
+.common-header .header-container nav > ul.sns-nav > li:last-child {
+  margin-right: 0;
+}
 .common-header .header-container nav > ul a {
   display: inline-block;
   color: #ffffff;
