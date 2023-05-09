@@ -161,7 +161,6 @@ const SideMenu = () => {
                   path: '/',
                   domain: 'markcloud.co.kr',
                 });
-                localStorage.removeItem('yn');
                 navigate('/mark-group/');
               }}>
               로그아웃
