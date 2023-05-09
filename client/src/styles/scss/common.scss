@@ -387,7 +387,8 @@ input {
         }
       }
     }
-    &.manageMark, &.addMark {
+    &.manageMark,
+    &.addMark {
       .search {
         display: none;
       }
@@ -444,7 +445,16 @@ input {
 
       > ul {
         @include flex-style($alignVal: center);
-
+        &.sns-nav {
+          margin-left: auto;
+          margin-right: 30px;
+          > li {
+            margin-right: 10px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
         a {
           display: inline-block;
           color: $white;
