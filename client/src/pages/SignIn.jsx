@@ -79,8 +79,6 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
-      const ipResult = await getIp();
-      localStorage.setItem('loginIp', ipResult);
       checkUser();
       navigate('/mark-group');
     } else {
