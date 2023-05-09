@@ -821,18 +821,15 @@
 
         &.sns-icon {
           @include flex-style(column, $alignVal: center, $justifyVal: center);
+
           width: 40px;
           height: 40px;
-          border-radius: 50%;
-          background-color: $viewMainColor;
-
+          margin-left: 10px;
           a {
+            font-size: 12px;
+            display: inline-block;
             font-family: $blackFont;
             @include txt-style(14px, $footerColor);
-          }
-
-          &:nth-child(2) {
-            margin: 0 10px;
           }
         }
       }

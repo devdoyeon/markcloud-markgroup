@@ -277,6 +277,7 @@ const Home = () => {
           <CommonFooter />
         </div>
       </div>
+      {console.log(alertBox.bool)}
       {alertBox.bool && (
         <CommonModal
           setModal={setAlertBox}
