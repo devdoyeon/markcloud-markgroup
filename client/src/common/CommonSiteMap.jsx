@@ -3,6 +3,11 @@ import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import CommonMenu from './CommonMenu';
 
+import kakao from 'image/kakao.svg';
+import naverBlog from 'image/naver_blog.svg';
+import facebook from 'image/facebook.svg';
+import instagram from 'image/insta.svg';
+
 const CommonSiteMap = ({ color }) => {
   const headerHoverEvent = () => {
     const main = '.main-nav';
@@ -91,6 +96,40 @@ const CommonSiteMap = ({ color }) => {
                   </a>
                 </li>
               </ul>
+            </li>
+          </ul>
+          <ul className='sns-nav'>
+            <li>
+              <a
+                href='https://blog.naver.com/prologue/PrologueList.naver?blogId=go_markcloud'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <img src={naverBlog} alt='네이버 블로그로 바로가기' />
+              </a>
+            </li>
+            <li>
+              <a
+                href='https://www.instagram.com/mark_cloud_/'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <img src={instagram} alt='인스타그램 바로가기' />
+              </a>
+            </li>
+            <li>
+              <a
+                href='https://www.facebook.com/people/mark_cloud_/100083298100939/'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <img src={facebook} alt='페이스북으로 바로가기' />
+              </a>
+            </li>
+            <li>
+              <a
+                href='https://pf.kakao.com/_Nmwxcxj'
+                target='_blank'
+                rel='noopener noreferrer'>
+                <img src={kakao} alt='카카오톡 상담하기' />
+              </a>
             </li>
           </ul>
           <CommonMenu />

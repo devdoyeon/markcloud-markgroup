@@ -829,16 +829,14 @@
   flex-wrap: wrap;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background-color: #434343;
+  margin-left: 10px;
 }
 .main-footer .top > ul > li.sns-icon a {
+  font-size: 12px;
+  display: inline-block;
   font-family: "NotoSansBlack", "맑은 고딕", "sans-serif";
   font-size: 14px;
   color: #eeeeee;
-}
-.main-footer .top > ul > li.sns-icon:nth-child(2) {
-  margin: 0 10px;
 }
 .main-footer .top button {
   display: flex;
