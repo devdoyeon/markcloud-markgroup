@@ -159,7 +159,6 @@ const SideMenu = () => {
                 removeCookie('rfToken', {
                   path: '/',
                 });
-                localStorage.removeItem('yn');
                 navigate('/mark-group/');
               }}>
               로그아웃
