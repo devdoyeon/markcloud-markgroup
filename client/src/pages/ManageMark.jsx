@@ -283,7 +283,7 @@ const ManageMark = () => {
                         {' - '}
                         <input
                           type='date'
-                          className='date-input last'
+                        className='date-input last'
                           max='9999-12-31'
                           value={inputData?.application_end_date}
                           onChange={e => {

@@ -83,8 +83,6 @@ const SignIn = () => {
         secure: true,
         sameSite: 'none',
       });
-      const ipResult = await getIp();
-      localStorage.setItem('loginIp', ipResult);
       checkUser();
       navigate('/mark-group');
     } else {
