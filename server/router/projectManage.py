@@ -55,7 +55,8 @@ def read_projects(
             limit=limit
         ).success_response(project_list)
         
-    except:
+    except Exception as e:
+        # print(e)
         raise HTTPException(status_code=500, detail='ReadPjtError')
 
 # 프로젝트 상세페이지
