@@ -81,6 +81,14 @@ const CommonSiteMap = ({ color }) => {
                 </li>
                 <li>
                   <a
+                    href='https://markcloud.co.kr/mark-qna'
+                    rel='noopener noreferrer'
+                    target='_self'>
+                    상표 Q&A
+                  </a>
+                </li>
+                <li>
+                  <a
                     href='https://markcloud.co.kr/mark-inquiry/'
                     rel='noopener noreferrer'
                     target='_self'>
