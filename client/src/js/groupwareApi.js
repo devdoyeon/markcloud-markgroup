@@ -59,10 +59,17 @@ export const apiErrorHandling = async error => {
 
 export const getIp = async () => {
   try {
-    const ip = await axios.get('https://api.ip.pe.kr/');
-    return ip?.data;
+    const mainIpReq = await axios.get(`https://api.ip.pe.kr`, { timeout: 500 });
+    if (typeof mainIpReq === 'object') return mainIpReq?.data;
   } catch (error) {
-    return apiErrorHandling(error);
+    try {
+      const subIpReq = await axios.get(
+        `https://ipinfo.io/?token=fb0e9f29da28de`
+      );
+      if (typeof subIpReq === 'object') return subIpReq?.data?.ip;
+    } catch (error) {
+      return apiErrorHandling(error);
+    }
   }
 };
 
