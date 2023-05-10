@@ -59,10 +59,17 @@ export const apiErrorHandling = async error => {
 
 export const getIp = async () => {
   try {
-    const ip = await axios.get('https://api.ip.pe.kr/');
-    return ip?.data;
+    const mainIpReq = await axios.get(`https://api.ip.pe.kr`, { timeout: 500 });
+    if (typeof mainIpReq === 'object') return mainIpReq?.data;
   } catch (error) {
-    return apiErrorHandling(error);
+    try {
+      const subIpReq = await axios.get(
+        `https://ipinfo.io/?token=fb0e9f29da28de`
+      );
+      if (typeof subIpReq === 'object') return subIpReq?.data?.ip;
+    } catch (error) {
+      return apiErrorHandling(error);
+    }
   }
 };
 
@@ -77,9 +84,13 @@ const tokenReissue = async () => {
     const result = await axios.get(`/api/users/self/token`, { headers });
     removeCookie('myToken', {
       path: '/',
+      domain: 'markcloud.co.kr',
     });
     setCookie('myToken', result?.data?.data?.access_token, {
       path: '/',
+      domain: 'markcloud.co.kr',
+      secure: true,
+      sameSite: 'none',
     });
     window.location.reload();
   } catch (error) {
@@ -90,11 +101,14 @@ const tokenReissue = async () => {
 //# 로그인
 export const signIn = async (userId, userPw) => {
   try {
-    return await axios.post('/api/auth/login', {
+    const ip = await getIp();
+    const loginResult = await axios.post('/api/auth/login', {
       user_id: userId,
       password: userPw,
-      login_ip: await getIp(),
+      login_ip: ip,
     });
+    localStorage.setItem('loginIp', ip);
+    return loginResult;
   } catch (error) {
     return await apiErrorHandling(error);
   }
@@ -104,7 +118,7 @@ export const signIn = async (userId, userPw) => {
 export const checkUserInfo = async () => {
   try {
     return await axios.get(
-      `/api/users/self?current_ip=${await getIp()}`,
+      `/api/users/self?current_ip=${localStorage.getItem('loginIp')}`,
       header()
     );
   } catch (error) {
@@ -126,7 +140,7 @@ export const duplicateIdCheck = async userId => {
 export const createMID = async data => {
   try {
     return await axios.post(
-      `/api/order/create?current_ip=${await getIp()}`,
+      `/api/order/create?current_ip=${localStorage.getItem('loginIp')}`,
       data,
       header()
     );
@@ -138,7 +152,7 @@ export const createMID = async data => {
 export const checkPay = async data => {
   try {
     return await axios.post(
-      `/api/order/verify?current_ip=${await getIp()}`,
+      `/api/order/verify?current_ip=${localStorage.getItem('loginIp')}`,
       data,
       header()
     );
@@ -151,7 +165,7 @@ export const checkPay = async data => {
 export const checkPoint = async () => {
   try {
     return await axios.get(
-      `/api/checkpoint/groupware?current_ip=${await getIp()}`,
+      `/api/checkpoint/groupware?current_ip=${localStorage.getItem('loginIp')}`,
       header()
     );
   } catch (error) {

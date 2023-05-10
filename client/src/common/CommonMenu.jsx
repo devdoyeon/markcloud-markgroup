@@ -14,7 +14,6 @@ const CommonMenu = () => {
               removeCookie('rfToken', {
                 path: '/',
               });
-              localStorage.removeItem('yn');
               localStorage.clear();
               window.location.reload();
               return;
