@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import EditorComponent from 'common/EditorComponent';
 import SideMenu from 'common/SideMenu';
@@ -43,8 +43,6 @@ const NewBoard = () => {
   const path = useLocation().pathname;
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const inputFile = useRef();
 
   const returnHeader = () => {
     switch (path.split('/')[2]) {
