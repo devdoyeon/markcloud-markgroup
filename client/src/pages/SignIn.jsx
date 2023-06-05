@@ -73,15 +73,13 @@ const SignIn = () => {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
+        domain: process.env.REACT_APP_DEV_DOMAIN,
+        sameSite: 'lax',
       });
       setCookie('rfToken', refresh_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
+        domain: process.env.REACT_APP_DEV_DOMAIN,
+        sameSite: 'lax',
       });
       checkUser();
       navigate('/mark-group');

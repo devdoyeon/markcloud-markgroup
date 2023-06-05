@@ -84,13 +84,13 @@ const tokenReissue = async () => {
     const result = await axios.get(`/api/users/self/token`, { headers });
     removeCookie('myToken', {
       path: '/',
-      domain: 'markcloud.co.kr',
+      domain: process.env.REACT_APP_DEV_DOMAIN,
+      sameSite: 'lax',
     });
     setCookie('myToken', result?.data?.data?.access_token, {
       path: '/',
-      domain: 'markcloud.co.kr',
-      secure: true,
-      sameSite: 'none',
+      domain: process.env.REACT_APP_DEV_DOMAIN,
+      sameSite: 'lax',
     });
     window.location.reload();
   } catch (error) {
