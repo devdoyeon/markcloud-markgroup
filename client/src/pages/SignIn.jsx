@@ -71,16 +71,18 @@ const SignIn = () => {
     const result = await signIn(userInfo.id, userInfo.pw);
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
-      setCookie('myToken', access_token, {
-        path: '/',
-        domain: process.env.REACT_APP_DEV_DOMAIN,
-        sameSite: 'lax',
-      });
-      setCookie('rfToken', refresh_token, {
-        path: '/',
-        domain: process.env.REACT_APP_DEV_DOMAIN,
-        sameSite: 'lax',
-      });
+      if (!getCookie('myToken') || !getCookie('rfToken')) {
+        setCookie('myToken', access_token, {
+          path: '/',
+          domain: process.env.REACT_APP_DEV_DOMAIN,
+          sameSite: 'lax',
+        });
+        setCookie('rfToken', refresh_token, {
+          path: '/',
+          domain: process.env.REACT_APP_DEV_DOMAIN,
+          sameSite: 'lax',
+        });
+      }
       checkUser();
       navigate('/mark-group');
     } else {
