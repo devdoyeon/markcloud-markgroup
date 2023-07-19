@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SideMenu from 'common/SideMenu';
 import CommonHeader from 'common/CommonHeader';
 import Pagination from 'common/Pagination';
-import {
-  changeTitle,
-  catchError,
-  changeState,
-} from 'js/commonUtils';
+import { changeTitle, catchError, changeState } from 'js/commonUtils';
 import { getMarkList, searchMark } from 'js/groupwareApi';
 import noneList from 'image/noneList.svg';
 import CommonModal from 'common/CommonModal';
@@ -25,7 +21,7 @@ const ManageMark = () => {
     content: '',
     bool: false,
   });
-  const [list, setList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [list, setList] = useState([]);
   const navigate = useNavigate();
   let prevent = false;
   const [rights2, setRights2] = useState('전체');
@@ -34,6 +30,8 @@ const ManageMark = () => {
   const [appInput3, setAppInput3] = useState('');
   const [regInput1, setRegInput1] = useState('');
   const [regInput2, setRegInput2] = useState('');
+  const [regInput3, setRegInput3] = useState('');
+  const [regInput4, setRegInput4] = useState('');
   const rights = ['전체', '특허', '디자인', '상표'];
 
   const [inputData, setInputData] = useState({
@@ -71,8 +69,13 @@ const ManageMark = () => {
 
       changeState(setInputData, 'application_number', appInput);
     }
-    if (regInput1.length === 2 && regInput2.length === 4) {
-      let regInput = regInput1 + regInput2;
+    if (
+      regInput1.length === 2 &&
+      regInput2.length === 7 &&
+      regInput3.length === 2 &&
+      regInput4.length === 2
+    ) {
+      let regInput = regInput1 + regInput2 + regInput3 + regInput4;
       changeState(setInputData, 'registration_number', regInput);
     }
   }, [appInput3, appInput1, appInput2, regInput1, regInput2]);
@@ -283,7 +286,7 @@ const ManageMark = () => {
                         {' - '}
                         <input
                           type='date'
-                        className='date-input last'
+                          className='date-input last'
                           max='9999-12-31'
                           value={inputData?.application_end_date}
                           onChange={e => {
@@ -410,6 +413,28 @@ const ManageMark = () => {
                           value={regInput2}
                           onChange={e => {
                             setRegInput2(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='reg-input'
+                          placeholder='00'
+                          maxLength='2'
+                          value={regInput3}
+                          onChange={e => {
+                            setRegInput3(e.target.value);
+                          }}
+                        />
+                        {' - '}
+                        <input
+                          type='text'
+                          className='reg-input'
+                          placeholder='00'
+                          maxLength='2'
+                          value={regInput4}
+                          onChange={e => {
+                            setRegInput4(e.target.value);
                           }}
                         />
                       </div>

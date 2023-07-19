@@ -45,6 +45,8 @@ const AddMark = () => {
   const [appInput3, setAppInput3] = useState('');
   const [regInput1, setRegInput1] = useState('');
   const [regInput2, setRegInput2] = useState('');
+  const [regInput3, setRegInput3] = useState('');
+  const [regInput4, setRegInput4] = useState('');
   let appInput = '';
   let regInput = '';
 
@@ -124,13 +126,17 @@ const AddMark = () => {
     const result = await getMarkDetail(id);
     if (typeof result === 'object') {
       setMarkData(result?.data);
-      setRightFilter(result?.data?.rights);
-      setStatusFilter(result?.data?.ip_status);
-      setAppInput1(result?.data?.application_number?.slice(0, 2));
-      setAppInput2(result?.data?.application_number?.slice(2, 6));
-      setAppInput3(result?.data?.application_number?.slice(6));
-      setRegInput1(result?.data?.registration_number?.slice(0, 2));
-      setRegInput2(result?.data?.registration_number?.slice(2));
+      const { rights, ip_status, application_number, registration_number } =
+        result?.data;
+      setRightFilter(rights);
+      setStatusFilter(ip_status);
+      setAppInput1(application_number?.slice(0, 2));
+      setAppInput2(application_number?.slice(2, 6));
+      setAppInput3(application_number?.slice(6));
+      setRegInput1(registration_number?.slice(0, 2));
+      setRegInput2(registration_number?.slice(2, 9));
+      setRegInput3(registration_number?.slice(9, 11));
+      setRegInput4(registration_number?.slice(11));
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -181,10 +187,15 @@ const AddMark = () => {
     if (appInput1?.length && appInput2?.length && appInput3?.length) {
       appInput = appInput1 + appInput2 + appInput3;
     }
-    if (regInput1?.length && regInput2?.length) {
-      regInput = regInput1 + regInput2;
+    if (
+      regInput1?.length &&
+      regInput2?.length &&
+      regInput3?.length &&
+      regInput4?.length
+    ) {
+      regInput = regInput1 + regInput2 + regInput3 + regInput4;
     }
-  }, [appInput1, appInput2, appInput3, regInput1, regInput2]);
+  }, [appInput1, appInput2, appInput3, regInput1, regInput2, regInput3, regInput4]);
 
   const fileNameSettingFn = () => {
     if (file?.length)
@@ -356,6 +367,24 @@ const AddMark = () => {
                   }
                   value={regInput2}
                   maxLength={7}
+                />
+                {' - '}
+                <input
+                  type='text'
+                  onChange={e =>
+                    setRegInput3(e.target.value.replace(/[^-0-9]/g, ''))
+                  }
+                  value={regInput3}
+                  maxLength={2}
+                />
+                {' - '}
+                <input
+                  type='text'
+                  onChange={e =>
+                    setRegInput4(e.target.value.replace(/[^-0-9]/g, ''))
+                  }
+                  value={regInput4}
+                  maxLength={2}
                 />
               </div>
             </div>
